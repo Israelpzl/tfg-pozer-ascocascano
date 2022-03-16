@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Lee con Monclick</string>
+    <string name="error">UPS ALGO SALIO MAL!!</string>
+    <string name="back_home">VOLVER A INICIO</string>
 </resources>

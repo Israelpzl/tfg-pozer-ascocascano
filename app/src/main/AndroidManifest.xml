@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LeeConMonclick">
         <activity
+            android:name=".ProfilesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoadActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

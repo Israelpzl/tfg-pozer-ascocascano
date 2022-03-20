@@ -13,7 +13,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         //Convertir a pantalla completa
 
@@ -24,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(3000);//abre la StartActivity tras 3 segundos
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class/*cambiar a la de home*/));
+                    startActivity(new Intent(getApplicationContext(),ProfilesActivity.class/*cambiar a la de home*/));
                     finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

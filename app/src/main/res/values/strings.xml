@@ -3,4 +3,7 @@
     <string name="error">UPS ALGO SALIO MAL!!</string>
     <string name="back_home">VOLVER A INICIO</string>
     <string name="tv_lscreen">0 %</string>
+    <string name="who_are_u">¿QUIÉN ERES?</string>
+    <string name="child">ALUMNOS</string>
+    <string name="professional">PROFESIONAL</string>
 </resources>

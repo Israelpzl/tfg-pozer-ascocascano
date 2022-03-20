@@ -32,6 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/errorMessage"
         android:layout_width="792dp"
         android:layout_height="290dp"

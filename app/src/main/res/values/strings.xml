@@ -6,4 +6,11 @@
     <string name="who_are_u">¿QUIÉN ERES?</string>
     <string name="child">ALUMNOS</string>
     <string name="professional">PROFESIONAL</string>
+    <string name="login_title">INICIO DE SESION</string>
+    <string name="email">EMAIL</string>
+    <string name="password">CONTRASEÑA</string>
+    <string name="login">ACCEDER</string>
+    <string name="forgot_password">¿OLVIDASTE LA CONTRASEÑA?</string>
+    <string name="register">REGISTRARSE</string>
+    <string name="remember_user">RECORDAR USUARIO</string>
 </resources>

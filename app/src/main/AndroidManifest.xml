@@ -11,10 +11,12 @@
         android:theme="@style/Theme.LeeConMonclick">
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".HelpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ProfilesActivity"
             android:exported="false"

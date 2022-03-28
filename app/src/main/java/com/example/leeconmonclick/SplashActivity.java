@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(3000);//abre la StartActivity tras 3 segundos
-                    startActivity(new Intent(getApplicationContext(),ProfilesActivity.class/*cambiar a la de home*/));
+                    startActivity(new Intent(getApplicationContext(),HelpActivity.class/*cambiar a la de home*/));
                     finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

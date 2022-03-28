@@ -2,6 +2,8 @@ package com.example.leeconmonclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner spinner;
     TextView message;
+    String url = "www.youtube.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_help);
 
         spinner = findViewById(R.id.spinner);
-        message = findViewById(R.id.textView_titleQuestion);
+        message = findViewById(R.id.textView_message);
 
         ArrayList<String> options = new ArrayList<>();
         options.add("Pregunta 1");
@@ -30,16 +33,37 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         options.add("Pregunta 3");
         options.add("Pregunta 4");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_itemms, options);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
     }
+    public void home(View v){
+        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        startActivity(helpIntent);
+    }
 
+    public void youtube(View v){
+        Uri link = Uri.parse(url);
+        Intent video = new Intent(Intent.ACTION_VIEW, link);
+        startActivity(video);
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String text_selection =  adapterView.getItemAtPosition(i).toString();
-        if(text_selection.equals("Pregunta 2")){
-            message.setText("Mensaje referencial");
+
+        switch (text_selection) {
+            case "Pregunta 1":
+                message.setText("Ayuda a mensaje 1");
+                break;
+            case "Pregunta 2":
+                message.setText("Ayuda a mensaje 2");
+                break;
+            case "Pregunta 3":
+                message.setText("Ayuda a mensaje 3");
+                break;
+            case "Pregunta 4":
+                message.setText("Ayuda a mensaje 4");
+                break;
         }
     }
 

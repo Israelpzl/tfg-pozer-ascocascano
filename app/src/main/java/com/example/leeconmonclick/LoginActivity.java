@@ -18,4 +18,8 @@ public class LoginActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
         startActivity(helpIntent);
     }
+    public void home(View v){
+        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        startActivity(helpIntent);
+    }
 }

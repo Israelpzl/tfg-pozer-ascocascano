@@ -7,6 +7,22 @@
     tools:context=".LoginActivity"
     android:background="@color/background">
 
+    <ImageButton
+        android:id="@+id/helpButton_profiles3"
+        android:layout_width="60dp"
+        android:layout_height="56dp"
+        android:background="@null"
+        android:onClick="home"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021"
+        app:srcCompat="@drawable/ayuda"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="643dp"

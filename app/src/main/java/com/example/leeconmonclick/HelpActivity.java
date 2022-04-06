@@ -17,7 +17,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner spinner;
     TextView message;
-    String url = "www.youtube.com";
+    String url = "http://www.youtube.com/user/JustinBieberVEVO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,14 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void youtube(View v){
-        Uri link = Uri.parse(url);
-        Intent video = new Intent(Intent.ACTION_VIEW, link);
+        Intent video = new Intent(Intent.ACTION_VIEW);
+        video.setData(Uri.parse(url));
+        startActivity(video);
+    }
+
+    public void email(View v){
+        Intent video = new Intent(Intent.ACTION_SENDTO);
+        video.setData(Uri.parse("mailto:theyecoca@gmail.com"));
         startActivity(video);
     }
     @Override

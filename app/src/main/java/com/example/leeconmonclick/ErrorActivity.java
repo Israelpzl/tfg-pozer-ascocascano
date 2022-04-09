@@ -17,12 +17,12 @@ public class ErrorActivity extends AppCompatActivity {
 
     //Simples intent que estan pendientes de redirigir a su pagina real
     public void home(View v){
-        Intent homeIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la principal
+        Intent homeIntent = new Intent(this, ProfilesActivity.class);
         startActivity(homeIntent);
     }
 
     public void help(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
 }

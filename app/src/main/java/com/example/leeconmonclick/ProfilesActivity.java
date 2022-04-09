@@ -16,17 +16,17 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void user(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de login alumno
+        Intent helpIntent = new Intent(this, LoginPatientActivity.class);
         startActivity(helpIntent);
     }
 
     public void professional(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de login profesional
+        Intent helpIntent = new Intent(this, LoginActivity.class);
         startActivity(helpIntent);
     }
 
     public void help(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
 }

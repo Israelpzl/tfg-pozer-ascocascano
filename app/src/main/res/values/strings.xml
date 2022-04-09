@@ -16,4 +16,7 @@
     <string name="frecuent_questions">PREGUNTAS FRECUENTES</string>
     <string name="tutorial">VER TUTORIAL</string>
     <string name="email_help">CORREO AYUDA</string>
+    <string name="name">NOMBRE</string>
+    <string name="code">CODIGO</string>
+    <string name="repeat_pass">REPETIR CONTRASEÑA</string>
 </resources>

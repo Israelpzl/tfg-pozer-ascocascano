@@ -15,11 +15,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void help(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
-    public void home(View v){
-        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+    public void register(View v){
+        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
         startActivity(helpIntent);
+    }
+
+    public void rememberPass(View v){
+        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void back(View v){
+        finish();
     }
 }

@@ -53,6 +53,10 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         video.setData(Uri.parse("mailto:theyecoca@gmail.com"));
         startActivity(video);
     }
+
+    public void back(View v){
+        finish();
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String text_selection =  adapterView.getItemAtPosition(i).toString();

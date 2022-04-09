@@ -25,6 +25,7 @@
         android:layout_marginTop="350dp"
         android:onClick="home"
         android:text="@string/back_home"
+        android:background="@drawable/button_style"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

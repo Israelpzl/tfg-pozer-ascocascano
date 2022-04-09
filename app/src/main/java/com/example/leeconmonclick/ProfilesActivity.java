@@ -3,7 +3,6 @@ package com.example.leeconmonclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,7 +20,7 @@ public class ProfilesActivity extends AppCompatActivity {
     }
 
     public void professional(View v){
-        Intent helpIntent = new Intent(this, LoginActivity.class);
+        Intent helpIntent = new Intent(this, LoginProfesionalActivity.class);
         startActivity(helpIntent);
     }
 

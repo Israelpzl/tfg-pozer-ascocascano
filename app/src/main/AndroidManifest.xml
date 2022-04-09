@@ -10,8 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LeeConMonclick">
         <activity
-            android:name=".LoginPatientActivity"
-            android:exported="false" />
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ProfilesActivity"
             android:exported="false"
@@ -28,6 +33,10 @@
             android:name=".ErrorActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+      <activity
+            android:name=".LoginPatientActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"

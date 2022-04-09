@@ -24,4 +24,9 @@ public class ProfilesActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de login profesional
         startActivity(helpIntent);
     }
+
+    public void help(View v){
+        Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
+        startActivity(helpIntent);
+    }
 }

@@ -33,6 +33,10 @@
             android:name=".ErrorActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+      <activity
+            android:name=".LoginPatientActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"

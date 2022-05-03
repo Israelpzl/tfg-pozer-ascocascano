@@ -17,7 +17,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner spinner;
     TextView message;
-    String url = "http://www.youtube.com/user/JustinBieberVEVO";
+    String url = "https://www.youtube.com/watch?v=s-aph61W300";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

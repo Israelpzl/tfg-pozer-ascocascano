@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">Lee con Monclick</string>
+    <string name="app_name">Leer con Monclick</string>
+    <string name="error">UPS ALGO SALIO MAL!!</string>
+    <string name="back_home">VOLVER A INICIO</string>
+    <string name="tv_lscreen">0 %</string>
+    <string name="who_are_u">¿QUIÉN ERES?</string>
+    <string name="child">ALUMNOS</string>
+    <string name="professional">PROFESIONAL</string>
+    <string name="login_title">INICIO DE SESION</string>
+    <string name="email">EMAIL</string>
+    <string name="password">CONTRASEÑA</string>
+    <string name="login">ACCEDER</string>
+    <string name="forgot_password">¿OLVIDASTE LA CONTRASEÑA?</string>
+    <string name="register">REGISTRARSE</string>
+    <string name="remember_user">RECORDAR USUARIO</string>
+    <string name="frecuent_questions">PREGUNTAS FRECUENTES</string>
+    <string name="tutorial">VER TUTORIAL</string>
+    <string name="email_help">CORREO AYUDA</string>
+    <string name="name">NOMBRE</string>
+    <string name="code">CODIGO</string>
+    <string name="repeat_pass">REPETIR CONTRASEÑA</string>
 </resources>

@@ -19,4 +19,7 @@
     <string name="name">NOMBRE</string>
     <string name="code">CODIGO</string>
     <string name="repeat_pass">REPETIR CONTRASEÑA</string>
+    <string name="error_mail">EMAIL NO VALIDO</string>
+    <string name="error_pass">CONTRASEÑA NO VALIDA</string>
+    <string name="error_pass_confirmation">LAS CONTRASEÑAS NO SON IGUALES</string>
 </resources>

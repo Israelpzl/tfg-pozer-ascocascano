@@ -41,6 +41,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:21.0.5'
 
+    //Extra Librerys
+    implementation 'com.basgeekball:awesome-validation:4.3'
+
 
 }
 

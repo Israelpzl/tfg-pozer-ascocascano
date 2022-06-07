@@ -156,6 +156,7 @@
         android:layout_width="138dp"
         android:layout_height="58dp"
         android:background="@drawable/button_style"
+        android:onClick="createUser"
         android:text="Registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

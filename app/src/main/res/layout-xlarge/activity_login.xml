@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginProfesionalActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:onClick="login"
+    tools:context=".LoginProfesionalActivity">
 
     <ImageButton
         android:id="@+id/helpButton_profiles3"
@@ -52,13 +53,13 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <TextView
-        android:textColor="@color/black"
         android:id="@+id/textView_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="600dp"
         android:layout_marginTop="30dp"
         android:text="@string/email"
+        android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,15 +84,15 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:textColor="@color/black"
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
+        android:hint="@string/email"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/email"
+        android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,6 @@
         app:layout_constraintVertical_bias="0.004" />
 
     <EditText
-        android:textColor="@color/black"
         android:id="@+id/editTextTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,6 +110,7 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,8 +124,9 @@
         android:layout_width="129dp"
         android:layout_height="60dp"
         android:layout_marginTop="120dp"
-        android:text="@string/login"
         android:background="@drawable/button_style"
+        android:onClick="login"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.827"
@@ -155,9 +157,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:textColor="@color/black"
         android:minHeight="48dp"
         android:text="@string/remember_user"
+        android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.885"
@@ -169,8 +171,8 @@
         android:layout_width="160dp"
         android:layout_height="59dp"
         android:layout_marginEnd="64dp"
-        android:onClick="rememberPass"
         android:background="@drawable/button_style"
+        android:onClick="rememberPass"
         android:text="@string/forgot_password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -181,9 +183,9 @@
         android:id="@+id/button3"
         android:layout_width="160dp"
         android:layout_height="59dp"
+        android:background="@drawable/button_style"
         android:onClick="register"
         android:text="@string/register"
-        android:background="@drawable/button_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.939"

@@ -129,6 +129,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_style"
+        android:onClick="login"
         android:text="@string/login"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -136,8 +137,7 @@
         app:layout_constraintHorizontal_bias="0.762"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_remember"
-        app:layout_constraintVertical_bias="0.313"
-        android:onClick="login"/>
+        app:layout_constraintVertical_bias="0.313" />
 
     <ImageButton
         android:id="@+id/helpButton2"

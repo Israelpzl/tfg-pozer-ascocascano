@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,6 @@ import es.leerconmonclick.util.User;
 public class RegisterProfessionalActivity extends AppCompatActivity {
 
     AwesomeValidation awesomeValidation;
-    FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
 
     @Override
@@ -55,31 +55,26 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
 
         if(awesomeValidation.validate()){
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            FirebaseAuth db = FirebaseAuth.getInstance();
+
+            db.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-                        String id ="1"; //firebaseAuth.getCurrentUser().getUid();
+                        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-/*
                         Map<String,Object> mapUserValues = new HashMap<>();
 
                         mapUserValues.put("email", email.getText().toString());
-                        mapUserValues.put("password", pass.getText().toString());
 
-                        databaseReference.child("Users").child(id).setValue(mapUserValues);
-                        databaseReference.child("Users").push().setValue(u);
-                        */
+                        String userCollection = email.getText().toString();
+                        String[] parts = userCollection.split("@");
+                        userCollection = parts[0];
 
-                        User u = new User(
-                                email.getText().toString(),
-                                pass.getText().toString()
-                        );
+                        databaseReference.child("Users").child(userCollection).setValue(mapUserValues);
 
-
-
-                        goHome(email);
+                        goHome(userCollection);
                         finish();
 
                         succesCreation();
@@ -95,9 +90,9 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     }
 
-    private void goHome(EditText email){
-        Intent i = new Intent(this, LoginProfesionalActivity.class);
-        i.putExtra("email", email.getText().toString());
+    private void goHome(String email){
+        Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("email",email);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }

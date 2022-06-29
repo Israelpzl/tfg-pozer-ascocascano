@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,11 +27,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         firebaseAuth = FirebaseAuth.getInstance();
-
-        //awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
-        //awesomeValidation.addValidation(this,R.id.editTextTextPassword4, ".{6,}", R.string.error_pass);
 
     }
 
@@ -44,16 +41,24 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     }
 
     public void login (View v){
+        EditText email = findViewById(R.id.editTextTextPersonName);
+        EditText pass = findViewById(R.id.editTextTextPassword);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
+        awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
+
         if (awesomeValidation.validate()){
-            EditText email = findViewById(R.id.editTextTextPersonName);
-            EditText pass = findViewById(R.id.editTextTextPassword);
 
             firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()){
-                        goProfile(email);
+
+                        String userCollection = email.getText().toString();
+                        String[] parts = userCollection.split("@");
+                        userCollection = parts[0];
+                        goProfile(userCollection);
                     }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                         dameToastdeerror(errorCode);
@@ -63,13 +68,13 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         }
     }
 
-    public void logOut(View v) {
+    /*public void logOut(View v) {
         firebaseAuth.signOut();
-    }
+    }*/
 
-    private void goProfile(EditText email){
+    private void goProfile(String email){
         Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("email", email.getText().toString());
+        i.putExtra("email", email);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }

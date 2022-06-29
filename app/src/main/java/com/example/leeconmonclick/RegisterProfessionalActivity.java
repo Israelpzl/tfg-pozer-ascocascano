@@ -17,10 +17,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import es.leerconmonclick.util.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
 
     AwesomeValidation awesomeValidation;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,29 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
+
+                        String id ="1"; //firebaseAuth.getCurrentUser().getUid();
+
+/*
+                        Map<String,Object> mapUserValues = new HashMap<>();
+
+                        mapUserValues.put("email", email.getText().toString());
+                        mapUserValues.put("password", pass.getText().toString());
+
+                        databaseReference.child("Users").child(id).setValue(mapUserValues);
+                        databaseReference.child("Users").push().setValue(u);
+                        */
+
+                        User u = new User(
+                                email.getText().toString(),
+                                pass.getText().toString()
+                        );
+
+
+
+                        goHome(email);
+                        finish();
+
                         succesCreation();
                     }else {
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
@@ -63,6 +94,14 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
         }
 
     }
+
+    private void goHome(EditText email){
+        Intent i = new Intent(this, LoginProfesionalActivity.class);
+        i.putExtra("email", email.getText().toString());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
+
 
     public void succesCreation(){
         Toast.makeText(getApplicationContext(),"Usuario creado correctamente",Toast.LENGTH_LONG).show();

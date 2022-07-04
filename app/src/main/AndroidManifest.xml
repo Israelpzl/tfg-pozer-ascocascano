@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".RegisterProfessionalActivity"
+            android:name=".ProfileActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".RegisterProfessionalActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LoginProfesionalActivity"
             android:exported="false"
@@ -37,10 +41,10 @@
             android:name=".ErrorActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
-      <activity
+        <activity
             android:name=".LoginPatientActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"

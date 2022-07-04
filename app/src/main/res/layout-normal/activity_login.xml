@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginProfesionalActivity"
-    android:background="@color/background">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginProfesionalActivity"
+        android:background="@color/background">
 
     <ImageButton
         android:id="@+id/helpButton_profiles3"
@@ -94,7 +94,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/email"
+        android:hint="@string/email"
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,6 +129,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_style"
+        android:onClick="login"
         android:text="@string/login"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

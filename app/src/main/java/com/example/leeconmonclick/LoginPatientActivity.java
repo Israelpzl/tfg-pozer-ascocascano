@@ -3,11 +3,14 @@ package com.example.leeconmonclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import com.google.firebase.database.DatabaseReference;
 
 public class LoginPatientActivity extends AppCompatActivity {
+
+    Bundle datos;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

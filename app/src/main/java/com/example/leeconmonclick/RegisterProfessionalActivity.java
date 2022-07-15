@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,15 +65,15 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                        Map<String,Object> mapUserValues = new HashMap<>();
-
-                        mapUserValues.put("email", email.getText().toString());
-
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
+                        ArrayList<String> notas = new ArrayList<String>();
+                        notas.add("Aquí podras añadir todas tus notas personales");
 
-                        databaseReference.child("Users").child(userCollection).setValue(mapUserValues);
+                        User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas); //Faltaria crear los pacientes
+
+                        databaseReference.child("Users").child(userCollection).setValue(usuario);
 
                         goHome(userCollection);
                         finish();

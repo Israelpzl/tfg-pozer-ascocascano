@@ -73,7 +73,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     }*/
 
     private void goProfile(String email){
-        Intent i = new Intent(this, ProfileActivity.class);
+        Intent i = new Intent(this, PatientsPrincipal.class);
         i.putExtra("email", email);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

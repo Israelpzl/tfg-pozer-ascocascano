@@ -22,4 +22,16 @@
     <string name="error_mail">EMAIL NO VALIDO</string>
     <string name="error_pass">CONTRASEÑA NO VALIDA</string>
     <string name="error_pass_confirmation">LAS CONTRASEÑAS NO SON IGUALES</string>
+
+    <string name="icon">ICONO</string>
+    <string name="datonisc">DALTONISMO</string>
+    <string name="size_text">TAMAÑO TEXTO</string>
+    <string name="size_text_big">GRANDE</string>
+    <string name="size_text_mid">MEDIANO</string>
+    <string name="size_text_small">PEQUEÑO</string>
+    <string name="acromatic">ACROMÁTICO</string>
+    <string name="nothing">NINGUNO</string>
+    <string name="log_out">CERRAR SESIÓN</string>
+    <string name="save_changes">GUARDAR CAMBIOS</string>
+    <string name="settings">AJUSTES</string>
 </resources>

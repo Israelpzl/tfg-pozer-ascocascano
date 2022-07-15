@@ -9,7 +9,6 @@ import com.google.firebase.database.DatabaseReference;
 
 public class LoginPatientActivity extends AppCompatActivity {
 
-    Bundle datos;
     DatabaseReference databaseReference;
 
     @Override

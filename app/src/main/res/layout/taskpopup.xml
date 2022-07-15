@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="500dp"
+    android:layout_height="300dp"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/imgCalendarPopupId"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_calendar_month_fill0_wght400_grad0_opsz48" />
+
+    <EditText
+        android:id="@+id/descriptionCalendarPopupId"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:hint="Descripción" />
+
+    <EditText
+        android:id="@+id/dateCalendarPopupId"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:hint="Fecha" />
+
+    <LinearLayout
+        android:layout_width="500dp"
+        android:layout_height="50dp">
+
+
+        <EditText
+            android:id="@+id/timeCalendarPopupId"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:hint="Hora"/>
+
+        <Button
+            android:id="@+id/addTimeCalendarPopupBtnId"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="125dp"
+            android:text="+" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="500dp"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/addCalendarPopupBtnId"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:text="Añadir" />
+
+
+        <Button
+            android:id="@+id/cancelCalendarPopupBtnId"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="200dp"
+            android:text="Cancelar" />
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+

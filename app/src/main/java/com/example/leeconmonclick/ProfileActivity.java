@@ -47,6 +47,11 @@ public class ProfileActivity extends AppCompatActivity {
         goHome();
     }
 
+    public void goCalendar (View v){
+        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        startActivity(calendarIntent);
+    }
+
     private void goHome() {
 
         startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CalendarActivity"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:background="@drawable/bg_calendar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="60dp"
+        >
+
+        <CalendarView
+            android:id ="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="240dp"
+         >
+
+
+        </CalendarView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp">
+
+
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="175dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="150dp"
+            android:layout_weight="1"
+            android:text="Fecha" />
+
+        <Button
+            android:id="@+id/openPopupTaskCalendarBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Añadir Fecha"
+            android:layout_marginBottom="50dp"
+            android:onClick="createNewTask"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

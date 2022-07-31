@@ -39,4 +39,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_calendar_month_fill0_wght400_grad0_opsz48"
         android:onClick="goCalendar"/>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="409dp"
+        android:layout_marginEnd="410dp"
+        android:layout_marginBottom="5dp"
+        android:onClick="goTaskView"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:srcCompat="@drawable/ic_task" />
 </androidx.constraintlayout.widget.ConstraintLayout>

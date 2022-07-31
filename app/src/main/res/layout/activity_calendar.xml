@@ -10,16 +10,16 @@
     <LinearLayout
         android:background="@drawable/bg_calendar"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="260dp"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="60dp"
         >
 
         <CalendarView
-            android:id ="@+id/calendarView"
-            android:layout_width="wrap_content"
-            android:layout_height="240dp"
-         >
+            android:id="@+id/calendarView"
+            android:layout_width="300dp"
+            android:layout_height="270dp"
+            android:layout_marginTop="20dp">
 
 
         </CalendarView>
@@ -29,31 +29,75 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginLeft="60dp">
 
 
+        <EditText
+            android:id="@+id/descriptionCalendarId"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:hint="Descripción" />
+
         <TextView
-            android:id="@+id/textDate"
-            android:layout_width="100dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="175dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginBottom="150dp"
-            android:layout_weight="1"
+            android:id="@+id/dateCalendarId"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:text="Fecha" />
 
-        <Button
-            android:id="@+id/openPopupTaskCalendarBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Añadir Fecha"
-            android:layout_marginBottom="50dp"
-            android:onClick="createNewTask"/>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp">
+
+
+            <TextView
+                android:id="@+id/timeCalendarId"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Hora"/>
+
+            <Button
+                android:id="@+id/addTimeCalendarBtnId"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:text="+"
+                android:onClick="openTime"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp">
+
+            <Button
+                android:id="@+id/addCalendarPopupBtnId"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:text="Añadir"
+                android:onClick="saveTask"/>
+
+
+            <Button
+                android:id="@+id/cancelCalendarPopupBtnId"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:text="Cancelar" />
+
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -30,11 +30,26 @@
                     android:id="@+id/descriptionTask"
                     android:layout_width="300dp"
                     android:layout_height="35dp"
-                    android:layout_marginRight="350dp"
+                    android:layout_marginRight="150dp"
                     android:gravity="center"
                     android:text="Tarea 1" />
 
 
+                <ImageButton
+                    android:id="@+id/editBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_edit"
+                    app:srcCompat="@drawable/ic_edit" />
+
+
+                <ImageButton
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="@color/button_red_cancel"
+                    app:srcCompat="@drawable/ic_cancel" />
 
 
             </LinearLayout>

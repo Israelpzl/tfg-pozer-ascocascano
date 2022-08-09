@@ -5,6 +5,8 @@ package es.leerconmonclick.util;
 
 public class Task {
 
+    private int id;
+    private String tittle;
     private String date;
     private String time;
     private String description;
@@ -12,10 +14,28 @@ public class Task {
 
     public Task(){}
 
-    public Task(String date, String description, String time) {
+    public Task(int id, String tittle, String date, String time, String description) {
+        this.id = id;
+        this.tittle = tittle;
         this.date = date;
-        this.description = description;
         this.time = time;
+        this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 
     public String getDate() {

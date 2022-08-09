@@ -19,12 +19,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import es.leerconmonclick.util.ListAdapterTask;
 import es.leerconmonclick.util.Task;
 
-public class TaskList extends AppCompatActivity {
+public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
     private List<Task> taskItems =  taskItems = new ArrayList<>();
 
@@ -37,7 +40,7 @@ public class TaskList extends AppCompatActivity {
         setContentView(R.layout.activity_task_list);
 
 
-        init();
+        getListTask();
     }
 
     public void goCalendar (View v){
@@ -45,7 +48,7 @@ public class TaskList extends AppCompatActivity {
         startActivity(calendarIntent);
     }
 
-    public void init(){
+    public void getListTask(){
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -54,6 +57,7 @@ public class TaskList extends AppCompatActivity {
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
 
         databaseReference.child("Users").child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,6 +67,8 @@ public class TaskList extends AppCompatActivity {
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     Task t =  objDataSnapshot.getValue(Task.class);
                     taskItems.add(t);
+
+                    Collections.sort(taskItems, new TaskList());
 
                     ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskList.this);
                     RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
@@ -79,17 +85,13 @@ public class TaskList extends AppCompatActivity {
         });
 
 
-        Task task2 = new Task("20/07/2000","Tarea 200","20:00");
-        Task task3 = new Task("20/07/2000","Tarea 300","20:00");
-
-
-        taskItems.add(task2);
-        taskItems.add(task3);
-
-
-
-
 
     }
 
+
+
+    @Override
+    public int compare(Task t1, Task t2) {
+        return t1.getDate().compareTo(t2.getDate());
+    }
 }

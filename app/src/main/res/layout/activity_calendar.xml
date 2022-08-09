@@ -1,107 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tittleTaskId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CalendarActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".CalendarActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/timeTaskId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/time"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/dateTaskId"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="6dp"
+        android:hint="@string/tittle"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTaskId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="271dp"
+        android:layout_height="255dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/bg_calendar"
-        android:layout_width="300dp"
-        android:layout_height="260dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="60dp"
-        >
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="300dp"
-            android:layout_height="270dp"
-            android:layout_marginTop="20dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/timeTaskId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-        </CalendarView>
+    </CalendarView>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="550dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="200dp"
+        android:text="@string/add_task"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/descriptionTaskId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="6dp"
+        android:hint="@string/description"
+        app:layout_constraintBottom_toTopOf="@+id/dateTaskId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/dateTaskId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/date"
+        app:layout_constraintBottom_toTopOf="@+id/timeTaskId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTaskId" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/clock"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/timeTaskId"
+        app:layout_constraintTop_toBottomOf="@+id/dateTaskId"
+        android:onClick="openTime"/>
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button7"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/timeTaskId"
+        android:onClick="saveTask"/>
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginLeft="60dp">
-
-
-        <EditText
-            android:id="@+id/descriptionCalendarId"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:hint="Descripción" />
-
-        <TextView
-            android:id="@+id/dateCalendarId"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="Fecha" />
-
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="50dp">
-
-
-            <TextView
-                android:id="@+id/timeCalendarId"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:text="Hora"/>
-
-            <Button
-                android:id="@+id/addTimeCalendarBtnId"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="50dp"
-                android:text="+"
-                android:onClick="openTime"
-                />
-
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="50dp">
-
-            <Button
-                android:id="@+id/addCalendarPopupBtnId"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:text="Añadir"
-                android:onClick="saveTask"/>
-
-
-            <Button
-                android:id="@+id/cancelCalendarPopupBtnId"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="50dp"
-                android:text="Cancelar" />
-
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,13 @@
 package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -45,6 +47,7 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
     public void goCalendar (View v){
         Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        calendarIntent.putExtra("modeEdit",false);
         startActivity(calendarIntent);
     }
 
@@ -60,12 +63,21 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
         userCollection = userCollection.toLowerCase();
 
         databaseReference.child("Users").child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 taskItems.clear();
 
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                    Task t =  objDataSnapshot.getValue(Task.class);
+                   // Task t =  objDataSnapshot.getValue(Task.class);
+                    Long id = (Long) objDataSnapshot.child("id").getValue();
+                    String tittle = (String) objDataSnapshot.child("tittle").getValue();
+                    String date = (String) objDataSnapshot.child("date").getValue();
+                    String time = (String) objDataSnapshot.child("time").getValue();
+                    String description = (String) objDataSnapshot.child("description").getValue();
+                    int i = Math.toIntExact(id);
+                    Task t =  new Task(i,tittle,date,time,description);
+
                     taskItems.add(t);
 
                     Collections.sort(taskItems, new TaskList());

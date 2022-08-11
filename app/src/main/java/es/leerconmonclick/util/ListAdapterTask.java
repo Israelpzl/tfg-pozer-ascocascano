@@ -2,6 +2,8 @@ package es.leerconmonclick.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.leeconmonclick.CalendarActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -142,7 +145,8 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    exclamation.setVisibility(View.GONE);
+
+                    goEdit(task);
                 }
             });
 
@@ -157,6 +161,16 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
         }
 
+    }
+    private void goEdit(Task task){
+        Intent calendarIntent = new Intent(context, CalendarActivity.class);
+        calendarIntent.putExtra("id", task.getId());
+        calendarIntent.putExtra("tittle", task.getTittle());
+        calendarIntent.putExtra("description", task.getDescription());
+        calendarIntent.putExtra("date", task.getDate());
+        calendarIntent.putExtra("time", task.getTime());
+        calendarIntent.putExtra("modeEdit", true);
+        context.startActivity(calendarIntent);
     }
 
 }

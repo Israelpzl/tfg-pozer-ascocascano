@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,19 +37,15 @@ import es.leerconmonclick.util.Task;
 
 public class CalendarActivity extends AppCompatActivity implements Comparator<Task> {
 
-    private List<Task> taskItems =  taskItems = new ArrayList<>();
-
-    private AlertDialog.Builder alertDialogBuilder;
-    private AlertDialog alertDialog;
+    private Bundle data;
     private TextView  taskDate, taskTime;
     private EditText taskDescription,taskTittle;
-    private Button newTaskBtn, cancelTaskBtn, openPopUpTaskBtn, addTimeTaskBtn;
     private String date,time,userCollection;
-
-    private int cont = 0;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
+
+    private int contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +63,8 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
 
         taskDate = (TextView) findViewById(R.id.dateTaskId);
         taskTime = (TextView) findViewById(R.id.timeTaskId);
+        taskTittle = (EditText) findViewById(R.id.textView12);
+        taskDescription = (EditText) findViewById(R.id.descriptionTaskId);
 
 
         date = day + "/" + month + "/" + year;
@@ -81,6 +80,11 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
                taskDate.setText(date);
            }
        });
+
+        data = getIntent().getExtras();
+        if (data.getBoolean("modeEdit")){
+            modeEditOn(calendarView);
+        }
 
 
     }
@@ -107,76 +111,81 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
 
     public void saveTask (View v){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser user = db.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-        taskTittle = (EditText) findViewById(R.id.textView12);
-        taskDescription = (EditText) findViewById(R.id.descriptionTaskId);
 
 
-        databaseReference.child("Users").child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-
-                //Collections.sort(taskItems, new TaskList());
-                //databaseReference.child("Users").child(userCollection).child("taskList").removeValue();
-
-
-
-                int randomNum = (int) (Math.random() *1000);
-
-
-                Task task = new Task(randomNum,taskTittle.getText().toString(),date,time,taskDescription.getText().toString());
-               // Task task2 = new Task(randomNum,taskItems.size()+"",date,time,"Tarea generada");
-               // taskItems.add(task);
-                //taskItems.add(task2);
-
-
-
-               // cont=  0;
-                databaseReference.child("Users").child(userCollection).child("taskList").child(randomNum+"").setValue(task);
                 /*
+                databaseReference.child(userCollection).child("taskList").removeValue();
+                contador = 0;
+                for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
 
+                    databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(objDataSnapshot);
+                    contador +=1;
 
-               taskItems.clear();
-
-                for(DataSnapshot objDataSnapshot : snapshot.getChildren()) {
-                    Task t = objDataSnapshot.getValue(Task.class);
-                    taskItems.add(t);
                 }
+                */
 
 
-                for (Task t : taskItems){
-                    databaseReference.child("Users").child(userCollection).child("taskList").child(cont+"").setValue(t);
+                if (data.getBoolean("modeEdit")){
+                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
+                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
+                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
+                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
+                    Toast.makeText(getApplicationContext(),"Tarea editada correctamente",Toast.LENGTH_LONG).show();
+
+                }else{
+                    int randomNum = (int) (Math.random() *1000);
+                    Task task = new Task(randomNum,taskTittle.getText().toString(),date,time,taskDescription.getText().toString());
+
+                    databaseReference.child(userCollection).child("taskList").child(randomNum+"").setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getApplicationContext(),"Tarea guardada correctamente",Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-                 */
-
-
+                taskDate.setText(date);
+                taskTime.setText(time);
+                taskTittle.setText("");
+                taskDescription.setText("");
 
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-
-        Toast.makeText(getApplicationContext(),"Tarea guardada correctamente",Toast.LENGTH_LONG).show();
         Intent taskIntent = new Intent(this, TaskList.class);
         startActivity(taskIntent);
+
 
     }
 
     @Override
     public int compare(Task t1, Task t2) {
         return t1.getDate().compareTo(t2.getDate());
+    }
+
+    private void modeEditOn(CalendarView calendarView){
+
+        taskTittle.setText(data.getString("tittle"));
+        taskDescription.setText(data.getString("description"));
+        taskDate.setText(data.getString("date"));
+        taskTime.setText(data.getString("time"));
+       // calendarView.setDate(Long.parseLong(data.getString("date")));
+
     }
 }

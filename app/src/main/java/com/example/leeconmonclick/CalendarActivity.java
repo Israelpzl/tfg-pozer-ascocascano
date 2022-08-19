@@ -45,7 +45,6 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
 
-    private int contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

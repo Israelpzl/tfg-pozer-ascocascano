@@ -14,10 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leeconmonclick.CalendarActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.TaskList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,11 +43,21 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
 
+    final ListAdapterTask.OnItemClickListener listener;
 
-    public ListAdapterTask(List<Task> itemList, Context context){
+
+
+
+    public interface OnItemClickListener{
+        void onItemClick(Task item);
+    }
+
+
+    public ListAdapterTask(List<Task> itemList, Context context,ListAdapterTask.OnItemClickListener listener){
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mDataTask = itemList;
+        this.listener = listener;
 
     }
 
@@ -79,7 +90,6 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
         ViewHolder(View itemView){
             super(itemView);
             tittleTask = itemView.findViewById(R.id.descriptionTask);
-            editBtn = (ImageButton) itemView.findViewById(R.id.editBtn);
             cancelBtn = (ImageButton) itemView.findViewById(R.id.cancelBtn);
             exclamation = (ImageView) itemView.findViewById(R.id.exclamationImg);
         }
@@ -106,10 +116,18 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             int minuteDay = calendar.get(Calendar.MINUTE);
             String time =hourDay + ":" + minuteDay;
             SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+
             Date timeToday = formatTime.parse(time);
             Date timeTask = formatTime.parse(task.getTime());
 
 
+            if  (dateTask.before(dateToday)){
+                exclamation.setVisibility(View.VISIBLE);
+
+            }else{
+                exclamation.setVisibility(View.GONE);
+
+            }
 
             tittleTask.setText(task.getTittle());
 
@@ -142,24 +160,16 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
                 }
             });
 
-            editBtn.setOnClickListener(new View.OnClickListener() {
+
+            itemView.setOnClickListener( new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-
-                    goEdit(task);
+                    listener.onItemClick(task);
                 }
             });
 
-            if  (dateTask.before(dateToday) && timeTask.before(timeToday)){
-                exclamation.setVisibility(View.VISIBLE);
-
-            }else{
-                exclamation.setVisibility(View.GONE);
-
-            }
-
-
         }
+
 
     }
     private void goEdit(Task task){

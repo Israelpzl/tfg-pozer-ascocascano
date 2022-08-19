@@ -2,14 +2,20 @@ package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +41,12 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
+
+    private Context context;
+
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
+    private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +94,12 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
                     Collections.sort(taskItems, new TaskList());
 
-                    ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskList.this);
+                    ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskList.this, new ListAdapterTask.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Task item) {
+                            popUpDescriptionTask(item);
+                        }
+                    });
                     RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(TaskList.this));
@@ -100,6 +117,48 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
     }
 
+    private void popUpDescriptionTask(Task task) {
+
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        final View taskPopUpView = getLayoutInflater().inflate(R.layout.taskpopup,null);
+
+
+        descriptionTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.descriptionPopUpId);
+        tittleTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.tittlePopUpId);
+        dateTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.datePopUpId);
+        timeTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.timePopUpId);
+        ImageButton editBtn = (ImageButton) taskPopUpView.findViewById(R.id.editBtnPopUpId);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goEdit(task);
+            }
+        });
+
+
+
+        descriptionTaskPopUp.setText(task.getDescription());
+        tittleTaskPopUp.setText(task.getTittle());
+        dateTaskPopUp.setText(task.getDate());
+        timeTaskPopUp.setText(task.getTime());
+
+        alertDialogBuilder.setView(taskPopUpView);
+        alertDialog =  alertDialogBuilder.create();
+        alertDialog.show();
+
+
+    }
+
+    private void goEdit(Task task){
+        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        calendarIntent.putExtra("id", task.getId());
+        calendarIntent.putExtra("tittle", task.getTittle());
+        calendarIntent.putExtra("description", task.getDescription());
+        calendarIntent.putExtra("date", task.getDate());
+        calendarIntent.putExtra("time", task.getTime());
+        calendarIntent.putExtra("modeEdit", true);
+        this.startActivity(calendarIntent);
+    }
 
 
     @Override

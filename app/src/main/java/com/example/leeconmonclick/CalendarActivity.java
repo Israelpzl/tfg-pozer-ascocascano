@@ -1,11 +1,13 @@
 package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +26,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +47,8 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
     private EditText taskDescription,taskTittle;
     private String date,time,userCollection;
 
+    private int contador;
+
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
 
@@ -50,8 +57,6 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
-
 
         Calendar c  = Calendar.getInstance();
         int year =  c.get(Calendar.YEAR);
@@ -67,9 +72,15 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
 
 
         date = day + "/" + month + "/" + year;
-        time =hourDay + ":" + minuteDay;
+        if (Integer.toString(minuteDay).length() == 1){
+            time =hourDay + ":" + "0" + minuteDay;
+        }else{
+            time =hourDay + ":" + minuteDay;
+        }
+
         taskDate.setText(date);
         taskTime.setText(time);
+
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -82,10 +93,12 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
 
         data = getIntent().getExtras();
         if (data.getBoolean("modeEdit")){
-            modeEditOn(calendarView);
+            try {
+                modeEditOn(calendarView);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 
 
@@ -98,7 +111,12 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
         TimePickerDialog tpd = new TimePickerDialog( this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                time =hour + ":" + minute;
+
+                if (Integer.toString(minute).length() == 1){
+                    time =hour + ":" + "0" + minute;
+                }else{
+                    time =hour + ":" + minute;
+                }
                 taskTime.setText(time);
             }
         }, hourDay, minuteDay, true);
@@ -117,24 +135,10 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-
-
-
         databaseReference.child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                /*
-                databaseReference.child(userCollection).child("taskList").removeValue();
-                contador = 0;
-                for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-
-                    databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(objDataSnapshot);
-                    contador +=1;
-
-                }
-                */
-
 
                 if (data.getBoolean("modeEdit")){
                     databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
@@ -144,10 +148,21 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
                     Toast.makeText(getApplicationContext(),"Tarea editada correctamente",Toast.LENGTH_LONG).show();
 
                 }else{
-                    int randomNum = (int) (Math.random() *1000);
-                    Task task = new Task(randomNum,taskTittle.getText().toString(),date,time,taskDescription.getText().toString());
+                    databaseReference.child(userCollection).child("taskList").removeValue();
+                    contador = 0;
+                    for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
+                        String tittle = (String) objDataSnapshot.child("tittle").getValue();
+                        String date = (String) objDataSnapshot.child("date").getValue();
+                        String time = (String) objDataSnapshot.child("time").getValue();
+                        String description = (String) objDataSnapshot.child("description").getValue();
+                        Task t =  new Task(contador,tittle,date,time,description);
+                        databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(t);
+                        contador +=1;
 
-                    databaseReference.child(userCollection).child("taskList").child(randomNum+"").setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    }
+                    Task task = new Task(contador,taskTittle.getText().toString(),date,time,taskDescription.getText().toString());
+
+                    databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(getApplicationContext(),"Tarea guardada correctamente",Toast.LENGTH_LONG).show();
@@ -178,13 +193,17 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
         return t1.getDate().compareTo(t2.getDate());
     }
 
-    private void modeEditOn(CalendarView calendarView){
+    private void modeEditOn(CalendarView calendarView) throws ParseException {
 
         taskTittle.setText(data.getString("tittle"));
         taskDescription.setText(data.getString("description"));
         taskDate.setText(data.getString("date"));
         taskTime.setText(data.getString("time"));
-       // calendarView.setDate(Long.parseLong(data.getString("date")));
+        TextView editTittle = (TextView) findViewById(R.id.textView10);
+        editTittle.setText("Editar Tarea");
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        Date d = f.parse(data.getString("date"));
+        calendarView.setDate(d.getTime());
 
     }
 }

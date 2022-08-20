@@ -3,6 +3,7 @@ package es.leerconmonclick.util;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +25,11 @@ import com.example.leeconmonclick.R;
 import com.example.leeconmonclick.TaskList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,13 +90,13 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tittleTask;
-        ImageButton editBtn, cancelBtn;
+        ImageButton editBtn, deleteBtn;
         ImageView exclamation;
 
         ViewHolder(View itemView){
             super(itemView);
             tittleTask = itemView.findViewById(R.id.descriptionTask);
-            cancelBtn = (ImageButton) itemView.findViewById(R.id.cancelBtn);
+            deleteBtn = (ImageButton) itemView.findViewById(R.id.cancelBtn);
             exclamation = (ImageView) itemView.findViewById(R.id.exclamationImg);
         }
 
@@ -131,7 +137,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
             tittleTask.setText(task.getTittle());
 
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -142,7 +148,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             databaseReference.child("Users").child(userCollection).child("taskList").child(taskId).removeValue();
-                            Toast.makeText(context,"Tarea borrada con éxito",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Tarea borrada con éxito", Toast.LENGTH_LONG).show();
                         }
                     });
 

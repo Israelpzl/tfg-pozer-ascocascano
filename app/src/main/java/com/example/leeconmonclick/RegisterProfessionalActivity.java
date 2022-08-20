@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import es.leerconmonclick.util.User;
@@ -71,6 +72,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
+                        userCollection = userCollection.toLowerCase();
 
                         databaseReference.child("Users").child(userCollection).setValue(mapUserValues);
 

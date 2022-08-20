@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
+import java.util.Locale;
+
 public class LoginProfesionalActivity extends AppCompatActivity {
 
     AwesomeValidation awesomeValidation;
@@ -58,6 +60,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
+                        userCollection = userCollection.toLowerCase();
                         goProfile(userCollection);
                     }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();

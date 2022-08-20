@@ -1,15 +1,19 @@
 package es.leerconmonclick.util;
 
+import java.util.List;
+
 public class User {
 
     private String email;
     private String pass;
+    private List<Task> taskList;
 
     public User (){}
 
-    public User(String email, String pass) {
+    public User(String email, String pass, List<Task> taskList) {
         this.email = email;
         this.pass = pass;
+        this.taskList = taskList;
     }
 
     public void setEmail(String email) {
@@ -18,6 +22,14 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
     public String getEmail() {

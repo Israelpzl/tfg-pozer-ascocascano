@@ -3,6 +3,7 @@ package com.example.leeconmonclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 ;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Bundle datos;
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
     DatabaseReference databaseReference;
 
     @Override
@@ -28,21 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+    
 
-        datos = getIntent().getExtras();
-        String user = datos.getString("email");
-
-        TextView ususario = findViewById(R.id.textView8);
-
-        databaseReference.child("Users").child(user).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                ususario.setText(dataSnapshot.child("email").getValue().toString());
-            }
-        });
     }
 
     public void logOut(View v) {
+        saveStateSession();
         FirebaseAuth.getInstance().signOut();
         goHome();
     }
@@ -62,5 +56,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
         finish();
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();
     }
 }

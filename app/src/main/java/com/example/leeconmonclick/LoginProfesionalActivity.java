@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -22,15 +24,25 @@ import java.util.Locale;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
-    AwesomeValidation awesomeValidation;
-    FirebaseAuth firebaseAuth;
+    private AwesomeValidation awesomeValidation;
+    private FirebaseAuth firebaseAuth;
+    private Switch remeberSession;
+    private EditText email,pass;
+
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
+        remeberSession = (Switch) findViewById(R.id.switch_remember);
+        email = findViewById(R.id.editTextTextPersonName);
+        pass = findViewById(R.id.editTextTextPassword);
     }
 
     public void help(View v){
@@ -43,8 +55,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     }
 
     public void login (View v){
-        EditText email = findViewById(R.id.editTextTextPersonName);
-        EditText pass = findViewById(R.id.editTextTextPassword);
+
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
         awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
@@ -71,15 +82,13 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         }
     }
 
-    /*public void logOut(View v) {
-        firebaseAuth.signOut();
-    }*/
-
     private void goProfile(String email){
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("email", email);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        saveStateSession();
         startActivity(i);
+        finish();
     }
 
     public void rememberPass(View v){
@@ -89,6 +98,15 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
     public void back(View v){
         finish();
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
+    }
+    public boolean getStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+         return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);
     }
 
     private void dameToastdeerror(String error) {

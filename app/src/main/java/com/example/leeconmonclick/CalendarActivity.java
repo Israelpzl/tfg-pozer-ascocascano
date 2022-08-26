@@ -2,7 +2,6 @@ package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Data;
 import androidx.work.WorkManager;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -31,15 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 import es.leerconmonclick.util.Task;
@@ -138,7 +130,6 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
             }
         }, hourDay, minuteDay, true);
 
-
         tpd.show();
 
     }
@@ -158,10 +149,24 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (data.getBoolean("modeEdit")){
+                    deleteNotify(data.getString("tagNoty"));
+                    String tag = generateKey();
+
                     databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
                     databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
                     databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
                     databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
+                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tagNoty").setValue(tag);
+
+                    Long alertTime = calendar.getTimeInMillis() - System.currentTimeMillis() - 30000;
+                    int random = (int) (Math.random() * 50 + 1);
+                    Data data = saveData("Tarea: " + taskTittle.getText().toString() ,"Te toca", random);
+                    WorkManagerNoti.saveNoti(alertTime,data,tag);
+
+                    if(!noty.isChecked()){
+                        deleteNotify(tag);
+                    }
+
                     Toast.makeText(getApplicationContext(),"Tarea editada correctamente",Toast.LENGTH_LONG).show();
 
                 }else{
@@ -186,12 +191,11 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
                         @Override
                         public void onSuccess(Void unused) {
 
-
-                            Long alertTime = calendar.getTimeInMillis() - System.currentTimeMillis();
+                            Long alertTime = calendar.getTimeInMillis() - System.currentTimeMillis() - 30000;
                             int random = (int) (Math.random() * 50 + 1);
-
-                            Data data = saveData("Notificacion WorkManager 1","Descripcion", random);
+                            Data data = saveData("Tarea: " + taskTittle.getText().toString(),"Te toca", random);
                             WorkManagerNoti.saveNoti(alertTime,data,tag);
+
                             if(!noty.isChecked()){
                                 deleteNotify(tag);
                             }

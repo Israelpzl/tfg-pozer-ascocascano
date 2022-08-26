@@ -81,14 +81,14 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
                 taskItems.clear();
 
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                   // Task t =  objDataSnapshot.getValue(Task.class);
                     Long id = (Long) objDataSnapshot.child("id").getValue();
                     String tittle = (String) objDataSnapshot.child("tittle").getValue();
                     String date = (String) objDataSnapshot.child("date").getValue();
                     String time = (String) objDataSnapshot.child("time").getValue();
                     String description = (String) objDataSnapshot.child("description").getValue();
+                    String tag = (String) objDataSnapshot.child("tagNoty").getValue();
                     int i = Math.toIntExact(id);
-                    Task t =  new Task(i,tittle,date,time,description);
+                    Task t =  new Task(i,tittle,date,time,description,tag);
 
                     taskItems.add(t);
 
@@ -156,6 +156,7 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
         calendarIntent.putExtra("description", task.getDescription());
         calendarIntent.putExtra("date", task.getDate());
         calendarIntent.putExtra("time", task.getTime());
+        calendarIntent.putExtra("tagNoty", task.getTagNoty());
         calendarIntent.putExtra("modeEdit", true);
         this.startActivity(calendarIntent);
     }

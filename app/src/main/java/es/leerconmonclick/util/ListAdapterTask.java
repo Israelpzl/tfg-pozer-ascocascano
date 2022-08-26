@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 
 import com.example.leeconmonclick.CalendarActivity;
 import com.example.leeconmonclick.R;
@@ -90,7 +91,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tittleTask;
-        ImageButton editBtn, deleteBtn;
+        ImageButton deleteBtn;
         ImageView exclamation;
 
         ViewHolder(View itemView){
@@ -109,6 +110,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             userCollection = parts[0];
             userCollection = userCollection.toLowerCase();
             String taskId = task.getId()+"";
+            String tag = task.getTagNoty();
 
             SimpleDateFormat formatDay = new SimpleDateFormat("dd/MM/yyyy");
             Calendar calendar = Calendar.getInstance();
@@ -147,6 +149,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
                     builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            deleteNotify(tag);
                             databaseReference.child("Users").child(userCollection).child("taskList").child(taskId).removeValue();
                             Toast.makeText(context, "Tarea borrada con éxito", Toast.LENGTH_LONG).show();
                         }
@@ -178,15 +181,11 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
 
     }
-    private void goEdit(Task task){
-        Intent calendarIntent = new Intent(context, CalendarActivity.class);
-        calendarIntent.putExtra("id", task.getId());
-        calendarIntent.putExtra("tittle", task.getTittle());
-        calendarIntent.putExtra("description", task.getDescription());
-        calendarIntent.putExtra("date", task.getDate());
-        calendarIntent.putExtra("time", task.getTime());
-        calendarIntent.putExtra("modeEdit", true);
-        context.startActivity(calendarIntent);
+
+    private void deleteNotify (String tag){
+        WorkManager.getInstance(context).cancelAllWorkByTag(tag);
+        Toast.makeText(context,"Notificación Eliminada",Toast.LENGTH_LONG).show();
     }
+
 
 }

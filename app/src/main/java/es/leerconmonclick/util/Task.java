@@ -10,16 +10,26 @@ public class Task {
     private String date;
     private String time;
     private String description;
+    private String tagNoty;
 
 
     public Task(){}
 
-    public Task(int id, String tittle, String date, String time, String description) {
+    public Task(int id, String tittle, String date, String time, String description, String tagNoty) {
         this.id = id;
         this.tittle = tittle;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.tagNoty = tagNoty;
+    }
+
+    public String getTagNoty() {
+        return tagNoty;
+    }
+
+    public void setTagNoty(String tagNoty) {
+        this.tagNoty = tagNoty;
     }
 
     public int getId() {

@@ -53,8 +53,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void goHome() {
-
         startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
+        finish();
+    }
+
+    public void goAddContent(View v) {
+        startActivity(new Intent(getApplicationContext(),AddContentActivity.class));
+        finish();
+    }
+
+    public void goHelp(View v) {
+        startActivity(new Intent(getApplicationContext(),HelpActivity.class));
         finish();
     }
 

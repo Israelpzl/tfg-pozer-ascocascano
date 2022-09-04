@@ -66,7 +66,8 @@
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.437" />
+        app:layout_constraintVertical_bias="0.437"
+        android:onClick="saveContent"/>
 
     <Button
         android:id="@+id/btnBackId"

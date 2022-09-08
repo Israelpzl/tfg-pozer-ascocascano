@@ -1,5 +1,6 @@
 package com.example.leeconmonclick;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,7 @@ public class AddContentActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private TextInputEditText word;
+    private Context context;
 
 
     @Override
@@ -67,10 +71,11 @@ public class AddContentActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imgViewId);
         word = (TextInputEditText) findViewById(R.id.wordInputId);
 
-        String [] opciones = {"-","El","La","Los","Las","Un","Una","Unos","Unas"};
+        String[] opciones = {"-", "El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"};
 
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,opciones);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
         spinner.setAdapter(adapterSpinner);
+        context = getApplicationContext();
 
         someActivityResultGalery = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
@@ -88,16 +93,19 @@ public class AddContentActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Bundle extras = result.getData().getExtras();
                             Bitmap img = (Bitmap) extras.get("data");
+                            uri = getImageUri(context, img);
                             imageView.setImageBitmap(img);
                         }
                     }
                 });
+
+
+
+
     }
-
-
     public void cameraImageBtn(View v){ someActivityResultCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE)); }
 
     public void galeryImageBtn(View v){
@@ -135,6 +143,22 @@ public class AddContentActivity extends AppCompatActivity {
         Intent taskIntent = new Intent(this, ProfileActivity.class);
         startActivity(taskIntent);
         finish();
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void goBack(View view){
+        onBackPressed();
     }
 
 }

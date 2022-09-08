@@ -49,6 +49,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
+
     public void register(View v){
         Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
         startActivity(helpIntent);

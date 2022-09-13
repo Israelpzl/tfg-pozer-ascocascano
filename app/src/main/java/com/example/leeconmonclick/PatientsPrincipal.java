@@ -15,7 +15,7 @@ public class PatientsPrincipal extends AppCompatActivity {
     }
 
     public void goSettings(View v){
-        Intent sett = new Intent(this, Settings.class);
+        Intent sett = new Intent(this, PersonalNotesActivity.class);
         startActivity(sett);
     }
 }

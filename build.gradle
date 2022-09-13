@@ -3,10 +3,12 @@ buildscript {
     repositories {
 
         google()  // Google's Maven repository
+        jcenter()
 
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
+        classpath "io.realm:realm-gradle-plugin:10.11.1"
 
     }
 }

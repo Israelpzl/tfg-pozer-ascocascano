@@ -10,13 +10,12 @@ public class User {
     private String tamanio;
     private String daltonismo;
     private ArrayList<String> notas;
+    private ArrayList<String> sett;
 
-    public User(String email, String nombre, String icono, String tamanio, String daltonismo, ArrayList<String> notas) {
+    public User(String email, String nombre, ArrayList<String> sett, ArrayList<String> notas) {
         this.email = email;
         this.nombre = nombre;
-        this.icono = icono;
-        this.tamanio = tamanio;
-        this.daltonismo = daltonismo;
+        this.sett = sett;
         this.notas = notas;
     }
 
@@ -66,5 +65,13 @@ public class User {
 
     public void setNotas(ArrayList<String> notas) {
         this.notas = notas;
+    }
+
+    public ArrayList<String> getSett() {
+        return sett;
+    }
+
+    public void setSett(ArrayList<String> sett) {
+        this.sett = sett;
     }
 }

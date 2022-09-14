@@ -68,10 +68,17 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
+
+                        ArrayList<String> settings = new ArrayList<>();
+                        settings.add("0");
+                        settings.add("normal");
+                        settings.add("no");
+
                         ArrayList<String> notas = new ArrayList<String>();
                         notas.add("Aquí podras añadir todas tus notas personales");
 
-                        User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas); //Faltaria crear los pacientes
+                        //User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas);
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas); //Faltaria crear los pacientes
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

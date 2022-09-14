@@ -58,12 +58,19 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void goAddContent(View v) {
-        startActivity(new Intent(getApplicationContext(),AddContentActivity.class));
-        finish();
+        Intent addContentIntent = new Intent(this, AddContentActivity.class);
+        addContentIntent.putExtra("modeEdit",false);
+        startActivity(addContentIntent);
     }
 
     public void goHelp(View v) {
         startActivity(new Intent(getApplicationContext(),HelpActivity.class));
+        finish();
+    }
+
+
+    public void goListConetnt(View v) {
+        startActivity(new Intent(getApplicationContext(),ContentList.class));
         finish();
     }
 

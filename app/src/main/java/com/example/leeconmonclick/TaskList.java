@@ -37,10 +37,10 @@ import es.leerconmonclick.util.Task;
 
 public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
-    private List<Task> taskItems =  taskItems = new ArrayList<>();
+    private List<Task> taskItems;
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
+    private FirebaseAuth db;
 
     private Context context;
 
@@ -52,6 +52,9 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+
+        taskItems = new ArrayList<>();
+        db = FirebaseAuth.getInstance();
 
 
         getListTask();

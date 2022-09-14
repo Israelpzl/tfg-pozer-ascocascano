@@ -17,10 +17,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +39,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +57,14 @@ public class AddContentActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> someActivityResultCamera;
     private ActivityResultLauncher<String> someActivityResultGalery;
     private StorageReference storageReference;
-    private Uri uri;
+    private Uri uri,dowloadUri;
+    private String uriStr;
+    private Task<Uri> taskUri;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private TextInputEditText word;
     private Context context;
+    private Bundle data;
 
 
     @Override
@@ -102,6 +112,11 @@ public class AddContentActivity extends AppCompatActivity {
                     }
                 });
 
+        data = getIntent().getExtras();
+        if (data.getBoolean("modeEdit")){
+                modeEditOn();
+        }
+
 
 
 
@@ -114,29 +129,40 @@ public class AddContentActivity extends AppCompatActivity {
 
     public void saveContent (View v){
 
-        if (uri != null){
-            StorageReference filePath = storageReference.child("contenidos").child(uri.getLastPathSegment());
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getApplicationContext(),"Se ha subido la imagen",Toast.LENGTH_LONG).show();
-                }
-            });
-        }else{ Toast.makeText(getApplicationContext(),"Debe elegir una imagen",Toast.LENGTH_LONG).show(); }
+        if (!data.getBoolean("modeEdit") || uri !=null){
+            if(uri != null){
+                StorageReference filePath = storageReference.child("contenidos").child(uri.getLastPathSegment());
+                filePath.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()){
+                            throw new Exception();
+                        }
+                        return filePath.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri2 = task.getResult();
+                            List<String> sylablle = new ArrayList<>();
+                            Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
+                            databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
+                                    goProfile();
+                                }
+                            });
+                        }
+                    }
+                });
+            }else{ Toast.makeText(getApplicationContext(),"Debe elegir una imagen",Toast.LENGTH_LONG).show(); }
 
-        List<String> sylablle = new ArrayList<>();
-        Content content = new Content(word.getText().toString(), uri.toString(),sylablle , spinner.getSelectedItem().toString());
 
-        databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getApplicationContext(),"Se ha creado el contenido correctamente",Toast.LENGTH_LONG).show();
-                goProfile();
-            }
-        });
-
-
-
+            }else{
+            editContent();
+        }
     }
 
     private void goProfile () {
@@ -159,6 +185,26 @@ public class AddContentActivity extends AppCompatActivity {
 
     public void goBack(View view){
         onBackPressed();
+    }
+
+    private void modeEditOn() {
+
+        Glide.with(this).load(data.getString("image")).into(imageView);
+        word.setText(data.getString("word"));
+        uriStr = data.getString("image");
+    }
+
+    private void editContent(){
+        databaseReference.child("content").child(data.getString("word")).removeValue();
+        List<String> sylablle = new ArrayList<>();
+        Content content = new Content(word.getText().toString(), uriStr ,sylablle , spinner.getSelectedItem().toString());
+        databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getApplicationContext(),"Se ha editado el contenido correctamente",Toast.LENGTH_LONG).show();
+                goProfile();
+            }
+        });
     }
 
 }

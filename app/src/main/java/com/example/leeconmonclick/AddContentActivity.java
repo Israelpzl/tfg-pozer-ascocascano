@@ -57,14 +57,15 @@ public class AddContentActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> someActivityResultCamera;
     private ActivityResultLauncher<String> someActivityResultGalery;
     private StorageReference storageReference;
-    private Uri uri,dowloadUri;
+    private Uri uri;
     private String uriStr;
-    private Task<Uri> taskUri;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private TextInputEditText word;
     private Context context;
     private Bundle data;
+    private ArrayAdapter<String> adapterSpinner;
+    private StorageReference filePath;
 
 
     @Override
@@ -83,7 +84,7 @@ public class AddContentActivity extends AppCompatActivity {
 
         String[] opciones = {"-", "El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"};
 
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
         spinner.setAdapter(adapterSpinner);
         context = getApplicationContext();
 
@@ -131,7 +132,13 @@ public class AddContentActivity extends AppCompatActivity {
 
         if (!data.getBoolean("modeEdit") || uri !=null){
             if(uri != null){
-                StorageReference filePath = storageReference.child("contenidos").child(uri.getLastPathSegment());
+
+                if (data.getBoolean("modeEdit")){
+                    filePath = storageReference.child("contenidos").child(data.getString("word"));
+                    filePath.delete();
+                }
+
+                filePath = storageReference.child("contenidos").child(word.getText().toString());
                 filePath.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -161,7 +168,7 @@ public class AddContentActivity extends AppCompatActivity {
 
 
             }else{
-            editContent();
+                editContent();
         }
     }
 
@@ -192,6 +199,8 @@ public class AddContentActivity extends AppCompatActivity {
         Glide.with(this).load(data.getString("image")).into(imageView);
         word.setText(data.getString("word"));
         uriStr = data.getString("image");
+        int selectionPosition= adapterSpinner.getPosition(data.getString("determinant"));
+        spinner.setSelection(selectionPosition);
     }
 
     private void editContent(){

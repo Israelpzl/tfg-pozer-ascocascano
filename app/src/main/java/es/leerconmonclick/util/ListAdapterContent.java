@@ -133,7 +133,7 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
         Intent addIntent = new Intent(context, AddContentActivity.class);
         addIntent.putExtra("word", content.getWord());
         addIntent.putExtra("image", content.getImg());
-        addIntent.putExtra("determinat", content.getDeterminant());
+        addIntent.putExtra("determinant", content.getDeterminant());
         //addIntent.putExtra("syllables", content.getSyllables());
         addIntent.putExtra("modeEdit", true);
         context.startActivity(addIntent);

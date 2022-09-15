@@ -90,9 +90,9 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
     public void setItems (List<Task> tasks){ mDataTask = tasks;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView tittleTask;
-        ImageButton deleteBtn;
-        ImageView exclamation;
+        private TextView tittleTask;
+        private ImageButton deleteBtn;
+        private ImageView exclamation;
 
         ViewHolder(View itemView){
             super(itemView);
@@ -161,11 +161,8 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
                         }
                     });
-
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
-
                 }
             });
 

@@ -68,6 +68,11 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    public void goAddPacient(View v) {
+        startActivity(new Intent(getApplicationContext(),AddPacientsActivity.class));
+        finish();
+    }
+
 
     public void goListConetnt(View v) {
         startActivity(new Intent(getApplicationContext(),ContentList.class));

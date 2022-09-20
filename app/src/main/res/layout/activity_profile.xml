@@ -32,28 +32,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_calendar_month"
-        android:onClick="goCalendar"/>
-
-    <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="409dp"
         android:layout_marginEnd="410dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="24dp"
         android:onClick="goTaskView"
         app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:srcCompat="@drawable/ic_task" />
 
     <Button
@@ -62,13 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="71dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="113dp"
         android:layout_marginBottom="19dp"
         android:onClick="goAddContent"
         android:text="AÑADIR CONTENIDO"
         app:layout_constraintBottom_toTopOf="@+id/button8"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,5 +88,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button10"
         android:onClick="goListConetnt"/>
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="473dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginBottom="61dp"
+        android:text="Añadir Paciente"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:onClick="goAddPacient"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

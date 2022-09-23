@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,10 +76,26 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         settings.add("no");
 
                         ArrayList<String> notas = new ArrayList<String>();
-                        notas.add("Aquí podras añadir todas tus notas personales");
+                        ArrayList<String> notas2 = new ArrayList<String>();
+                        notas.add("Bienvenido");
+                        notas.add("Aqui podras guardar tus notas personales");
+                        long createdTime = System.currentTimeMillis();
+                        String time = Long.toString(createdTime);
+                        notas.add(time);
+
+                        notas2.add("Bienvenido2");
+                        notas2.add("Aqui podras guardar tus notas personales2");
+                        long createdTime2 = System.currentTimeMillis();
+                        String time2 = Long.toString(createdTime2);
+                        notas2.add(time2);
+
+                        ArrayList<ArrayList<String>> test = new ArrayList<>();
+                        test.add(notas);
+                        test.add(notas2);
+
 
                         //User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas);
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas); //Faltaria crear los pacientes
+                        User usuario = new User(email.getText().toString(),userCollection,settings,test); //Faltaria crear los pacientes
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

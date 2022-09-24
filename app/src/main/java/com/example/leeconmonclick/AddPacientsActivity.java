@@ -112,6 +112,8 @@ public class AddPacientsActivity extends AppCompatActivity {
 
             }
         });
+
+        databaseReference.child("userPacient").child(generateKey()).setValue(pass);
     }
 
     public void goBack(View view){finish();}

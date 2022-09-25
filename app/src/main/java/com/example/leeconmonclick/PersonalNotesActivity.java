@@ -40,20 +40,20 @@ public class PersonalNotesActivity extends AppCompatActivity {
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
-        ArrayList<ArrayList<String>> listNotes = new ArrayList<ArrayList<String>>();
+        ArrayList<Note> listNotes = new ArrayList<Note>();
 
         databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 String count = dataSnapshot.getValue().toString();
                 for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
-                    ArrayList<String> note = new ArrayList<>();
-                    String tittle = (String) objDataSnapshot.child("0").getValue();
-                    String description = (String) objDataSnapshot.child("1").getValue();
-                    String date = (String) objDataSnapshot.child("2").getValue();
-                    note.add(tittle);
-                    note.add(description);
-                    note.add(date);
+                    Note noteExist = new Note();
+                    String tittle = (String) objDataSnapshot.child("title").getValue();
+                    String description = (String) objDataSnapshot.child("description").getValue();
+                    String date = (String) objDataSnapshot.child("date").getValue();
+                    noteExist.setTitle(tittle);
+                    noteExist.setDescription(description);
+                    noteExist.setTime(Long.parseLong(date));
                     /*for(int z=0;z<3;z++){
                         String wh = String.valueOf(i);
                         String fo = String.valueOf(z);
@@ -61,7 +61,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
                         note.add(aux);
                         note.add(count);
                     }*/
-                    listNotes.add(note);
+                    listNotes.add(noteExist);
                 }
             }
         });

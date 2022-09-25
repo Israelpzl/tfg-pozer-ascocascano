@@ -1,5 +1,7 @@
 package es.leerconmonclick.util;
 
+import com.example.leeconmonclick.Note;
+
 import java.util.ArrayList;
 
 public class User {
@@ -9,10 +11,10 @@ public class User {
     private String icono;
     private String tamanio;
     private String daltonismo;
-    private ArrayList<ArrayList<String>> notas;
+    private ArrayList<Note> notas;
     private ArrayList<String> settings;
 
-    public User(String email, String nombre, ArrayList<String> settings, ArrayList<ArrayList<String>> notas) {
+    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas) {
         this.email = email;
         this.nombre = nombre;
         this.settings = settings;
@@ -59,11 +61,11 @@ public class User {
         this.daltonismo = daltonismo;
     }
 
-    public ArrayList<ArrayList<String>> getNotas() {
+    public ArrayList<Note> getNotas() {
         return notas;
     }
 
-    public void setNotas(ArrayList<ArrayList<String>> notas) {
+    public void setNotas(ArrayList<Note> notas) {
         this.notas = notas;
     }
 

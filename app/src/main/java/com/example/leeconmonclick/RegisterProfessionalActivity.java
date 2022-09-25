@@ -75,27 +75,29 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         settings.add("normal");
                         settings.add("no");
 
-                        ArrayList<String> notas = new ArrayList<String>();
-                        ArrayList<String> notas2 = new ArrayList<String>();
-                        notas.add("Bienvenido");
-                        notas.add("Aqui podras guardar tus notas personales");
+                        ArrayList<Note> notas = new ArrayList<Note>();
+                        Note generateNote = new Note();
+                        generateNote.setTitle("Bienvenido");
+                        generateNote.setDescription("Aqui podras guardar tus notas personales");
                         long createdTime = System.currentTimeMillis();
-                        String time = Long.toString(createdTime);
-                        notas.add(time);
+                        generateNote.setTime(createdTime);
 
-                        notas2.add("Bienvenido2");
-                        notas2.add("Aqui podras guardar tus notas personales2");
+                        Note aux = new Note();
+                        aux.setTitle("Bienvenido");
+                        aux.setDescription("Aqui podras guardar tus notas personales");
                         long createdTime2 = System.currentTimeMillis();
-                        String time2 = Long.toString(createdTime2);
-                        notas2.add(time2);
+                        aux.setTime(createdTime2);
 
-                        ArrayList<ArrayList<String>> test = new ArrayList<>();
+                        notas.add(generateNote);
+                        notas.add(aux);
+
+/*                        ArrayList<ArrayList<String>> test = new ArrayList<>();
                         test.add(notas);
-                        test.add(notas2);
+                        test.add(notas2);*/
 
 
                         //User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas);
-                        User usuario = new User(email.getText().toString(),userCollection,settings,test); //Faltaria crear los pacientes
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas); //Faltaria crear los pacientes
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

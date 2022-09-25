@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,8 +30,12 @@ public class LoginPatient2Activity extends AppCompatActivity {
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
 
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
     private EditText namePacient, passPacient;
     private Button btnLoginPacient;
+    private Switch remeberSession;
 
     private DatabaseReference databaseReference;
 
@@ -43,6 +49,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
         namePacient =  findViewById(R.id.namePacientIId);
         passPacient = findViewById(R.id.passPacientId);
         btnLoginPacient = findViewById(R.id.BtnLoginPacientId);
+        remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -73,6 +80,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
                     if (nPacient.equals(namePacient.getText().toString()) && pass.equals(passPacient.getText().toString())){
                         Toast.makeText(getApplicationContext(),"Usuario Encontrado",Toast.LENGTH_LONG).show();
+                        goHomePatient();
                         break;
                     }
                 }
@@ -109,6 +117,19 @@ public class LoginPatient2Activity extends AppCompatActivity {
     private Key generateKeyPassword() throws Exception {
         Key key = new SecretKeySpec(KEY.getBytes(),ALGORITHM);
         return key;
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
+    }
+
+    private void goHomePatient(){
+        Intent i = new Intent(this, HomePatientActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        saveStateSession();
+        startActivity(i);
+        finish();
     }
 
 }

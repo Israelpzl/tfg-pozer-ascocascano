@@ -13,9 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".HomeProfesionalActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".HomePatientActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LoginPatient2Activity"
             android:exported="false"

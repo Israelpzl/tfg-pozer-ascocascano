@@ -1,10 +1,10 @@
 package es.leerconmonclick.util;
 
-public class UserPacient {
+public class UserPatient {
 
     private String namePacient, agePacient, emailPacient, password,descriptionPacient,nameProfesional;
 
-    public UserPacient(String namePacient, String agePacient, String emailPacient, String password, String descriptionPacient, String nameProfesional) {
+    public UserPatient(String namePacient, String agePacient, String emailPacient, String password, String descriptionPacient, String nameProfesional) {
         this.namePacient = namePacient;
         this.agePacient = agePacient;
         this.emailPacient = emailPacient;

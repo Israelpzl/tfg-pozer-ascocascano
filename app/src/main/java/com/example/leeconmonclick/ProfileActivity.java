@@ -79,6 +79,11 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    public void goHome(View v) {
+        startActivity(new Intent(getApplicationContext(),HomeProfesionalActivity.class));
+        finish();
+    }
+
     public void saveStateSession(){
         SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
         preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();

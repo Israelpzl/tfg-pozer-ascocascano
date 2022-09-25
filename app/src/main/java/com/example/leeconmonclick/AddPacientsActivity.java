@@ -27,9 +27,9 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import es.leerconmonclick.util.UserPacient;
+import es.leerconmonclick.util.UserPatient;
 
-public class AddPacientsActivity extends AppCompatActivity {
+class AddPacientsActivity extends AppCompatActivity {
 
     private EditText namePacient,agePacient,emailPacient,descriptionPacient;
     private Button addPacientBtn;
@@ -94,7 +94,7 @@ public class AddPacientsActivity extends AppCompatActivity {
         String pass = generatePassword();
         String passEncrypt = encrypt(pass);
 
-        UserPacient userPacient = new UserPacient(
+        UserPatient userPacient = new UserPatient(
                 namePacient.getText().toString(),
                 agePacient.getText().toString(),
                 emailPacient.getText().toString(),

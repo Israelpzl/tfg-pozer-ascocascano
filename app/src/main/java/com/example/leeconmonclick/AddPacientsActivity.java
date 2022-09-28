@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -29,13 +28,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import es.leerconmonclick.util.UserPatient;
 
-class AddPacientsActivity extends AppCompatActivity {
+public class AddPacientsActivity extends AppCompatActivity {
 
     private EditText namePacient,agePacient,emailPacient,descriptionPacient;
     private Button addPacientBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private String nameProfesional;
 
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
@@ -57,9 +55,8 @@ class AddPacientsActivity extends AppCompatActivity {
         addPacientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //sendMail();
                 try {
-                    registerPacient();
+                    registerPatient();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -67,43 +64,29 @@ class AddPacientsActivity extends AppCompatActivity {
         });
     }
 
-    private void sendMail() {
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.setData(Uri.parse("mailto:"));
-        email.setType("message/rfc822");
-        email.putExtra(Intent.EXTRA_EMAIL,emailPacient.getText().toString());
-        email.putExtra(Intent.EXTRA_SUBJECT,"USUARIO PACIENTE");
-        email.putExtra(Intent.EXTRA_TEXT,"SE HA CREADO EL USUARIO CORRECTAMENTE");
-        startActivity(Intent.createChooser(email,"send email"));
-    }
 
-    private void registerPacient() throws Exception {
+
+    private void registerPatient() throws Exception {
 
         FirebaseUser user = mAuth.getCurrentUser();
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
-        databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                nameProfesional=  dataSnapshot.child("nombre").getValue().toString();
-            }
-        });
 
-        String pass = generatePassword();
-        String passEncrypt = encrypt(pass);
 
-        UserPatient userPacient = new UserPatient(
+        String passEncrypt = encrypt(generatePassword());
+
+        UserPatient userPatient = new UserPatient(
                 namePacient.getText().toString(),
                 agePacient.getText().toString(),
                 emailPacient.getText().toString(),
                 passEncrypt,
                 descriptionPacient.getText().toString(),
-                nameProfesional
+                userCollection
         );
 
-        databaseReference.child("userPacient").child(generateKey()).setValue(userPacient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPacient").child(generateKey()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
@@ -112,8 +95,6 @@ class AddPacientsActivity extends AppCompatActivity {
 
             }
         });
-
-        databaseReference.child("userPacient").child(generateKey()).setValue(pass);
     }
 
     public void goBack(View view){finish();}

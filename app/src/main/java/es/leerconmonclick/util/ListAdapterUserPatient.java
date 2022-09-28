@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,12 +51,18 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView namePatientView;
+
         ViewHolder(View itemView) {
             super(itemView);
+
+            namePatientView =  itemView.findViewById(R.id.namePatientItemId);
 
         }
 
         void bindData(final UserPatient userPatient){
+
+            namePatientView.setText(userPatient.getNamePatient());
 
 
         }

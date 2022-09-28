@@ -30,21 +30,23 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="104dp"
-                    android:layout_height="71dp"
+                    android:layout_width="96dp"
+                    android:layout_height="58dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/monclick"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="2dp" />
 
                 <TextView
+                    android:id="@+id/namePatientItemId"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="50dp"
-                    android:text="PACIENTE 1" />
+                    android:layout_marginTop="20dp"
+                    android:text="PACIENTE 1"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

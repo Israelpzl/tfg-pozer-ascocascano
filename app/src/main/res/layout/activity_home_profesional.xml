@@ -13,7 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="212dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="219dp"
         android:text="Lista de Pacientes"
         android:textAlignment="center"

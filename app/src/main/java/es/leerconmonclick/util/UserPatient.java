@@ -2,39 +2,39 @@ package es.leerconmonclick.util;
 
 public class UserPatient {
 
-    private String namePacient, agePacient, emailPacient, password,descriptionPacient,nameProfesional;
+    private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional;
 
-    public UserPatient(String namePacient, String agePacient, String emailPacient, String password, String descriptionPacient, String nameProfesional) {
-        this.namePacient = namePacient;
-        this.agePacient = agePacient;
-        this.emailPacient = emailPacient;
+    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional) {
+        this.namePatient = namePatient;
+        this.agePatient = agePatient;
+        this.emailPatient = emailPatient;
         this.password = password;
-        this.descriptionPacient = descriptionPacient;
-        this.nameProfesional = nameProfesional;
+        this.descriptionPatient = descriptionPatient;
+        this.nameProfessional = nameProfessional;
     }
 
-    public String getNamePacient() {
-        return namePacient;
+    public String getNamePatient() {
+        return namePatient;
     }
 
-    public void setNamePacient(String namePacient) {
-        this.namePacient = namePacient;
+    public void setNamePatient(String namePatient) {
+        this.namePatient = namePatient;
     }
 
-    public String getAgePacient() {
-        return agePacient;
+    public String getAgePatient() {
+        return agePatient;
     }
 
-    public void setAgePacient(String agePacient) {
-        this.agePacient = agePacient;
+    public void setAgePatient(String agePatient) {
+        this.agePatient = agePatient;
     }
 
-    public String getEmailPacient() {
-        return emailPacient;
+    public String getEmailPatient() {
+        return emailPatient;
     }
 
-    public void setEmailPacient(String emailPacient) {
-        this.emailPacient = emailPacient;
+    public void setEmailPatient(String emailPatient) {
+        this.emailPatient = emailPatient;
     }
 
     public String getPassword() {
@@ -45,19 +45,19 @@ public class UserPatient {
         this.password = password;
     }
 
-    public String getDescriptionPacient() {
-        return descriptionPacient;
+    public String getDescriptionPatient() {
+        return descriptionPatient;
     }
 
-    public void setDescriptionPacient(String descriptionPacient) {
-        this.descriptionPacient = descriptionPacient;
+    public void setDescriptionPatient(String descriptionPatient) {
+        this.descriptionPatient = descriptionPatient;
     }
 
-    public String getNameProfesional() {
-        return nameProfesional;
+    public String getNameProfessionals() {
+        return nameProfessional;
     }
 
-    public void setNameProfesional(String nameProfesional) {
-        this.nameProfesional = nameProfesional;
+    public void setNameProfessionals(String nameProfessionals) {
+        this.nameProfessional = nameProfessionals;
     }
 }

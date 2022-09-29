@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -12,19 +14,31 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.security.Key;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import es.leerconmonclick.util.UserPatient;
 
@@ -34,6 +48,8 @@ public class AddPacientsActivity extends AppCompatActivity {
     private Button addPacientBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private Session session;
+    private String email,pass;
 
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
@@ -43,8 +59,14 @@ public class AddPacientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pacients);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
         mAuth =  FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        email = "pozeriaspozeriascocascano@gmail";
+        pass = "xibhweslzkstsard";
 
         namePacient = (EditText) findViewById(R.id.namePacientId);
         agePacient = (EditText) findViewById(R.id.agePacientId);
@@ -52,18 +74,94 @@ public class AddPacientsActivity extends AppCompatActivity {
         descriptionPacient = (EditText) findViewById(R.id.descriptionPacientId);
         addPacientBtn = (Button) findViewById(R.id.addPacientBtn);
 
+
         addPacientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
-                    registerPatient();
-                } catch (Exception e) {
+                    sendEmail();
+                } catch (MessagingException e) {
                     e.printStackTrace();
                 }
+
+
             }
         });
     }
 
+    private void sendEmail() throws MessagingException {
+        Properties props = new Properties();
+        /*
+        //properties.put("mail.smtp.host", "mail.gmail.com");
+        properties.setProperty("mail.smtp.host", "127.0.0.1");
+        properties.put("mail.transport.protocol","smtp");
+        //properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.user", "leerConMonclick@gmail.com");
+        properties.put("mail.smtp.auth","false");
+        properties.put("mail.smtp.port",25); //465
+        props.put("mail.smtp.starttls.enable", "true");
+
+         */
+
+        props.put("mail.smtp.host", "smtp.googlemail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.socketFactory.port","465");
+        props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+        props.put("mail.transport.protocol","smtp");
+        props.put("mail.smtp.auth","true");
+        props.put("mail.smtp.port","465");
+        props.put("mail.smtp.user", email);
+        props.put("mail.smtp.pass", pass);
+
+
+
+
+
+
+
+            session = Session.getDefaultInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(email,pass);
+                }
+            });
+
+
+                if (session != null){
+
+
+                    try {
+                        Message message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(email));
+                        message.setSubject("Nuevo Usuario LeerConMonclick");
+                        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("israelpozuelo00@gmail.com"));
+                        message.setContent("Se ha creado nuevo Usuario de Paciente","text/plain");
+                        Transport.send(message);
+
+
+
+
+
+
+                    } catch (MessagingException msg) {
+                        msg.printStackTrace();
+                    }finally {
+
+                    }
+
+
+                /*
+                Transport t = session.getTransport("smtp");
+                t.connect("no-reply@leerConMonclick.com","la password");
+                t.sendMessage(message,message.getAllRecipients());
+                t.close();
+
+                 */
+
+            }
+
+    }
 
 
     private void registerPatient() throws Exception {

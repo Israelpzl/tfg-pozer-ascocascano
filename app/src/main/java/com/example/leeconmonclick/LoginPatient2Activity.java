@@ -33,8 +33,8 @@ public class LoginPatient2Activity extends AppCompatActivity {
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
-    private EditText namePacient, passPacient;
-    private Button btnLoginPacient;
+    private EditText namePatient, passPatient;
+    private Button btnLoginPatient;
     private Switch remeberSession;
 
     private DatabaseReference databaseReference;
@@ -46,14 +46,14 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        namePacient =  findViewById(R.id.namePacientIId);
-        passPacient = findViewById(R.id.passPacientId);
-        btnLoginPacient = findViewById(R.id.BtnLoginPacientId);
+        namePatient =  findViewById(R.id.namePacientIId);
+        passPatient = findViewById(R.id.passPacientId);
+        btnLoginPatient = findViewById(R.id.BtnLoginPacientId);
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        btnLoginPacient.setOnClickListener(new View.OnClickListener() {
+        btnLoginPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginPacient();
@@ -68,7 +68,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                    String nPacient = (String) objDataSnapshot.child("namePacient").getValue();
+                    String nPacient = (String) objDataSnapshot.child("namePatient").getValue();
                     String pass = (String) objDataSnapshot.child("password").getValue();
 
 
@@ -78,12 +78,13 @@ public class LoginPatient2Activity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    if (nPacient.equals(namePacient.getText().toString()) && pass.equals(passPacient.getText().toString())){
+                    if (nPacient.equals(namePatient.getText().toString()) && pass.equals(passPatient.getText().toString())){
                         Toast.makeText(getApplicationContext(),"Usuario Encontrado",Toast.LENGTH_LONG).show();
                         goHomePatient();
                         break;
                     }
                 }
+              
             }
 
             @Override

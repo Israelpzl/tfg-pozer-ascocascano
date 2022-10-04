@@ -8,8 +8,6 @@ public class User {
     private String pass;
     private List<Task> taskList;
 
-    public User (){}
-
     public User(String email, String pass, List<Task> taskList) {
         this.email = email;
         this.pass = pass;

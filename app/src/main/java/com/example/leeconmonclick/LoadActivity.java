@@ -2,11 +2,12 @@ package com.example.leeconmonclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import es.leerconmonclick.util.PBAnimation;
 
 public class LoadActivity extends AppCompatActivity {
 

@@ -16,7 +16,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.TaskList;
+import com.example.leeconmonclick.TaskListActivity;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +49,7 @@ public class WorkManagerNoti extends Worker {
             notificationManager.createNotificationChannel(nc);
         }
 
-        Intent intent = new Intent(getApplicationContext(), TaskList.class);
+        Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 ,intent, PendingIntent.FLAG_ONE_SHOT);
 
         builder.setAutoCancel(true)

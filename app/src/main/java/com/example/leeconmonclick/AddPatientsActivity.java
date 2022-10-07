@@ -27,19 +27,17 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import javax.mail.Session;
-
 import es.leerconmonclick.util.JavaMail;
 import es.leerconmonclick.util.UserPatient;
 
-public class AddPacientsActivity extends AppCompatActivity {
+public class AddPatientsActivity extends AppCompatActivity {
 
     private EditText namePatient, agePatient, emailPatient, descriptionPatient;
-    private Button addPacientBtn;
+    private Button addPatientBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private  String pass;
-    private Session session;
+    private Bundle data;
 
 
     private static final String ALGORITHM = "AES";
@@ -48,7 +46,7 @@ public class AddPacientsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_pacients);
+        setContentView(R.layout.activity_add_patients);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -62,14 +60,17 @@ public class AddPacientsActivity extends AppCompatActivity {
         agePatient = (EditText) findViewById(R.id.agePacientId);
         emailPatient = (EditText) findViewById(R.id.emailPacientId);
         descriptionPatient = (EditText) findViewById(R.id.descriptionPacientId);
-        addPacientBtn = (Button) findViewById(R.id.addPacientBtn);
+        addPatientBtn = (Button) findViewById(R.id.addPacientBtn);
+
+        data = getIntent().getExtras();
+        if (data.getBoolean("modeEdit")){
+            modeEditOn();
+        }
 
 
-        addPacientBtn.setOnClickListener(new View.OnClickListener() {
+        addPatientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
                 try {
                     registerPatient();
@@ -83,10 +84,20 @@ public class AddPacientsActivity extends AppCompatActivity {
         });
     }
 
+    private void modeEditOn() {
+        namePatient.setText(data.getString("namePatient"));
+        agePatient.setText(data.getString("agePatient"));
+        emailPatient.setText(data.getString("emailPatient"));
+        descriptionPatient.setText(data.getString("descriptionPatient"));
+    }
+
     private void sendEmail()  {
 
-        JavaMail javaMail = new JavaMail(this, emailPatient.getText().toString(),"NUEVO USUARIO","", namePatient.getText().toString(),pass);
-        javaMail.execute();
+        if (!data.getBoolean("modeEdit")){
+            JavaMail javaMail = new JavaMail(this, emailPatient.getText().toString(),"NUEVO USUARIO","", namePatient.getText().toString(),pass);
+            javaMail.execute();
+        }
+
 
 
     }
@@ -104,6 +115,10 @@ public class AddPacientsActivity extends AppCompatActivity {
         pass = generatePassword();
         String passEncrypt = encrypt(pass);
 
+        if (data.getBoolean("modeEdit")){
+            passEncrypt = data.getString("passPatient");
+        }
+
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString(),
                 agePatient.getText().toString(),
@@ -113,7 +128,7 @@ public class AddPacientsActivity extends AppCompatActivity {
                 userCollection
         );
 
-        databaseReference.child("userPacient").child(generateKey()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPatient").child(namePatient.getText().toString()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

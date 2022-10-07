@@ -8,14 +8,11 @@ import android.os.Bundle;
 
 ;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import android.view.View;
-import android.widget.TextView;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -48,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void goTaskView (View v){
-        Intent taskIntent = new Intent(this, TaskList.class);
+        Intent taskIntent = new Intent(this, TaskListActivity.class);
         startActivity(taskIntent);
     }
 
@@ -65,23 +62,25 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void goHelp(View v) {
         startActivity(new Intent(getApplicationContext(),HelpActivity.class));
-        finish();
+
     }
 
-    public void goAddPacient(View v) {
-        startActivity(new Intent(getApplicationContext(),AddPacientsActivity.class));
-        finish();
+    public void goAddPatient(View v) {
+        Intent addPatientIntent = new Intent(this, AddPatientsActivity.class);
+        addPatientIntent.putExtra("modeEdit",false);
+        startActivity(addPatientIntent);
+
     }
 
 
     public void goListConetnt(View v) {
         startActivity(new Intent(getApplicationContext(),ContentList.class));
-        finish();
+
     }
 
     public void goHome(View v) {
         startActivity(new Intent(getApplicationContext(),HomeProfesionalActivity.class));
-        finish();
+
     }
 
     public void saveStateSession(){

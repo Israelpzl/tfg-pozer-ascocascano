@@ -1,4 +1,4 @@
-package com.example.leeconmonclick;
+package es.leerconmonclick.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.leeconmonclick.MainActivity;
 
 public class PBAnimation extends Animation {
 

@@ -30,7 +30,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private List<UserPatient> userPatientItems;
-    private CircleImageView circleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

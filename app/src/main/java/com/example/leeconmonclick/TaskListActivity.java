@@ -8,16 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,12 +27,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import es.leerconmonclick.util.ListAdapterTask;
 import es.leerconmonclick.util.Task;
 
-public class TaskList extends AppCompatActivity implements Comparator<Task> {
+public class TaskListActivity extends AppCompatActivity implements Comparator<Task> {
 
     private List<Task> taskItems;
 
@@ -95,9 +91,9 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
 
                     taskItems.add(t);
 
-                    Collections.sort(taskItems, new TaskList());
+                    Collections.sort(taskItems, new TaskListActivity());
 
-                    ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskList.this, new ListAdapterTask.OnItemClickListener() {
+                    ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
                         @Override
                         public void onItemClick(Task item) {
                             popUpDescriptionTask(item);
@@ -105,7 +101,7 @@ public class TaskList extends AppCompatActivity implements Comparator<Task> {
                     });
                     RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(TaskList.this));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
                     recyclerView.setAdapter(listAdapterTask);
                 }
             }

@@ -43,11 +43,33 @@
                     android:id="@+id/namePatientItemId"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:text="PACIENTE 1"
                     android:textColor="@color/black" />
+
+
+                <ImageButton
+                    android:id="@+id/deleteBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="200dp"
+                    android:backgroundTint="@color/button_red_cancel"
+                    app:srcCompat="@drawable/ic_delete" />
+
+                <ImageButton
+                    android:id="@+id/editBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="@color/button_edit"
+                    app:srcCompat="@drawable/ic_edit" />
+
+
             </LinearLayout>
+
+
+
         </RelativeLayout>
     </LinearLayout>
 

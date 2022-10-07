@@ -25,7 +25,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AddPacientsActivity"
+            android:name=".AddPatientsActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -37,7 +37,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".TaskList"
+            android:name=".TaskListActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

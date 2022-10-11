@@ -35,7 +35,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:src="@drawable/monclick"
+                    android:src="@drawable/mono"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="2dp" />
 

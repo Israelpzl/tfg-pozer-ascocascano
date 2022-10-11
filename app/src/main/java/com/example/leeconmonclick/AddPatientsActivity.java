@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Base64;
@@ -14,12 +15,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.security.Key;
 import java.util.UUID;
@@ -36,8 +40,11 @@ public class AddPatientsActivity extends AppCompatActivity {
     private Button addPatientBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private  String pass;
+    private  String pass,icon;
     private Bundle data;
+    private StorageReference storageReference;
+    private StorageReference filePath;
+
 
 
     private static final String ALGORITHM = "AES";
@@ -54,6 +61,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         mAuth =  FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
 
         namePatient = (EditText) findViewById(R.id.namePacientId);
@@ -61,6 +69,15 @@ public class AddPatientsActivity extends AppCompatActivity {
         emailPatient = (EditText) findViewById(R.id.emailPacientId);
         descriptionPatient = (EditText) findViewById(R.id.descriptionPacientId);
         addPatientBtn = (Button) findViewById(R.id.addPacientBtn);
+
+        storageReference.child("iconos/mono2"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                icon = uri.toString();
+            }
+        });
+
+
 
         data = getIntent().getExtras();
         if (data.getBoolean("modeEdit")){
@@ -73,6 +90,7 @@ public class AddPatientsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
+
                     registerPatient();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -104,7 +122,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
 
     private void registerPatient() throws Exception {
-
+        
         FirebaseUser user = mAuth.getCurrentUser();
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
@@ -119,13 +137,15 @@ public class AddPatientsActivity extends AppCompatActivity {
             passEncrypt = data.getString("passPatient");
         }
 
+
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString(),
                 agePatient.getText().toString(),
                 emailPatient.getText().toString(),
                 passEncrypt,
                 descriptionPatient.getText().toString(),
-                userCollection
+                userCollection,
+                icon
         );
 
         databaseReference.child("userPatient").child(namePatient.getText().toString()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {

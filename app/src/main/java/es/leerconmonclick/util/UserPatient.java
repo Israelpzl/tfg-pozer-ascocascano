@@ -2,15 +2,32 @@ package es.leerconmonclick.util;
 
 public class UserPatient {
 
-    private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional;
+    private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon;
 
-    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional) {
+    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon) {
         this.namePatient = namePatient;
         this.agePatient = agePatient;
         this.emailPatient = emailPatient;
         this.password = password;
         this.descriptionPatient = descriptionPatient;
         this.nameProfessional = nameProfessional;
+        this.icon = icon;
+    }
+
+    public String getNameProfessional() {
+        return nameProfessional;
+    }
+
+    public void setNameProfessional(String nameProfessional) {
+        this.nameProfessional = nameProfessional;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getNamePatient() {

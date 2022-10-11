@@ -51,7 +51,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
     private void getListUserPatient() {
 
-        databaseReference.child("userPacient").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -69,10 +69,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     String nameProfessional = (String) objDataSnapshot.child("nameProfessionals").getValue();
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
+                    String icon = (String) objDataSnapshot.child("icon").getValue();
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon);
                         userPatientItems.add(userPatient);
 
                         ListAdapterUserPatient listAdapterUserPatient = new ListAdapterUserPatient(userPatientItems,HomeProfesionalActivity.this);

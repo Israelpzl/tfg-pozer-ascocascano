@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.Note;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -29,6 +30,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth db = FirebaseAuth.getInstance();
+    ArrayList<Note> listNotes = new ArrayList<Note>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,54 +42,33 @@ public class PersonalNotesActivity extends AppCompatActivity {
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
-        ArrayList<Note> listNotes = new ArrayList<Note>();
 
         databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                String count = dataSnapshot.getValue().toString();
                 for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
                     Note noteExist = new Note();
                     String tittle = (String) objDataSnapshot.child("title").getValue();
                     String description = (String) objDataSnapshot.child("description").getValue();
-                    String date = (String) objDataSnapshot.child("date").getValue();
+                    Long date = (Long) objDataSnapshot.child("time").getValue();
                     noteExist.setTitle(tittle);
                     noteExist.setDescription(description);
-                    noteExist.setTime(Long.parseLong(date));
-                    /*for(int z=0;z<3;z++){
-                        String wh = String.valueOf(i);
-                        String fo = String.valueOf(z);
-                        String aux = dataSnapshot.child(wh).child(fo).getValue().toString();
-                        note.add(aux);
-                        note.add(count);
-                    }*/
+                    noteExist.setTime(date);
                     listNotes.add(noteExist);
                 }
-            }
-        });
+                Button addNoteBtn = findViewById(R.id.materialbutt);
+                addNoteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(PersonalNotesActivity.this,AddNote.class));
+                        finish();
+                    }
+                });
 
-        Button addNoteBtn = findViewById(R.id.materialbutt);
-        addNoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PersonalNotesActivity.this,AddNote.class));
-            }
-        });
-
-        Realm.init(getApplicationContext());
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmResults<Note> noteList = realm.where(Note.class).findAll().sort("time", Sort.DESCENDING);//revisar
-
-        RecyclerView recyclerView = findViewById(R.id.recycleview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AdapterNotes adapterNotes = new AdapterNotes(getApplicationContext(),noteList);
-        recyclerView.setAdapter(adapterNotes);
-
-        noteList.addChangeListener(new RealmChangeListener<RealmResults<Note>>() {
-            @Override
-            public void onChange(RealmResults<Note> notes) {
-                adapterNotes.notifyDataSetChanged();
+                RecyclerView recyclerView = findViewById(R.id.recycleview);
+                recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
+                AdapterNotes adapterNotes = new AdapterNotes(getApplicationContext(),listNotes);
+                recyclerView.setAdapter(adapterNotes);
             }
         });
     }

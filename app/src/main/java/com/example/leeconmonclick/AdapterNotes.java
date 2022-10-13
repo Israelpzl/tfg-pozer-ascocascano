@@ -13,19 +13,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+
+import es.leerconmonclick.util.Note;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder>{
 
     Context context;
-    RealmResults<Note> noteList;
+    ArrayList<Note> listNotes;
+    DatabaseReference databaseReference;
+    FirebaseAuth db = FirebaseAuth.getInstance();
 
-    public AdapterNotes(Context context, RealmResults<Note> noteList) {
+    public AdapterNotes(Context context, ArrayList<Note> listNotes) {
         this.context = context;
-        this.noteList = noteList;
+        this.listNotes = listNotes;
     }
 
     @NonNull
@@ -36,7 +47,7 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Note note = noteList.get(position);
+        Note note = listNotes.get(position);
         holder.titleOutput.setText(note.getTitle());
         holder.descriptionOutput.setText(note.getDescription());
         String formatedTime = DateFormat.getDateTimeInstance().format(note.getTime());
@@ -51,12 +62,28 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if(menuItem.getTitle().equals("BORRAR")){
+                            databaseReference = FirebaseDatabase.getInstance().getReference();
+                            FirebaseUser user = db.getCurrentUser();
+                            String userCollection = user.getEmail();
+                            String[] parts = userCollection.split("@");
+                            userCollection = parts[0];
+                            databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
+                                        Long time = (Long) objDataSnapshot.child("time").getValue();
+                                        if(time == note.getTime()){
+                                            objDataSnapshot.getRef().removeValue();
+                                        }
+                                    }
+                                }
+                            });
                             //Borra la nota
-                            Realm realm = Realm.getDefaultInstance();
+/*                            Realm realm = Realm.getDefaultInstance();
                             realm.beginTransaction();
                             note.deleteFromRealm();
                             realm.commitTransaction();
-                            Toast.makeText(context,"Nota borrada",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,"Nota borrada",Toast.LENGTH_LONG).show();*/
                         }
                         return true;
                     }
@@ -69,7 +96,7 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return noteList.size();
+        return listNotes.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -20,11 +20,9 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import es.leerconmonclick.util.Note;
 import es.leerconmonclick.util.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
@@ -75,7 +73,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         settings.add("normal");
                         settings.add("no");
 
-                        ArrayList<Note> notas = new ArrayList<Note>();
+                        ArrayList<Note> notas = new ArrayList<>();
                         Note generateNote = new Note();
                         generateNote.setTitle("Bienvenido");
                         generateNote.setDescription("Aqui podras guardar tus notas personales");
@@ -83,21 +81,15 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         generateNote.setTime(createdTime);
 
                         Note aux = new Note();
-                        aux.setTitle("Bienvenido");
-                        aux.setDescription("Aqui podras guardar tus notas personales");
+                        aux.setTitle("Bienvenido de nuevo");
+                        aux.setDescription("Comeme el pito");
                         long createdTime2 = System.currentTimeMillis();
                         aux.setTime(createdTime2);
 
                         notas.add(generateNote);
                         notas.add(aux);
 
-/*                        ArrayList<ArrayList<String>> test = new ArrayList<>();
-                        test.add(notas);
-                        test.add(notas2);*/
-
-
-                        //User usuario = new User(email.getText().toString(),userCollection,"0","normal","no",notas);
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas); //Faltaria crear los pacientes
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas);
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

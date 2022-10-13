@@ -1,7 +1,5 @@
 package es.leerconmonclick.util;
 
-import com.example.leeconmonclick.Note;
-
 import java.util.ArrayList;
 
 public class User {

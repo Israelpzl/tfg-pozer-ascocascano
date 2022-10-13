@@ -1,8 +1,7 @@
-package com.example.leeconmonclick;
+package es.leerconmonclick.util;
 
-import io.realm.RealmObject;
 
-public class Note extends RealmObject {
+public class Note {
     String title;
     String description;
     long time;

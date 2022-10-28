@@ -1,6 +1,7 @@
 package com.example.leeconmonclick;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -78,12 +79,6 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
                                     }
                                 }
                             });
-                            //Borra la nota
-/*                            Realm realm = Realm.getDefaultInstance();
-                            realm.beginTransaction();
-                            note.deleteFromRealm();
-                            realm.commitTransaction();
-                            Toast.makeText(context,"Nota borrada",Toast.LENGTH_LONG).show();*/
                         }
                         return true;
                     }

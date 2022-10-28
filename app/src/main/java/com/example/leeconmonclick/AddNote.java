@@ -30,6 +30,8 @@ public class AddNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+
+
         EditText titleNote = findViewById(R.id.editTextTextPersonName5);
         EditText descriptionNote = findViewById(R.id.editTextTextPersonName6);
         Button saveNote = findViewById(R.id.savenoteBtn);
@@ -70,14 +72,6 @@ public class AddNote extends AppCompatActivity {
                         databaseReference.child("Users").child(finalUserCollection).child("notas").setValue(notasNews);
                     }
                 });
-
-
-/*                realm.beginTransaction();
-                Note note = realm.createObject(Note.class);
-                note.setTitle(title);
-                note.setDescription(description);
-                note.setTime(createdTime);
-                realm.commitTransaction();*/
 
                 Toast.makeText(getApplicationContext(), "Nota guardada", Toast.LENGTH_LONG).show();
                 finish();

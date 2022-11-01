@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,12 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import es.leerconmonclick.util.Content;
 import es.leerconmonclick.util.ListAdapterUserPatient;
 import es.leerconmonclick.util.UserPatient;
 
-public class HomeProfesionalActivity extends AppCompatActivity {
+public class ListPatientActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -34,7 +34,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_profesional);
+        setContentView(R.layout.activity_list_patient);
 
         userPatientItems = new ArrayList<>();
 
@@ -76,11 +76,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                         UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon);
                         userPatientItems.add(userPatient);
 
-                        ListAdapterUserPatient listAdapterUserPatient = new ListAdapterUserPatient(userPatientItems,HomeProfesionalActivity.this);
+                        ListAdapterUserPatient listAdapterUserPatient = new ListAdapterUserPatient(userPatientItems, ListPatientActivity.this);
 
                         RecyclerView recyclerView = findViewById(R.id.recycleViewUserPatientId);
                         recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(HomeProfesionalActivity.this));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(ListPatientActivity.this));
                         recyclerView.setAdapter(listAdapterUserPatient);
                     }
 
@@ -92,5 +92,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void goBack(View view){finish();}
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
     }
 }

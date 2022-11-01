@@ -4,14 +4,25 @@ import java.util.List;
 
 public class User {
 
+
+    private String name;
     private String email;
     private String pass;
     private List<Task> taskList;
 
-    public User(String email, String pass, List<Task> taskList) {
+    public User(String name, String email, String pass, List<Task> taskList) {
+        this.name = name;
         this.email = email;
         this.pass = pass;
         this.taskList = taskList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmail(String email) {

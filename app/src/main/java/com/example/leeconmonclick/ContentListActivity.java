@@ -4,13 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +31,7 @@ import es.leerconmonclick.util.Content;
 import es.leerconmonclick.util.ListAdapterContent;
 
 
-public class ContentList extends AppCompatActivity {
+public class ContentListActivity extends AppCompatActivity {
 
     private GridLayout gridLayout;
     private LayoutInflater mInflater;
@@ -46,6 +47,7 @@ public class ContentList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_list);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         contentItems = new ArrayList<>();
         db = FirebaseAuth.getInstance();
@@ -73,12 +75,12 @@ public class ContentList extends AppCompatActivity {
                     Content content = new Content(word,img,null,determinant);
                     contentItems.add(content);
 
-                    ListAdapterContent listAdapterContent = new ListAdapterContent(contentItems,ContentList.this);
+                    ListAdapterContent listAdapterContent = new ListAdapterContent(contentItems, ContentListActivity.this);
 
 
                     RecyclerView recyclerView = findViewById(R.id.listContentRecyclerViewId);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new GridLayoutManager(ContentList.this,3));
+                    recyclerView.setLayoutManager(new GridLayoutManager(ContentListActivity.this,3));
                     recyclerView.setAdapter(listAdapterContent);
                 }
             }
@@ -92,6 +94,11 @@ public class ContentList extends AppCompatActivity {
 
     public void goBack(View view){
         finish();
+    }
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
     }
 
 }

@@ -8,6 +8,51 @@
     android:background="@color/background"
     tools:context=".CalendarActivity">
 
+    <ImageButton
+        android:id="@+id/btnHelpId3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@null"
+        android:onClick="goHelp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/viewId2"
+        app:srcCompat="@drawable/ic_help" />
+
+    <View
+        android:id="@+id/viewId2"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnImageBackScreenId3" />
+
+    <ImageButton
+        android:id="@+id/btnImageBackScreenId3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="179dp"
+        android:layout_marginBottom="5dp"
+        android:background="@null"
+        android:onClick="goBack"
+        app:layout_constraintBottom_toTopOf="@+id/viewId2"
+        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back_android" />
+
     <TextView
         android:id="@+id/timeTaskId"
         android:layout_width="0dp"
@@ -25,15 +70,16 @@
     <EditText
         android:id="@+id/textView12"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="100dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="6dp"
         android:hint="@string/tittle"
         app:layout_constraintBottom_toTopOf="@+id/descriptionTaskId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calendarView"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -54,16 +100,16 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="550dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="200dp"
+        android:layout_width="202dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="259dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/add_task"
-        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintBottom_toTopOf="@+id/viewId2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnImageBackScreenId3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -143,7 +189,7 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="102dp"
+        android:layout_marginStart="103dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="170dp"
         android:layout_marginBottom="8dp"

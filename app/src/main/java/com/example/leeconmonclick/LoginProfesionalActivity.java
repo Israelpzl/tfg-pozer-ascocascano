@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +20,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
+
+import es.leerconmonclick.util.User;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
@@ -28,6 +36,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Switch remeberSession;
     private EditText email,pass;
+    private DatabaseReference databaseReference;
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
@@ -39,6 +48,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         remeberSession = (Switch) findViewById(R.id.switch_remember);
         email = findViewById(R.id.editTextTextPersonName);
@@ -73,7 +83,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
                         userCollection = userCollection.toLowerCase();
-                        goProfile(userCollection);
+                        goHomeProfesional(userCollection);
                     }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                         dameToastdeerror(errorCode);
@@ -83,10 +93,33 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         }
     }
 
-    private void goProfile(String email){
-        Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("email", email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    private void goHomeProfesional(String name){
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
+
+        /*
+        databaseReference.child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User u = new User(
+                        snapshot.child("nombre").getValue().toString(),
+                        snapshot.child("email").getValue().toString(),
+                        "pass",
+                        null
+                );
+
+                i.putExtra("userProfesional", (Parcelable) u);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+         */
+
         saveStateSession();
         startActivity(i);
         finish();

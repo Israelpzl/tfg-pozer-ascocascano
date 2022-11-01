@@ -4,40 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContentList"
+    tools:context=".ContentListActivity"
     android:background="@color/background">
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@null"
+        android:onClick="goHelp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listContentRecyclerViewId"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:srcCompat="@drawable/ic_help" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toTopOf="@+id/listContentRecyclerViewId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleContentListId" />
 
     <ImageButton
         android:id="@+id/btnImageBackScreenId2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="38dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
         android:background="@null"
         android:onClick="goBack"
-        app:layout_constraintBottom_toTopOf="@+id/listContentRecyclerViewId"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
         app:layout_constraintEnd_toStartOf="@+id/tittleContentListId"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <TextView
         android:id="@+id/tittleContentListId"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="219dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:text="Lista de Contenidos"
         android:textAlignment="center"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnImageBackScreenId2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -52,6 +80,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tittleContentListId" />
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

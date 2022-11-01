@@ -74,12 +74,12 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void goListConetnt(View v) {
-        startActivity(new Intent(getApplicationContext(),ContentList.class));
+        startActivity(new Intent(getApplicationContext(), ContentListActivity.class));
 
     }
 
     public void goHome(View v) {
-        startActivity(new Intent(getApplicationContext(),HomeProfesionalActivity.class));
+        startActivity(new Intent(getApplicationContext(), ListPatientActivity.class));
 
     }
 

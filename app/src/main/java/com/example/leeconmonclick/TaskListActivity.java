@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         taskItems = new ArrayList<>();
         db = FirebaseAuth.getInstance();
@@ -158,6 +160,13 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         calendarIntent.putExtra("tagNoty", task.getTagNoty());
         calendarIntent.putExtra("modeEdit", true);
         this.startActivity(calendarIntent);
+    }
+
+    public void goBack(View view){finish();}
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
     }
 
 

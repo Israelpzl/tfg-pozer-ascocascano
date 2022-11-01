@@ -4,35 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeProfesionalActivity"
+    tools:context=".ListPatientActivity"
     android:background="@color/background">
 
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@null"
+        android:onClick="goHelp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recycleViewUserPatientId"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:srcCompat="@drawable/ic_help" />
+
+    <ImageButton
+        android:id="@+id/btnImageBackScreenId4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:onClick="goBack"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/tittleContentListId2"
+        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066"
+        app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <TextView
         android:id="@+id/tittleContentListId2"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="219dp"
         android:text="Lista de Pacientes"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnImageBackScreenId4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="341dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recycleViewUserPatientId"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tittleContentListId2" />
 

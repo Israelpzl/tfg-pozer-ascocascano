@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,7 +76,68 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-        databaseReference.child("Users").child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Users").child(userCollection).child("taskList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()) {
+                    Long id = (Long) objDataSnapshot.child("id").getValue();
+                    String tittle = (String) objDataSnapshot.child("tittle").getValue();
+                    String date = (String) objDataSnapshot.child("date").getValue();
+                    String time = (String) objDataSnapshot.child("time").getValue();
+                    String description = (String) objDataSnapshot.child("description").getValue();
+                    String tag = (String) objDataSnapshot.child("tagNoty").getValue();
+                    int i = Math.toIntExact(id);
+                    Task t = new Task(i, tittle, date, time, description, tag);
+                    taskItems.add(t);
+                }
+
+                ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Task item) {
+                        popUpDescriptionTask(item);
+                    }
+                });
+
+                RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
+                recyclerView.setAdapter(listAdapterTask);
+
+                databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        taskItems.clear();
+                        for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
+                            Long id = (Long) objDataSnapshot.child("id").getValue();
+                            String tittle = (String) objDataSnapshot.child("tittle").getValue();
+                            String date = (String) objDataSnapshot.child("date").getValue();
+                            String time = (String) objDataSnapshot.child("time").getValue();
+                            String description = (String) objDataSnapshot.child("description").getValue();
+                            String tag = (String) objDataSnapshot.child("tagNoty").getValue();
+                            int i = Math.toIntExact(id);
+                            Task t =  new Task(i,tittle,date,time,description,tag);
+                            taskItems.add(t);
+
+                        }
+                        listAdapterTask.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                
+            }});
+
+
+
+        /*
+
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,7 +167,10 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
                     recyclerView.setAdapter(listAdapterTask);
+                    listAdapterTask.notifyDataSetChanged();
+
                 }
+
             }
 
             @Override
@@ -113,6 +178,8 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
             }
         });
+
+         */
 
 
 

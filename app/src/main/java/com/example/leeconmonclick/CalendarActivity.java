@@ -221,6 +221,7 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
 
         Intent taskIntent = new Intent(this, TaskListActivity.class);
         startActivity(taskIntent);
+        finish();
 
 
     }

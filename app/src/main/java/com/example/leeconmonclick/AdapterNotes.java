@@ -1,15 +1,15 @@
 package com.example.leeconmonclick;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +25,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 
 import es.leerconmonclick.util.Note;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder>{
 
@@ -75,6 +73,7 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
                                         Long time = (Long) objDataSnapshot.child("time").getValue();
                                         if(time == note.getTime()){
                                             objDataSnapshot.getRef().removeValue();
+                                            context.startActivity(new Intent(context,PersonalNotesActivity.class));
                                         }
                                     }
                                 }

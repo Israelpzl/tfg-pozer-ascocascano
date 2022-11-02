@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -41,6 +42,8 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     private FirebaseAuth db;
 
     private Context context;
+    private RecyclerView recyclerView;
+    private ListAdapterTask listAdapterTask;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
@@ -54,9 +57,15 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
         taskItems = new ArrayList<>();
         db = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-        getListTask();
+        recyclerView = findViewById(R.id.listTaskRecycleView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
+
+
+       readData();
     }
 
     public void goCalendar (View v){
@@ -68,7 +77,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     public void getListTask(){
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         FirebaseUser user = db.getCurrentUser();
         String userCollection = user.getEmail();
@@ -77,6 +86,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         userCollection = userCollection.toLowerCase();
 
         databaseReference.child("Users").child(userCollection).child("taskList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @SuppressLint("NotifyDataSetChanged")
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -92,20 +102,9 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
                     taskItems.add(t);
                 }
 
-                ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Task item) {
-                        popUpDescriptionTask(item);
-                    }
-                });
-
-                RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
-                recyclerView.setAdapter(listAdapterTask);
 
                 databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
-
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         taskItems.clear();
@@ -121,6 +120,13 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
                             taskItems.add(t);
 
                         }
+                        listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Task item) {
+                                popUpDescriptionTask(item);
+                            }
+                        });
+                        recyclerView.setAdapter(listAdapterTask);
                         listAdapterTask.notifyDataSetChanged();
 
                     }
@@ -234,6 +240,49 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+    private void readData(){
+        FirebaseUser user = db.getCurrentUser();
+        String userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+        databaseReference.child("Users").child(userCollection).child("taskList").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                taskItems.clear();
+                for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
+                    Long id = (Long) objDataSnapshot.child("id").getValue();
+                    String tittle = (String) objDataSnapshot.child("tittle").getValue();
+                    String date = (String) objDataSnapshot.child("date").getValue();
+                    String time = (String) objDataSnapshot.child("time").getValue();
+                    String description = (String) objDataSnapshot.child("description").getValue();
+                    String tag = (String) objDataSnapshot.child("tagNoty").getValue();
+                    int i = Math.toIntExact(id);
+                    Task t =  new Task(i,tittle,date,time,description,tag);
+                    taskItems.add(t);
+                }
+                listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Task item) {
+                        popUpDescriptionTask(item);
+                    }
+                });
+
+               recyclerView.setAdapter(listAdapterTask);
+               listAdapterTask.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

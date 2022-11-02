@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +19,15 @@ import androidx.work.WorkManager;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +39,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
     private LayoutInflater mInflater;
     private Context context;
 
+    private   List<String> listNameTask;
     private String userCollection;
 
     private DatabaseReference databaseReference;
@@ -152,6 +158,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
+
                 }
             });
 

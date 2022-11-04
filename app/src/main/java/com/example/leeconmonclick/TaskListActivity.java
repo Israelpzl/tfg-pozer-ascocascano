@@ -68,87 +68,19 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
        readData();
     }
 
-    public void goCalendar (View v){
-        Intent calendarIntent = new Intent(this, CalendarActivity.class);
-        calendarIntent.putExtra("modeEdit",false);
-        startActivity(calendarIntent);
-    }
-
-    public void getListTask(){
-
-
-
-
+    private void readData(){
         FirebaseUser user = db.getCurrentUser();
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-        databaseReference.child("Users").child(userCollection).child("taskList").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+        databaseReference.child("Users").child(userCollection).child("taskList").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()) {
-                    Long id = (Long) objDataSnapshot.child("id").getValue();
-                    String tittle = (String) objDataSnapshot.child("tittle").getValue();
-                    String date = (String) objDataSnapshot.child("date").getValue();
-                    String time = (String) objDataSnapshot.child("time").getValue();
-                    String description = (String) objDataSnapshot.child("description").getValue();
-                    String tag = (String) objDataSnapshot.child("tagNoty").getValue();
-                    int i = Math.toIntExact(id);
-                    Task t = new Task(i, tittle, date, time, description, tag);
-                    taskItems.add(t);
-                }
-
-
-                databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        taskItems.clear();
-                        for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
-                            Long id = (Long) objDataSnapshot.child("id").getValue();
-                            String tittle = (String) objDataSnapshot.child("tittle").getValue();
-                            String date = (String) objDataSnapshot.child("date").getValue();
-                            String time = (String) objDataSnapshot.child("time").getValue();
-                            String description = (String) objDataSnapshot.child("description").getValue();
-                            String tag = (String) objDataSnapshot.child("tagNoty").getValue();
-                            int i = Math.toIntExact(id);
-                            Task t =  new Task(i,tittle,date,time,description,tag);
-                            taskItems.add(t);
-
-                        }
-                        listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(Task item) {
-                                popUpDescriptionTask(item);
-                            }
-                        });
-                        recyclerView.setAdapter(listAdapterTask);
-                        listAdapterTask.notifyDataSetChanged();
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                
-            }});
-
-
-
-        /*
-
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 taskItems.clear();
-
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     Long id = (Long) objDataSnapshot.child("id").getValue();
                     String tittle = (String) objDataSnapshot.child("tittle").getValue();
@@ -158,24 +90,18 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
                     String tag = (String) objDataSnapshot.child("tagNoty").getValue();
                     int i = Math.toIntExact(id);
                     Task t =  new Task(i,tittle,date,time,description,tag);
-
                     taskItems.add(t);
-
-                    Collections.sort(taskItems, new TaskListActivity());
-
-                    ListAdapterTask listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Task item) {
-                            popUpDescriptionTask(item);
-                        }
-                    });
-                    RecyclerView recyclerView = findViewById(R.id.listTaskRecycleView);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
-                    recyclerView.setAdapter(listAdapterTask);
-                    listAdapterTask.notifyDataSetChanged();
-
                 }
+                listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Task item) {
+                        popUpDescriptionTask(item);
+                    }
+                });
+
+                recyclerView.setAdapter(listAdapterTask);
+                listAdapterTask.notifyDataSetChanged();
+
 
             }
 
@@ -184,11 +110,12 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
             }
         });
+    }
 
-         */
-
-
-
+    public void goCalendar (View v){
+        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        calendarIntent.putExtra("modeEdit",false);
+        startActivity(calendarIntent);
     }
 
     private void popUpDescriptionTask(Task task) {
@@ -241,49 +168,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
-    private void readData(){
-        FirebaseUser user = db.getCurrentUser();
-        String userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
 
-        databaseReference.child("Users").child(userCollection).child("taskList").addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                taskItems.clear();
-                for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                    Long id = (Long) objDataSnapshot.child("id").getValue();
-                    String tittle = (String) objDataSnapshot.child("tittle").getValue();
-                    String date = (String) objDataSnapshot.child("date").getValue();
-                    String time = (String) objDataSnapshot.child("time").getValue();
-                    String description = (String) objDataSnapshot.child("description").getValue();
-                    String tag = (String) objDataSnapshot.child("tagNoty").getValue();
-                    int i = Math.toIntExact(id);
-                    Task t =  new Task(i,tittle,date,time,description,tag);
-                    taskItems.add(t);
-                }
-                listAdapterTask = new ListAdapterTask(taskItems, TaskListActivity.this, new ListAdapterTask.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Task item) {
-                        popUpDescriptionTask(item);
-                    }
-                });
-
-               recyclerView.setAdapter(listAdapterTask);
-               listAdapterTask.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
 
     @Override

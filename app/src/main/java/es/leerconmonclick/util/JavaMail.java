@@ -56,11 +56,9 @@ public class JavaMail extends AsyncTask<Void,Void,Void> {
         super.onPostExecute(aVoid);
 
         mProgressDialog.dismiss();
-
-
         Toast.makeText(mContext,"Usuario Paciente Creado",Toast.LENGTH_SHORT).show();
-        Intent goHomeProfesional = new Intent(mContext, ListPatientActivity.class);
-        mContext.startActivity(goHomeProfesional);
+        Intent homeProfesionalIntent = new Intent(mContext, ListPatientActivity.class);
+        mContext.startActivity(homeProfesionalIntent);
     }
 
 

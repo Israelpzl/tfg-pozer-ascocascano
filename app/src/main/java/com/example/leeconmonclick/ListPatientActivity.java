@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,19 +30,25 @@ public class ListPatientActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
-    private List<UserPatient> userPatientItems;
+    private List<UserPatient> userPatientList;
+    private ListAdapterUserPatient listAdapterUserPatient;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient);
 
-        userPatientItems = new ArrayList<>();
+        userPatientList = new ArrayList<>();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth =  FirebaseAuth.getInstance();
+
+        recyclerView = findViewById(R.id.recycleViewUserPatientId);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ListPatientActivity.this));
 
 
         getListUserPatient();
@@ -51,7 +58,8 @@ public class ListPatientActivity extends AppCompatActivity {
 
     private void getListUserPatient() {
 
-        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("userPatient").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -61,6 +69,7 @@ public class ListPatientActivity extends AppCompatActivity {
                 userCollection = parts[0];
                 userCollection = userCollection.toLowerCase();
 
+                userPatientList.clear();
 
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     String namePatient = (String) objDataSnapshot.child("namePatient").getValue();
@@ -74,17 +83,15 @@ public class ListPatientActivity extends AppCompatActivity {
                     if (nameProfessional.equals(userCollection)){
 
                         UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon);
-                        userPatientItems.add(userPatient);
+                        userPatientList.add(userPatient);
 
-                        ListAdapterUserPatient listAdapterUserPatient = new ListAdapterUserPatient(userPatientItems, ListPatientActivity.this);
-
-                        RecyclerView recyclerView = findViewById(R.id.recycleViewUserPatientId);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(ListPatientActivity.this));
-                        recyclerView.setAdapter(listAdapterUserPatient);
                     }
 
                 }
+
+                listAdapterUserPatient = new ListAdapterUserPatient(userPatientList, ListPatientActivity.this);
+                recyclerView.setAdapter(listAdapterUserPatient);
+                listAdapterUserPatient.notifyDataSetChanged();
             }
 
             @Override
@@ -98,5 +105,10 @@ public class ListPatientActivity extends AppCompatActivity {
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+    public void goAddPatient(View v){
+        Intent addPatientIntent = new Intent(this, AddPatientsActivity.class);
+        addPatientIntent.putExtra("modeEdit",false);
+        startActivity(addPatientIntent);
     }
 }

@@ -158,7 +158,7 @@ public class AddContentActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
-                                    goProfile();
+                                    finish();
                                 }
                             });
                         }
@@ -172,11 +172,6 @@ public class AddContentActivity extends AppCompatActivity {
         }
     }
 
-    private void goProfile () {
-        Intent taskIntent = new Intent(this, ProfileActivity.class);
-        startActivity(taskIntent);
-        finish();
-    }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -211,7 +206,7 @@ public class AddContentActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(getApplicationContext(),"Se ha editado el contenido correctamente",Toast.LENGTH_LONG).show();
-                goProfile();
+                finish();
             }
         });
     }

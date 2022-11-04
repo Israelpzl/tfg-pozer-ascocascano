@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -33,15 +34,11 @@ import es.leerconmonclick.util.ListAdapterContent;
 
 public class ContentListActivity extends AppCompatActivity {
 
-    private GridLayout gridLayout;
-    private LayoutInflater mInflater;
-    private ImageView imgViewContent;
-    private ImageButton imgDeleteBtn,imgEditBtn;
-    private TextView nameConntent;
-
     private List<Content> contentItems;
     private DatabaseReference databaseReference;
     private FirebaseAuth db;
+    private RecyclerView recyclerView;
+    private ListAdapterContent listAdapterContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +50,19 @@ public class ContentListActivity extends AppCompatActivity {
         db = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        recyclerView = findViewById(R.id.listContentRecyclerViewId);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(ContentListActivity.this,3));
 
-        getListContent();
+
+        readData();
 
     }
 
 
-    private void getListContent(){
-        databaseReference.child("content").addListenerForSingleValueEvent(new ValueEventListener() {
+    private void readData(){
+        databaseReference.child("content").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -75,14 +77,11 @@ public class ContentListActivity extends AppCompatActivity {
                     Content content = new Content(word,img,null,determinant);
                     contentItems.add(content);
 
-                    ListAdapterContent listAdapterContent = new ListAdapterContent(contentItems, ContentListActivity.this);
-
-
-                    RecyclerView recyclerView = findViewById(R.id.listContentRecyclerViewId);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new GridLayoutManager(ContentListActivity.this,3));
-                    recyclerView.setAdapter(listAdapterContent);
                 }
+
+                listAdapterContent = new ListAdapterContent(contentItems, ContentListActivity.this);
+                recyclerView.setAdapter(listAdapterContent);
+                listAdapterContent.notifyDataSetChanged();
             }
 
             @Override
@@ -100,5 +99,13 @@ public class ContentListActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
+
+    public void goAddContent(View v){
+        Intent addContent = new Intent(this, AddContentActivity.class);
+        addContent.putExtra("modeEdit",false);
+        startActivity(addContent);
+    }
+
+
 
 }

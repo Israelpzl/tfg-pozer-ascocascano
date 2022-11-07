@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,6 +75,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
                 databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
                     @Override
+                    @SuppressLint("NotifyDataSetChanged")
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         listNotes.removeAll(listNotes);
                         for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
@@ -87,6 +89,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
                             listNotes.add(noteExist);
                         }
                         adapterNotes.notifyDataSetChanged();
+                        onRestart();
                     }
 
                     @Override

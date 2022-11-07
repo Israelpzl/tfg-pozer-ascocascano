@@ -2,6 +2,7 @@ package com.example.leeconmonclick;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -68,12 +69,15 @@ public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder
                             userCollection = parts[0];
                             databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                 @Override
+                                @SuppressLint("NotifyDataSetChanged")
                                 public void onSuccess(DataSnapshot dataSnapshot) {
                                     for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
                                         Long time = (Long) objDataSnapshot.child("time").getValue();
                                         if(time == note.getTime()){
                                             objDataSnapshot.getRef().removeValue();
-                                            context.startActivity(new Intent(context,PersonalNotesActivity.class));
+                                            Intent intent= new Intent(context, PersonalNotesActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            context.startActivity(intent);
                                         }
                                     }
                                 }

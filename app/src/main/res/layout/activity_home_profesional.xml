@@ -66,8 +66,8 @@
 
     <Button
         android:id="@+id/button17"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:text="Notas"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,8 +79,8 @@
 
     <Button
         android:id="@+id/button15"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:onClick="goListPatient"
         android:text="Pacientes"
@@ -93,8 +93,8 @@
 
     <Button
         android:id="@+id/button19"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:text="Ajustes"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,8 +106,8 @@
 
     <Button
         android:id="@+id/button16"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:onClick="goContent"
         android:text="Contenido"
@@ -120,8 +120,8 @@
 
     <Button
         android:id="@+id/button18"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:onClick="goListTask"
         android:text="Citas"

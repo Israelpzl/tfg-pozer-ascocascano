@@ -9,33 +9,30 @@
 
     <ImageButton
         android:id="@+id/btnHelpId2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="350dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="41dp"
+        android:layout_height="39dp"
         android:background="@null"
         android:onClick="goHelp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintHorizontal_bias="0.966"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/button18"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.851"
         app:srcCompat="@drawable/ic_help" />
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="500dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="138dp"
+        android:layout_height="19dp"
         android:layout_marginBottom="25dp"
         android:text="NOMBRE TERAPEUTA"
         app:layout_constraintBottom_toTopOf="@+id/button16"
-        app:layout_constraintEnd_toStartOf="@+id/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.791"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.397" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -47,20 +44,18 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/button16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.321"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.312" />
 
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="287dp"
         android:layout_height="281dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button17"
+        app:layout_constraintHorizontal_bias="0.417"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/mono_transparente2" />
@@ -69,72 +64,68 @@
         android:id="@+id/button17"
         android:layout_width="98dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginBottom="34dp"
         android:background="@drawable/button_style"
         android:text="Notas"
-        app:layout_constraintBottom_toTopOf="@+id/button19"
-        app:layout_constraintEnd_toStartOf="@+id/button18"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/button15" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.578" />
 
     <Button
         android:id="@+id/button15"
         android:layout_width="98dp"
         android:layout_height="46dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="27dp"
         android:background="@drawable/button_style"
         android:onClick="goListPatient"
         android:text="Pacientes"
-        app:layout_constraintBottom_toTopOf="@+id/button17"
-        app:layout_constraintEnd_toStartOf="@+id/button16"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.331" />
 
     <Button
         android:id="@+id/button19"
         android:layout_width="98dp"
         android:layout_height="46dp"
-        android:layout_marginStart="177dp"
-        android:layout_marginEnd="254dp"
-        android:layout_marginBottom="70dp"
         android:background="@drawable/button_style"
         android:text="Ajustes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/button18" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/button16"
         android:layout_width="98dp"
         android:layout_height="46dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="26dp"
         android:background="@drawable/button_style"
         android:onClick="goContent"
         android:text="Contenido"
-        app:layout_constraintBottom_toTopOf="@+id/button18"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button15"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintHorizontal_bias="0.754"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.331" />
 
     <Button
         android:id="@+id/button18"
         android:layout_width="98dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="34dp"
         android:background="@drawable/button_style"
         android:onClick="goListTask"
         android:text="Citas"
-        app:layout_constraintBottom_toTopOf="@+id/button19"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button17"
-        app:layout_constraintTop_toBottomOf="@+id/button16" />
+        app:layout_constraintHorizontal_bias="0.868"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.578" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

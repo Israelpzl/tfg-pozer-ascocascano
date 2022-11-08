@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_calendar.xml" value="0.2425" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style.xml" value="0.3675" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style_red.xml" value="0.2415" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/calendar_style.xml" value="0.2415" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_add.xml" value="0.3635" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_arrow_back_.xml" value="0.3635" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/notification_bar.xml" value="0.243" />
@@ -18,7 +21,7 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_pacients.xml" value="0.25" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_patients.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_borrar.xml" value="0.2975630611372381" />
-        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_calendar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_calendar.xml" value="0.33" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_content_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_home_patient.xml" value="0.33" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_home_profesional.xml" value="0.33" />

@@ -11,4 +11,6 @@
     <color name="button_back">#959595</color>
     <color name="button_red_cancel">#D42416</color>
     <color name="button_edit">#7160EA</color>
+    <color name="task_item">#e1e5f2</color>
+
 </resources>

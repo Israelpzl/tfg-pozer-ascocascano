@@ -6,9 +6,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,9 +44,9 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     private DatabaseReference databaseReference;
     private FirebaseAuth db;
 
-    private Context context;
     private RecyclerView recyclerView;
     private ListAdapterTask listAdapterTask;
+    private String userCollection;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
@@ -70,7 +73,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
     private void readData(){
         FirebaseUser user = db.getCurrentUser();
-        String userCollection = user.getEmail();
+        userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
@@ -129,10 +132,19 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         dateTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.datePopUpId);
         timeTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.timePopUpId);
         ImageButton editBtn = (ImageButton) taskPopUpView.findViewById(R.id.editBtnPopUpId);
+        ImageButton deleteBtn = (ImageButton) taskPopUpView.findViewById(R.id.deleteBtnId);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goEdit(task);
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTask(task.getTagNoty(),task.getId()+"");
+                alertDialog.dismiss();
             }
         });
 
@@ -160,6 +172,36 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         calendarIntent.putExtra("tagNoty", task.getTagNoty());
         calendarIntent.putExtra("modeEdit", true);
         this.startActivity(calendarIntent);
+    }
+
+    private void deleteTask(String tag, String taskId){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("¿Quieres borrar la tarea?");
+        builder.setTitle("Borrado");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteNotify(tag);
+                databaseReference.child("Users").child(userCollection).child("taskList").child(taskId).removeValue();
+                Toast.makeText(getApplicationContext(), "Tarea borrada con éxito", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void deleteNotify (String tag){
+        WorkManager.getInstance(this).cancelAllWorkByTag(tag);
     }
 
     public void goBack(View view){finish();}

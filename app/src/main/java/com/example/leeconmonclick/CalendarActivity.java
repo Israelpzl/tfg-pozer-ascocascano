@@ -218,9 +218,6 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        Intent taskIntent = new Intent(this, TaskListActivity.class);
-        startActivity(taskIntent);
         finish();
 
 

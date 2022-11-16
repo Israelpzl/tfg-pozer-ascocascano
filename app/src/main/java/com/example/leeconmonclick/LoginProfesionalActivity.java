@@ -19,8 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Locale;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
@@ -28,7 +28,6 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Switch remeberSession;
     private EditText email,pass;
-    private DatabaseReference databaseReference;
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
@@ -40,7 +39,6 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         remeberSession = (Switch) findViewById(R.id.switch_remember);
         email = findViewById(R.id.editTextTextPersonName);

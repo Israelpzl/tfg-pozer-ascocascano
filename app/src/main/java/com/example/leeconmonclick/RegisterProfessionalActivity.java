@@ -19,11 +19,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
+import es.leerconmonclick.util.Note;
 import es.leerconmonclick.util.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
@@ -65,16 +65,35 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                        Map<String,Object> mapUserValues = new HashMap<>();
-
-                        mapUserValues.put("email", email.getText().toString());
-
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
                         userCollection = userCollection.toLowerCase();
 
-                        databaseReference.child("Users").child(userCollection).setValue(mapUserValues);
+                        ArrayList<String> settings = new ArrayList<>();
+                        settings.add("0");
+                        settings.add("normal");
+                        settings.add("no");
+
+                        ArrayList<Note> notas = new ArrayList<>();
+                        Note generateNote = new Note();
+                        generateNote.setTitle("Bienvenido");
+                        generateNote.setDescription("Aqui podras guardar tus notas personales");
+                        long createdTime = System.currentTimeMillis();
+                        generateNote.setTime(createdTime);
+
+                        Note aux = new Note();
+                        aux.setTitle("Bienvenido de nuevo");
+                        aux.setDescription("Comeme el pito");
+                        long createdTime2 = System.currentTimeMillis();
+                        aux.setTime(createdTime2);
+
+                        notas.add(generateNote);
+                        notas.add(aux);
+
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null);
+
+                        databaseReference.child("Users").child(userCollection).setValue(usuario);
 
                         goHome(userCollection);
                         finish();

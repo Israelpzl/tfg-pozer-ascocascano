@@ -33,7 +33,7 @@ public class PBAnimation extends Animation {
         tv.setText((int) value + " %");
 
         if (value == to) {
-            context.startActivity(new Intent(context, MainActivity.class));
+            context.startActivity(new Intent(context, PersonalNotesActivity.class));
         }
     }
 }

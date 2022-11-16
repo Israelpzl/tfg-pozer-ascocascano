@@ -13,6 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
+            android:name=".AddNote"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".PersonalNotesActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".HomeProfesionalActivity"
             android:exported="false"
             android:screenOrientation="landscape"  />
@@ -50,6 +58,14 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ProfileActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Settings"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".PatientsPrincipal"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

@@ -9,11 +9,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,11 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.ListAdapterNotes;
 import es.leerconmonclick.util.Note;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-import io.realm.Sort;
+
 
 public class PersonalNotesActivity extends AppCompatActivity {
 
@@ -64,14 +60,14 @@ public class PersonalNotesActivity extends AppCompatActivity {
                 addNoteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(PersonalNotesActivity.this,AddNote.class));
+                        startActivity(new Intent(PersonalNotesActivity.this, AddNoteActivity.class));
                     }
                 });
 
                 RecyclerView recyclerView = findViewById(R.id.recycleview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
-                AdapterNotes adapterNotes = new AdapterNotes(getApplicationContext(),listNotes);
-                recyclerView.setAdapter(adapterNotes);
+                ListAdapterNotes listAdapterNotes = new ListAdapterNotes(getApplicationContext(),listNotes);
+                recyclerView.setAdapter(listAdapterNotes);
 
                 databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
                     @Override
@@ -88,7 +84,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
                             noteExist.setTime(date);
                             listNotes.add(noteExist);
                         }
-                        adapterNotes.notifyDataSetChanged();
+                        listAdapterNotes.notifyDataSetChanged();
                         onRestart();
                     }
 

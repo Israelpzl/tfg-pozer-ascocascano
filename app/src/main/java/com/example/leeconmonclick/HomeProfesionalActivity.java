@@ -86,7 +86,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
 
     public void goSettiings(View v){
-        Intent helpIntent = new Intent(this, Settings.class);
+        Intent helpIntent = new Intent(this, SettingsActivity.class);
         startActivity(helpIntent);
     }
 

@@ -4,190 +4,240 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings"
+    tools:context=".SettingsActivity"
     android:background="@color/background">
+
+    <ImageButton
+        android:id="@+id/btnImageBackScreenId6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@null"
+        android:onClick="goBack"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        app:srcCompat="@drawable/ic_arrow_back_android" />
+
+    <ImageButton
+        android:id="@+id/imageButton10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:onClick="goHelp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.987"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.979"
+        app:srcCompat="@drawable/ic_help" />
 
     <Button
         android:id="@+id/buttonSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
         android:onClick="saveChanges"
+        android:background="@drawable/button_style"
         android:text="@string/save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toEndOf="@+id/buttonLogOut"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSize"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="60dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="40dp"
-        android:background="@null"
-        android:onClick="help"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ayuda" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonSmall" />
 
     <Button
         android:id="@+id/buttonLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="364dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_style_red"
         android:onClick="logOut"
         android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSize"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintStart_toEndOf="@+id/buttonSaveChanges"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonBig"
+        app:layout_constraintVertical_bias="0.526" />
 
     <EditText
         android:id="@+id/editTextTextPersonNameEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="600dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.133" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="5dp"
         android:text="@string/name"
         android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.206" />
 
     <TextView
         android:id="@+id/textViewIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="5dp"
         android:text="@string/icon"
         android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewName"
+        app:layout_constraintVertical_bias="0.129" />
 
     <TextView
         android:id="@+id/textViewDaltonism"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="5dp"
         android:text="@string/datonisc"
         android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewIcon"
+        app:layout_constraintVertical_bias="0.142" />
 
     <TextView
         android:id="@+id/textViewSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="5dp"
         android:text="@string/size_text"
         android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDaltonism" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDaltonism"
+        app:layout_constraintVertical_bias="0.184" />
 
     <ToggleButton
         android:id="@+id/toggleButtonNoDalto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="200dp"
         android:onClick="changeDalto"
         android:text="ToggleButton"
         android:textOff="@string/nothing"
         android:textOn="@string/nothing"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonDalto"
-        app:layout_constraintTop_toBottomOf="@+id/textViewIcon" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintStart_toEndOf="@+id/textViewDaltonism"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNameEdit"
+        app:layout_constraintVertical_bias="0.313" />
 
     <ToggleButton
         android:id="@+id/toggleButtonDalto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="350dp"
         android:onClick="changeDalto"
         android:text="ToggleButton"
         android:textOff="@string/acromatic"
         android:textOn="@string/acromatic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewIcon" />
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toEndOf="@+id/toggleButtonNoDalto"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNameEdit"
+        app:layout_constraintVertical_bias="0.313" />
 
     <ToggleButton
         android:id="@+id/toggleButtonBig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="15dp"
         android:onClick="changeSize"
         android:text="ToggleButton"
         android:textOff="@string/size_text_big"
         android:textOn="@string/size_text_big"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveChanges"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonMid"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDalto"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintStart_toEndOf="@+id/toggleButtonMid"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
+        app:layout_constraintVertical_bias="0.101" />
 
     <ToggleButton
         android:id="@+id/toggleButtonMid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="15dp"
         android:onClick="changeSize"
         android:text="ToggleButton"
         android:textOff="@string/size_text_mid"
         android:textOn="@string/size_text_mid"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveChanges"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonSmall"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDalto"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonSmall"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
+        app:layout_constraintVertical_bias="0.101" />
 
     <ToggleButton
         android:id="@+id/toggleButtonSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="15dp"
         android:onClick="changeSize"
         android:text="ToggleButton"
         android:textOff="@string/size_text_small"
         android:textOn="@string/size_text_small"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSaveChanges"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toEndOf="@+id/textViewSize"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDalto"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.14" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
         android:text="@string/settings"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

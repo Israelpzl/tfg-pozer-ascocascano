@@ -1,6 +1,4 @@
-package com.example.leeconmonclick;
-
-import static androidx.core.content.ContextCompat.startActivity;
+package es.leerconmonclick.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.leeconmonclick.PersonalNotesActivity;
+import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,16 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
-import es.leerconmonclick.util.Note;
-
-public class AdapterNotes extends RecyclerView.Adapter<AdapterNotes.MyViewHolder>{
+public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyViewHolder>{
 
     Context context;
     ArrayList<Note> listNotes;
     DatabaseReference databaseReference;
     FirebaseAuth db = FirebaseAuth.getInstance();
 
-    public AdapterNotes(Context context, ArrayList<Note> listNotes) {
+    public ListAdapterNotes(Context context, ArrayList<Note> listNotes) {
         this.context = context;
         this.listNotes = listNotes;
     }

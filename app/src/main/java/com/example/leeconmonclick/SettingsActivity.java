@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import es.leerconmonclick.util.User;
 
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth db = FirebaseAuth.getInstance();
@@ -32,6 +33,7 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         TextView userName = findViewById(R.id.editTextTextPersonNameEdit);
@@ -131,6 +133,7 @@ public class Settings extends AppCompatActivity {
         databaseReference.child("Users").child(userCollection).child("tamanio").setValue(size);
 
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
+        goHome();
     }
 
     public void changeDalto(View v){
@@ -165,4 +168,20 @@ public class Settings extends AppCompatActivity {
                 break;
         }
     }
+
+    public void goBack(View view){finish();}
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+
+    public void goHome(){
+        Intent HomeIntent = new Intent(this, HomeProfesionalActivity.class);
+        startActivity(HomeIntent);
+        finish();
+    }
+
+
 }

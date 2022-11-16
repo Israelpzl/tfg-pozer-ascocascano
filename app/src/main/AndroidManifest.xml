@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
-            android:name=".AddNote"
+            android:name=".AddNoteActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
@@ -61,7 +61,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Settings"
+            android:name=".SettingsActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

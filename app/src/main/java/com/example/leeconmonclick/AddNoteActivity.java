@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import es.leerconmonclick.util.Note;
 
-public class AddNote extends AppCompatActivity {
+public class AddNoteActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth db = FirebaseAuth.getInstance();
@@ -75,7 +75,7 @@ public class AddNote extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Nota guardada", Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(AddNote.this,PersonalNotesActivity.class));
+                startActivity(new Intent(AddNoteActivity.this,PersonalNotesActivity.class));
             }
         });
     }

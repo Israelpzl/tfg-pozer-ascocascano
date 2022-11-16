@@ -3,6 +3,7 @@ package com.example.leeconmonclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 ;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Bundle datos;
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
     DatabaseReference databaseReference;
 
     @Override
@@ -28,28 +31,61 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+    
 
-        datos = getIntent().getExtras();
-        String user = datos.getString("email");
-
-        TextView ususario = findViewById(R.id.textView8);
-
-        databaseReference.child("Users").child(user).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                ususario.setText(dataSnapshot.child("email").getValue().toString());
-            }
-        });
     }
 
     public void logOut(View v) {
+        saveStateSession();
         FirebaseAuth.getInstance().signOut();
         goHome();
     }
 
-    private void goHome() {
+    public void goCalendar (View v){
+        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        calendarIntent.putExtra("modeEdit",false);
+        startActivity(calendarIntent);
+    }
 
+    public void goTaskView (View v){
+        Intent taskIntent = new Intent(this, TaskList.class);
+        startActivity(taskIntent);
+    }
+
+    private void goHome() {
         startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
         finish();
+    }
+
+    public void goAddContent(View v) {
+        Intent addContentIntent = new Intent(this, AddContentActivity.class);
+        addContentIntent.putExtra("modeEdit",false);
+        startActivity(addContentIntent);
+    }
+
+    public void goHelp(View v) {
+        startActivity(new Intent(getApplicationContext(),HelpActivity.class));
+        finish();
+    }
+
+    public void goAddPacient(View v) {
+        startActivity(new Intent(getApplicationContext(),AddPacientsActivity.class));
+        finish();
+    }
+
+
+    public void goListConetnt(View v) {
+        startActivity(new Intent(getApplicationContext(),ContentList.class));
+        finish();
+    }
+
+    public void goHome(View v) {
+        startActivity(new Intent(getApplicationContext(),HomeProfesionalActivity.class));
+        finish();
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();
     }
 }

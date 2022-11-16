@@ -1,6 +1,7 @@
 package es.leerconmonclick.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -11,12 +12,16 @@ public class User {
     private String daltonismo;
     private ArrayList<Note> notas;
     private ArrayList<String> settings;
+    private String pass;
+    private List<Task> taskList;
 
-    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas) {
+    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList ) {
         this.email = email;
         this.nombre = nombre;
         this.settings = settings;
         this.notas = notas;
+        this.pass = pass;
+        this.taskList = taskList;
     }
 
     public String getEmail() {
@@ -70,6 +75,15 @@ public class User {
     public ArrayList<String> getSett() {
         return settings;
     }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
 
     public void setSett(ArrayList<String> sett) {
         this.settings = sett;

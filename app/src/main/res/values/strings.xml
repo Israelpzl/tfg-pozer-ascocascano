@@ -21,8 +21,9 @@
     <string name="repeat_pass">REPETIR CONTRASEÑA</string>
     <string name="error_mail">EMAIL NO VALIDO</string>
     <string name="error_pass">CONTRASEÑA NO VALIDA</string>
+    <string name="add">Añadir</string>
+    <string name="cancel">Cancelar</string>
     <string name="error_pass_confirmation">LAS CONTRASEÑAS NO SON IGUALES</string>
-
     <string name="icon">ICONO</string>
     <string name="datonisc">DALTONISMO</string>
     <string name="size_text">TAMAÑO TEXTO</string>
@@ -34,4 +35,12 @@
     <string name="log_out">CERRAR SESIÓN</string>
     <string name="save_changes">GUARDAR CAMBIOS</string>
     <string name="settings">AJUSTES</string>
+    <!--Task and Calendar-->
+    <string name="list_Task">Lista De Tareas</string>
+    <string name="add_task">Añadir Tarea</string>
+    <string name="date">Fecha</string>
+    <string name="time">Tiempo</string>
+    <string name="tittle">Título</string>
+    <string name="description">Descripción</string>
+    <string name="clock">Reloj</string>
 </resources>

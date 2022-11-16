@@ -19,9 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import es.leerconmonclick.util.Note;
 import es.leerconmonclick.util.User;
 
@@ -67,6 +68,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
+                        userCollection = userCollection.toLowerCase();
 
                         ArrayList<String> settings = new ArrayList<>();
                         settings.add("0");
@@ -89,7 +91,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         notas.add(generateNote);
                         notas.add(aux);
 
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas);
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null);
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

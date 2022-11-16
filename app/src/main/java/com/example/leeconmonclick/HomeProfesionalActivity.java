@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,9 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private TextView nameProfesional;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,34 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, ContentListActivity.class);
         startActivity(helpIntent);
     }
+
+
+    public void goSettiings(View v){
+        Intent helpIntent = new Intent(this, Settings.class);
+        startActivity(helpIntent);
+    }
+
+
+
+    public void goNotes(View v){
+        Intent helpIntent = new Intent(this, PersonalNotesActivity.class);
+        startActivity(helpIntent);
+    }
+
+
+    public void logOut(View v) {
+        saveStateSession();
+        FirebaseAuth.getInstance().signOut();
+        Intent profileIntent = new Intent(this, ProfilesActivity.class);
+        startActivity(profileIntent);
+    }
+
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();
+    }
+
 
 
 

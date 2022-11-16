@@ -112,7 +112,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
     }
 
     private void goHome(String email){
-        Intent i = new Intent(this, ProfileActivity.class);
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
         i.putExtra("email",email);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

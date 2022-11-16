@@ -8,6 +8,7 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/task_item"
   >
 
     <LinearLayout
@@ -27,28 +28,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+
                 <TextView
                     android:id="@+id/descriptionTask"
                     android:layout_width="300dp"
                     android:layout_height="35dp"
-                    android:layout_marginRight="50dp"
-                    android:gravity="center"
-                    android:text="Tarea 1" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="150dp"
 
+                    android:text="Tarea 1"
+                    android:textColor="@color/black" />
 
                 <ImageView
                     android:id="@+id/exclamationImg"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp"
                     app:srcCompat="@drawable/ic_exlamation" />
-
-                <ImageButton
-                    android:id="@+id/cancelBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="@color/button_red_cancel"
-                    app:srcCompat="@drawable/ic_delete" />
 
 
             </LinearLayout>

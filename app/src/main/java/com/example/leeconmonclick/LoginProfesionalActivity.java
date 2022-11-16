@@ -73,7 +73,7 @@ public class LoginProfesionalActivity extends AppCompatActivity {
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
                         userCollection = userCollection.toLowerCase();
-                        goProfile(userCollection);
+                        goHomeProfesional(userCollection);
                     }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                         dameToastdeerror(errorCode);
@@ -83,10 +83,33 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         }
     }
 
-    private void goProfile(String email){
-        Intent i = new Intent(this, PatientsPrincipal.class);
-        i.putExtra("email", email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    private void goHomeProfesional(String name){
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
+
+        /*
+        databaseReference.child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User u = new User(
+                        snapshot.child("nombre").getValue().toString(),
+                        snapshot.child("email").getValue().toString(),
+                        "pass",
+                        null
+                );
+
+                i.putExtra("userProfesional", (Parcelable) u);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+         */
+
         saveStateSession();
         startActivity(i);
         finish();

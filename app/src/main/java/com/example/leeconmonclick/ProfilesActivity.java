@@ -19,15 +19,18 @@ public class ProfilesActivity extends AppCompatActivity {
     public void user(View v){
         Intent helpIntent = new Intent(this, LoginPatient2Activity.class);
         startActivity(helpIntent);
+        finish();
     }
 
     public void professional(View v){
         Intent helpIntent = new Intent(this, LoginProfesionalActivity.class);
         startActivity(helpIntent);
+        finish();
     }
 
     public void help(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+        finish();
     }
 }

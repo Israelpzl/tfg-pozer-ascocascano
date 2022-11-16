@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Base64;
@@ -14,12 +15,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.security.Key;
 import java.util.UUID;
@@ -27,19 +31,20 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import javax.mail.Session;
-
 import es.leerconmonclick.util.JavaMail;
 import es.leerconmonclick.util.UserPatient;
 
-public class AddPacientsActivity extends AppCompatActivity {
+public class AddPatientsActivity extends AppCompatActivity {
 
     private EditText namePatient, agePatient, emailPatient, descriptionPatient;
-    private Button addPacientBtn;
+    private Button addPatientBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private  String pass;
-    private Session session;
+    private  String pass,icon;
+    private Bundle data;
+    private StorageReference storageReference;
+    private StorageReference filePath;
+
 
 
     private static final String ALGORITHM = "AES";
@@ -48,7 +53,7 @@ public class AddPacientsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_pacients);
+        setContentView(R.layout.activity_add_patients);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -56,22 +61,36 @@ public class AddPacientsActivity extends AppCompatActivity {
 
         mAuth =  FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
 
         namePatient = (EditText) findViewById(R.id.namePacientId);
         agePatient = (EditText) findViewById(R.id.agePacientId);
         emailPatient = (EditText) findViewById(R.id.emailPacientId);
         descriptionPatient = (EditText) findViewById(R.id.descriptionPacientId);
-        addPacientBtn = (Button) findViewById(R.id.addPacientBtn);
+        addPatientBtn = (Button) findViewById(R.id.addPacientBtn);
+
+        storageReference.child("iconos/mono2"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                icon = uri.toString();
+            }
+        });
 
 
-        addPacientBtn.setOnClickListener(new View.OnClickListener() {
+
+        data = getIntent().getExtras();
+        if (data.getBoolean("modeEdit")){
+            modeEditOn();
+        }
+
+
+        addPatientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-
                 try {
+
                     registerPatient();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -83,17 +102,27 @@ public class AddPacientsActivity extends AppCompatActivity {
         });
     }
 
+    private void modeEditOn() {
+        namePatient.setText(data.getString("namePatient"));
+        agePatient.setText(data.getString("agePatient"));
+        emailPatient.setText(data.getString("emailPatient"));
+        descriptionPatient.setText(data.getString("descriptionPatient"));
+    }
+
     private void sendEmail()  {
 
-        JavaMail javaMail = new JavaMail(this, emailPatient.getText().toString(),"NUEVO USUARIO","", namePatient.getText().toString(),pass);
-        javaMail.execute();
+        if (!data.getBoolean("modeEdit")){
+            JavaMail javaMail = new JavaMail(this, emailPatient.getText().toString(),"NUEVO USUARIO","", namePatient.getText().toString(),pass);
+            javaMail.execute();
+        }
+
 
 
     }
 
 
     private void registerPatient() throws Exception {
-
+        
         FirebaseUser user = mAuth.getCurrentUser();
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
@@ -104,16 +133,22 @@ public class AddPacientsActivity extends AppCompatActivity {
         pass = generatePassword();
         String passEncrypt = encrypt(pass);
 
+        if (data.getBoolean("modeEdit")){
+            passEncrypt = data.getString("passPatient");
+        }
+
+
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString(),
                 agePatient.getText().toString(),
                 emailPatient.getText().toString(),
                 passEncrypt,
                 descriptionPatient.getText().toString(),
-                userCollection
+                userCollection,
+                icon
         );
 
-        databaseReference.child("userPacient").child(generateKey()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPatient").child(namePatient.getText().toString()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

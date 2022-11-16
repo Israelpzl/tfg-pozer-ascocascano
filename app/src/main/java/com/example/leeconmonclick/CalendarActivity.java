@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -56,6 +57,7 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         c  = Calendar.getInstance();
         calendar = Calendar.getInstance();
@@ -216,9 +218,7 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        Intent taskIntent = new Intent(this, TaskList.class);
-        startActivity(taskIntent);
+        finish();
 
 
     }
@@ -256,5 +256,12 @@ public class CalendarActivity extends AppCompatActivity implements Comparator<Ta
                 .putString("tittle",tittle)
                 .putString("description",description)
                 .putInt("idNoty",idNoty).build();
+    }
+
+    public void goBack(View view){finish();}
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
     }
 }

@@ -2,28 +2,21 @@ package es.leerconmonclick.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkManager;
 
-import com.example.leeconmonclick.CalendarActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.TaskList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +39,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
     private LayoutInflater mInflater;
     private Context context;
 
+    private   List<String> listNameTask;
     private String userCollection;
 
     private DatabaseReference databaseReference;
@@ -97,20 +92,10 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
         ViewHolder(View itemView){
             super(itemView);
             tittleTask = itemView.findViewById(R.id.descriptionTask);
-            deleteBtn = (ImageButton) itemView.findViewById(R.id.cancelBtn);
             exclamation = (ImageView) itemView.findViewById(R.id.exclamationImg);
         }
 
         void bindData(final Task task) throws ParseException {
-
-            databaseReference = FirebaseDatabase.getInstance().getReference();
-            FirebaseUser user = db.getCurrentUser();
-            userCollection = user.getEmail();
-            String[] parts = userCollection.split("@");
-            userCollection = parts[0];
-            userCollection = userCollection.toLowerCase();
-            String taskId = task.getId()+"";
-            String tag = task.getTagNoty();
 
             SimpleDateFormat formatDay = new SimpleDateFormat("dd/MM/yyyy");
             Calendar calendar = Calendar.getInstance();
@@ -129,7 +114,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             Date timeTask = formatTime.parse(task.getTime());
 
 
-            if  (dateTask.before(dateToday)){
+            if  ( (dateTask.equals(dateToday) || dateTask.before(dateToday)) && timeTask.before(timeToday)){
                 exclamation.setVisibility(View.VISIBLE);
 
             }else{
@@ -138,33 +123,6 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             }
 
             tittleTask.setText(task.getTittle());
-
-            deleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                    builder.setMessage("¿Quieres borrar la tarea?");
-                    builder.setTitle("Borrado");
-                    builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            deleteNotify(tag);
-                            databaseReference.child("Users").child(userCollection).child("taskList").child(taskId).removeValue();
-                            Toast.makeText(context, "Tarea borrada con éxito", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
 
 
             itemView.setOnClickListener( new View.OnClickListener(){
@@ -179,10 +137,6 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
     }
 
-    private void deleteNotify (String tag){
-        WorkManager.getInstance(context).cancelAllWorkByTag(tag);
-        Toast.makeText(context,"Notificación Eliminada",Toast.LENGTH_LONG).show();
-    }
 
 
 }

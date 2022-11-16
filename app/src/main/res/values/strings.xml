@@ -35,6 +35,7 @@
     <string name="log_out">CERRAR SESIÓN</string>
     <string name="save_changes">GUARDAR CAMBIOS</string>
     <string name="settings">AJUSTES</string>
+    <string name="add_note">AÑADIR NOTA</string>
     <!--Task and Calendar-->
     <string name="list_Task">Lista De Tareas</string>
     <string name="add_task">Añadir Tarea</string>

@@ -79,4 +79,7 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void goBack(View view){finish();}
+
 }

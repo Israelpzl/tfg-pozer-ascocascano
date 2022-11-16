@@ -62,10 +62,10 @@
         android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintHorizontal_bias="0.393"
         app:layout_constraintStart_toEndOf="@+id/buttonSaveChanges"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonBig"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.497" />
 
     <EditText
         android:id="@+id/editTextTextPersonNameEdit"
@@ -177,7 +177,7 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toEndOf="@+id/toggleButtonNoDalto"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNameEdit"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintVertical_bias="0.328" />
 
     <ToggleButton
         android:id="@+id/toggleButtonBig"
@@ -190,10 +190,10 @@
         android:textOn="@string/size_text_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.299"
         app:layout_constraintStart_toEndOf="@+id/toggleButtonMid"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <ToggleButton
         android:id="@+id/toggleButtonMid"
@@ -206,10 +206,10 @@
         android:textOn="@string/size_text_mid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintHorizontal_bias="0.281"
         app:layout_constraintStart_toStartOf="@+id/toggleButtonSmall"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <ToggleButton
         android:id="@+id/toggleButtonSmall"
@@ -222,7 +222,7 @@
         android:textOn="@string/size_text_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toEndOf="@+id/textViewSize"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDalto"
         app:layout_constraintVertical_bias="0.14" />

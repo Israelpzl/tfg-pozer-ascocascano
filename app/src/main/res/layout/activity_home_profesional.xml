@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/ic_help" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/nameProfesionalId"
         android:layout_width="138dp"
         android:layout_height="19dp"
         android:layout_marginBottom="25dp"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.321"
-        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintStart_toEndOf="@+id/nameProfesionalId"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.312" />
 
@@ -93,20 +93,16 @@
 
     <Button
         android:id="@+id/button19"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="200dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:background="@drawable/button_style"
         android:text="Ajustes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.804" />
 
     <Button
         android:id="@+id/button16"
@@ -117,10 +113,10 @@
         android:text="Contenido"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.709"
+        app:layout_constraintHorizontal_bias="0.754"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.331" />
+        app:layout_constraintVertical_bias="0.33" />
 
     <Button
         android:id="@+id/button18"
@@ -131,7 +127,7 @@
         android:text="Citas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.868"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.578" />

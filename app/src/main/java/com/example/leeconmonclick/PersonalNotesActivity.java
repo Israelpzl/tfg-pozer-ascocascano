@@ -9,7 +9,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,14 +30,36 @@ import es.leerconmonclick.util.Note;
 
 public class PersonalNotesActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference;
-    FirebaseAuth db = FirebaseAuth.getInstance();
-    ArrayList<Note> listNotes = new ArrayList<Note>();
+    private DatabaseReference databaseReference;
+    private FirebaseAuth db = FirebaseAuth.getInstance();
+    private ArrayList<Note> listNotes = new ArrayList<Note>();
+    private ListAdapterNotes listAdapterNotes;
+    private RecyclerView recyclerView;
+    private ImageButton addNoteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_notes);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        recyclerView = findViewById(R.id.recycleview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
+
+        addNoteBtn = findViewById(R.id.addNotesId);
+        addNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PersonalNotesActivity.this, AddNoteActivity.class));
+            }
+        });
+
+
+        readData();
+    }
+
+    public void readData(){
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = db.getCurrentUser();
@@ -43,57 +67,42 @@ public class PersonalNotesActivity extends AppCompatActivity {
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
 
-        databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+        databaseReference.child("Users").child(userCollection).child("notas").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
+            @SuppressLint("NotifyDataSetChanged")
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                listNotes.removeAll(listNotes);
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Note noteExist = new Note();
-                    String tittle = (String) objDataSnapshot.child("title").getValue();
-                    String description = (String) objDataSnapshot.child("description").getValue();
-                    Long date = (Long) objDataSnapshot.child("time").getValue();
+                    String tittle = (String) dataSnapshot.child("title").getValue();
+                    String description = (String) dataSnapshot.child("description").getValue();
+                    Long date = (Long) dataSnapshot.child("time").getValue();
                     noteExist.setTitle(tittle);
                     noteExist.setDescription(description);
                     noteExist.setTime(date);
                     listNotes.add(noteExist);
                 }
-                Button addNoteBtn = findViewById(R.id.materialbutt);
-                addNoteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(PersonalNotesActivity.this, AddNoteActivity.class));
-                    }
-                });
-
-                RecyclerView recyclerView = findViewById(R.id.recycleview);
-                recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
-                ListAdapterNotes listAdapterNotes = new ListAdapterNotes(getApplicationContext(),listNotes);
+                listAdapterNotes = new ListAdapterNotes(getApplicationContext(),listNotes);
                 recyclerView.setAdapter(listAdapterNotes);
+                listAdapterNotes.notifyDataSetChanged();
+            }
 
-                databaseReference.getRoot().addValueEventListener(new ValueEventListener() {
-                    @Override
-                    @SuppressLint("NotifyDataSetChanged")
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        listNotes.removeAll(listNotes);
-                        for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                            Note noteExist = new Note();
-                            String tittle = (String) dataSnapshot1.child("title").getValue();
-                            String description = (String) dataSnapshot1.child("description").getValue();
-                            Long date = (Long) dataSnapshot1.child("time").getValue();
-                            noteExist.setTitle(tittle);
-                            noteExist.setDescription(description);
-                            noteExist.setTime(date);
-                            listNotes.add(noteExist);
-                        }
-                        listAdapterNotes.notifyDataSetChanged();
-                        onRestart();
-                    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
         });
+
     }
+
+    public void goBack(View view){finish();}
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+
 }

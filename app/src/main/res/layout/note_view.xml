@@ -15,14 +15,14 @@
         android:textColor="@color/black"
         tools:text="My title"
         />
+
     <TextView
+        android:id="@+id/descriptionNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/descriptionNote"
         android:layout_below="@id/titleNote"
         android:textColor="@color/black"
-        tools:text="My description"
-        />
+        tools:text="My description" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

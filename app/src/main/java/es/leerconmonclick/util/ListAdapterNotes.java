@@ -73,9 +73,6 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
                                         Long time = (Long) objDataSnapshot.child("time").getValue();
                                         if(time == note.getTime()){
                                             objDataSnapshot.getRef().removeValue();
-                                            Intent intent= new Intent(context, PersonalNotesActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            context.startActivity(intent);
                                         }
                                     }
                                 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class AddNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         EditText titleNote = findViewById(R.id.editTextTextPersonName5);
@@ -75,11 +76,15 @@ public class AddNoteActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Nota guardada", Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(AddNoteActivity.this,PersonalNotesActivity.class));
             }
         });
     }
 
     public void goBack(View view){finish();}
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
 
 }

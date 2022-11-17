@@ -133,7 +133,7 @@ public class SettingsActivity extends AppCompatActivity {
         databaseReference.child("Users").child(userCollection).child("tamanio").setValue(size);
 
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
-        goHome();
+        finish();
     }
 
     public void changeDalto(View v){
@@ -177,11 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    public void goHome(){
-        Intent HomeIntent = new Intent(this, HomeProfesionalActivity.class);
-        startActivity(HomeIntent);
-        finish();
-    }
+
 
 
 }

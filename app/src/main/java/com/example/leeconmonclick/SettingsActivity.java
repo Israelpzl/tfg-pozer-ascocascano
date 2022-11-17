@@ -2,8 +2,10 @@ package com.example.leeconmonclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,17 +20,28 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.User;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference;
-    FirebaseAuth db = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference;
+    private FirebaseAuth db = FirebaseAuth.getInstance();
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
+    private CircleImageView maleDoctorIcon,femaleDoctorIcon,maleProfesorIcon,femaleProfesorIcon;
+
+    private String userCollection;
+    private FirebaseUser user;
+    private StorageReference storageReference;
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference("iconos/");
+
         TextView userName = findViewById(R.id.editTextTextPersonNameEdit);
         ToggleButton noDaltonic = findViewById(R.id.toggleButtonNoDalto);
         ToggleButton daltonic = findViewById(R.id.toggleButtonDalto);
@@ -43,10 +58,13 @@ public class SettingsActivity extends AppCompatActivity {
         ToggleButton midSize = findViewById(R.id.toggleButtonMid);
         ToggleButton smallSize = findViewById(R.id.toggleButtonSmall);
 
-        FirebaseUser user = db.getCurrentUser();
-        String userCollection = user.getEmail();
+        setIconProfesional();
+
+        user = db.getCurrentUser();
+        userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
 
         databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -92,18 +110,13 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public void saveChanges(View v){
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         TextView userName = findViewById(R.id.editTextTextPersonNameEdit);
         ToggleButton noDaltonic = findViewById(R.id.toggleButtonNoDalto);
         ToggleButton daltonic = findViewById(R.id.toggleButtonDalto);
         ToggleButton bigSize = findViewById(R.id.toggleButtonBig);
         ToggleButton midSize = findViewById(R.id.toggleButtonMid);
         ToggleButton smallSize = findViewById(R.id.toggleButtonSmall);
-
-        FirebaseUser user = db.getCurrentUser();
-        String userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
 
         //Nombre
         String name = userName.getText().toString();
@@ -174,6 +187,67 @@ public class SettingsActivity extends AppCompatActivity {
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    private void setIconProfesional(){
+
+        maleDoctorIcon = findViewById(R.id.maleDoctorIconId);
+        femaleDoctorIcon = findViewById(R.id.femaleDoctorIconId);
+        maleProfesorIcon = findViewById(R.id.maleProfesorIconId);
+        femaleProfesorIcon = findViewById(R.id.femaleProfesorIconId);
+
+        maleDoctorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                storageReference.child("doctor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
+                    }
+                });
+            }
+        });
+
+        femaleDoctorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                storageReference.child("iconos/doctora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
+                    }
+                });
+            }
+        });
+
+        maleProfesorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                storageReference.child("iconos/profesor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
+                    }
+                });
+            }
+        });
+
+        femaleProfesorIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                storageReference.child("iconos/profesora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
+                    }
+                });
+            }
+        });
+
     }
 
 

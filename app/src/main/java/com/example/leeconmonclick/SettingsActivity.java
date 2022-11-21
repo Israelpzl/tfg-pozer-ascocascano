@@ -3,13 +3,13 @@ package com.example.leeconmonclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -24,7 +24,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import es.leerconmonclick.util.User;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -39,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
     private String userCollection;
     private FirebaseUser user;
     private StorageReference storageReference;
+    private String maleDoctorImg, femaleDoctorImg, maleProfesorImg, femaleProfesorImg;
 
 
     @SuppressLint("MissingInflatedId")
@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference("iconos/");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         TextView userName = findViewById(R.id.editTextTextPersonNameEdit);
         ToggleButton noDaltonic = findViewById(R.id.toggleButtonNoDalto);
@@ -58,13 +58,18 @@ public class SettingsActivity extends AppCompatActivity {
         ToggleButton midSize = findViewById(R.id.toggleButtonMid);
         ToggleButton smallSize = findViewById(R.id.toggleButtonSmall);
 
+
+        getIcons();
         setIconProfesional();
+
 
         user = db.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
+
+
 
         databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -195,59 +200,73 @@ public class SettingsActivity extends AppCompatActivity {
         femaleDoctorIcon = findViewById(R.id.femaleDoctorIconId);
         maleProfesorIcon = findViewById(R.id.maleProfesorIconId);
         femaleProfesorIcon = findViewById(R.id.femaleProfesorIconId);
-
+        
         maleDoctorIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                storageReference.child("doctor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
-                    }
-                });
+                databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue("https://firebasestorage.googleapis.com/v0/b/leerconmonclick.appspot.com/o/iconos%2Fdoctor.png?alt=media&token=7ce24f3a-e556-4cc7-88be-8ee92e4f4416");
             }
         });
 
         femaleDoctorIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                storageReference.child("iconos/doctora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
-                    }
-                });
+                databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue("https://firebasestorage.googleapis.com/v0/b/leerconmonclick.appspot.com/o/iconos%2Fdoctora.png?alt=media&token=22fc8752-0568-4bbb-a891-60e47358d9c0");
             }
         });
 
         maleProfesorIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                storageReference.child("iconos/profesor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
-                    }
-                });
+                databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue("https://firebasestorage.googleapis.com/v0/b/leerconmonclick.appspot.com/o/iconos%2Fprofesor.png?alt=media&token=3122b844-f470-46b8-88bd-52ddeda87c28");
             }
         });
 
         femaleProfesorIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                storageReference.child("iconos/profesora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(uri.toString());
-                    }
-                });
+                databaseReference.child("Users").child(userCollection).child("setting").child("icon").setValue(femaleProfesorImg);
             }
         });
 
+    }
+
+    private void getIcons(){
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Recuperando Iconos");
+        progressDialog.show();
+
+        storageReference.child("iconos/doctor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                maleDoctorImg = uri.toString();
+            }
+        });
+
+
+        storageReference.child("iconos/doctora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                femaleDoctorImg = uri.toString();
+            }
+        });
+
+        storageReference.child("iconos/profesor"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                maleProfesorImg = uri.toString();
+            }
+        });
+
+        storageReference.child("iconos/profesora"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                femaleProfesorImg = uri.toString();
+            }
+        });
+
+        progressDialog.dismiss();
     }
 
 

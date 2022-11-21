@@ -9,6 +9,8 @@ import android.view.WindowManager;
 
 public class ProfilesActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

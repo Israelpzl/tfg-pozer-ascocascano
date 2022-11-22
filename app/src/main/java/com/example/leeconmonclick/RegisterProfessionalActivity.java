@@ -91,7 +91,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         notas.add(generateNote);
                         notas.add(aux);
 
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null);
+                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null,"maleDoctor");
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

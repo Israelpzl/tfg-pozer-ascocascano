@@ -3,6 +3,7 @@ package com.example.leeconmonclick;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeProfesionalActivity extends AppCompatActivity {
 
@@ -26,6 +31,8 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+    private CircleImageView iconProfesional;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         nameProfesional = findViewById(R.id.nameProfesionalId);
+        iconProfesional = findViewById(R.id.iconProfesionalId);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -50,7 +58,14 @@ public class HomeProfesionalActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 nameProfesional.setText(snapshot.child("nombre").getValue().toString());
+                String icon = snapshot.child("icon").getValue().toString();
 
+                databaseReference.child("iconImg").child(icon).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        Glide.with(context).load(dataSnapshot.getValue().toString()).into(iconProfesional);
+                    }
+                });
             }
 
             @Override
@@ -62,6 +77,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
     }
 
+    public void getIcon(){
+
+
+
+    }
 
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);

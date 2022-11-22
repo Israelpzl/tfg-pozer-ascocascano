@@ -29,7 +29,7 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
+                    android:id="@+id/iconProfesionalId"
                     android:layout_width="96dp"
                     android:layout_height="58dp"
                     android:layout_marginLeft="10dp"

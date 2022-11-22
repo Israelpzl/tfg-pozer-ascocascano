@@ -1,8 +1,6 @@
 package es.leerconmonclick.util;
 
 
-import static com.example.leeconmonclick.R.drawable.mono;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +18,8 @@ import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.AddPatientsActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -77,7 +71,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             namePatientView =  itemView.findViewById(R.id.namePatientItemId);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
-            circleImageView = itemView.findViewById(R.id.profile_image);
+            circleImageView = itemView.findViewById(R.id.iconProfesionalId);
 
         }
 

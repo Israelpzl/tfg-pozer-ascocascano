@@ -15,13 +15,14 @@ public class User {
     private String pass;
     private List<Task> taskList;
 
-    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList ) {
+    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList,String icono ) {
         this.email = email;
         this.nombre = nombre;
         this.settings = settings;
         this.notas = notas;
         this.pass = pass;
         this.taskList = taskList;
+        this.icono = icono;
     }
 
     public String getEmail() {

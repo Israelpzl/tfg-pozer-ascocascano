@@ -74,10 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         getIcons();
         getSettings();
-
         setIconProfesional();
-
-
 
     }
 

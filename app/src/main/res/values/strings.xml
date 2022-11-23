@@ -36,12 +36,20 @@
     <string name="save_changes">GUARDAR CAMBIOS</string>
     <string name="settings">AJUSTES</string>
     <string name="add_note">AÑADIR NOTA</string>
+    <!--CONTENT-->
+    <string name="personalize_content">PERSONALIZAR CONTENIDO</string>
+    <string name="img">IMÁGENES</string>
+    <string name="word">Palabra</string>
+    <!--ADD PATIENT-->
+    <string name="add_patient">AÑADIR PACIENTE</string>
+    <string name="age">EDAD</string>
     <!--Task and Calendar-->
-    <string name="list_Task">Lista De Tareas</string>
-    <string name="add_task">Añadir Tarea</string>
-    <string name="date">Fecha</string>
-    <string name="time">Tiempo</string>
-    <string name="tittle">Título</string>
-    <string name="description">Descripción</string>
-    <string name="clock">Reloj</string>
+    <string name="list_Task">LISTA DE TAREAS</string>
+    <string name="add_task">AÑADIR TAREAS</string>
+    <string name="noti">NOTI</string>
+    <string name="date">FECHA</string>
+    <string name="time">TIEMPO</string>
+    <string name="tittle">TÍTULO</string>
+    <string name="description">DESCRIPCIÓN</string>
+    <string name="clock">RELOJ</string>
 </resources>

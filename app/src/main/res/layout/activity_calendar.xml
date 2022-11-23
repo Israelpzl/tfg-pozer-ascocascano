@@ -10,49 +10,50 @@
 
     <ImageButton
         android:id="@+id/btnHelpId3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="270dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="15dp"
         android:background="@null"
         android:onClick="goHelp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toBottomOf="@+id/viewId2"
+        app:layout_constraintVertical_bias="0.981"
         app:srcCompat="@drawable/ic_help" />
+
 
     <View
         android:id="@+id/viewId2"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/separator"
         app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnImageBackScreenId3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <ImageButton
         android:id="@+id/btnImageBackScreenId3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="179dp"
         android:layout_marginBottom="5dp"
         android:background="@null"
         android:onClick="goBack"
         app:layout_constraintBottom_toTopOf="@+id/viewId2"
         app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
         app:srcCompat="@drawable/ic_arrow_back_android" />
-
 
     <TextView
         android:id="@+id/timeTaskId"
@@ -84,8 +85,8 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="271dp"
-        android:layout_height="255dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="70dp"
@@ -95,23 +96,22 @@
         app:layout_constraintEnd_toStartOf="@+id/timeTaskId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.546">
+        app:layout_constraintVertical_bias="0.467">
 
 
     </CalendarView>
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="202dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="259dp"
+        android:layout_width="330dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="5dp"
         android:text="@string/add_task"
+        android:textAlignment="center"
+        android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/viewId2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnImageBackScreenId3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -182,7 +182,7 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="178dp"
         android:layout_marginBottom="8dp"
-        android:text="Noti"
+        android:text="@string/noti"
         app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toStartOf="@+id/imageButton9"
         app:layout_constraintHorizontal_bias="0.0"

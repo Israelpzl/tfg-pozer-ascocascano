@@ -43,6 +43,10 @@
     <!--ADD PATIENT-->
     <string name="add_patient">AÑADIR PACIENTE</string>
     <string name="age">EDAD</string>
+    <string name="name_patient">NOMBRE PACIENTE</string>
+    <string name="progress">PROGRESO</string>
+    <string name="level">NIVEL 2</string>
+    <string name="play">JUGAR</string>
     <!--Task and Calendar-->
     <string name="list_Task">LISTA DE TAREAS</string>
     <string name="add_task">AÑADIR TAREAS</string>

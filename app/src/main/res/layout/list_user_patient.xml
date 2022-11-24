@@ -7,7 +7,7 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/button_back" >
+    app:cardBackgroundColor="@color/white" >
 
 
     <LinearLayout
@@ -48,26 +48,34 @@
                     android:text="PACIENTE 1"
                     android:textColor="@color/black" />
 
+                <LinearLayout
+                    android:layout_width="137dp"
+                    android:layout_height="71dp"
+                    android:layout_marginLeft="300dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/deleteBtn"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="200dp"
-                    android:backgroundTint="@color/button_red_cancel"
-                    app:srcCompat="@drawable/ic_delete" />
+                    <ImageButton
+                        android:id="@+id/deleteBtn"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="200dp"
+                        android:backgroundTint="@color/button_red_cancel"
+                        app:srcCompat="@drawable/ic_delete" />
 
-                <ImageButton
-                    android:id="@+id/editBtn"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="10dp"
-                    android:backgroundTint="@color/button_edit"
-                    app:srcCompat="@drawable/ic_edit" />
+                    <ImageButton
+                        android:id="@+id/editBtn"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="@color/button_edit"
+                        app:srcCompat="@drawable/ic_edit" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
-
 
 
         </RelativeLayout>

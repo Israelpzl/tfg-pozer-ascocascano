@@ -2,6 +2,7 @@ package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageButton addNoteBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +47,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
-
-        addNoteBtn = findViewById(R.id.addNotesId);
-        addNoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PersonalNotesActivity.this, AddNoteActivity.class));
-            }
-        });
-
+        recyclerView.setLayoutManager(new GridLayoutManager(PersonalNotesActivity.this,3));
 
         readData();
     }
@@ -84,7 +77,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
                     noteExist.setTime(date);
                     listNotes.add(noteExist);
                 }
-                listAdapterNotes = new ListAdapterNotes(getApplicationContext(),listNotes);
+                listAdapterNotes = new ListAdapterNotes(PersonalNotesActivity.this,listNotes);
                 recyclerView.setAdapter(listAdapterNotes);
                 listAdapterNotes.notifyDataSetChanged();
             }
@@ -102,6 +95,12 @@ public class PersonalNotesActivity extends AppCompatActivity {
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    public void goAddNote (View v){
+        Intent addNoteIntent = new Intent(this, AddNoteActivity.class);
+        addNoteIntent.putExtra("modeEdit",false);
+        startActivity(addNoteIntent);
     }
 
 

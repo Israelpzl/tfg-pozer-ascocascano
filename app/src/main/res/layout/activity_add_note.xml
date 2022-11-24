@@ -30,7 +30,7 @@
         android:background="@null"
         android:onClick="goBack"
         app:layout_constraintBottom_toTopOf="@+id/view5"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintEnd_toStartOf="@+id/tittleActivityAddNoteId"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tittleActivityAddNoteId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_note"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/tittleActivityAddNoteId"
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout

@@ -2,18 +2,21 @@ package es.leerconmonclick.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.leeconmonclick.PersonalNotesActivity;
+import com.example.leeconmonclick.AddContentActivity;
+import com.example.leeconmonclick.AddNoteActivity;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,87 +25,126 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyViewHolder>{
 
-    Context context;
-    ArrayList<Note> listNotes;
-    DatabaseReference databaseReference;
-    FirebaseAuth db = FirebaseAuth.getInstance();
+    private Context context;
+    private ArrayList<Note> mDataNote;
+    private LayoutInflater mInflater;
 
-    public ListAdapterNotes(Context context, ArrayList<Note> listNotes) {
+    private String userCollection;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth db = FirebaseAuth.getInstance();
+
+
+    public ListAdapterNotes(Context context, ArrayList<Note> mDataNote) {
+        this.mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.listNotes = listNotes;
-    }
-
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.note_view,parent,false));
+        this.mDataNote = mDataNote;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Note note = listNotes.get(position);
-        holder.titleOutput.setText(note.getTitle());
-        holder.descriptionOutput.setText(note.getDescription());
-        String formatedTime = DateFormat.getDateTimeInstance().format(note.getTime());
-        holder.dateOutput.setText(formatedTime);
+    public ListAdapterNotes.MyViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.note_view, null);
+        return new ListAdapterNotes.MyViewHolder(view);
+    }
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                PopupMenu menu = new PopupMenu(context, view);
-                menu.getMenu().add("BORRAR");
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        if(menuItem.getTitle().equals("BORRAR")){
-                            databaseReference = FirebaseDatabase.getInstance().getReference();
-                            FirebaseUser user = db.getCurrentUser();
-                            String userCollection = user.getEmail();
-                            String[] parts = userCollection.split("@");
-                            userCollection = parts[0];
-                            databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                @Override
-                                @SuppressLint("NotifyDataSetChanged")
-                                public void onSuccess(DataSnapshot dataSnapshot) {
-                                    for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
-                                        Long time = (Long) objDataSnapshot.child("time").getValue();
-                                        if(time == note.getTime()){
-                                            objDataSnapshot.getRef().removeValue();
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                        return true;
-                    }
-                });
-                menu.show();
-                return true;
-            }
-        });
+    @Override
+    public void onBindViewHolder( MyViewHolder holder, int position) {
+            holder.bindData(mDataNote.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return listNotes.size();
+        return mDataNote.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleOutput;
-        TextView descriptionOutput;
-        TextView dateOutput;
+        private TextView title;
+        private TextView description;
+        private TextView dateOutput;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private ImageButton editBtn, deleteBtn;
+
+         MyViewHolder( View itemView) {
             super(itemView);
-            titleOutput = itemView.findViewById(R.id.titleNote);
-            descriptionOutput = itemView.findViewById(R.id.descriptionNote);
-            dateOutput = itemView.findViewById(R.id.dateNote);
+
+            title = itemView.findViewById(R.id.tittleNoteId);
+            description = itemView.findViewById(R.id.descriptionNoteId);
+            editBtn = itemView.findViewById(R.id.btnEditNoteElementId);
+            deleteBtn = itemView.findViewById(R.id.btnDeleteNoteElementId);
+            //dateOutput = itemView.findViewById(R.id.dateNote);
         }
+
+        void bindData(final Note note)  {
+
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            title.setText(note.getTitle());
+            description.setText(note.getDescription());
+
+            FirebaseUser user = db.getCurrentUser();
+            userCollection = user.getEmail();
+            String[] parts = userCollection.split("@");
+            userCollection = parts[0];
+            userCollection = userCollection.toLowerCase();
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteNote(note);
+                }
+            });
+
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editNote(note);
+                }
+            });
+
+        }
+    }
+
+    private void deleteNote(Note note){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage("¿Quieres borrar el contenido?");
+        builder.setTitle("Borrado");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    @SuppressLint("NotifyDataSetChanged")
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
+                            Long time = (Long) objDataSnapshot.child("time").getValue();
+                            if(time == note.getTime()){
+                                objDataSnapshot.getRef().removeValue();
+                            }
+                        }
+                    }
+                });
+                Toast.makeText(context, "Contenido borrado con éxito", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void editNote(Note note){
+        Intent addIntent = new Intent(context, AddNoteActivity.class);
+        addIntent.putExtra("tittle", note.getTitle());
+        addIntent.putExtra("description", note.getDescription());
+        addIntent.putExtra("modeEdit", true);
+        context.startActivity(addIntent);
     }
 }

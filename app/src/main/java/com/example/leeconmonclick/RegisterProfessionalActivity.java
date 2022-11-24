@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,17 +35,11 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_professional);
+        setContentView(R.layout.activity_register_professional2);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    public void help(View v){
-        Intent helpIntent = new Intent(this, HelpActivity.class);
-        startActivity(helpIntent);
-    }
 
-    public void back(View v){
-        finish();
-    }
 
     public void createUser(View v){
         EditText email = findViewById(R.id.editTextTextPersonName4);
@@ -109,13 +104,6 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
             necesaryInfo();
         }
 
-    }
-
-    private void goHome(String email){
-        Intent i = new Intent(this, HomeProfesionalActivity.class);
-        i.putExtra("email",email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
     }
 
 
@@ -207,5 +195,21 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void goHome(String email){
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
+        i.putExtra("email",email);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void goBack(View v){
+        finish();
     }
 }

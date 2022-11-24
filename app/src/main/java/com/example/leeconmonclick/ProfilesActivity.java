@@ -14,23 +14,23 @@ public class ProfilesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profiles);
+        setContentView(R.layout.activity_profiles2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    public void user(View v){
+    public void goUser(View v){
         Intent helpIntent = new Intent(this, LoginPatient2Activity.class);
         startActivity(helpIntent);
         finish();
     }
 
-    public void professional(View v){
+    public void goProfessional(View v){
         Intent helpIntent = new Intent(this, LoginProfesionalActivity.class);
         startActivity(helpIntent);
         finish();
     }
 
-    public void help(View v){
+    public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
         finish();

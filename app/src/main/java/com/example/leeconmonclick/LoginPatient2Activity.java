@@ -43,6 +43,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_patient2);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -51,7 +52,6 @@ public class LoginPatient2Activity extends AppCompatActivity {
         btnLoginPatient = findViewById(R.id.BtnLoginPacientId);
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         btnLoginPatient.setOnClickListener(new View.OnClickListener() {
             @Override

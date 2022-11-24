@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyViewHolder>{
@@ -64,7 +65,7 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
 
         private TextView title;
         private TextView description;
-        private TextView dateOutput;
+        private TextView date;
 
         private ImageButton editBtn, deleteBtn;
 
@@ -75,7 +76,7 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
             description = itemView.findViewById(R.id.descriptionNoteId);
             editBtn = itemView.findViewById(R.id.btnEditNoteElementId);
             deleteBtn = itemView.findViewById(R.id.btnDeleteNoteElementId);
-            //dateOutput = itemView.findViewById(R.id.dateNote);
+            date = itemView.findViewById(R.id.timeNoteId);
         }
 
         void bindData(final Note note)  {
@@ -89,6 +90,8 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
             String[] parts = userCollection.split("@");
             userCollection = parts[0];
             userCollection = userCollection.toLowerCase();
+
+            date.setText(DateFormat.getDateTimeInstance().format(note.getTime()));
 
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

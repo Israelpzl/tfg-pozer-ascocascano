@@ -1,5 +1,6 @@
 package com.example.leeconmonclick;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -17,11 +18,14 @@ import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -47,6 +51,16 @@ public class SettingsActivity extends AppCompatActivity {
     private Context context= this;
     private String icon;
 
+    //Texts
+    private TextView titleText;
+    private TextView textName;
+    private TextView iconText;
+    private TextView daltoText;
+    private TextView syzeText;
+    private TextView saveText;
+    private TextView logOutText;
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,6 +80,14 @@ public class SettingsActivity extends AppCompatActivity {
         midSize = findViewById(R.id.toggleButtonMid);
         smallSize = findViewById(R.id.toggleButtonSmall);
 
+        titleText = findViewById(R.id.textView13);
+        textName = findViewById(R.id.textViewName);
+        iconText = findViewById(R.id.textViewIcon);
+        daltoText = findViewById(R.id.textViewDaltonism);
+        syzeText = findViewById(R.id.textViewSize);
+        saveText = findViewById(R.id.buttonSaveChanges);
+        logOutText = findViewById(R.id.buttonLogOut);
+
         user = db.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
@@ -76,6 +98,61 @@ public class SettingsActivity extends AppCompatActivity {
         getSettings();
         setIconProfesional();
 
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    userName.setTextSize(30);
+                    titleText.setTextSize(30);
+                    textName.setTextSize(30);
+                    iconText.setTextSize(30);
+                    daltoText.setTextSize(30);
+                    syzeText.setTextSize(30);
+                    saveText.setTextSize(30);
+                    logOutText.setTextSize(30);
+                    noDaltonic.setTextSize(30);
+                    daltonic.setTextSize(30);
+                    bigSize.setTextSize(30);
+                    midSize.setTextSize(30);
+                    smallSize.setTextSize(30);
+                }else if(size.equals("normal")){
+                    userName.setTextSize(20);
+                    titleText.setTextSize(20);
+                    textName.setTextSize(20);
+                    iconText.setTextSize(20);
+                    daltoText.setTextSize(20);
+                    syzeText.setTextSize(20);
+                    saveText.setTextSize(20);
+                    logOutText.setTextSize(20);
+                    noDaltonic.setTextSize(20);
+                    daltonic.setTextSize(20);
+                    bigSize.setTextSize(20);
+                    midSize.setTextSize(20);
+                    smallSize.setTextSize(20);
+                }else if(size.equals("peque")){
+                    userName.setTextSize(10);
+                    titleText.setTextSize(10);
+                    textName.setTextSize(10);
+                    iconText.setTextSize(10);
+                    daltoText.setTextSize(10);
+                    syzeText.setTextSize(10);
+                    saveText.setTextSize(10);
+                    logOutText.setTextSize(10);
+                    noDaltonic.setTextSize(10);
+                    daltonic.setTextSize(10);
+                    bigSize.setTextSize(10);
+                    midSize.setTextSize(10);
+                    smallSize.setTextSize(10);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -116,8 +193,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         databaseReference.child("Users").child(userCollection).child("icon").setValue(icon);
         databaseReference.child("Users").child(userCollection).child("nombre").setValue(name);
-        databaseReference.child("Users").child(userCollection).child("daltonismo").setValue(dalto);
-        databaseReference.child("Users").child(userCollection).child("tamanio").setValue(size);
+        databaseReference.child("Users").child(userCollection).child("sett").child("1").setValue(dalto);
+        databaseReference.child("Users").child(userCollection).child("sett").child("0").setValue(size);
 
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
         finish();
@@ -141,14 +218,14 @@ public class SettingsActivity extends AppCompatActivity {
                     femaleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
                 }
                 //Seccion para daltonismo
-                String daltonism = dataSnapshot.child("sett").child("2").getValue().toString();
+                String daltonism = dataSnapshot.child("sett").child("1").getValue().toString();
                 if(daltonism.equals("no")){
                     noDaltonic.setChecked(true);
                 }else{
                     daltonic.setChecked(true);
                 }
                 //Seccion tamaño
-                String size = dataSnapshot.child("sett").child("1").getValue().toString();
+                String size = dataSnapshot.child("sett").child("0").getValue().toString();
                 if(size.equals("grande")){
                     bigSize.setChecked(true);
                 }else if(size.equals("normal")){

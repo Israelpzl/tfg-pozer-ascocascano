@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +20,12 @@ import com.example.leeconmonclick.AddContentActivity;
 import com.example.leeconmonclick.CalendarActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import org.w3c.dom.Text;
@@ -38,6 +43,7 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
+    private FirebaseUser user;
 
 
 
@@ -86,8 +92,35 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
         void bindData(final Content content){
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
+            db = FirebaseAuth.getInstance();
             word.setText( content.getWord());
             Glide.with(context).load(content.getImg()).into(imgView);
+
+            user = db.getCurrentUser();
+            userCollection = user.getEmail();
+            String[] parts = userCollection.split("@");
+            userCollection = parts[0];
+            userCollection = userCollection.toLowerCase();
+
+            databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String size = snapshot.child("sett").child("0").getValue().toString();
+                    if(size.equals("grande")){
+                        word.setTextSize(30);
+                    }else if(size.equals("normal")){
+                        word.setTextSize(20);
+                    }else if(size.equals("peque")){
+                        word.setTextSize(10);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

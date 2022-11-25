@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,13 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private CircleImageView iconProfesional;
     private Context context = this;
 
+
+    private TextView btnPatients;
+    private TextView btnContent;
+    private TextView btnNotes;
+    private TextView btnDates;
+    private TextView btnSett;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +54,56 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         nameProfesional = findViewById(R.id.nameProfesionalId);
         iconProfesional = findViewById(R.id.iconProfesionalId);
 
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         String userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
+
+        btnPatients = findViewById(R.id.button15);
+        btnContent = findViewById(R.id.button16);
+        btnSett = findViewById(R.id.button19);
+        btnNotes = findViewById(R.id.button17);
+        btnDates = findViewById(R.id.button18);
+
+/*        databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+*//*                //Seccion para daltonismo
+                String daltonism = dataSnapshot.child("sett").child("2").getValue().toString();
+                if(daltonism.equals("no")){
+                    noDaltonic.setChecked(true);
+                }else{
+                    daltonic.setChecked(true);
+                }*//*
+                //Seccion tamaño
+                String size = dataSnapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    nameProfesional.setTextSize(30);
+                    btnPatients.setTextSize(30);
+                    btnContent.setTextSize(30);
+                    btnSett.setTextSize(30);
+                    btnNotes.setTextSize(30);
+                    btnDates.setTextSize(30);
+                }else if(size.equals("normal")){
+                    nameProfesional.setTextSize(20);
+                    btnPatients.setTextSize(20);
+                    btnContent.setTextSize(20);
+                    btnSett.setTextSize(20);
+                    btnNotes.setTextSize(20);
+                    btnDates.setTextSize(20);
+                }else if(size.equals("peque")){
+                    nameProfesional.setTextSize(10);
+                    btnPatients.setTextSize(10);
+                    btnContent.setTextSize(10);
+                    btnSett.setTextSize(10);
+                    btnNotes.setTextSize(10);
+                    btnDates.setTextSize(10);
+                }
+            }
+        });*/
 
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,6 +118,29 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                         Glide.with(context).load(dataSnapshot.getValue().toString()).into(iconProfesional);
                     }
                 });
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    nameProfesional.setTextSize(30);
+                    btnPatients.setTextSize(30);
+                    btnContent.setTextSize(30);
+                    btnSett.setTextSize(30);
+                    btnNotes.setTextSize(30);
+                    btnDates.setTextSize(30);
+                }else if(size.equals("normal")){
+                    nameProfesional.setTextSize(20);
+                    btnPatients.setTextSize(20);
+                    btnContent.setTextSize(20);
+                    btnSett.setTextSize(20);
+                    btnNotes.setTextSize(20);
+                    btnDates.setTextSize(20);
+                }else if(size.equals("peque")){
+                    nameProfesional.setTextSize(10);
+                    btnPatients.setTextSize(10);
+                    btnContent.setTextSize(10);
+                    btnSett.setTextSize(10);
+                    btnNotes.setTextSize(10);
+                    btnDates.setTextSize(10);
+                }
             }
 
             @Override

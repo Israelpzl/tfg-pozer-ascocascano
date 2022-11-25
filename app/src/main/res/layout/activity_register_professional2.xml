@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:onClick="createUser"
     tools:context=".RegisterProfessionalActivity">
 
     <ImageButton
@@ -75,8 +76,8 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="3dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/email"
+        android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
@@ -183,6 +184,7 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_style"
+        android:onClick="createUser"
         android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,7 +7,7 @@ public class User {
 
     private String email;
     private String nombre;
-    private String icono;
+    private String icon;
     private String tamanio;
     private String daltonismo;
     private ArrayList<Note> notas;
@@ -15,14 +15,14 @@ public class User {
     private String pass;
     private List<Task> taskList;
 
-    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList,String icono ) {
+    public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList,String icon ) {
         this.email = email;
         this.nombre = nombre;
         this.settings = settings;
         this.notas = notas;
         this.pass = pass;
         this.taskList = taskList;
-        this.icono = icono;
+        this.icon = icon;
     }
 
     public String getEmail() {
@@ -41,12 +41,12 @@ public class User {
         this.nombre = nombre;
     }
 
-    public String getIcono() {
-        return icono;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIcono(String icono) {
-        this.icono = icono;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getTamanio() {

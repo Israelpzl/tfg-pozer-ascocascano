@@ -133,6 +133,36 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         timeTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.timePopUpId);
         ImageButton editBtn = (ImageButton) taskPopUpView.findViewById(R.id.editBtnPopUpId);
         ImageButton deleteBtn = (ImageButton) taskPopUpView.findViewById(R.id.deleteBtnId);
+
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    descriptionTaskPopUp.setTextSize(30);
+                    tittleTaskPopUp.setTextSize(30);
+                    timeTaskPopUp.setTextSize(30);
+                }else if(size.equals("normal")){
+                    descriptionTaskPopUp.setTextSize(20);
+                    tittleTaskPopUp.setTextSize(20);
+                    dateTaskPopUp.setTextSize(20);
+                    timeTaskPopUp.setTextSize(20);
+                }else if(size.equals("peque")){
+                    descriptionTaskPopUp.setTextSize(10);
+                    tittleTaskPopUp.setTextSize(10);
+                    dateTaskPopUp.setTextSize(10);
+                    timeTaskPopUp.setTextSize(10);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

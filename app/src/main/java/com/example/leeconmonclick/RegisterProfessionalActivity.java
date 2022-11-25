@@ -66,7 +66,6 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         userCollection = userCollection.toLowerCase();
 
                         ArrayList<String> settings = new ArrayList<>();
-                        settings.add("0");
                         settings.add("normal");
                         settings.add("no");
 
@@ -77,14 +76,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         long createdTime = System.currentTimeMillis();
                         generateNote.setTime(createdTime);
 
-                        Note aux = new Note();
-                        aux.setTitle("Bienvenido de nuevo");
-                        aux.setDescription("Comeme el pito");
-                        long createdTime2 = System.currentTimeMillis();
-                        aux.setTime(createdTime2);
-
                         notas.add(generateNote);
-                        notas.add(aux);
 
                         User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null,"maleDoctor");
 

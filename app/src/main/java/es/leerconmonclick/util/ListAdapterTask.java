@@ -44,6 +44,7 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
+    private FirebaseUser user;
 
     final ListAdapterTask.OnItemClickListener listener;
 
@@ -97,6 +98,8 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
 
         void bindData(final Task task) throws ParseException {
 
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            db = FirebaseAuth.getInstance();
             SimpleDateFormat formatDay = new SimpleDateFormat("dd/MM/yyyy");
             Calendar calendar = Calendar.getInstance();
 
@@ -113,7 +116,6 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             Date timeToday = formatTime.parse(time);
             Date timeTask = formatTime.parse(task.getTime());
 
-
             if  ( (dateTask.equals(dateToday) || dateTask.before(dateToday)) && timeTask.before(timeToday)){
                 exclamation.setVisibility(View.VISIBLE);
 
@@ -129,6 +131,32 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(task);
+                }
+            });
+
+            user = db.getCurrentUser();
+            userCollection = user.getEmail();
+            String[] parts = userCollection.split("@");
+            userCollection = parts[0];
+            userCollection = userCollection.toLowerCase();
+
+            databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String size = snapshot.child("sett").child("0").getValue().toString();
+                    if(size.equals("grande")){
+                        tittleTask.setTextSize(30);
+                    }else if(size.equals("normal")){
+                        tittleTask.setTextSize(20);
+                    }else if(size.equals("peque")){
+                        tittleTask.setTextSize(10);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
 

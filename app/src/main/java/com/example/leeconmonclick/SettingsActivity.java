@@ -281,6 +281,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     private String setIconProfesional(){
 
+        databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                icon = dataSnapshot.child("icon").getValue().toString();
+            }
+        });
+
 
         
         maleDoctorIcon.setOnClickListener(new View.OnClickListener() {

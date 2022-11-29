@@ -8,49 +8,44 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/task_item"
-  >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+    app:cardBackgroundColor="@color/task_item">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:padding="6dp">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/descriptionTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:text="Tarea 1"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:textSize="20dp" />
 
+            <ImageView
+                android:id="@+id/exclamationImg"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
 
-                <TextView
-                    android:id="@+id/descriptionTask"
-                    android:layout_width="300dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="150dp"
+                app:srcCompat="@drawable/ic_exlamation" />
 
-                    android:text="Tarea 1"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:id="@+id/exclamationImg"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    app:srcCompat="@drawable/ic_exlamation" />
-
-
-            </LinearLayout>
 
         </RelativeLayout>
-    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

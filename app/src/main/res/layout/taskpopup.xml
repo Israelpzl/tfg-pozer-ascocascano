@@ -4,76 +4,64 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/task_item"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="301dp"
-        android:layout_marginLeft="50dp"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
 
         <TextView
             android:id="@+id/tittlePopUpId"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
             android:text="@string/tittle"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionPopUpId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descriptionPopUpId"
             android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tittlePopUpId"
             android:gravity="center"
             android:text="@string/description"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/datePopUpId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.57"
-            app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-            app:layout_constraintTop_toBottomOf="@+id/tittlePopUpId" />
+            android:textColor="@color/black" />
 
 
         <TextView
             android:id="@+id/datePopUpId"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@id/descriptionPopUpId"
+            android:gravity="center"
             android:text="@string/date"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/timePopUpId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionPopUpId" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/timePopUpId"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@id/datePopUpId"
             android:layout_marginBottom="15dp"
+            android:gravity="center"
             android:text="@string/time"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/editBtnPopUpId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-            app:layout_constraintTop_toBottomOf="@+id/datePopUpId" />
+            android:textColor="@color/black" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_below="@id/timePopUpId"
+            android:gravity="center"
             android:orientation="horizontal">
 
 
@@ -81,34 +69,22 @@
                 android:id="@+id/deleteBtnId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginRight="30dp"
                 android:backgroundTint="@color/button_red_cancel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.346"
-                app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-                app:layout_constraintTop_toBottomOf="@+id/timePopUpId"
-                app:srcCompat="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete" />
 
             <ImageButton
                 android:id="@+id/editBtnPopUpId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="100dp"
                 android:backgroundTint="@color/button_edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.346"
-                app:layout_constraintStart_toEndOf="@+id/imgTaskPopUpId"
-                app:layout_constraintTop_toBottomOf="@+id/timePopUpId"
-                app:srcCompat="@drawable/ic_edit" />
+                android:src="@drawable/ic_edit" />
 
 
         </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </androidx.cardview.widget.CardView>

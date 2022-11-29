@@ -74,11 +74,11 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
          MyViewHolder( View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.tittleNoteId);
-            description = itemView.findViewById(R.id.descriptionNoteId);
+            title = itemView.findViewById(R.id.titleNote);
+            description = itemView.findViewById(R.id.descriptionNote);
             editBtn = itemView.findViewById(R.id.btnEditNoteElementId);
             deleteBtn = itemView.findViewById(R.id.btnDeleteNoteElementId);
-            date = itemView.findViewById(R.id.timeNoteId);
+            date = itemView.findViewById(R.id.dateNote);
         }
 
         void bindData(final Note note)  {

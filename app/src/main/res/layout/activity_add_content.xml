@@ -155,7 +155,8 @@
             android:id="@+id/wordInputId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/word" />
+            android:hint="@string/word"
+            android:maxLength="20"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner

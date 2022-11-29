@@ -123,7 +123,7 @@
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="6dp"
         android:hint="@string/description"
-        android:maxLength="244"
+        android:maxLength="100"
         android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/dateTaskId"
         app:layout_constraintEnd_toEndOf="parent"

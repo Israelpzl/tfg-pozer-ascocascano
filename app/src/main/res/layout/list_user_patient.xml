@@ -10,76 +10,64 @@
     app:cardBackgroundColor="@color/white" >
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:padding="6dp">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iconProfesionalId"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/mono"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/namePatientItemId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/iconProfesionalId"
+                android:text="PACIENTE 1"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
             <LinearLayout
+                android:id="@+id/layoutbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/namePatientItemId"
+                android:gravity="right"
                 android:orientation="horizontal">
 
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iconProfesionalId"
-                    android:layout_width="96dp"
-                    android:layout_height="58dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/mono"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
-
-                <TextView
-                    android:id="@+id/namePatientItemId"
+                <ImageButton
+                    android:id="@+id/deleteBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="20dp"
-                    android:text="PACIENTE 1"
-                    android:textColor="@color/black" />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_red_cancel"
+                    app:srcCompat="@drawable/ic_delete" />
 
-                <LinearLayout
-                    android:layout_width="137dp"
-                    android:layout_height="71dp"
-                    android:layout_marginLeft="300dp"
-                    android:gravity="right"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/deleteBtn"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginLeft="200dp"
-                        android:backgroundTint="@color/button_red_cancel"
-                        app:srcCompat="@drawable/ic_delete" />
-
-                    <ImageButton
-                        android:id="@+id/editBtn"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="@color/button_edit"
-                        app:srcCompat="@drawable/ic_edit" />
-
-
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/editBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_edit"
+                    app:srcCompat="@drawable/ic_edit" />
 
 
             </LinearLayout>
 
 
+
+
         </RelativeLayout>
-    </LinearLayout>
+
 
 
 

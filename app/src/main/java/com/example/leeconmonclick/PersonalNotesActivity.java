@@ -47,7 +47,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(PersonalNotesActivity.this,3));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
 
         readData();
     }

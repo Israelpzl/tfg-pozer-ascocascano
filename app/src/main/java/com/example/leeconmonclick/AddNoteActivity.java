@@ -2,6 +2,7 @@ package com.example.leeconmonclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,9 @@ public class AddNoteActivity extends AppCompatActivity {
     private Bundle data;
     private EditText titleNote,descriptionNote;
     private TextView tittleActivityAddNote;
+    private Button saveNote;
+    private long date;
+    private String userCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         titleNote = findViewById(R.id.editTextTextPersonName5);
         descriptionNote = findViewById(R.id.editTextTextPersonName6);
-        Button saveNote = findViewById(R.id.savenoteBtn);
+        saveNote = findViewById(R.id.savenoteBtn);
         ArrayList<Note> notasNews = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -64,37 +68,69 @@ public class AddNoteActivity extends AppCompatActivity {
         saveNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Note note = new Note();
-                note.setTitle(titleNote.getText().toString());
-                note.setDescription(descriptionNote.getText().toString());
-                long createdTime = System.currentTimeMillis();
-                note.setTime(createdTime);
 
-
-                String userCollection = user.getEmail();
+                userCollection = user.getEmail();
                 String[] parts = userCollection.split("@");
                 userCollection = parts[0];
 
-                String finalUserCollection = userCollection;
+
                 databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                     @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
+                    public void onSuccess(DataSnapshot dataSnapshot){
 
+                        databaseReference.child("Users").child(userCollection).child("notas").removeValue();
+                        int cont = 0;
                         for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
-                            Note notaNew = new Note();
-                            notaNew.setTitle((String) objDataSnapshot.child("title").getValue());
-                            notaNew.setDescription((String) objDataSnapshot.child("description").getValue());
-                            notaNew.setTime((Long) objDataSnapshot.child("time").getValue());
-                            notasNews.add(notaNew);
+                            Note note = new Note();
+                            note.setTitle((String) objDataSnapshot.child("title").getValue());
+                            note.setDescription((String) objDataSnapshot.child("description").getValue());
+                            note.setTime((Long) objDataSnapshot.child("time").getValue());
+                            databaseReference.child("Users").child(userCollection).child("notas").child(cont+"").setValue(note);
+                            cont++;
                         }
-                        notasNews.add(note);
-                        databaseReference.child("Users").child(finalUserCollection).child("notas").removeValue();
-                        databaseReference.child("Users").child(finalUserCollection).child("notas").setValue(notasNews);
+
+                        Note newNote = new Note();
+                        newNote.setTitle(titleNote.getText().toString());
+                        newNote.setDescription(descriptionNote.getText().toString());
+
+                        if (data.getBoolean("modeEdit")){
+                            removeNote();
+                            newNote.setTime(date);
+                        }else{
+                            long createdTime = System.currentTimeMillis();
+                            newNote.setTime(createdTime);
+                        }
+                        databaseReference.child("Users").child(userCollection).child("notas").child(cont+"").setValue(newNote).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                if (data.getBoolean("modeEdit")){
+                                    Toast.makeText(getApplicationContext(),"Nota editada correctamente",Toast.LENGTH_LONG).show();
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"Nota guardada correctamente",Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        });
+
                     }
                 });
 
-                Toast.makeText(getApplicationContext(), "Nota guardada", Toast.LENGTH_LONG).show();
                 finish();
+            }
+        });
+    }
+
+    private void removeNote() {
+
+        databaseReference.child("Users").child(userCollection).child("notas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot objDataSnapshot : dataSnapshot.getChildren()){
+                    Long time = (Long) objDataSnapshot.child("time").getValue();
+                    if(time == date){
+                        objDataSnapshot.getRef().removeValue();
+                    }
+                }
             }
         });
     }
@@ -104,6 +140,8 @@ public class AddNoteActivity extends AppCompatActivity {
         tittleActivityAddNote = findViewById(R.id.tittleActivityAddNoteId);
         tittleActivityAddNote.setText("EDITAR NOTA");
         titleNote.setText(data.getString("tittle"));
+        date = data.getLong("date");
+        saveNote.setText("Editar");
         descriptionNote.setText(data.getString("description"));
 
     }

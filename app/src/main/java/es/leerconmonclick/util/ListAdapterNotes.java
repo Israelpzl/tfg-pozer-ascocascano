@@ -177,6 +177,7 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
         Intent addIntent = new Intent(context, AddNoteActivity.class);
         addIntent.putExtra("tittle", note.getTitle());
         addIntent.putExtra("description", note.getDescription());
+        addIntent.putExtra("date",note.getTime());
         addIntent.putExtra("modeEdit", true);
         context.startActivity(addIntent);
     }

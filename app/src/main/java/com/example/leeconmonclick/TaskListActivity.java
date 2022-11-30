@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkManager;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -20,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -116,7 +113,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     }
 
     public void goCalendar (View v){
-        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        Intent calendarIntent = new Intent(this, AddTaskctivity.class);
         calendarIntent.putExtra("modeEdit",false);
         startActivity(calendarIntent);
     }
@@ -193,7 +190,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     }
 
     private void goEdit(Task task){
-        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        Intent calendarIntent = new Intent(this, AddTaskctivity.class);
         calendarIntent.putExtra("id", task.getId());
         calendarIntent.putExtra("tittle", task.getTittle());
         calendarIntent.putExtra("description", task.getDescription());

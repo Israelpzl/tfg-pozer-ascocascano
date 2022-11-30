@@ -33,8 +33,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/iconProfesionalId"
                 android:text="PACIENTE 1"
-                android:textSize="20dp"
                 android:textColor="@color/black"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <LinearLayout

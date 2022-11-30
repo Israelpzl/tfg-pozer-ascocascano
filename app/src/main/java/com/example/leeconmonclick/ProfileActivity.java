@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void goCalendar (View v){
-        Intent calendarIntent = new Intent(this, CalendarActivity.class);
+        Intent calendarIntent = new Intent(this, AddTaskctivity.class);
         calendarIntent.putExtra("modeEdit",false);
         startActivity(calendarIntent);
     }

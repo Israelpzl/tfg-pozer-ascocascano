@@ -2,9 +2,9 @@ package es.leerconmonclick.util;
 
 
 public class Note {
-    String title;
-    String description;
-    long time;
+    private String title;
+    private String description;
+    private long time;
 
     public String getTitle() {
         return title;

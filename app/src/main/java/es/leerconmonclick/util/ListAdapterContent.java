@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AddContentActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.AddContentActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -1,8 +1,7 @@
-package com.example.leeconmonclick;
+package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,10 +10,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

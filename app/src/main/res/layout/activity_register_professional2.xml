@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:onClick="createUser"
-    tools:context=".RegisterProfessionalActivity">
+    tools:context=".professional.leeconmonclick.professional.RegisterProfessionalActivity">
 
     <ImageButton
         android:id="@+id/imageButton16"

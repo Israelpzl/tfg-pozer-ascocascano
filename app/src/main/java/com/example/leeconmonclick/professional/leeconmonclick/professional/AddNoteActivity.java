@@ -1,4 +1,4 @@
-package com.example.leeconmonclick;
+package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -1,115 +1,143 @@
-package com.example.leeconmonclick;
+package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import es.leerconmonclick.util.Note;
-import es.leerconmonclick.util.User;
 
-public class RegisterProfessionalActivity extends AppCompatActivity {
+public class LoginProfesionalActivity extends AppCompatActivity {
 
-    AwesomeValidation awesomeValidation;
-    DatabaseReference databaseReference;
+    private AwesomeValidation awesomeValidation;
+    private FirebaseAuth firebaseAuth;
+    private Switch remeberSession;
+    private EditText email,pass;
+
+    private static final String STRING_PREFERENCES = "leeconmonclick.login";
+    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_professional2);
+        setContentView(R.layout.activity_login_professional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        remeberSession = (Switch) findViewById(R.id.switch_remember);
+        email = findViewById(R.id.editTextTextPersonName);
+        pass = findViewById(R.id.editTextTextPassword);
     }
 
+    public void help(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
 
+    public void register(View v){
+        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
+        startActivity(helpIntent);
+    }
 
-    public void createUser(View v){
-        EditText email = findViewById(R.id.editTextTextPersonName4);
-        EditText pass = findViewById(R.id.editTextTextPassword4);
+    public void login (View v){
+
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
-        awesomeValidation.addValidation(this,R.id.editTextTextPassword4, ".{6,}", R.string.error_pass);
-        awesomeValidation.addValidation(this, R.id.editTextTextPassword5, R.id.editTextTextPassword4, R.string.error_pass_confirmation);
+        awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
 
+        if (awesomeValidation.validate()){
 
-        if(awesomeValidation.validate()){
-            FirebaseAuth db = FirebaseAuth.getInstance();
-
-            db.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference();
+                    if (task.isSuccessful()){
 
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
                         userCollection = userCollection.toLowerCase();
-
-                        ArrayList<String> settings = new ArrayList<>();
-                        settings.add("normal");
-                        settings.add("no");
-
-                        ArrayList<Note> notas = new ArrayList<>();
-                        Note generateNote = new Note();
-                        generateNote.setTitle("Bienvenido");
-                        generateNote.setDescription("Aqui podras guardar tus notas personales");
-                        long createdTime = System.currentTimeMillis();
-                        generateNote.setTime(createdTime);
-
-                        notas.add(generateNote);
-
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null,"maleDoctor");
-
-                        databaseReference.child("Users").child(userCollection).setValue(usuario);
-
-                        goHome(userCollection);
-                        finish();
-
-                        succesCreation();
-                    }else {
+                        goHomeProfesional(userCollection);
+                    }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                         dameToastdeerror(errorCode);
                     }
                 }
             });
-        }else{
-            necesaryInfo();
         }
-
     }
 
+    private void goHomeProfesional(String name){
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
 
-    public void succesCreation(){
-        Toast.makeText(getApplicationContext(),"Usuario creado correctamente",Toast.LENGTH_LONG).show();
+        /*
+        databaseReference.child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User u = new User(
+                        snapshot.child("nombre").getValue().toString(),
+                        snapshot.child("email").getValue().toString(),
+                        "pass",
+                        null
+                );
+
+                i.putExtra("userProfesional", (Parcelable) u);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+         */
+
+        saveStateSession();
+        startActivity(i);
+        finish();
     }
 
-    public void necesaryInfo(){
-        Toast.makeText(getApplicationContext(),"Complete todos los campos",Toast.LENGTH_LONG).show();
+    public void rememberPass(View v){
+        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void back(View v){
+        finish();
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
+    }
+    public boolean getStateSession(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+         return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);
     }
 
     private void dameToastdeerror(String error) {
-        EditText email = findViewById(R.id.editTextTextPersonName4);
-        EditText pass = findViewById(R.id.editTextTextPassword4);
+        EditText email = findViewById(R.id.editTextTextPersonName);
+        EditText pass = findViewById(R.id.editTextTextPassword);
         switch (error) {
 
             case "ERROR_INVALID_CUSTOM_TOKEN":
@@ -187,21 +215,5 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    private void goHome(String email){
-        Intent i = new Intent(this, HomeProfesionalActivity.class);
-        i.putExtra("email",email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
-    }
-
-    public void goHelp(View v){
-        Intent helpIntent = new Intent(this, HelpActivity.class);
-        startActivity(helpIntent);
-    }
-
-    public void goBack(View v){
-        finish();
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".LoginPatient2Activity">
+    tools:context=".patient.LoginPatient2Activity">
 
     <Switch
         android:id="@+id/switch_remember1"

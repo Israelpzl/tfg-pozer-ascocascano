@@ -1,4 +1,4 @@
-package com.example.leeconmonclick;
+package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;

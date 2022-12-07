@@ -1,4 +1,4 @@
-package com.example.leeconmonclick;
+package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

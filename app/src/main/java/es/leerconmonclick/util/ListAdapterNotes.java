@@ -15,8 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.leeconmonclick.AddContentActivity;
-import com.example.leeconmonclick.AddNoteActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.AddNoteActivity;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

@@ -13,15 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
-            android:name=".AddNoteActivity"
+            android:name=".professional.leeconmonclick.professional.AddNoteActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".PersonalNotesActivity"
+            android:name=".professional.leeconmonclick.professional.PersonalNotesActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".HomeProfesionalActivity"
+            android:name=".professional.leeconmonclick.professional.HomeProfesionalActivity"
             android:exported="false"
             android:screenOrientation="landscape"  />
         <activity
@@ -29,35 +29,31 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".HomePatientActivity"
+            android:name=".patient.HomePatientActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".LoginPatient2Activity"
+            android:name=".patient.LoginPatient2Activity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AddPatientsActivity"
+            android:name=".professional.leeconmonclick.professional.AddPatientsActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ContentListActivity"
+            android:name=".professional.leeconmonclick.professional.ContentListActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AddContentActivity"
+            android:name=".professional.leeconmonclick.professional.AddContentActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".TaskListActivity"
+            android:name=".professional.leeconmonclick.professional.TaskListActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AddTaskctivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ProfileActivity"
+            android:name=".professional.leeconmonclick.professional.AddTaskctivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -65,15 +61,11 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PatientsPrincipal"
+            android:name=".professional.leeconmonclick.professional.RegisterProfessionalActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".RegisterProfessionalActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".LoginProfesionalActivity"
+            android:name=".professional.leeconmonclick.professional.LoginProfesionalActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

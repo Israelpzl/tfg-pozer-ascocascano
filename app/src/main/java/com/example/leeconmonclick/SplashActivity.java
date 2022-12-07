@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
                         finish();
                     }else{
-                        startActivity(new Intent(getApplicationContext(),HomeProfesionalActivity.class));
+                        startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
                         finish();
                     }
 

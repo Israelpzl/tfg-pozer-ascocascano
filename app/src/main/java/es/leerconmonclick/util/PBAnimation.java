@@ -7,8 +7,7 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.leeconmonclick.MainActivity;
-import com.example.leeconmonclick.PersonalNotesActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PersonalNotesActivity;
 
 public class PBAnimation extends Animation {
 

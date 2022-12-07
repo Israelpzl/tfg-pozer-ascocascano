@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.leeconmonclick.patient.LoginPatient2Activity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.LoginProfesionalActivity;
+
 public class ProfilesActivity extends AppCompatActivity {
 
 

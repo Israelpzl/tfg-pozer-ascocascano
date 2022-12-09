@@ -2,15 +2,19 @@ package com.example.leeconmonclick;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +72,10 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        final ConstraintLayout constraintLayout;
+
+        constraintLayout =  findViewById(R.id.settings);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -146,6 +154,11 @@ public class SettingsActivity extends AppCompatActivity {
                     midSize.setTextSize(10);
                     smallSize.setTextSize(10);
                 }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    logOutText.setBackgroundResource(R.color.butto_red_tritano);
+                }
             }
 
             @Override
@@ -173,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(noDaltonic.isChecked()){
             dalto = "no";
         }else if(daltonic.isChecked()){
-            dalto = "acromatico";
+            dalto = "tritanopia";
         }else{
             dalto = "no";
         }

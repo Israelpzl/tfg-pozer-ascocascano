@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
+    android:id="@+id/note_view"
     android:background="@color/task_item">
 
     <TextView

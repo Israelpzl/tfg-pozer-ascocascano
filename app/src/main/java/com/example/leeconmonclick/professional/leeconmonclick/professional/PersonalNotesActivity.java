@@ -2,6 +2,7 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,8 +37,11 @@ public class PersonalNotesActivity extends AppCompatActivity {
     private ListAdapterNotes listAdapterNotes;
     private RecyclerView recyclerView;
     private ImageButton addNoteBtn;
+    private String userCollection;
+    private FirebaseUser user;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +52,30 @@ public class PersonalNotesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
 
-        readData();
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.personal_notes);
+
+        user = db.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void readData(){

@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leeconmonclick.professional.leeconmonclick.professional.AddNoteActivity;
@@ -67,6 +69,7 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
         private TextView title;
         private TextView description;
         private TextView date;
+        final RelativeLayout relativeLayout;
 
         private ImageButton editBtn, deleteBtn;
 
@@ -78,12 +81,12 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
             editBtn = itemView.findViewById(R.id.btnEditNoteElementId);
             deleteBtn = itemView.findViewById(R.id.btnDeleteNoteElementId);
             date = itemView.findViewById(R.id.dateNote);
+            relativeLayout =  itemView.findViewById(R.id.note_view);
         }
 
         void bindData(final Note note)  {
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
-
 
             title.setText(note.getTitle());
             description.setText(note.getDescription());
@@ -111,6 +114,12 @@ public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyVi
                         title.setTextSize(10);
                         description.setTextSize(10);
                         date.setTextSize(10);
+                    }
+                    String dalto = snapshot.child("sett").child("1").getValue().toString();
+                    if(dalto.equals("tritanopia")){
+                        relativeLayout.setBackgroundResource(R.color.task_item_tritano);
+                        editBtn.setBackgroundResource(R.color.button_edit_tritano);
+                        deleteBtn.setBackgroundResource(R.color.butto_red_tritano);
                     }
                 }
 

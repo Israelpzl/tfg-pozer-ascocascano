@@ -16,4 +16,5 @@
 <!--    Daltonic-->
     <color name="background_tritano">#275960</color>
     <color name="butto_red_tritano">#D32727</color>
+    <color name="button_back_tritano">#95929D</color>
 </resources>

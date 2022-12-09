@@ -2,7 +2,9 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,11 +48,15 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private TextView btnDates;
     private TextView btnSett;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_profesional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout = findViewById(R.id.home_profesional);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -71,43 +77,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         btnSett = findViewById(R.id.button19);
         btnNotes = findViewById(R.id.button17);
         btnDates = findViewById(R.id.button18);
-
-/*        databaseReference.child("Users").child(userCollection).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-*//*                //Seccion para daltonismo
-                String daltonism = dataSnapshot.child("sett").child("2").getValue().toString();
-                if(daltonism.equals("no")){
-                    noDaltonic.setChecked(true);
-                }else{
-                    daltonic.setChecked(true);
-                }*//*
-                //Seccion tamaño
-                String size = dataSnapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    nameProfesional.setTextSize(30);
-                    btnPatients.setTextSize(30);
-                    btnContent.setTextSize(30);
-                    btnSett.setTextSize(30);
-                    btnNotes.setTextSize(30);
-                    btnDates.setTextSize(30);
-                }else if(size.equals("normal")){
-                    nameProfesional.setTextSize(20);
-                    btnPatients.setTextSize(20);
-                    btnContent.setTextSize(20);
-                    btnSett.setTextSize(20);
-                    btnNotes.setTextSize(20);
-                    btnDates.setTextSize(20);
-                }else if(size.equals("peque")){
-                    nameProfesional.setTextSize(10);
-                    btnPatients.setTextSize(10);
-                    btnContent.setTextSize(10);
-                    btnSett.setTextSize(10);
-                    btnNotes.setTextSize(10);
-                    btnDates.setTextSize(10);
-                }
-            }
-        });*/
 
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
@@ -145,6 +114,15 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     btnNotes.setTextSize(10);
                     btnDates.setTextSize(10);
                 }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    btnPatients.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnContent.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnSett.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnNotes.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnDates.setBackgroundResource(R.drawable.button_style_tritano);
+                }
             }
 
             @Override
@@ -152,12 +130,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
             }
         });
-
-
-    }
-
-    public void getIcon(){
-
 
 
     }

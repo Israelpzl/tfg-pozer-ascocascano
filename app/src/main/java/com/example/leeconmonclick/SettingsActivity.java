@@ -157,7 +157,8 @@ public class SettingsActivity extends AppCompatActivity {
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
-                    logOutText.setBackgroundResource(R.color.butto_red_tritano);
+                    logOutText.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
                 }
             }
 

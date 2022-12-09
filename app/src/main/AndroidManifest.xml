@@ -25,7 +25,7 @@
             android:exported="false"
             android:screenOrientation="landscape"  />
         <activity
-            android:name=".ListPatientActivity"
+            android:name=".professional.leeconmonclick.professional.ListPatientActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -53,7 +53,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".professional.leeconmonclick.professional.AddTaskctivity"
+            android:name=".professional.leeconmonclick.professional.AddTaskActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

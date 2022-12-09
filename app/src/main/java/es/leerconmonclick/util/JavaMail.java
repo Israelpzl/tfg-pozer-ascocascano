@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.leeconmonclick.ListPatientActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.ListPatientActivity;
 
 import java.util.Properties;
 

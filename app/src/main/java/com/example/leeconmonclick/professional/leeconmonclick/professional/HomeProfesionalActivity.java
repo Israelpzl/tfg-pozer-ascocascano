@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
-import com.example.leeconmonclick.ListPatientActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
 import com.example.leeconmonclick.SettingsActivity;

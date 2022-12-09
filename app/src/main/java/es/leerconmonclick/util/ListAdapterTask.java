@@ -116,12 +116,10 @@ public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHo
             Date timeToday = formatTime.parse(time);
             Date timeTask = formatTime.parse(task.getTime());
 
-            if  ( (dateTask.equals(dateToday) || dateTask.before(dateToday)) && timeTask.before(timeToday)){
+            if (dateTask.before(dateToday)){
                 exclamation.setVisibility(View.VISIBLE);
-
-            }else{
-                exclamation.setVisibility(View.GONE);
-
+            }else if(timeTask.before(timeToday) &&  dateTask.equals(dateToday)){
+                exclamation.setVisibility(View.VISIBLE);
             }
 
             tittleTask.setText(task.getTittle());

@@ -115,7 +115,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     }
 
     public void goCalendar (View v){
-        Intent calendarIntent = new Intent(this, AddTaskctivity.class);
+        Intent calendarIntent = new Intent(this, AddTaskActivity.class);
         calendarIntent.putExtra("modeEdit",false);
         startActivity(calendarIntent);
     }
@@ -192,7 +192,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     }
 
     private void goEdit(Task task){
-        Intent calendarIntent = new Intent(this, AddTaskctivity.class);
+        Intent calendarIntent = new Intent(this, AddTaskActivity.class);
         calendarIntent.putExtra("id", task.getId());
         calendarIntent.putExtra("tittle", task.getTittle());
         calendarIntent.putExtra("description", task.getDescription());

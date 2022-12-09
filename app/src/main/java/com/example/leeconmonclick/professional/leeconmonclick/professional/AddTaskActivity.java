@@ -40,7 +40,7 @@ import java.util.UUID;
 import es.leerconmonclick.util.Task;
 import es.leerconmonclick.util.WorkManagerNoti;
 
-public class AddTaskctivity extends AppCompatActivity implements Comparator<Task> {
+public class AddTaskActivity extends AppCompatActivity implements Comparator<Task> {
 
     private Bundle data;
     private TextView  taskDate, taskTime;

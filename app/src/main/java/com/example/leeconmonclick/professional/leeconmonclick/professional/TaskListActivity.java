@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkManager;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,11 +49,13 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     private RecyclerView recyclerView;
     private ListAdapterTask listAdapterTask;
     private String userCollection;
+    private StorageReference storageReference;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
     private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +65,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         taskItems = new ArrayList<>();
         db = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         recyclerView = findViewById(R.id.listTaskRecycleView);
         recyclerView.setHasFixedSize(true);
@@ -68,6 +73,25 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
 
        readData();
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.taskList);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void readData(){

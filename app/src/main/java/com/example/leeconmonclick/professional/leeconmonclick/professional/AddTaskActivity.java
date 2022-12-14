@@ -3,9 +3,11 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.work.Data;
 import androidx.work.WorkManager;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -29,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,18 +47,20 @@ import es.leerconmonclick.util.WorkManagerNoti;
 public class AddTaskActivity extends AppCompatActivity implements Comparator<Task> {
 
     private Bundle data;
-    private TextView  taskDate, taskTime;
+    private TextView  taskDate, taskTime,title,saveText,cancelText;
     private EditText taskDescription,taskTittle;
     private String date,time,userCollection;
     private  Calendar calendar,c;
 
     private Switch noty;
     private int contador;
+    private StorageReference storageReference;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +80,22 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         taskTime = (TextView) findViewById(R.id.timeTaskId);
         taskTittle = (EditText) findViewById(R.id.textView12);
         taskDescription = (EditText) findViewById(R.id.descriptionTaskId);
+        title = findViewById(R.id.tittleActivityAddNoteId);
         noty =(Switch) findViewById(R.id.switch1);
+        saveText = findViewById(R.id.button6);
+        cancelText = findViewById(R.id.button7);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        FirebaseUser user = db.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.tittleTaskId);
 
         date = day + "/" + month + "/" + year;
         if (Integer.toString(minuteDay).length() == 1){
@@ -108,6 +128,45 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                 e.printStackTrace();
             }
         }
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    taskDate.setTextSize(30);
+                    taskTime.setTextSize(30);
+                    taskTittle.setTextSize(30);
+                    taskDescription.setTextSize(30);
+                    title.setTextSize(30);
+                }else if(size.equals("normal")){
+                    taskDate.setTextSize(20);
+                    taskTime.setTextSize(20);
+                    taskTittle.setTextSize(20);
+                    taskDescription.setTextSize(20);
+                    title.setTextSize(20);
+                }else if(size.equals("peque")){
+                    taskDate.setTextSize(10);
+                    taskTime.setTextSize(10);
+                    taskTittle.setTextSize(10);
+                    taskDescription.setTextSize(10);
+                    title.setTextSize(10);
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    cancelText.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 
@@ -139,13 +198,6 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
     }
 
     public void saveTask (View v){
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        FirebaseUser user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
 
         databaseReference.child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)

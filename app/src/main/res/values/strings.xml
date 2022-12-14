@@ -30,7 +30,7 @@
     <string name="size_text_big">GRANDE</string>
     <string name="size_text_mid">MEDIANO</string>
     <string name="size_text_small">PEQUEÑO</string>
-    <string name="acromatic">ACROMÁTICO</string>
+    <string name="acromatic">TRITANOPIA</string>
     <string name="nothing">NINGUNO</string>
     <string name="log_out">CERRAR SESIÓN</string>
     <string name="save_changes">GUARDAR CAMBIOS</string>

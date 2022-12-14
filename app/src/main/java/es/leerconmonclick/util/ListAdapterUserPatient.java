@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +19,12 @@ import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.AddPatientsActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -34,6 +39,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
+    private String userCollection;
 
 
     public ListAdapterUserPatient(List<UserPatient> itemList, Context context){
@@ -82,6 +88,37 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
 
             Glide.with(context).load(userPatient.getIcon()).into(circleImageView);
 
+            FirebaseUser user = db.getCurrentUser();
+            userCollection = user.getEmail();
+            String[] parts = userCollection.split("@");
+            userCollection = parts[0];
+            userCollection = userCollection.toLowerCase();
+
+            databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String size = snapshot.child("sett").child("0").getValue().toString();
+                    if(size.equals("grande")){
+                        namePatientView.setTextSize(30);
+                    }else if(size.equals("normal")){
+                        namePatientView.setTextSize(20);
+                    }else if(size.equals("peque")){
+                        namePatientView.setTextSize(10);
+                    }
+                    String dalto = snapshot.child("sett").child("1").getValue().toString();
+                    if(dalto.equals("tritanopia")){
+                        editBtn.setBackgroundResource(R.color.button_edit_tritano);
+                        deleteBtn.setBackgroundResource(R.color.butto_red_tritano);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,6 +132,8 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                     deleteUserPatient(userPatient);
                 }
             });
+
+
         }
     }
 

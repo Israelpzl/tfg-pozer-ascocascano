@@ -19,4 +19,5 @@
     <color name="button_back_tritano">#95929D</color>
     <color name="button_edit_tritano">#497C86</color>
     <color name="task_item_tritano">#e1e4f5</color>
+    <color name="background_notes">#A79AA6</color>
 </resources>

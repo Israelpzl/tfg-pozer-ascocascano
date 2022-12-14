@@ -7,7 +7,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,8 +37,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -65,12 +71,17 @@ public class AddContentActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private TextInputEditText word;
+    private TextView title,imageText,saveButt,cancelButt;
     private Context context;
     private Bundle data;
     private ArrayAdapter<String> adapterSpinner;
     private StorageReference filePath;
+    private String userCollection;
+    private FirebaseUser user;
+    private FirebaseAuth db = FirebaseAuth.getInstance();
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,53 @@ public class AddContentActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinnerId);
         imageView = (ImageView) findViewById(R.id.imgViewId);
         word = (TextInputEditText) findViewById(R.id.wordInputId);
+        title = findViewById(R.id.textView11);
+        saveButt = findViewById(R.id.btnSaveId);
+        cancelButt = findViewById(R.id.btnBackId);
+
+        user = db.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.addContentLayoutId);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    title.setTextSize(30);
+                    word.setTextSize(30);
+                    saveButt.setTextSize(30);
+                    cancelButt.setTextSize(30);
+                }else if(size.equals("normal")){
+                    title.setTextSize(20);
+                    word.setTextSize(20);
+                    saveButt.setTextSize(20);
+                    cancelButt.setTextSize(20);
+                }else if(size.equals("peque")){
+                    title.setTextSize(10);
+                    word.setTextSize(10);
+                    saveButt.setTextSize(10);
+                    cancelButt.setTextSize(10);
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    cancelButt.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveButt.setBackgroundResource(R.drawable.button_style_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         String[] opciones = {"-", "El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"};
 

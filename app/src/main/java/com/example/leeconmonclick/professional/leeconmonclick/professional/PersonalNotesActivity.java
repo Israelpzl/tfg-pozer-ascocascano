@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
     private ImageButton addNoteBtn;
     private String userCollection;
     private FirebaseUser user;
+    private StorageReference storageReference;
 
 
     @SuppressLint("MissingInflatedId")
@@ -52,8 +55,13 @@ public class PersonalNotesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.personal_notes);
+
+        readData();
 
         user = db.getCurrentUser();
         userCollection = user.getEmail();

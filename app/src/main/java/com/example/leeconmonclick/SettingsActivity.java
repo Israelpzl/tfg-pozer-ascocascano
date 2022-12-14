@@ -74,7 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final ConstraintLayout constraintLayout;
-
         constraintLayout =  findViewById(R.id.settings);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();

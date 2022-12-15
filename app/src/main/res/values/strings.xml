@@ -19,4 +19,41 @@
     <string name="name">NOMBRE</string>
     <string name="code">CODIGO</string>
     <string name="repeat_pass">REPETIR CONTRASEÑA</string>
+    <string name="error_mail">EMAIL NO VALIDO</string>
+    <string name="error_pass">CONTRASEÑA NO VALIDA</string>
+    <string name="add">Añadir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="error_pass_confirmation">LAS CONTRASEÑAS NO SON IGUALES</string>
+    <string name="icon">ICONO</string>
+    <string name="datonisc">DALTONISMO</string>
+    <string name="size_text">TAMAÑO TEXTO</string>
+    <string name="size_text_big">GRANDE</string>
+    <string name="size_text_mid">MEDIANO</string>
+    <string name="size_text_small">PEQUEÑO</string>
+    <string name="acromatic">TRITANOPIA</string>
+    <string name="nothing">NINGUNO</string>
+    <string name="log_out">CERRAR SESIÓN</string>
+    <string name="save_changes">GUARDAR CAMBIOS</string>
+    <string name="settings">AJUSTES</string>
+    <string name="add_note">AÑADIR NOTA</string>
+    <!--CONTENT-->
+    <string name="personalize_content">PERSONALIZAR CONTENIDO</string>
+    <string name="img">IMÁGENES</string>
+    <string name="word">Palabra</string>
+    <!--ADD PATIENT-->
+    <string name="add_patient">AÑADIR PACIENTE</string>
+    <string name="age">EDAD</string>
+    <string name="name_patient">NOMBRE PACIENTE</string>
+    <string name="progress">PROGRESO</string>
+    <string name="level">NIVEL 2</string>
+    <string name="play">JUGAR</string>
+    <!--Task and Calendar-->
+    <string name="list_Task">LISTA DE TAREAS</string>
+    <string name="add_task">AÑADIR TAREAS</string>
+    <string name="noti">NOTI</string>
+    <string name="date">FECHA</string>
+    <string name="time">TIEMPO</string>
+    <string name="tittle">TÍTULO</string>
+    <string name="description">DESCRIPCIÓN</string>
+    <string name="clock">RELOJ</string>
 </resources>

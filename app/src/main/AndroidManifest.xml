@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.leeconmonclick">
+    package="com.example.leeconmonclick" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -8,13 +11,61 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_leerconmonclick_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
-            android:name=".RegisterProfessionalActivity"
+            android:name=".professional.leeconmonclick.professional.AddNoteActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".LoginProfesionalActivity"
+            android:name=".professional.leeconmonclick.professional.PersonalNotesActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".professional.leeconmonclick.professional.HomeProfesionalActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"  />
+        <activity
+            android:name=".professional.leeconmonclick.professional.ListPatientActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".patient.HomePatientActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".patient.LoginPatient2Activity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.AddPatientsActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.ContentListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.AddContentActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.TaskListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.AddTaskActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.RegisterProfessionalActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".professional.leeconmonclick.professional.LoginProfesionalActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -37,14 +88,10 @@
             android:name=".ErrorActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
-      <activity
-            android:name=".LoginPatientActivity"
-            android:exported="false"
-            android:screenOrientation="landscape"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

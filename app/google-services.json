@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810634575363",
+    "project_id": "leerconmonclick",
+    "storage_bucket": "leerconmonclick.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810634575363:android:f5b80d25c511e8cabd1836",
+        "android_client_info": {
+          "package_name": "com.example.leeconmonclick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810634575363-2nl63jt8gdonq0klsr3d3nto9oj5pn57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAey6P8EsJJSRv50s83z0E1PPoJkdPTc-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810634575363-2nl63jt8gdonq0klsr3d3nto9oj5pn57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

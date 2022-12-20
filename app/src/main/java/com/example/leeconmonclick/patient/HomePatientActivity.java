@@ -1,40 +1,42 @@
 package com.example.leeconmonclick.patient;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import es.leerconmonclick.util.ListAdapterContent;
-import es.leerconmonclick.util.ListAdapterUserPatient;
 
-public class HomePatientActivity extends AppCompatActivity {
+import es.leerconmonclick.util.DialogSettingPatient;
+
+
+public class HomePatientActivity extends AppCompatActivity implements DialogSettingPatient.DialogListener {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth db;
+    private TextView level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_patient);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        level = findViewById(R.id.level);
 
+    }
+
+    public void goSettings ( View v){
+        DialogSettingPatient dialogSettingPatient = new DialogSettingPatient();
+        dialogSettingPatient.show(getSupportFragmentManager(),"example");
 
     }
 
@@ -45,4 +47,8 @@ public class HomePatientActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void applyTexts(String number) {
+        level.setText(number);
+    }
 }

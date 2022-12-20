@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
@@ -47,6 +48,10 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private TextView btnDates;
     private TextView btnSett;
 
+    private String userCollection;
+    private  ConstraintLayout constraintLayout;
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_profesional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        final ConstraintLayout constraintLayout;
         constraintLayout = findViewById(R.id.home_profesional);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -64,9 +68,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         iconProfesional = findViewById(R.id.iconProfesionalId);
 
 
+
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        String userCollection = user.getEmail();
+        userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
@@ -121,6 +127,13 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     btnSett.setBackgroundResource(R.drawable.button_style_tritano);
                     btnNotes.setBackgroundResource(R.drawable.button_style_tritano);
                     btnDates.setBackgroundResource(R.drawable.button_style_tritano);
+                }else {
+                    constraintLayout.setBackgroundResource(R.color.background);
+                    btnPatients.setBackgroundResource(R.drawable.button_style);
+                    btnContent.setBackgroundResource(R.drawable.button_style);
+                    btnSett.setBackgroundResource(R.drawable.button_style);
+                    btnNotes.setBackgroundResource(R.drawable.button_style);
+                    btnDates.setBackgroundResource(R.drawable.button_style);
                 }
             }
 
@@ -182,9 +195,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     }
 
 
-
-
-
     /*
 
       public void goListNotes(View v){
@@ -197,9 +207,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         startActivity(helpIntent);
     }
     */
-
-
-
 
 
 

@@ -6,10 +6,12 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_calendar.xml" value="0.2425" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_select_icon.xml" value="0.3675" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style.xml" value="0.3675" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style_green.xml" value="0.224" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style_red.xml" value="0.2415" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/calendar_style.xml" value="0.2415" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_add.xml" value="0.3635" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_arrow_back_.xml" value="0.3635" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_check.xml" value="0.225" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_delete.xml" value="0.2465" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/ic_edit.xml" value="0.2465" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/notification_bar.xml" value="0.243" />
@@ -54,6 +56,7 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_settings.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_task_list.xml" value="0.14238683127572016" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/content_element.xml" value="0.3448275862068966" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/dialog_setting_patient.xml" value="0.22" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/list_task_element.xml" value="0.33" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/list_user_pacient.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/list_user_patient.xml" value="0.25" />

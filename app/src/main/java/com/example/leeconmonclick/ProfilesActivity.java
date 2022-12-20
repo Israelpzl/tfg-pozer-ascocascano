@@ -8,9 +8,16 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.leeconmonclick.patient.LoginPatient2Activity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.LoginProfesionalActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class ProfilesActivity extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
+
 
 
 
@@ -19,23 +26,37 @@ public class ProfilesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
     }
 
-    public void goUser(View v){
+    public void goPatient(View v){
         Intent helpIntent = new Intent(this, LoginPatient2Activity.class);
         startActivity(helpIntent);
-        finish();
     }
 
     public void goProfessional(View v){
         Intent helpIntent = new Intent(this, LoginProfesionalActivity.class);
         startActivity(helpIntent);
-        finish();
     }
 
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
-        finish();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null){
+            Intent goHome = new Intent(this, HomeProfesionalActivity.class);
+            startActivity(goHome);
+            finish();
+        }
+
+
     }
 }

@@ -51,21 +51,22 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
         namePatient =  findViewById(R.id.namePacientIId);
         passPatient = findViewById(R.id.passPacientId);
-        btnLoginPatient = findViewById(R.id.BtnLoginPacientId);
+        btnLoginPatient = findViewById(R.id.BtnLoginPatientId);
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
 
         btnLoginPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginPacient();
+                loginPatient();
             }
         });
     }
 
-    private void loginPacient(){
+    private void loginPatient(){
 
-        databaseReference.child("userPacient").addListenerForSingleValueEvent(new ValueEventListener() {
+        Toast.makeText(getApplicationContext(),"Pulsado",Toast.LENGTH_LONG).show();
+        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -210,7 +211,9 @@ public class SettingsActivity extends AppCompatActivity {
         databaseReference.child("Users").child(userCollection).child("sett").child("0").setValue(size);
 
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
+        //goHome();
         finish();
+
     }
 
     public void getSettings(){
@@ -377,11 +380,17 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(helpIntent);
     }
 
+    public void goHome(){
+        Intent helpIntent = new Intent(this, HomeProfesionalActivity.class);
+        startActivity(helpIntent);
+    }
+
     public void logOut(View v) {
         saveStateSession();
         FirebaseAuth.getInstance().signOut();
         Intent profileIntent = new Intent(this, ProfilesActivity.class);
         startActivity(profileIntent);
+        finish();
     }
     public void saveStateSession(){
         SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);

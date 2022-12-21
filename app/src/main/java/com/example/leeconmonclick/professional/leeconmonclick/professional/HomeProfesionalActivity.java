@@ -34,6 +34,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
     private TextView nameProfesional;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private DatabaseReference databaseReference;
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
@@ -59,18 +60,15 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_profesional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        constraintLayout = findViewById(R.id.home_profesional);
-
         firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+
+        constraintLayout = findViewById(R.id.home_profesional);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         nameProfesional = findViewById(R.id.nameProfesionalId);
         iconProfesional = findViewById(R.id.iconProfesionalId);
 
-
-
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
 
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
@@ -144,6 +142,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     public void goHelp(View v){
@@ -208,6 +207,13 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     }
     */
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
-
+       FirebaseUser u =  firebaseAuth.getCurrentUser();
+       if (u == null){
+           finish();
+       }
+    }
 }

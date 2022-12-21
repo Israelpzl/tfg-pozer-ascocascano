@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
+import com.example.leeconmonclick.patient.HomePatientActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -15,6 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
+    private String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +32,22 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(3000);//abre la StartActivity tras 3 segundos
-                    if (!getStateSession()){
-                        startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
-                        finish();
+
+                    if (getStateSession()) {
+                        switch (user){
+                            case("patient"):{
+                                startActivity(new Intent(getApplicationContext(), HomePatientActivity.class));
+                                finish();
+                                break;
+                            }
+                            case ("professional"):{
+                                startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
+                                finish();
+                                break;
+                            }
+                        }
                     }else{
-                        startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
+                        startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
                         finish();
                     }
 
@@ -44,8 +58,14 @@ public class SplashActivity extends AppCompatActivity {
         };
         thread.start();
     }
-    public boolean getStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);
+    public Boolean getStateSession(){
+       /* SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);*/
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        user = preferences.getString("user","null");
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn",false);
+        return isLoggedIn;
+
     }
 }

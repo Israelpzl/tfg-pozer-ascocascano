@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -127,8 +128,14 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     }
 
     public void saveStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
+       /* SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();*/
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", remeberSession.isChecked());
+        editor.putString("user","professional");
+        editor.apply();
     }
     public boolean getStateSession(){
         SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);

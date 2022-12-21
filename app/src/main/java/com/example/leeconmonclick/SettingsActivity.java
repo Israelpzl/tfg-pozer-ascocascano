@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +19,6 @@ import android.widget.ToggleButton;
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,8 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SettingsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
-
+    private FirebaseAuth firebaseAuth;
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
@@ -79,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
-
+        firebaseAuth = FirebaseAuth.getInstance();
 
         userName = findViewById(R.id.editTextTextPersonNameEdit);
         noDaltonic = findViewById(R.id.toggleButtonNoDalto);
@@ -96,7 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
         saveText = findViewById(R.id.buttonSaveChanges);
         logOutText = findViewById(R.id.buttonLogOut);
 
-        user = db.getCurrentUser();
+        user = firebaseAuth.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
@@ -387,14 +381,20 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void logOut(View v) {
         saveStateSession();
-        FirebaseAuth.getInstance().signOut();
+        firebaseAuth.signOut();
         Intent profileIntent = new Intent(this, ProfilesActivity.class);
         startActivity(profileIntent);
         finish();
     }
     public void saveStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();
+      /*  SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();*/
+        Toast.makeText(getApplicationContext(),"LogOut",Toast.LENGTH_LONG).show();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.putString("user","null");
+        editor.apply();
     }
 
 

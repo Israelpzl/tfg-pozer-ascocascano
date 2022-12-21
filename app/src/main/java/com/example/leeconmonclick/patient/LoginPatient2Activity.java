@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
@@ -65,7 +66,6 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
     private void loginPatient(){
 
-        Toast.makeText(getApplicationContext(),"Pulsado",Toast.LENGTH_LONG).show();
         databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -124,8 +124,14 @@ public class LoginPatient2Activity extends AppCompatActivity {
     }
 
     public void saveStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
+        /*SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();*/
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", remeberSession.isChecked());
+        editor.putString("user","patient");
+        editor.apply();
     }
 
     private void goHomePatient(){

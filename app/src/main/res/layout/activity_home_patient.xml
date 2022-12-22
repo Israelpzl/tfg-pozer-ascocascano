@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBtnId" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/namePatientId"
         android:layout_width="231dp"
         android:layout_height="23dp"
         android:layout_marginTop="10dp"
@@ -113,7 +113,7 @@
         android:text="@string/level"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView11"
-        app:layout_constraintEnd_toStartOf="@+id/textView19"
+        app:layout_constraintEnd_toStartOf="@+id/namePatientId"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

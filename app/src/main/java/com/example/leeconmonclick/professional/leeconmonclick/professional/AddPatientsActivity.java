@@ -149,7 +149,7 @@ public class AddPatientsActivity extends AppCompatActivity {
             }
         });
 
-        storageReference.child("iconos/mono2"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("iconos/mono"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 icon = uri.toString();

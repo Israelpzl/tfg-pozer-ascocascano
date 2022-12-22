@@ -387,8 +387,6 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
     public void saveStateSession(){
-      /*  SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();*/
         Toast.makeText(getApplicationContext(),"LogOut",Toast.LENGTH_LONG).show();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();

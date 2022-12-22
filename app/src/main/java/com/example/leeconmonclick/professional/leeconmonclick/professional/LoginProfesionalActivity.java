@@ -128,18 +128,11 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     }
 
     public void saveStateSession(){
-       /* SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();*/
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isLoggedIn", remeberSession.isChecked());
         editor.putString("user","professional");
         editor.apply();
-    }
-    public boolean getStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-         return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);
     }
 
     private void dameToastdeerror(String error) {

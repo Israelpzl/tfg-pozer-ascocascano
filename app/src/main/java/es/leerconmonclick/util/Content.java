@@ -6,10 +6,10 @@ public class Content {
 
     private String word;
     private String img;
-    private List<String> syllables;
+    private String syllables;
     private String determinant;
 
-    public Content(String word, String img, List<String> syllables, String determinant) {
+    public Content(String word, String img, String syllables, String determinant) {
         this.word = word;
         this.img = img;
         this.syllables = syllables;
@@ -32,11 +32,11 @@ public class Content {
         this.img = img;
     }
 
-    public List<String> getSyllables() {
+    public String getSyllables() {
         return syllables;
     }
 
-    public void setSyllables(List<String> syllables) {
+    public void setSyllables(String syllables) {
         this.syllables = syllables;
     }
 

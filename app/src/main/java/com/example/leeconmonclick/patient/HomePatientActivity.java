@@ -49,6 +49,11 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     }
 
+    public void goGameSelecction(View v){
+        Intent gameSelecctionIntent = new Intent(this, GameSelecctionActivity.class);
+        startActivity(gameSelecctionIntent);
+    }
+
     public void logOutPatient(View v){
         Toast.makeText(getApplicationContext(),"LogOut",Toast.LENGTH_LONG).show();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

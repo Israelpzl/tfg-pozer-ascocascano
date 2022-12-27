@@ -49,6 +49,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_style"
         android:text="@string/play"
+        android:onClick="goGameSelecction"
         app:layout_constraintBottom_toTopOf="@+id/progressBtnId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

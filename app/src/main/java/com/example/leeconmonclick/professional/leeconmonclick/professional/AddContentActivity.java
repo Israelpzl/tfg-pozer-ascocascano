@@ -54,9 +54,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.Vector;
 
 import es.leerconmonclick.util.Content;
+import es.leerconmonclick.util.Silabas;
 
 
 public class AddContentActivity extends AppCompatActivity {
@@ -213,16 +217,22 @@ public class AddContentActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri downloadUri2 = task.getResult();
-                            List<String> sylablle = new ArrayList<>();
-                            Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
-                            databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                            });
+                            Vector palabras = getPalabras(word.getText().toString());
+                            if(Verificar(word.getText().toString().trim().toLowerCase()) && palabras.size() != 1){
+                                Uri downloadUri2 = task.getResult();
+                                String sylablle = Silabear();
+                                Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
+                                databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Tiene que ser una palabra real", Toast.LENGTH_LONG).show();
+                            }
+
                         }
                     }
                 });
@@ -262,7 +272,7 @@ public class AddContentActivity extends AppCompatActivity {
 
     private void editContent(){
         databaseReference.child("content").child(data.getString("word")).removeValue();
-        List<String> sylablle = new ArrayList<>();
+        String sylablle = Silabear();
         Content content = new Content(word.getText().toString(), uriStr ,sylablle , spinner.getSelectedItem().toString());
         databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -271,6 +281,75 @@ public class AddContentActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+  /*  public  List<String> dividirEnSilabas(String palabra) {
+        List<String> silabas = new ArrayList<>();
+        for (int i = 0; i < palabra.length(); i++) {
+            if (esVocal(palabra.charAt(i))) {
+                silabas.add(palabra.substring(i, i+1));
+            }
+            else {
+                int j = i+1;
+                while (j < palabra.length() && !esVocal(palabra.charAt(j))) {
+                    j++;
+                }
+                silabas.add(palabra.substring(i, j));
+                i = j-1;
+            }
+        }
+
+        return silabas;
+    }
+
+    private static boolean esVocal(char c) {
+        return "AEIOUaeiou".indexOf(c) >= 0;
+    }*/
+
+    private boolean Verificar(String cadena){
+        String s;
+        char c[],x;
+        int i,j,k;
+        int error = 0;
+        s = " abcdefghijklmnñopqrstuvwxyzáéíóúü";
+        c = s.toCharArray();
+        for( i=0 ;  i < cadena.length() && error == 0;i++){
+            x = cadena.charAt(i);
+            k = 0;
+            for(j = 0 ;  j < s.length() && k == 0;j++){
+                if(x==c[j])
+                    k++;
+            }
+            if( k == 0)
+                error++;
+        }
+        if(error == 0)
+            return true;
+        else
+            return false;
+    }
+
+    private Vector getPalabras(String cadena) {
+        Vector palabras = new Vector();
+        String palabra = "";
+        cadena = cadena.trim().toLowerCase() + " ";
+        char[] c = cadena.toCharArray();
+        int i;
+        for(i = 0; i < cadena.length(); i++){
+            if ( c[i] == ' '){
+                palabras.add(palabra);
+                palabra = "";
+            }
+            else
+                palabra = palabra + String.valueOf(c[i]);
+        }
+        return palabras;
+    }
+
+    private String Silabear() {
+        Silabas s = new Silabas();
+        s.setString(word.getText().toString());
+        return s.silabear();
     }
 
 }

@@ -217,7 +217,8 @@ public class AddContentActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            if(Verificar(word.getText().toString().trim().toLowerCase())){
+                            Vector palabras = getPalabras(word.getText().toString());
+                            if(Verificar(word.getText().toString().trim().toLowerCase()) && palabras.size() != 1){
                                 Uri downloadUri2 = task.getResult();
                                 String sylablle = Silabear();
                                 Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
@@ -229,7 +230,7 @@ public class AddContentActivity extends AppCompatActivity {
                                     }
                                 });
                             }else{
-                                Toast.makeText(getApplicationContext(), "La palabra solo debe contener letras", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Tiene que ser una palabra real", Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -326,6 +327,23 @@ public class AddContentActivity extends AppCompatActivity {
             return true;
         else
             return false;
+    }
+
+    private Vector getPalabras(String cadena) {
+        Vector palabras = new Vector();
+        String palabra = "";
+        cadena = cadena.trim().toLowerCase() + " ";
+        char[] c = cadena.toCharArray();
+        int i;
+        for(i = 0; i < cadena.length(); i++){
+            if ( c[i] == ' '){
+                palabras.add(palabra);
+                palabra = "";
+            }
+            else
+                palabra = palabra + String.valueOf(c[i]);
+        }
+        return palabras;
     }
 
     private String Silabear() {

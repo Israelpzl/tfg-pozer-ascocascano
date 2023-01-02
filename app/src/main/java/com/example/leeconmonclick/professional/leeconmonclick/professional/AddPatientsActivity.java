@@ -56,7 +56,6 @@ public class AddPatientsActivity extends AppCompatActivity {
     private StorageReference filePath;
 
     private FirebaseUser user;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
     private String userCollection;
 
     private static final String ALGORITHM = "AES";
@@ -78,7 +77,6 @@ public class AddPatientsActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-
         namePatient = (EditText) findViewById(R.id.namePacientId);
         agePatient = (EditText) findViewById(R.id.agePacientId);
         emailPatient = (EditText) findViewById(R.id.emailPacientId);
@@ -91,7 +89,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         descriptionTitle = findViewById(R.id.age);
         title = findViewById(R.id.tittleAddPacientId);
 
-        user = db.getCurrentUser();
+        user = mAuth.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
@@ -201,12 +199,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
 
     private void registerPatient() throws Exception {
-        
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
+
 
 
         pass = generatePassword();
@@ -275,7 +268,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         StringBuilder pass = new StringBuilder();
 
-        for(int i = 0; i<=10; i++){
+        for(int i = 0; i<=3; i++){
             int numCaracteres = caracteres.length();
             int numRandom = (int)(Math.random()*numCaracteres);
             pass.append((caracteres.toString()).charAt(numRandom));

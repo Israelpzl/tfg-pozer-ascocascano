@@ -48,11 +48,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconProfesionalId3"
+        app:layout_constraintTop_toBottomOf="@+id/iconPatientId"
         app:layout_constraintVertical_bias="0.113" />
 
     <TextView
-        android:id="@+id/namePatientId2"
+        android:id="@+id/namePatientId"
         android:layout_width="231dp"
         android:layout_height="23dp"
         android:layout_marginTop="10dp"
@@ -62,13 +62,13 @@
         android:textAlignment="textEnd"
         android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/viewId3"
-        app:layout_constraintEnd_toStartOf="@+id/iconProfesionalId3"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId3"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:layout_marginStart="30dp"

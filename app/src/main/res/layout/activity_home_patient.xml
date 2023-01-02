@@ -8,7 +8,7 @@
     tools:context=".patient.HomePatientActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId2"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:layout_marginStart="30dp"
@@ -98,7 +98,7 @@
         android:textAlignment="textEnd"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button11"
-        app:layout_constraintEnd_toStartOf="@+id/iconProfesionalId2"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

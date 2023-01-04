@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".patient.JoinWordsGameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".patient.GameSelecctionActivity"
             android:exported="false"
             android:screenOrientation="landscape" />

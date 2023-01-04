@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,6 +71,11 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void goGameJoin(View v){
+        Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
+        startActivity(joinIntent);
     }
 
     public void goBack(View view){

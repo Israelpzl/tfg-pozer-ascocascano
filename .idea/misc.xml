@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_calendar.xml" value="0.2425" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_select_cardview.xml" value="0.224" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/bg_select_icon.xml" value="0.3675" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style.xml" value="0.3675" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/button_style_green.xml" value="0.224" />
@@ -39,6 +40,7 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_help2.xml" value="0.19666524155622062" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_home_patient.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_home_profesional.xml" value="0.22" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_join_words_game.xml" value="0.25" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_list_patient.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_load.xml" value="1.550660792951542" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_login.xml" value="0.21432291666666667" />

@@ -1,17 +1,28 @@
 package com.example.leeconmonclick.patient;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.leeconmonclick.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class JoinWordsGameActivity extends AppCompatActivity {
 
@@ -25,7 +36,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private CardView[] cardViewsWord = new CardView[2];
     private String[] arrayImg, arrayWord;
     private String img,word;
-    private int select;
+    private boolean select;
+    private int points;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +47,18 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_words_game);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
         arrayImg = new String[]{"perro", "gato", "oso"};
         arrayWord = new String[]{"oso", "gato", "perro"};
+        points = 0;
 
         findElement();
         listenerClickSelect();
 
+
     }
+
+
 
     private void checkResult(){
 
@@ -60,6 +79,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 imageSelect2.setVisibility(View.INVISIBLE);
                 imageSelect3.setVisibility(View.INVISIBLE);
                 img = arrayImg[0];
+                select = true;
             }
         });
 
@@ -70,6 +90,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 imageSelect2.setVisibility(View.VISIBLE);
                 imageSelect3.setVisibility(View.INVISIBLE);
                 img = arrayImg[1];
+                select = true;
             }
         });
 
@@ -80,38 +101,88 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 imageSelect2.setVisibility(View.INVISIBLE);
                 imageSelect3.setVisibility(View.VISIBLE);
                 img = arrayImg[2];
+                select = true;
             }
         });
 
-        cardViewWord1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wordSelect1.setVisibility(View.VISIBLE);
-                wordSelect2.setVisibility(View.INVISIBLE);
-                wordSelect3.setVisibility(View.INVISIBLE);
-                word = arrayWord [0];
-            }
-        });
 
-        cardViewWord2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wordSelect1.setVisibility(View.INVISIBLE);
-                wordSelect2.setVisibility(View.VISIBLE);
-                wordSelect3.setVisibility(View.INVISIBLE);
-                word = arrayWord [1];
-            }
-        });
+            cardViewWord1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (select) {
+                        wordSelect1.setVisibility(View.VISIBLE);
+                        wordSelect2.setVisibility(View.INVISIBLE);
+                        wordSelect3.setVisibility(View.INVISIBLE);
+                        word = arrayWord [0];
+                        if (img.equals(word)){
+                            Toast.makeText(getApplicationContext(), "Has Acertado", Toast.LENGTH_LONG).show();
+                            points++;
+                            cardViewWord1.setVisibility(View.INVISIBLE);
+                            if (points == 3){
+                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                                alertFinishGame();
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                            word = "";
+                            wordSelect1.setVisibility(View.INVISIBLE);
+                        }
+                    }
 
-        cardViewWord3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wordSelect1.setVisibility(View.INVISIBLE);
-                wordSelect2.setVisibility(View.INVISIBLE);
-                wordSelect3.setVisibility(View.VISIBLE);
-                word = arrayWord [2];
-            }
-        });
+                }
+            });
+
+            cardViewWord2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (select) {
+                        wordSelect1.setVisibility(View.INVISIBLE);
+                        wordSelect2.setVisibility(View.VISIBLE);
+                        wordSelect3.setVisibility(View.INVISIBLE);
+                        word = arrayWord [1];
+                        if (img.equals(word)){
+                            Toast.makeText(getApplicationContext(), "Has Acertado", Toast.LENGTH_LONG).show();
+                            points++;
+                            cardViewWord2.setVisibility(View.INVISIBLE);
+                            if (points == 3){
+                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                                alertFinishGame();
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                            word = "";
+                            wordSelect2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            });
+
+            cardViewWord3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(select) {
+                        wordSelect1.setVisibility(View.INVISIBLE);
+                        wordSelect2.setVisibility(View.INVISIBLE);
+                        wordSelect3.setVisibility(View.VISIBLE);
+                        word = arrayWord [2];
+                        if (img.equals(word)){
+                            Toast.makeText(getApplicationContext(), "Has Acertado", Toast.LENGTH_LONG).show();
+                            points++;
+                            cardViewWord3.setVisibility(View.INVISIBLE);
+
+                            if (points == 3){
+                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                                alertFinishGame();
+
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                            word = "";
+                            wordSelect3.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            });
     }
 
 
@@ -143,6 +214,27 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         wordSelect3 = findViewById(R.id.wordSelect3);
 
     }
+
+    public void goGameSelecction(){
+        Intent gameSelecctionIntent = new Intent(this, GameSelecctionActivity.class);
+        startActivity(gameSelecctionIntent);
+        finish();
+    }
+
+    private void alertFinishGame(){
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+        alertDialogBuilder.setView(finishGamePopUp);
+        alertDialog =  alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+    }
+
 
     public void goBack(View v){
         finish();

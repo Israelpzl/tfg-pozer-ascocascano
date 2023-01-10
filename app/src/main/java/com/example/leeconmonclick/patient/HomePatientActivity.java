@@ -43,10 +43,9 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     }
 
-    public void goSettings ( View v){
-        DialogSettingPatient dialogSettingPatient = new DialogSettingPatient();
-        dialogSettingPatient.show(getSupportFragmentManager(),"example");
-
+    public void goSettings(View v){
+        Intent settIntent = new Intent(this, SettingsPatientActivity.class);
+        startActivity(settIntent);
     }
 
     public void goGameSelecction(View v){

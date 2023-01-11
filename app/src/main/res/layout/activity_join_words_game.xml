@@ -8,7 +8,7 @@
     android:background="@color/background">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconPatientId2"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:src="@drawable/mono"

@@ -9,13 +9,13 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.LineView;
 
 public class JoinWordsGameActivity extends AppCompatActivity {
@@ -41,9 +42,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private ImageView imageSelect1,imageSelect2,imageSelect3;
     private ImageView wordSelect1,wordSelect2,wordSelect3;
     private TextView word1,word2,word3;
-    private CardView[] cardViewsImage = new CardView[2];
-    private CardView[] cardViewsWord = new CardView[2];
-    private String[] arrayImg, arrayWord;
     private String img,word;
     private boolean select;
     private int points;
@@ -55,9 +53,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private boolean cardImageFinish1, cardImageFinish2, cardImageFinish3 = false;
     private int numSelect;
     private List<String> listImg,listWord;
-    private ProgressDialog progressDialog;
-
+    private final float OPACITY = (float) 0.2;
     private DatabaseReference databaseReference;
+    private CircleImageView iconPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,28 +64,35 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        initBBDD();
         findElement();
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String namePatient = preferences.getString("userName","null");
 
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String icon = snapshot.child("icon").getValue().toString();
+                Glide.with(context).load(icon).into(iconPatient);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
 
-
-        arrayImg = new String[]{"perro", "gato", "oso"};
-        arrayWord = new String[]{"oso", "gato", "perro"};
-        listImg = new ArrayList<>();
-        listWord = new ArrayList<>();
-        points = 0;
-
-
+        initBBDD();
         listenerClickSelect();
-
 
     }
 
 
     private void listenerClickSelect(){
+
+        listImg = new ArrayList<>();
+        listWord = new ArrayList<>();
+        points = 0;
 
         cardViewImage1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,188 +155,122 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         });
 
 
-            cardViewWord1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        cardViewWord1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (select && !cardWordFinish1) {
+                    wordSelect1.setVisibility(View.VISIBLE);
+                    wordSelect2.setVisibility(View.INVISIBLE);
+                    wordSelect3.setVisibility(View.INVISIBLE);
+                    word = listWord.get(0);
 
-                    if (select && !cardWordFinish1) {
-                        wordSelect1.setVisibility(View.VISIBLE);
-                        wordSelect2.setVisibility(View.INVISIBLE);
-                        wordSelect3.setVisibility(View.INVISIBLE);
-                        word = listWord.get(0);
-                        if (img.equals(word)){
-                            points++;
-                            int[] loc = new int[2];
-                            cardViewWord1.getLocationOnScreen(loc);
-                            cardWordX = loc[0];
-                            cardWordY = loc[1];
-                            LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
-                            addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-                            cardWordFinish1 = false;
-                            wordSelect1.setVisibility(View.INVISIBLE);
-
-
-                            float z = (float) 0.2;
-                            cardViewWord1.setAlpha(z);
-
-                            switch (numSelect){
-                                case 1:{
-                                    float a = (float) 0.2;
-                                    cardViewImage1.setAlpha(a);
-                                    cardImageFinish1 = true;
-                                    imageSelect1.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                                case 2:{
-                                    float a = (float) 0.2;
-                                    cardViewImage2.setAlpha(a);
-                                    cardImageFinish2 = true;
-                                    imageSelect2.setVisibility(View.INVISIBLE);
-                                    break;
-                                } case 3: {
-                                    float a = (float) 0.2;
-                                    cardViewImage3.setAlpha(a);
-                                    cardImageFinish3 = true;
-                                    imageSelect3.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                            }
-
-                            if (points == 3){
-                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                                alertFinishGame();
-                            }
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
-                            word = "";
-                            wordSelect1.setVisibility(View.INVISIBLE);
-                        }
-                    }
-
-                }
-            });
-
-            cardViewWord2.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("Range")
-                @Override
-                public void onClick(View v) {
-                    if (select && !cardWordFinish2) {
+                    if (img.equals(word)){
+                        check(1);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        word = "";
                         wordSelect1.setVisibility(View.INVISIBLE);
-                        wordSelect2.setVisibility(View.VISIBLE);
-                        wordSelect3.setVisibility(View.INVISIBLE);
-                        word = listWord.get(1);
-                        if (img.equals(word)){
-                            points++;
-
-                            int[] loc = new int[2];
-                            cardViewWord2.getLocationOnScreen(loc);
-                            cardWordX = loc[0];
-                            cardWordY = loc[1];
-
-                            LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
-                            addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
-                            cardWordFinish2 = true;
-                            wordSelect2.setVisibility(View.INVISIBLE);
-
-                            float z = (float) 0.2;
-                            cardViewWord2.setAlpha(z);
-
-                            switch (numSelect){
-                                case 1:{
-                                    float a = (float) 0.2;
-                                    cardViewImage1.setAlpha(a);
-                                    cardImageFinish1 = true;
-                                    imageSelect1.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                                case 2:{
-                                    float a = (float) 0.2;
-                                    cardViewImage2.setAlpha(a);
-                                    cardImageFinish2 = true;
-                                    imageSelect2.setVisibility(View.INVISIBLE);
-                                    break;
-                                } case 3: {
-                                    float a = (float) 0.2;
-                                    cardViewImage3.setAlpha(a);
-                                    cardImageFinish3 = true;
-                                    imageSelect3.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                            }
-
-                            if (points == 3){
-                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                                alertFinishGame();
-                            }
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
-                            word = "";
-                            wordSelect2.setVisibility(View.INVISIBLE);
-                        }
                     }
                 }
-            });
+            }
+        });
 
-            cardViewWord3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(select && !cardWordFinish3) {
-                        wordSelect1.setVisibility(View.INVISIBLE);
+        cardViewWord2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (select && !cardWordFinish2) {
+                    wordSelect1.setVisibility(View.INVISIBLE);
+                    wordSelect2.setVisibility(View.VISIBLE);
+                    wordSelect3.setVisibility(View.INVISIBLE);
+                    word = listWord.get(1);
+                    if (img.equals(word)) {
+                        check(2);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        word = "";
                         wordSelect2.setVisibility(View.INVISIBLE);
-                        wordSelect3.setVisibility(View.VISIBLE);
-                        word =listWord.get(2);
-                        if (img.equals(word)){
-                            points++;
-                            int[] loc = new int[2];
-                            cardViewWord3.getLocationOnScreen(loc);
-                            cardWordX = loc[0];
-                            cardWordY = loc[1];
-                            LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
-                            addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-                            cardWordFinish3 =true;
-                            wordSelect3.setVisibility(View.INVISIBLE);
-
-                            float z = (float) 0.2;
-                            cardViewWord3.setAlpha(z);
-                            switch (numSelect){
-                                case 1:{
-                                    float a = (float) 0.2;
-                                    cardViewImage1.setAlpha(a);
-                                    cardImageFinish1 = true;
-                                    imageSelect1.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                                case 2:{
-                                    float a = (float) 0.2;
-                                    cardViewImage2.setAlpha(a);
-                                    cardImageFinish2 = true;
-                                    imageSelect2.setVisibility(View.INVISIBLE);
-                                    break;
-                                } case 3: {
-                                    float a = (float) 0.2;
-                                    cardViewImage3.setAlpha(a);
-                                    cardImageFinish3 = true;
-                                    imageSelect3.setVisibility(View.INVISIBLE);
-                                    break;
-                                }
-                            }
-
-                            if (points == 3){
-                                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                                alertFinishGame();
-
-                            }
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
-                            word = "";
-                            wordSelect3.setVisibility(View.INVISIBLE);
-                        }
                     }
                 }
-            });
+            }
+        });
+
+        cardViewWord3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                if (select && !cardWordFinish3) {
+                    check(3);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                    word = "";
+                    wordSelect3.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
+
+
+    private void check(int num){
+
+        points++;
+
+        int[] loc = new int[2];
+        switch (num){
+            case 1:{
+                cardViewWord1.getLocationOnScreen(loc);
+                cardWordFinish1 = true;
+                wordSelect1.setVisibility(View.INVISIBLE);
+                cardViewWord1.setAlpha(OPACITY);
+                break;
+            } case 2:{
+                cardViewWord2.getLocationOnScreen(loc);
+                cardWordFinish2 = true;
+                wordSelect2.setVisibility(View.INVISIBLE);
+                cardViewWord2.setAlpha(OPACITY);
+                break;
+            } case 3:{
+                cardViewWord3.getLocationOnScreen(loc);
+                cardWordFinish3 = true;
+                wordSelect3.setVisibility(View.INVISIBLE);
+                cardViewWord3.setAlpha(OPACITY);
+                break;
+            }
+        }
+
+
+        cardWordX = loc[0];
+        cardWordY = loc[1];
+        LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
+        addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        switch (numSelect){
+            case 1:{
+                cardViewImage1.setAlpha(OPACITY);
+                cardImageFinish1 = true;
+                imageSelect1.setVisibility(View.INVISIBLE);
+                break;
+            }
+            case 2:{
+                cardViewImage2.setAlpha(OPACITY);
+                cardImageFinish2 = true;
+                imageSelect2.setVisibility(View.INVISIBLE);
+                break;
+            } case 3: {
+                cardViewImage3.setAlpha(OPACITY);
+                cardImageFinish3 = true;
+                imageSelect3.setVisibility(View.INVISIBLE);
+                break;
+            }
+        }
+
+        if (points == 3){
+            Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+            alertFinishGame();
+
+        }
+
+    }
+
+
 
 
 
@@ -361,13 +300,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         wordSelect2 = findViewById(R.id.wordSelect2);
         wordSelect3 = findViewById(R.id.wordSelect3);
 
+        iconPatient = findViewById(R.id.iconPatientId);
+
     }
 
-    public void goGameSelecction(){
-        Intent gameSelecctionIntent = new Intent(this, GameSelecctionActivity.class);
-        startActivity(gameSelecctionIntent);
-        finish();
-    }
 
     private void alertFinishGame(){
         alertDialogBuilder = new AlertDialog.Builder(this);
@@ -386,8 +322,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private void  initBBDD () {
 
         List<String> contentList = new ArrayList<>();
-
-
 
         databaseReference.child("content").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -416,9 +350,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 Glide.with(context).load(snapshot.child(listImg.get(0)).child("img").getValue().toString()).into(imageView1);
                 Glide.with(context).load(snapshot.child(listImg.get(1)).child("img").getValue().toString()).into(imageView2);
                 Glide.with(context).load(snapshot.child(listImg.get(2)).child("img").getValue().toString()).into(imageView3);
-
-
-
 
             }
 

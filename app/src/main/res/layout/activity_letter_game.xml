@@ -43,8 +43,8 @@
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="604dp"
-        tools:layout_editor_absoluteY="25dp">
+        tools:layout_editor_absoluteX="652dp"
+        tools:layout_editor_absoluteY="39dp">
 
 
         <ImageView
@@ -85,8 +85,8 @@
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="661dp"
-        tools:layout_editor_absoluteY="216dp">
+        tools:layout_editor_absoluteX="686dp"
+        tools:layout_editor_absoluteY="228dp">
 
 
         <ImageView
@@ -106,8 +106,8 @@
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="454dp"
-        tools:layout_editor_absoluteY="168dp">
+        tools:layout_editor_absoluteX="438dp"
+        tools:layout_editor_absoluteY="155dp">
 
 
         <ImageView

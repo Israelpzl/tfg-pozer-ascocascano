@@ -78,6 +78,11 @@ public class GameSelecctionActivity extends AppCompatActivity {
         startActivity(joinIntent);
     }
 
+    public void goGameLetters(View v){
+        Intent letterIntent = new Intent(this, LetterGameActivity.class);
+        startActivity(letterIntent);
+    }
+
     public void goBack(View view){
         onBackPressed();
     }

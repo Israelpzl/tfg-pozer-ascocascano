@@ -5,8 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -271,9 +270,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void findElement(){
 
         cardViewImage1 = findViewById(R.id.cardViewImage1);
@@ -358,10 +354,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
     }
 

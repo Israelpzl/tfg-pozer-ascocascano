@@ -1,10 +1,12 @@
 package com.example.leeconmonclick.patient;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,10 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import es.leerconmonclick.util.LineView;
 
@@ -41,6 +54,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private boolean cardWordFinish1, cardWordFinish2, cardWordFinish3 = false;
     private boolean cardImageFinish1, cardImageFinish2, cardImageFinish3 = false;
     private int numSelect;
+    private List<String> listImg,listWord;
+    private ProgressDialog progressDialog;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +65,22 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_words_game);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        initBBDD();
+        findElement();
+
+
+
+
+
 
         arrayImg = new String[]{"perro", "gato", "oso"};
         arrayWord = new String[]{"oso", "gato", "perro"};
+        listImg = new ArrayList<>();
+        listWord = new ArrayList<>();
         points = 0;
 
-        findElement();
+
         listenerClickSelect();
 
 
@@ -69,7 +96,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect1.setVisibility(View.VISIBLE);
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
-                    img = arrayImg[0];
+                    img = listImg.get(0);
                     select = true;
                     numSelect =1;
 
@@ -89,7 +116,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect1.setVisibility(View.INVISIBLE);
                     imageSelect2.setVisibility(View.VISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
-                    img = arrayImg[1];
+                    img = listImg.get(1);
                     select = true;
                     numSelect =2;
 
@@ -109,7 +136,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect1.setVisibility(View.INVISIBLE);
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.VISIBLE);
-                    img = arrayImg[2];
+                    img = listImg.get(2);
                     select = true;
                     numSelect =3;
 
@@ -131,7 +158,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                         wordSelect1.setVisibility(View.VISIBLE);
                         wordSelect2.setVisibility(View.INVISIBLE);
                         wordSelect3.setVisibility(View.INVISIBLE);
-                        word = arrayWord [0];
+                        word = listWord.get(0);
                         if (img.equals(word)){
                             points++;
                             int[] loc = new int[2];
@@ -192,7 +219,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                         wordSelect1.setVisibility(View.INVISIBLE);
                         wordSelect2.setVisibility(View.VISIBLE);
                         wordSelect3.setVisibility(View.INVISIBLE);
-                        word = arrayWord [1];
+                        word = listWord.get(1);
                         if (img.equals(word)){
                             points++;
 
@@ -254,7 +281,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                         wordSelect1.setVisibility(View.INVISIBLE);
                         wordSelect2.setVisibility(View.INVISIBLE);
                         wordSelect3.setVisibility(View.VISIBLE);
-                        word = arrayWord [2];
+                        word =listWord.get(2);
                         if (img.equals(word)){
                             points++;
                             int[] loc = new int[2];
@@ -354,6 +381,57 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void  initBBDD () {
+
+        List<String> contentList = new ArrayList<>();
+
+
+
+        databaseReference.child("content").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot objDataSnapshot : snapshot.getChildren()){
+                    String w = (String) objDataSnapshot.child("word").getValue();
+                    contentList.add(w);
+                }
+
+
+                for (int i = 0; i<3;i++){
+                    int index = (int)Math.floor(Math.random()*(contentList.size()-1));
+                    listImg.add(contentList.get(index));
+                    listWord.add(contentList.get(index));
+                    contentList.remove(index);
+                }
+
+                Collections.shuffle(listImg);
+                Collections.shuffle(listWord);
+
+                word1.setText(listWord.get(0));
+                word2.setText(listWord.get(1));
+                word3.setText(listWord.get(2));
+
+                Glide.with(context).load(snapshot.child(listImg.get(0)).child("img").getValue().toString()).into(imageView1);
+                Glide.with(context).load(snapshot.child(listImg.get(1)).child("img").getValue().toString()).into(imageView2);
+                Glide.with(context).load(snapshot.child(listImg.get(2)).child("img").getValue().toString()).into(imageView3);
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
     }
 
 

@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.011" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewImage1"
+        android:id="@+id/cardViewImage2"
         android:layout_width="138dp"
         android:layout_height="143dp"
         app:cardBackgroundColor="@color/task_item"
@@ -48,7 +48,7 @@
 
 
         <ImageView
-            android:id="@+id/image1"
+            android:id="@+id/image2"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -58,7 +58,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewImage1"
+        android:id="@+id/cardViewLetter"
         android:layout_width="177dp"
         android:layout_height="181dp"
         app:cardBackgroundColor="@color/task_item"
@@ -69,17 +69,17 @@
 
 
         <ImageView
-            android:id="@+id/image1"
+            android:id="@+id/letter"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="" />
+            android:src="@drawable/letra_i" />
 
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewImage1"
+        android:id="@+id/cardViewImage3"
         android:layout_width="138dp"
         android:layout_height="143dp"
         app:cardBackgroundColor="@color/task_item"
@@ -90,7 +90,7 @@
 
 
         <ImageView
-            android:id="@+id/image1"
+            android:id="@+id/image3"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"

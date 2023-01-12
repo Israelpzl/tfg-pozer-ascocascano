@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.397" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId"
+        android:id="@+id/iconPatientId"
         android:layout_width="73dp"
         android:layout_height="55dp"
         android:layout_marginBottom="25dp"

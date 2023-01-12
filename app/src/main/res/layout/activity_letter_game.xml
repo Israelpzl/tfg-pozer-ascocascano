@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:layout_marginStart="30dp"
@@ -40,11 +40,17 @@
         android:id="@+id/cardViewImage2"
         android:layout_width="138dp"
         android:layout_height="143dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="652dp"
-        tools:layout_editor_absoluteY="39dp">
+        app:layout_constraintBottom_toTopOf="@+id/cardViewImage3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.42"
+        app:layout_constraintStart_toEndOf="@+id/cardViewImage1"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -64,8 +70,12 @@
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="106dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.46">
 
 
         <ImageView
@@ -73,20 +83,24 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/letra_i" />
-
-
+            android:src="@drawable/letra_a" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewImage3"
         android:layout_width="138dp"
         android:layout_height="143dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="686dp"
-        tools:layout_editor_absoluteY="228dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.288"
+        app:layout_constraintStart_toEndOf="@+id/cardViewImage1"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewImage2">
 
 
         <ImageView
@@ -106,8 +120,11 @@
         app:cardBackgroundColor="@color/task_item"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        tools:layout_editor_absoluteX="438dp"
-        tools:layout_editor_absoluteY="155dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.273"
+        app:layout_constraintStart_toEndOf="@+id/cardViewLetter"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView

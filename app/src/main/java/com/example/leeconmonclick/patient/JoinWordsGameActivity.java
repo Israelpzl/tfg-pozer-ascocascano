@@ -55,6 +55,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private final float OPACITY = (float) 0.2;
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
+    private Bundle data;
+    private String category;
+    private String difficultySelect;
+    private String namePatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +67,13 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        data = getIntent().getExtras();
+        category = data.getString("category");
+        difficultySelect = data.getString("difficulty");
         findElement();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userName","null");
+        namePatient = preferences.getString("userName","null");
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -319,15 +326,21 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         List<String> contentList = new ArrayList<>();
 
-        databaseReference.child("content").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("content").child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     String w = (String) objDataSnapshot.child("word").getValue();
-                    contentList.add(w);
-                }
+                    String difficulty = objDataSnapshot.child("difficulty").getValue().toString();
 
+                    if (difficulty.equals(difficultySelect)){
+                        contentList.add(w);
+                    }else if (difficultySelect.equals("PRÁCTICA")){
+                        contentList.add(w);
+                    }
+
+                }
 
                 for (int i = 0; i<3;i++){
                     int index = (int)Math.floor(Math.random()*(contentList.size()-1));

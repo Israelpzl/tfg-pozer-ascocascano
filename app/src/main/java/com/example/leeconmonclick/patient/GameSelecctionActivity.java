@@ -27,8 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GameSelecctionActivity extends AppCompatActivity {
 
-    private Spinner spinner;
-    private ArrayAdapter<String> adapterSpinner;
+
     private DatabaseReference databaseReference;
     private Context context = this;
     private CircleImageView iconPatient;
@@ -42,12 +41,10 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        spinner = (Spinner) findViewById(R.id.spinnerId);
-        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
 
-        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterSpinner);
-        // spinner.getSelectedItem().toString()
+
+
+
 
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
@@ -74,13 +71,19 @@ public class GameSelecctionActivity extends AppCompatActivity {
     }
 
     public void goGameJoin(View v){
-        Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
-        startActivity(joinIntent);
+        Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
+        categoryIntent.putExtra("game","j");
+        startActivity(categoryIntent);
+        //Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
+        //startActivity(joinIntent);
     }
 
     public void goGameLetters(View v){
-        Intent letterIntent = new Intent(this, LetterGameActivity.class);
-        startActivity(letterIntent);
+        Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
+        categoryIntent.putExtra("game","l");
+        startActivity(categoryIntent);
+       /* Intent letterIntent = new Intent(this, LetterGameActivity.class);
+        startActivity(letterIntent);*/
     }
 
     public void goBack(View view){

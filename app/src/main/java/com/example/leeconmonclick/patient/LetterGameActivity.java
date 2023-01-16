@@ -43,6 +43,9 @@ public class LetterGameActivity extends AppCompatActivity {
     private String correctWord;
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
+    private Bundle data;
+    private String category;
+    private String difficultySelect;
 
 
     @Override
@@ -52,6 +55,9 @@ public class LetterGameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        data = getIntent().getExtras();
+        category = data.getString("category");
+        difficultySelect = data.getString("difficulty");
         findElement();
         listImg = new ArrayList<>();
 
@@ -125,13 +131,19 @@ public class LetterGameActivity extends AppCompatActivity {
 
         List<String> contentList = new ArrayList<>();
 
-        databaseReference.child("content").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("content").child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     String w = (String) objDataSnapshot.child("word").getValue();
-                    contentList.add(w);
+                    String difficulty = objDataSnapshot.child("difficulty").getValue().toString();
+
+                    if (difficulty.equals(difficultySelect)){
+                        contentList.add(w);
+                    }else if (difficultySelect.equals("PRÁCTICA")){
+                        contentList.add(w);
+                    }
                 }
 
 
@@ -187,6 +199,18 @@ public class LetterGameActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void findElement(){
+
+        iconPatient = findViewById(R.id.iconPatientId);
+        image1 = findViewById(R.id.image1);
+        image2 = findViewById(R.id.image2);
+        image3 = findViewById(R.id.image3);
+        imgLetter = findViewById(R.id.letter);
+        cardViewImg1 = findViewById(R.id.cardViewImage1);
+        cardViewImg2 = findViewById(R.id.cardViewImage2);
+        cardViewImg3 = findViewById(R.id.cardViewImage3);
     }
 
     private void selectLetter (char c){
@@ -292,17 +316,7 @@ public class LetterGameActivity extends AppCompatActivity {
         }
     }
 
-    private void findElement(){
 
-        iconPatient = findViewById(R.id.iconPatientId);
-        image1 = findViewById(R.id.image1);
-        image2 = findViewById(R.id.image2);
-        image3 = findViewById(R.id.image3);
-        imgLetter = findViewById(R.id.letter);
-        cardViewImg1 = findViewById(R.id.cardViewImage1);
-        cardViewImg2 = findViewById(R.id.cardViewImage2);
-        cardViewImg3 = findViewById(R.id.cardViewImage3);
-    }
 
 
     public void goBack(View v){

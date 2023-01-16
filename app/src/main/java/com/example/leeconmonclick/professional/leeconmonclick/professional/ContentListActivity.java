@@ -92,7 +92,7 @@ public class ContentListActivity extends AppCompatActivity {
 
 
     private void readData(){
-        databaseReference.child("content").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("content").child(userCollection).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

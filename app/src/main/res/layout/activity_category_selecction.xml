@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".patient.CategorySelecctionActivity"
+    android:background="@color/background">
+
+    <Spinner
+        android:id="@+id/spinnerId"
+        android:layout_width="166dp"
+        android:layout_height="25dp"
+        android:background="@drawable/button_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.317"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DIFICULTAD"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.291" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="129dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_food"
+        android:onClick="goFoodCategory"
+        android:text="COMIDAS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.397" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iconPatientId"
+        android:layout_width="51dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/mono"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011" />
+
+    <TextView
+        android:id="@+id/namePatientId"
+        android:layout_width="231dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/name_patient"
+        android:textAlignment="textEnd"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewId4"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <ImageButton
+        android:id="@+id/btnImageBackScreenId13"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:onClick="goBack"
+        app:layout_constraintBottom_toTopOf="@+id/viewId4"
+        app:layout_constraintEnd_toStartOf="@+id/tittleActivityAddNoteId3"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333"
+        app:srcCompat="@drawable/ic_arrow_back_android" />
+
+    <View
+        android:id="@+id/viewId4"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleActivityAddNoteId3"
+        app:layout_constraintVertical_bias="0.016" />
+
+    <TextView
+        android:id="@+id/tittleActivityAddNoteId3"
+        android:layout_width="401dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:text="SELECCIÓN DE CATEGORÍA"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="129dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_pets"
+        android:onClick="goAnimalsCategory"
+        android:text="ANIMALES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.397" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="129dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_category"
+        android:onClick="goPersonalCategory"
+        android:text="PERSONAL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.397" />
+</androidx.constraintlayout.widget.ConstraintLayout>

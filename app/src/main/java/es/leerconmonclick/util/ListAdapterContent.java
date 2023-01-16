@@ -145,7 +145,7 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                databaseReference.child("content").child(w).removeValue();
+                databaseReference.child("content").child(userCollection).child(w).removeValue();
                 Toast.makeText(context, "Contenido borrado con éxito", Toast.LENGTH_LONG).show();
             }
         });
@@ -163,7 +163,7 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
         Intent addIntent = new Intent(context, AddContentActivity.class);
         addIntent.putExtra("word", content.getWord());
         addIntent.putExtra("image", content.getImg());
-        addIntent.putExtra("determinant", content.getDeterminant());
+        addIntent.putExtra("determinant", content.getDifficulty());
         //addIntent.putExtra("syllables", content.getSyllables());
         addIntent.putExtra("modeEdit", true);
         context.startActivity(addIntent);

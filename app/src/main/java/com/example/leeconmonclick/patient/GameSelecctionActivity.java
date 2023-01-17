@@ -74,16 +74,20 @@ public class GameSelecctionActivity extends AppCompatActivity {
         Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
         categoryIntent.putExtra("game","j");
         startActivity(categoryIntent);
-        //Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
-        //startActivity(joinIntent);
+
     }
 
     public void goGameLetters(View v){
         Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
         categoryIntent.putExtra("game","l");
         startActivity(categoryIntent);
-       /* Intent letterIntent = new Intent(this, LetterGameActivity.class);
-        startActivity(letterIntent);*/
+    }
+
+    public void goGameSyllables(View v){
+        Intent categoryIntent = new Intent(this,SyllablesGameActivity.class);
+        categoryIntent.putExtra("game","s");
+        startActivity(categoryIntent);
+
     }
 
     public void goBack(View view){

@@ -13,9 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".patient.SyllablesGameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".patient.CategorySelecctionActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".patient.LetterGameActivity"
             android:exported="false"

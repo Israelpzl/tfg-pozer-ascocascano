@@ -138,11 +138,12 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                             String w = (String) objDataSnapshot.child("word").getValue();
                             String difficulty = objDataSnapshot.child("difficulty").getValue().toString();
 
-                            if (difficulty.equals( spinner.getSelectedItem().toString())){
+                            if (difficulty.equals(spinner.getSelectedItem().toString())) {
                                 contentList.add(w);
-                            }else if ( spinner.getSelectedItem().toString().equals("PRÁCTICA")){
+                            } else if (spinner.getSelectedItem().toString().equals("PRÁCTICA")) {
                                 contentList.add(w);
                             }
+                        }
 
                             if (contentList.size()>3){
                                 if (type.equals("j")){
@@ -161,7 +162,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                             }else{
                                 Toast.makeText(getApplicationContext(), "Tiene que haber más contenido personalizado", Toast.LENGTH_LONG).show();
                             }
-                        }
+
                     }
 
                     @Override

@@ -117,6 +117,27 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     }
 
+    public void goHouseCategory(View v) {
+
+        data = getIntent().getExtras();
+        String type =  data.getString("game");
+
+        if (type.equals("j")){
+
+            Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
+            joinIntent.putExtra("category", "Hogar");
+            joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            startActivity(joinIntent);
+
+        }else if(type.equals("l")){
+            Intent lettersIntent = new Intent(this, LetterGameActivity.class);
+            lettersIntent.putExtra("category", "Hogar");
+            lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            startActivity(lettersIntent);
+        }
+
+    }
+
 
     public void goPersonalCategory (View view){
 

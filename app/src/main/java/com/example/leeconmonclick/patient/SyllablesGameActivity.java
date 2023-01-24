@@ -1,6 +1,7 @@
 package com.example.leeconmonclick.patient;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -11,11 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.DragEvent;
@@ -26,7 +26,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.Content;
+import es.leerconmonclick.util.Syllable;
 
 public class SyllablesGameActivity extends AppCompatActivity {
 
@@ -34,9 +41,18 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private CircleImageView iconPatient;
     private Context context = this;
     private String namePatient;
-    private ImageView blue,green,gray,red,yellow;
+    private ImageView puzzle1, puzzle2, puzzle3, puzzle4,puzzle5,yellow,yellow2;
     private TextView textView;
-
+    private boolean isIntersectBlue = false;
+    private boolean isIntersectRed = false;
+    private boolean isIntersectGray = false;
+    private boolean isIntersectGreen = false;
+    private boolean isIntersectPuzzle5 = false;
+    private List<Syllable> listSylable;
+    private  List<Content> l;
+    private boolean fist,second;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +64,10 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userName","null");
+
+        listSylable = new ArrayList<>();
+        l = new ArrayList<>();
+
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,85 +82,428 @@ public class SyllablesGameActivity extends AppCompatActivity {
             }
         });
 
-        blue.setOnLongClickListener(longClickListener);
-        blue.setOnTouchListener(touchListener);
-        red.setOnLongClickListener(longClickListener);
-        green.setOnLongClickListener(longClickListener);
-        gray.setOnLongClickListener(longClickListener);
-        yellow.setOnDragListener(dragListener);
-        textView.setOnLongClickListener(longClickListener);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.calendar_style);
 
+        puzzle1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle1.setX(event.getRawX() - puzzle1.getWidth() / 2);
+                    puzzle1.setY(event.getRawY() - puzzle1.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle1.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectBlue) {
+
+                            if(puzzle1.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                fist = true;
+                            }
+
+                            isIntersectBlue = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectBlue) {
+                            if(puzzle1.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                second = true;
+                            }
+                            isIntersectBlue = true;
+                        }
+                    }else{
+                        if (isIntersectBlue) {
+                            textView.setText("Elemento azul no en contacto");
+                            isIntersectBlue = false;
+                        }
+                    }
+
+                    if (fist && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+        puzzle4.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle4.setX(event.getRawX() - puzzle4.getWidth() / 2);
+                    puzzle4.setY(event.getRawY() - puzzle4.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle4.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectRed) {
+
+                            if(puzzle4.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                fist = true;
+                            }
+                            isIntersectRed = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectRed) {
+                            if(puzzle4.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                second = true;
+                            }
+                            isIntersectRed = true;
+                        }
+                    }else{
+                        if (isIntersectRed) {
+                            textView.setText("Elemento rojo no en contacto");
+                            isIntersectRed = false;
+                        }
+                    }
+                    if (fist && second){
+                        alertFinishGame();
+                    }
+                }
+
+                return true;
+            }
+        });
+
+        puzzle3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle3.setX(event.getRawX() - puzzle3.getWidth() / 2);
+                    puzzle3.setY(event.getRawY() - puzzle3.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle3.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectGray) {
+                            if(puzzle3.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                fist = true;
+                            }
+                            isIntersectGray = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectGray) {
+
+                            if(puzzle3.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                second = true;
+                            }
+                            isIntersectGray = true;
+                        }
+                    }else{
+                        if (isIntersectGray) {
+                            textView.setText("Elemento gris no en contacto");
+                            isIntersectGray = false;
+                        }
+                    }
+
+                    if (fist && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+        puzzle2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle2.setX(event.getRawX() - puzzle2.getWidth() / 2);
+                    puzzle2.setY(event.getRawY() - puzzle2.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle2.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectGreen) {
+                            if(puzzle2.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                fist = true;
+                            }
+                            isIntersectGreen = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectGreen) {
+                            if(puzzle2.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                second = true;
+                            }
+                            isIntersectGreen = true;
+                        }
+                    }else{
+                        if (isIntersectGreen) {
+                            textView.setText("Elemento verde no en contacto");
+                            isIntersectGreen = false;
+                        }
+                    }
+
+                    if (fist && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+        puzzle5.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle5.setX(event.getRawX() - puzzle5.getWidth() / 2);
+                    puzzle5.setY(event.getRawY() - puzzle5.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle5.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectPuzzle5) {
+                            if(puzzle5.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                fist = true;
+                            }
+                            isIntersectPuzzle5 = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectPuzzle5) {
+                            if(puzzle5.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                textView.setText("True");
+                                second = true;
+                            }
+                            isIntersectPuzzle5 = true;
+                        }
+                    }else{
+                        if (isIntersectPuzzle5) {
+                            textView.setText("Elemento verde no en contacto");
+                            isIntersectPuzzle5 = false;
+                        }
+                    }
+
+                    if (fist && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+
+        initBBDD();
 
 
 
     }
 
-    View.OnTouchListener touchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            ClipData clipData = ClipData.newPlainText("","");
-            View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder(v);
-            v.startDrag(clipData,myShadowBuilder,null,0);
-            return true;
-        }
-    };
+    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle..", Toast.LENGTH_LONG).show();
+        recreate();
+    }
+
+    private void initBBDD (){
+
+        String[] listCategory = {"Hogar","Animales","Comidas"};
+
+        List<Content> listContent = new ArrayList<>();
 
 
-    View.OnLongClickListener longClickListener = (v) -> {
-        ClipData clipData = ClipData.newPlainText("","");
-
-        View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder(v);
-        v.startDrag(clipData,myShadowBuilder,v,0);
-        return true;
-    };
+            databaseReference.child("content").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
 
-    View.OnDragListener dragListener = new View.OnDragListener() {
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
+                    for (String categoty : listCategory){
+                        for (DataSnapshot objSnapshot : snapshot.child(categoty).getChildren()) {
 
-            int dragEvent = event.getAction();
-            final View view = (View) event.getLocalState();
-            switch (dragEvent) {
-                case DragEvent.ACTION_DRAG_ENTERED:{
+                            boolean isSyllable =  (boolean) objSnapshot.child("isSyllable").getValue();
+                            if (isSyllable) {
+                                String syllable = objSnapshot.child("syllables").getValue().toString();
+                                String img = objSnapshot.child("img").getValue().toString();
+                                String word = objSnapshot.child("word").getValue().toString();
+                                Content content = new Content(word, img, syllable, null);
+                                listContent.add(content);
+                            }
+                        }
+                    }
 
-                        textView.setText("ENTRE");
-                    break;
+
+                    Collections.shuffle(listContent);
+                    l.add(listContent.get(0));
+                    l.add(listContent.get(1));
+
+
+                    Collections.shuffle(l);
+                    getImgPuzzle(l.get(0));
+
+
                 }
-                case DragEvent.ACTION_DRAG_EXITED:{
 
-                        textView.setText("SALI");
-                    break;
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
                 }
-                case DragEvent.ACTION_DROP:{
-                        textView.setText("DROP");
-                    break;
+            });
+
+    }
+
+    private void randomPuzzle(){
+
+        databaseReference.child("content").child("Puzzle").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String[] sy = l.get(0).getSyllables().split("-");
+                List<String> sl = new ArrayList<>();
+
+                for (DataSnapshot objSnapshot : snapshot.getChildren()){
+
+                    if(!sy[0].toLowerCase(Locale.ROOT).equals(objSnapshot.getKey().toLowerCase(Locale.ROOT)) &&
+                            !sy[1].toLowerCase(Locale.ROOT).equals(objSnapshot.getKey().toLowerCase(Locale.ROOT))){
+                        sl.add(objSnapshot.getKey().toLowerCase(Locale.ROOT));
+                    }
                 }
-                case DragEvent.ACTION_DRAG_ENDED:{
+                Collections.shuffle(sl);
+                Syllable s1 = new Syllable(sl.get(0).toLowerCase(Locale.ROOT),snapshot.child(sl.get(0)).getValue().toString());
+                Syllable s2 = new Syllable(sl.get(1).toLowerCase(Locale.ROOT),snapshot.child(sl.get(1)).getValue().toString());
+                Syllable s3 = new Syllable(sl.get(2).toLowerCase(Locale.ROOT),snapshot.child(sl.get(2)).getValue().toString());
+                listSylable.add(s1);
+                listSylable.add(s2);
+                listSylable.add(s3);
 
-                        textView.setText("END");
 
-                    break;
+                if (listSylable.size() == 5) {
+
+                    Collections.shuffle(listSylable);
+
+                    Glide.with(context).load(listSylable.get(0).getImg()).into(puzzle1);
+                    Glide.with(context).load(listSylable.get(1).getImg()).into(puzzle2);
+                    Glide.with(context).load(listSylable.get(2).getImg()).into(puzzle3);
+                    Glide.with(context).load(listSylable.get(3).getImg()).into(puzzle4);
+                    Glide.with(context).load(listSylable.get(4).getImg()).into(puzzle5);
+
+
+                    puzzle1.setTag(listSylable.get(0).getSyllable().toLowerCase(Locale.ROOT));
+                    puzzle2.setTag(listSylable.get(1).getSyllable().toLowerCase(Locale.ROOT));
+                    puzzle3.setTag(listSylable.get(2).getSyllable().toLowerCase(Locale.ROOT));
+                    puzzle4.setTag(listSylable.get(3).getSyllable().toLowerCase(Locale.ROOT));
+                    puzzle5.setTag(listSylable.get(4).getSyllable().toLowerCase(Locale.ROOT));
+
                 }
             }
-            return true;
-        }
-    };
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getImgPuzzle(Content content){
+
+        String[] sy = content.getSyllables().split("-");
+
+
+        databaseReference.child("content").child("Puzzle").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot objSnapshot : snapshot.getChildren()){
+                    String z =objSnapshot.getKey().toLowerCase(Locale.ROOT);
+                    if (z.equals(sy[0].toLowerCase(Locale.ROOT))){
+                        Syllable s = new Syllable(sy[0],objSnapshot.getValue().toString());
+                        listSylable.add(s);
+                        break;
+                    }
+                }
+
+                for (DataSnapshot objSnapshot : snapshot.getChildren()){
+                    String z =objSnapshot.getKey().toLowerCase(Locale.ROOT);
+                    if (z.equals(sy[1].toLowerCase(Locale.ROOT))){
+                        Syllable s = new Syllable(sy[1],objSnapshot.getValue().toString());
+                        listSylable.add(s);
+                        break;
+                    }
+                }
+
+                randomPuzzle();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+    private void alertFinishGame(){
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+        alertDialogBuilder.setView(finishGamePopUp);
+        alertDialog =  alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+    }
 
 
     private void findElements(){
         iconPatient = findViewById(R.id.iconPatientId);
 
-        blue =  findViewById(R.id.blue);
-        red = findViewById(R.id.reed);
-        green = findViewById(R.id.green);
-        gray = findViewById(R.id.gray);
+        puzzle1 =  findViewById(R.id.puzzle1);
+        puzzle2 = findViewById(R.id.puzzle2);
+        puzzle3 = findViewById(R.id.puzzle3);
+        puzzle4 = findViewById(R.id.puzzle4);
+        puzzle5 = findViewById(R.id.puzzle5);
         yellow =findViewById(R.id.yellow);
+        yellow2 =findViewById(R.id.yellow2);
 
         textView = findViewById(R.id.textView10);
 

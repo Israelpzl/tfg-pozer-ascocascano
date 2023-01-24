@@ -200,7 +200,7 @@ public class AddContentActivity extends AppCompatActivity {
             if(uri != null){
 
                 if (data.getBoolean("modeEdit")){
-                    filePath = storageReference.child("contenidos").child(data.getString("word"));
+                    filePath = storageReference.child("contenidos").child(userCollection).child(data.getString("word"));
                     filePath.delete();
                 }
 

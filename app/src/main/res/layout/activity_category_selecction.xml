@@ -7,6 +7,21 @@
     tools:context=".patient.CategorySelecctionActivity"
     android:background="@color/background">
 
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="129dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_chair"
+        android:onClick="goHouseCategory"
+        android:text="HOGAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.305"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.675" />
+
     <Spinner
         android:id="@+id/spinnerId"
         android:layout_width="166dp"

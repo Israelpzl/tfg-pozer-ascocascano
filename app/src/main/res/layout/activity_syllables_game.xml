@@ -7,6 +7,19 @@
     tools:context=".patient.SyllablesGameActivity"
     android:background="@color/background">
 
+    <ImageView
+        android:id="@+id/yellow2"
+        android:layout_width="125dp"
+        android:layout_height="103dp"
+        android:layout_marginStart="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/yellow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051"
+        app:srcCompat="@drawable/bg_select_cardview" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientId"
         android:layout_width="51dp"
@@ -38,63 +51,62 @@
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <ImageView
-        android:id="@+id/blue"
+        android:id="@+id/puzzle1"
         android:layout_width="87dp"
         android:layout_height="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77"
+        app:layout_constraintVertical_bias="0.654"
         app:srcCompat="@drawable/calendar_style" />
 
     <ImageView
-        android:id="@+id/green"
+        android:id="@+id/puzzle2"
         android:layout_width="81dp"
         android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintHorizontal_bias="0.323"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753"
+        app:layout_constraintVertical_bias="0.657"
         app:srcCompat="@drawable/button_style_green" />
 
     <ImageView
-        android:id="@+id/reed"
+        android:id="@+id/puzzle3"
         android:layout_width="87dp"
         android:layout_height="78dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726"
+        app:layout_constraintVertical_bias="0.642"
         app:srcCompat="@drawable/button_style_red_tritano" />
 
     <ImageView
-        android:id="@+id/gray"
+        android:id="@+id/puzzle4"
         android:layout_width="92dp"
         android:layout_height="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.798"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.735"
+        app:layout_constraintVertical_bias="0.683"
         app:srcCompat="@drawable/button_style" />
 
     <ImageView
         android:id="@+id/yellow"
-        android:layout_width="291dp"
-        android:layout_height="115dp"
+        android:layout_width="125dp"
+        android:layout_height="103dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054"
+        app:layout_constraintVertical_bias="0.051"
         app:srcCompat="@drawable/bg_select_cardview" />
 
     <TextView
@@ -108,4 +120,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.903" />
+
+    <ImageView
+        android:id="@+id/puzzle5"
+        android:layout_width="110dp"
+        android:layout_height="79dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.686"
+        app:srcCompat="@drawable/bg_select_icon" />
+
+    <ImageButton
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:onClick="refreshBBDD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.876"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.041"
+        app:srcCompat="@drawable/ic_refresh" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

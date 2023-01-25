@@ -136,6 +136,7 @@
 
     <Button
         android:id="@+id/BtnLoginPatientId"
+        android:onClick="loginPatient"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"

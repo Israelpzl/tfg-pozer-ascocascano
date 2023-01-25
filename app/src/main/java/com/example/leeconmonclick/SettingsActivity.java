@@ -75,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        userName = findViewById(R.id.editTextTextPersonNameEdit);
+        userName = findViewById(R.id.editNameUser);
         noDaltonic = findViewById(R.id.toggleButtonNoDalto);
         daltonic = findViewById(R.id.toggleButtonDalto);
         bigSize = findViewById(R.id.toggleButtonBig);
@@ -167,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void saveChanges(View v){
 
-        TextView userName = findViewById(R.id.editTextTextPersonNameEdit);
+        TextView userName = findViewById(R.id.editNameUser);
         ToggleButton noDaltonic = findViewById(R.id.toggleButtonNoDalto);
         ToggleButton daltonic = findViewById(R.id.toggleButtonDalto);
         ToggleButton bigSize = findViewById(R.id.toggleButtonBig);

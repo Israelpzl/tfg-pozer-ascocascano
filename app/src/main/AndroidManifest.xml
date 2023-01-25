@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".patient.ProgresionPatientActivity"
+            android:exported="false"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".patient.SettingsPatientActivity"
             android:name=".patient.SyllablesGameActivity"
             android:exported="false"
             android:screenOrientation="landscape" />

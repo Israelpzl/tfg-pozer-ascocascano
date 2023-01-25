@@ -19,6 +19,19 @@
         </activity>
         <activity
             android:name=".patient.SettingsPatientActivity"
+            android:name=".patient.SyllablesGameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".patient.CategorySelecctionActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".patient.LetterGameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".patient.JoinWordsGameActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

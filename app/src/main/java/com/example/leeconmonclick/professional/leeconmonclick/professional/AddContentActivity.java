@@ -148,7 +148,7 @@ public class AddContentActivity extends AppCompatActivity {
             }
         });
 
-        String[] opciones = {"-", "El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"};
+        String[] opciones = { "FÁCIL", "NORMAL", "DIFÍCIL"};
 
         adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
         spinner.setAdapter(adapterSpinner);
@@ -200,11 +200,11 @@ public class AddContentActivity extends AppCompatActivity {
             if(uri != null){
 
                 if (data.getBoolean("modeEdit")){
-                    filePath = storageReference.child("contenidos").child(data.getString("word"));
+                    filePath = storageReference.child("contenidos").child(userCollection).child(data.getString("word"));
                     filePath.delete();
                 }
 
-                filePath = storageReference.child("contenidos").child(word.getText().toString());
+                filePath = storageReference.child("contenidos").child(userCollection).child(word.getText().toString());
                 filePath.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -218,11 +218,11 @@ public class AddContentActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Vector palabras = getPalabras(word.getText().toString());
-                            if(Verificar(word.getText().toString().trim().toLowerCase()) && palabras.size() != 1){
+                            if(Verificar(word.getText().toString().trim().toLowerCase()) && palabras.size() == 1){
                                 Uri downloadUri2 = task.getResult();
                                 String sylablle = Silabear();
                                 Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
-                                databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                databaseReference.child("content").child(userCollection).child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();

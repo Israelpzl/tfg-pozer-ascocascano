@@ -44,15 +44,13 @@
         android:layout_height="2dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/separator"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconProfesionalId3"
-        app:layout_constraintVertical_bias="0.113" />
+        app:layout_constraintTop_toBottomOf="@+id/iconPatientId" />
 
     <TextView
-        android:id="@+id/namePatientId2"
+        android:id="@+id/namePatientId"
         android:layout_width="231dp"
         android:layout_height="23dp"
         android:layout_marginTop="10dp"
@@ -62,13 +60,13 @@
         android:textAlignment="textEnd"
         android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/viewId3"
-        app:layout_constraintEnd_toStartOf="@+id/iconProfesionalId3"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId3"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:layout_marginStart="30dp"
@@ -88,26 +86,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:background="@drawable/button_style"
-        android:text="JUEGO 1"
+        android:onClick="goGameJoin"
+        android:padding="6dp"
+        android:text="UNIR PALABRAS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.074"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId3" />
 
     <Button
         android:id="@+id/game2btnId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
-        android:text="JUEGO 2"
+        android:onClick="goGameLetters"
+        android:text="LETRAS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toEndOf="@+id/game1btnId"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerId"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId3" />
 
     <Button
         android:id="@+id/game3btnId"
@@ -115,36 +114,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:background="@drawable/button_style"
-        android:text="JUEGO 3"
+        android:text="SÍLABAS"
+        android:onClick="goGameSyllables"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toEndOf="@+id/game2btnId"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerId"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId3" />
 
-    <Spinner
-        android:id="@+id/spinnerId"
-        android:layout_width="166dp"
-        android:layout_height="25dp"
-        android:background="@drawable/button_style"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.317"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DIFICULTAD"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.291" />
 </androidx.constraintlayout.widget.ConstraintLayout>

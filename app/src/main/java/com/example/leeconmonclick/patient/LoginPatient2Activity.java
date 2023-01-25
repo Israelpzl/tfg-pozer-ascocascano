@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Base64;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -33,11 +36,8 @@ public class LoginPatient2Activity extends AppCompatActivity {
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
 
-    private static final String STRING_PREFERENCES = "leeconmonclick.login";
-    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
-
     private EditText namePatient, passPatient;
-    private Button btnLoginPatient;
+    private AwesomeValidation awesomeValidation;
     private Switch remeberSession;
 
     private DatabaseReference databaseReference;
@@ -52,49 +52,60 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
         namePatient =  findViewById(R.id.namePacientIId);
         passPatient = findViewById(R.id.passPacientId);
-        btnLoginPatient = findViewById(R.id.BtnLoginPatientId);
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
 
-        btnLoginPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginPatient();
-            }
-        });
+
     }
 
-    private void loginPatient(){
+    public void loginPatient(View v){
 
-        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        //awesomeValidation.addValidation(this,R.id.namePacientIId, Patterns., R.string.error_mail);
+        awesomeValidation.addValidation(this,R.id.passPacientId, ".{5,}", R.string.error_pass);
 
-                for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                    String nPacient = (String) objDataSnapshot.child("namePatient").getValue();
-                    String pass = (String) objDataSnapshot.child("password").getValue();
+        if (awesomeValidation.validate()){
+            databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    boolean exitUser = false;
+                    for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
+                        String nPatient = (String) objDataSnapshot.child("namePatient").getValue();
+                        String pass = (String) objDataSnapshot.child("password").getValue();
 
 
-                    try {
-                        pass = decrypt(pass);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        try {
+                            pass = decrypt(pass);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (nPatient.equals(namePatient.getText().toString()) && pass.equals(passPatient.getText().toString())){
+                            Toast.makeText(getApplicationContext(),"Usuario Encontrado",Toast.LENGTH_LONG).show();
+                            exitUser = true;
+                            break;
+                        }
                     }
 
-                    if (nPacient.equals(namePatient.getText().toString()) && pass.equals(passPatient.getText().toString())){
-                        Toast.makeText(getApplicationContext(),"Usuario Encontrado",Toast.LENGTH_LONG).show();
+                    if (!exitUser){
+                        Toast.makeText(getApplicationContext(),"No se encuentra el usuario",Toast.LENGTH_LONG).show();
+                    }else{
                         goHomePatient();
-                        break;
                     }
+
+
+
                 }
-              
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+
+
     }
 
     public void goBack(View v){
@@ -124,8 +135,6 @@ public class LoginPatient2Activity extends AppCompatActivity {
     }
 
     public void saveStateSession(){
-        /*SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();*/
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();

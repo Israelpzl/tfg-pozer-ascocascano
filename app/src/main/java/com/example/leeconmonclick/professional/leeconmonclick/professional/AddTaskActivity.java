@@ -199,7 +199,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
 
     public void saveTask (View v){
 
-        databaseReference.child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Users").child(userCollection).child("taskList").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -243,7 +243,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                     Task task = new Task(contador,taskTittle.getText().toString(),date,time,taskDescription.getText().toString(),tag);
 
 
-                    databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(contador+"").setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
 

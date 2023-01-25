@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
@@ -67,7 +66,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         nameProfesional = findViewById(R.id.nameProfesionalId);
-        iconProfesional = findViewById(R.id.iconProfesionalId);
+        iconProfesional = findViewById(R.id.iconPatientId);
 
 
         userCollection = user.getEmail();

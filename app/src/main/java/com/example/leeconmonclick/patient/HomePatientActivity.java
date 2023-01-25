@@ -48,6 +48,11 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         startActivity(settIntent);
     }
 
+    public void goProgression(View v){
+        Intent progress = new Intent(this, ProgresionPatientActivity.class);
+        startActivity(progress);
+    }
+
     public void goGameSelecction(View v){
         Intent gameSelecctionIntent = new Intent(this, GameSelecctionActivity.class);
         startActivity(gameSelecctionIntent);

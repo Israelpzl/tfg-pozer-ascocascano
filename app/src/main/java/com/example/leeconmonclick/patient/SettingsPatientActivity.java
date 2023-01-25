@@ -67,7 +67,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.settings);
+        constraintLayout =  findViewById(R.id.settingsPatient);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();

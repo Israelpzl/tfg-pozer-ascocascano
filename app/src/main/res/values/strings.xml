@@ -56,4 +56,11 @@
     <string name="tittle">TÍTULO</string>
     <string name="description">DESCRIPCIÓN</string>
     <string name="clock">RELOJ</string>
+    <string name="progression">PROGRESO</string>
+    <string name="lvl1">NIVEL 1</string>
+    <string name="lvl2">NIVEL 2</string>
+    <string name="lvl3">NIVEL 3</string>
+    <string name="lvl4">NIVEL 4</string>
+    <string name="lvl5">NIVEL 5</string>
+    <string name="lvl6">NIVEL 6</string>
 </resources>

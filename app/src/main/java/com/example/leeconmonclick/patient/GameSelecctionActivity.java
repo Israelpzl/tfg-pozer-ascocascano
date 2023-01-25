@@ -51,7 +51,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userName","null");
+        String namePatient = preferences.getString("userPatient","null");
 
         namePatientTxtView.setText(namePatient);
 

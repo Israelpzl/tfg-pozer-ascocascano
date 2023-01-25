@@ -64,7 +64,7 @@ public class LetterGameActivity extends AppCompatActivity {
         listImg = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userName","null");
+        String namePatient = preferences.getString("userPatient","null");
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override

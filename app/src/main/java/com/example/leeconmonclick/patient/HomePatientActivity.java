@@ -48,7 +48,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userName","null");
+        String namePatient = preferences.getString("userPatient","null");
 
         levelText = findViewById(R.id.level);
         namePatientText = findViewById(R.id.namePatientId);
@@ -59,7 +59,18 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
-                Glide.with(context).load(icon).into(iconPatient);
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override

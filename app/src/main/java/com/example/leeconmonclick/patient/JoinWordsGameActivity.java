@@ -74,7 +74,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         findElement();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userName","null");
+        namePatient = preferences.getString("userPatient","null");
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override

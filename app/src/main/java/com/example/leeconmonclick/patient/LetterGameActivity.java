@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private Bundle data;
     private String category;
     private String difficultySelect;
+    private String imgFinish;
 
 
     @Override
@@ -68,7 +70,18 @@ public class LetterGameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
-                Glide.with(context).load(icon).into(iconPatient);
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -127,6 +140,10 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
+    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
+        recreate();
+    }
+
     private void  initBBDD () {
 
         List<String> contentList = new ArrayList<>();
@@ -167,10 +184,12 @@ public class LetterGameActivity extends AppCompatActivity {
                 selectLetter(listImg.get(0).charAt(0));
 
                 correctWord = listImg.get(0);
-
+                imgFinish =snapshot.child(listImg.get(0)).child("img").getValue().toString();
 
 
                 Collections.shuffle(listImg);
+
+
 
 
                 Glide.with(context).load(snapshot.child(listImg.get(0)).child("img").getValue().toString()).into(image1);
@@ -190,6 +209,19 @@ public class LetterGameActivity extends AppCompatActivity {
     private void alertFinishGame(){
         alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+
+        ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
+        Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Glide.with(context).load(imgFinish).into(img);
+
         alertDialogBuilder.setView(finishGamePopUp);
         alertDialog =  alertDialogBuilder.create();
         alertDialog.show();

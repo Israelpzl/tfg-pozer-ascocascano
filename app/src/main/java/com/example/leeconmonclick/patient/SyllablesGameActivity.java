@@ -12,18 +12,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,17 +42,14 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private Context context = this;
     private String namePatient;
     private ImageView puzzle1, puzzle2, puzzle3, puzzle4,puzzle5,yellow,yellow2;
-    private TextView textView;
-    private boolean isIntersectBlue = false;
-    private boolean isIntersectRed = false;
-    private boolean isIntersectGray = false;
-    private boolean isIntersectGreen = false;
-    private boolean isIntersectPuzzle5 = false;
+    private boolean isIntersectPuzzle1, isIntersectPuzzle2, isIntersectPuzzle3, isIntersectPuzzle4,isIntersectPuzzle5 = false;
     private List<Syllable> listSylable;
     private  List<Content> l;
-    private boolean fist,second;
+    private boolean first,second;
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +91,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
         });
 
 
-
         puzzle1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -113,31 +109,120 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     String[] sy = l.get(0).getSyllables().split("-");
 
                     if (Rect.intersects(rect1, rect2)) {
-                        if (!isIntersectBlue) {
+                        if (!isIntersectPuzzle1) {
 
                             if(puzzle1.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                fist = true;
+                                first = true;
                             }
 
-                            isIntersectBlue = true;
+                            isIntersectPuzzle1 = true;
                         }
                     } else if (Rect.intersects(rect1,rect3)){
-                        if (!isIntersectBlue) {
+                        if (!isIntersectPuzzle1) {
                             if(puzzle1.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
                                 second = true;
                             }
-                            isIntersectBlue = true;
+                            isIntersectPuzzle1 = true;
                         }
                     }else{
-                        if (isIntersectBlue) {
-                            textView.setText("Elemento azul no en contacto");
-                            isIntersectBlue = false;
+                        if (isIntersectPuzzle1) {
+                            isIntersectPuzzle1 = false;
                         }
                     }
 
-                    if (fist && second){
+                    if (first && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+        puzzle2.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle2.setX(event.getRawX() - puzzle2.getWidth() / 2);
+                    puzzle2.setY(event.getRawY() - puzzle2.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle2.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectPuzzle2) {
+                            if(puzzle2.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                first = true;
+                            }
+                            isIntersectPuzzle2 = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectPuzzle2) {
+                            if(puzzle2.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                second = true;
+                            }
+                            isIntersectPuzzle2 = true;
+                        }
+                    }else{
+                        if (isIntersectPuzzle2) {
+                            isIntersectPuzzle2 = false;
+                        }
+                    }
+
+                    if (first && second){
+                        alertFinishGame();
+                    }
+                }
+                return true;
+            }
+        });
+
+        puzzle3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    puzzle3.setX(event.getRawX() - puzzle3.getWidth() / 2);
+                    puzzle3.setY(event.getRawY() - puzzle3.getHeight() / 2);
+
+                    Rect rect1 = new Rect();
+                    puzzle3.getHitRect(rect1);
+                    Rect rect2 = new Rect();
+                    yellow.getHitRect(rect2);
+                    Rect rect3 = new Rect();
+                    yellow2.getHitRect(rect3);
+
+                    String[] sy = l.get(0).getSyllables().split("-");
+
+                    if (Rect.intersects(rect1, rect2)) {
+                        if (!isIntersectPuzzle3) {
+                            if(puzzle3.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
+                                first = true;
+                            }
+                            isIntersectPuzzle3 = true;
+                        }
+                    } else if (Rect.intersects(rect1,rect3)){
+                        if (!isIntersectPuzzle3) {
+
+                            if(puzzle3.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
+                                second = true;
+                            }
+                            isIntersectPuzzle3 = true;
+                        }
+                    }else{
+                        if (isIntersectPuzzle3) {
+                            isIntersectPuzzle3 = false;
+                        }
+                    }
+
+                    if (first && second){
                         alertFinishGame();
                     }
                 }
@@ -163,130 +248,30 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     String[] sy = l.get(0).getSyllables().split("-");
 
                     if (Rect.intersects(rect1, rect2)) {
-                        if (!isIntersectRed) {
+                        if (!isIntersectPuzzle4) {
 
                             if(puzzle4.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                fist = true;
+                                first = true;
                             }
-                            isIntersectRed = true;
+                            isIntersectPuzzle4 = true;
                         }
                     } else if (Rect.intersects(rect1,rect3)){
-                        if (!isIntersectRed) {
+                        if (!isIntersectPuzzle4) {
                             if(puzzle4.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
                                 second = true;
                             }
-                            isIntersectRed = true;
+                            isIntersectPuzzle4 = true;
                         }
                     }else{
-                        if (isIntersectRed) {
-                            textView.setText("Elemento rojo no en contacto");
-                            isIntersectRed = false;
+                        if (isIntersectPuzzle4) {
+                            isIntersectPuzzle4 = false;
                         }
                     }
-                    if (fist && second){
+                    if (first && second){
                         alertFinishGame();
                     }
                 }
 
-                return true;
-            }
-        });
-
-        puzzle3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    puzzle3.setX(event.getRawX() - puzzle3.getWidth() / 2);
-                    puzzle3.setY(event.getRawY() - puzzle3.getHeight() / 2);
-
-                    Rect rect1 = new Rect();
-                    puzzle3.getHitRect(rect1);
-                    Rect rect2 = new Rect();
-                    yellow.getHitRect(rect2);
-                    Rect rect3 = new Rect();
-                    yellow2.getHitRect(rect3);
-
-                    String[] sy = l.get(0).getSyllables().split("-");
-
-                    if (Rect.intersects(rect1, rect2)) {
-                        if (!isIntersectGray) {
-                            if(puzzle3.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                fist = true;
-                            }
-                            isIntersectGray = true;
-                        }
-                    } else if (Rect.intersects(rect1,rect3)){
-                        if (!isIntersectGray) {
-
-                            if(puzzle3.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                second = true;
-                            }
-                            isIntersectGray = true;
-                        }
-                    }else{
-                        if (isIntersectGray) {
-                            textView.setText("Elemento gris no en contacto");
-                            isIntersectGray = false;
-                        }
-                    }
-
-                    if (fist && second){
-                        alertFinishGame();
-                    }
-                }
-                return true;
-            }
-        });
-
-        puzzle2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    puzzle2.setX(event.getRawX() - puzzle2.getWidth() / 2);
-                    puzzle2.setY(event.getRawY() - puzzle2.getHeight() / 2);
-
-                    Rect rect1 = new Rect();
-                    puzzle2.getHitRect(rect1);
-                    Rect rect2 = new Rect();
-                    yellow.getHitRect(rect2);
-                    Rect rect3 = new Rect();
-                    yellow2.getHitRect(rect3);
-
-                    String[] sy = l.get(0).getSyllables().split("-");
-
-                    if (Rect.intersects(rect1, rect2)) {
-                        if (!isIntersectGreen) {
-                            if(puzzle2.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                fist = true;
-                            }
-                            isIntersectGreen = true;
-                        }
-                    } else if (Rect.intersects(rect1,rect3)){
-                        if (!isIntersectGreen) {
-                            if(puzzle2.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                second = true;
-                            }
-                            isIntersectGreen = true;
-                        }
-                    }else{
-                        if (isIntersectGreen) {
-                            textView.setText("Elemento verde no en contacto");
-                            isIntersectGreen = false;
-                        }
-                    }
-
-                    if (fist && second){
-                        alertFinishGame();
-                    }
-                }
                 return true;
             }
         });
@@ -311,27 +296,24 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     if (Rect.intersects(rect1, rect2)) {
                         if (!isIntersectPuzzle5) {
                             if(puzzle5.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
-                                fist = true;
+                                first = true;
                             }
                             isIntersectPuzzle5 = true;
                         }
                     } else if (Rect.intersects(rect1,rect3)){
                         if (!isIntersectPuzzle5) {
                             if(puzzle5.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
-                                textView.setText("True");
                                 second = true;
                             }
                             isIntersectPuzzle5 = true;
                         }
                     }else{
                         if (isIntersectPuzzle5) {
-                            textView.setText("Elemento verde no en contacto");
                             isIntersectPuzzle5 = false;
                         }
                     }
 
-                    if (fist && second){
+                    if (first && second){
                         alertFinishGame();
                     }
                 }
@@ -340,13 +322,14 @@ public class SyllablesGameActivity extends AppCompatActivity {
         });
 
 
+
         initBBDD();
 
 
 
     }
 
-    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle..", Toast.LENGTH_LONG).show();
+    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG).show();
         recreate();
     }
 
@@ -377,15 +360,12 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         }
                     }
 
-
                     Collections.shuffle(listContent);
                     l.add(listContent.get(0));
                     l.add(listContent.get(1));
 
-
                     Collections.shuffle(l);
                     getImgPuzzle(l.get(0));
-
 
                 }
 
@@ -475,10 +455,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         break;
                     }
                 }
-
                 randomPuzzle();
-
-
             }
 
             @Override
@@ -493,6 +470,19 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private void alertFinishGame(){
         alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+
+        ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
+        Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Glide.with(context).load(l.get(0).getImg()).into(img);
+
         alertDialogBuilder.setView(finishGamePopUp);
         alertDialog =  alertDialogBuilder.create();
         alertDialog.show();
@@ -516,7 +506,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
         yellow =findViewById(R.id.yellow);
         yellow2 =findViewById(R.id.yellow2);
 
-        textView = findViewById(R.id.textView10);
 
     }
 

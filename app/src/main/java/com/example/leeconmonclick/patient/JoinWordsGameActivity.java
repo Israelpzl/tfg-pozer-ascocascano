@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +80,18 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
-                Glide.with(context).load(icon).into(iconPatient);
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -204,11 +216,17 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             @Override
             public void onClick (View v){
                 if (select && !cardWordFinish3) {
-                    check(3);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
-                    word = "";
-                    wordSelect3.setVisibility(View.INVISIBLE);
+                    wordSelect1.setVisibility(View.INVISIBLE);
+                    wordSelect2.setVisibility(View.INVISIBLE);
+                    wordSelect3.setVisibility(View.VISIBLE);
+                    word = listWord.get(2);
+                    if (img.equals(word)){
+                        check(3);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        word = "";
+                        wordSelect3.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -276,6 +294,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     }
 
+    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
+        recreate();
+    }
+
 
     private void findElement(){
 
@@ -311,6 +333,15 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private void alertFinishGame(){
         alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+        Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         alertDialogBuilder.setView(finishGamePopUp);
         alertDialog =  alertDialogBuilder.create();
         alertDialog.show();

@@ -60,7 +60,18 @@ public class GameSelecctionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
-                Glide.with(context).load(icon).into(iconPatient);
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override

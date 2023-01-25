@@ -1,19 +1,17 @@
 package es.leerconmonclick.util;
 
-import java.util.List;
-
 public class Content {
 
     private String word;
     private String img;
     private String syllables;
-    private String determinant;
+    private String difficulty;
 
-    public Content(String word, String img, String syllables, String determinant) {
+    public Content(String word, String img, String syllables, String difficulty) {
         this.word = word;
         this.img = img;
         this.syllables = syllables;
-        this.determinant = determinant;
+        this.difficulty = difficulty;
     }
 
     public String getWord() {
@@ -40,11 +38,11 @@ public class Content {
         this.syllables = syllables;
     }
 
-    public String getDeterminant() {
-        return determinant;
+    public String getDifficulty() {
+        return difficulty;
     }
 
-    public void setDeterminant(String determinant) {
-        this.determinant = determinant;
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 }

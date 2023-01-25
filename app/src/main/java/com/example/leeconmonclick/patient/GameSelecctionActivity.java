@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GameSelecctionActivity extends AppCompatActivity {
 
-    private Spinner spinner;
-    private ArrayAdapter<String> adapterSpinner;
+
     private DatabaseReference databaseReference;
     private Context context = this;
     private CircleImageView iconPatient;
@@ -40,12 +41,10 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        spinner = (Spinner) findViewById(R.id.spinnerId);
-        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
 
-        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterSpinner);
-        // spinner.getSelectedItem().toString()
+
+
+
 
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
@@ -61,7 +60,18 @@ public class GameSelecctionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
-                Glide.with(context).load(icon).into(iconPatient);
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -69,6 +79,26 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void goGameJoin(View v){
+        Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
+        categoryIntent.putExtra("game","j");
+        startActivity(categoryIntent);
+
+    }
+
+    public void goGameLetters(View v){
+        Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
+        categoryIntent.putExtra("game","l");
+        startActivity(categoryIntent);
+    }
+
+    public void goGameSyllables(View v){
+        Intent categoryIntent = new Intent(this,SyllablesGameActivity.class);
+        categoryIntent.putExtra("game","s");
+        startActivity(categoryIntent);
+
     }
 
     public void goBack(View view){

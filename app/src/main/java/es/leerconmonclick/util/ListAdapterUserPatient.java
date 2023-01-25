@@ -77,7 +77,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             namePatientView =  itemView.findViewById(R.id.namePatientItemId);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
-            circleImageView = itemView.findViewById(R.id.iconProfesionalId);
+            circleImageView = itemView.findViewById(R.id.iconPatientId);
 
         }
 

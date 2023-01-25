@@ -35,7 +35,6 @@ import es.leerconmonclick.util.DialogSettingPatient;
 public class HomePatientActivity extends AppCompatActivity implements DialogSettingPatient.DialogListener {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
     private TextView levelText,namePatientText;
     private Context context = this;
     private CircleImageView iconPatient;

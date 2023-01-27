@@ -46,13 +46,12 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        findElement();
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String namePatient = preferences.getString("userPatient","null");
 
-        levelText = findViewById(R.id.level);
-        namePatientText = findViewById(R.id.namePatientId);
-        iconPatient = findViewById(R.id.iconPatientId);
         namePatientText.setText(namePatient);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -82,8 +81,8 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     }
 
     public void goSettings(View v){
-        Intent settIntent = new Intent(this, SettingsPatientActivity.class);
-        startActivity(settIntent);
+        DialogSettingPatient dialogSettingPatient = new DialogSettingPatient();
+        dialogSettingPatient.show(getSupportFragmentManager(),"example");
     }
 
     public void goProgression(View v){
@@ -96,18 +95,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         startActivity(gameSelecctionIntent);
     }
 
-    public void logOutPatient(View v){
-        Toast.makeText(getApplicationContext(),"LogOut",Toast.LENGTH_LONG).show();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLoggedIn", false);
-        editor.putString("user","null");
-        editor.putString("userName","null");
-        editor.apply();
-        Intent profilesActivity = new Intent(this, ProfilesActivity.class);
-        startActivity(profilesActivity);
-        finish();
-    }
+
 
 
 
@@ -115,9 +103,24 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         finish();
     }
 
+    public void findElement(){
+
+        levelText = findViewById(R.id.level);
+        namePatientText = findViewById(R.id.namePatientId);
+        iconPatient = findViewById(R.id.iconPatientId);
+    }
+
 
     @Override
-    public void applyTexts(String number) {
-        levelText.setText(number);
+    public void applyTexts(String number,int x,int y) {
+
+        int numeroInt = Integer.parseInt(number);
+
+        if ((x+y) == numeroInt){
+            Intent settingPatient = new Intent(this, SettingsPatientActivity.class);
+            startActivity(settingPatient);
+        }else{
+            Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
+        }
     }
 }

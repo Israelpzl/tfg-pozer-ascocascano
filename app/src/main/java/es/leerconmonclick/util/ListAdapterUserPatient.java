@@ -86,7 +86,31 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             namePatientView.setText(userPatient.getNamePatient());
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
-            Glide.with(context).load(userPatient.getIcon()).into(circleImageView);
+
+
+            databaseReference.child("userPatient").child(userPatient.getNamePatient()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String icon = snapshot.child("icon").getValue().toString();
+                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             FirebaseUser user = db.getCurrentUser();
             userCollection = user.getEmail();

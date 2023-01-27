@@ -506,6 +506,10 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     }
 
+    public void goBack(View v){
+        finish();
+    }
+
     private void getIcons(){
 
         ima1Lvl1 = findViewById(R.id.iconPatientlvl1a);

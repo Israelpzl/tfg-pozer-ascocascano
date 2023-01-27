@@ -12,43 +12,45 @@
         android:id="@+id/buttonSaveProgresionPatient2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/button_style"
         android:onClick="saveChanges"
         android:text="@string/save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22"
+        app:layout_constraintVertical_bias="0.959" />
 
     <TextView
         android:id="@+id/textViewProgresionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="7dp"
         android:text="@string/progression"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.416" />
 
     <ImageButton
         android:id="@+id/btnImageBackScreenProgresion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:background="@null"
         android:onClick="goBack"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textViewProgresionTitle"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <View
@@ -60,339 +62,341 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintTop_toBottomOf="@+id/btnImageBackScreenProgresion"
+        app:layout_constraintVertical_bias="0.035" />
 
     <TextView
         android:id="@+id/namePatientId"
         android:layout_width="231dp"
         android:layout_height="23dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/name_patient"
         android:textAlignment="textEnd"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintEnd_toStartOf="@+id/iconPatientProgresionId"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.992"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.378" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientProgresionId"
-        android:layout_width="51dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="46dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintHorizontal_bias="0.986"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.008" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="150dp"
         android:text="@string/lvl1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintVertical_bias="0.136" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="150dp"
         android:text="@string/lvl2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.287" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="150dp"
         android:text="@string/lvl3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        app:layout_constraintVertical_bias="0.366" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="700dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:text="@string/lvl4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toEndOf="@+id/iconPatientlvl1b"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintVertical_bias="0.136" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="700dp"
-        android:layout_marginTop="150dp"
         android:text="@string/lvl5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.327"
+        app:layout_constraintStart_toEndOf="@+id/iconPatientlvl2c"
+        app:layout_constraintTop_toBottomOf="@+id/textView20"
+        app:layout_constraintVertical_bias="0.285" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="700dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:text="@string/lvl6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toEndOf="@+id/iconPatientlvl3b"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:layout_constraintVertical_bias="0.385" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl1b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl1a"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl6a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toEndOf="@+id/textView22"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl5a"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.366" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl5b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="49dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl5a"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl4b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.227" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl2c"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.023"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl2b"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl1b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.254" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl4c"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="50dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl4b"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl4a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toEndOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl4b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl4a"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl1a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.118" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl2b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl2a"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl1b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.254" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl6b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl6a"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl5b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.366" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl3a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toEndOf="@+id/textView19"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl2a"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.327" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl3b"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl3a"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl2b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.34" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl2a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl1a"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.255" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl6c"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="50dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toEndOf="@+id/iconPatientlvl6b"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl5b"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.366" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientlvl5a"
         android:layout_width="51dp"
         android:layout_height="49dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl4a"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.227" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -142,6 +142,8 @@ public class ListPatientActivity extends AppCompatActivity {
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
+
+
     public void goAddPatient(View v){
         Intent addPatientIntent = new Intent(this, AddPatientsActivity.class);
         addPatientIntent.putExtra("modeEdit",false);

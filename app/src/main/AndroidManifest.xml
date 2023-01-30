@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".professional.leeconmonclick.professional.RemeberPassActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".patient.ProgresionPatientActivity"
             android:exported="false"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".patient.SettingsPatientActivity"
             android:exported="false"

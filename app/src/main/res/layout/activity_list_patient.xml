@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/listPatient"
-    tools:context=".professional.leeconmonclick.professional.ListPatientActivity"
+    tools:context=".professional.leeconmonclick.professional.PatientListActivity"
     android:background="@color/background">
 
 

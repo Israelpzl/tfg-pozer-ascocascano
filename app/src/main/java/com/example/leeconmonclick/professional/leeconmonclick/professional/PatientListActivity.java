@@ -27,10 +27,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.leerconmonclick.util.ListAdapterTask;
 import es.leerconmonclick.util.ListAdapterUserPatient;
+import es.leerconmonclick.util.Task;
 import es.leerconmonclick.util.UserPatient;
 
-public class ListPatientActivity extends AppCompatActivity {
+public class PatientListActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -60,7 +62,7 @@ public class ListPatientActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleViewUserPatientId);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ListPatientActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PatientListActivity.this));
 
         user = db.getCurrentUser();
         userCollection = user.getEmail();
@@ -125,7 +127,15 @@ public class ListPatientActivity extends AppCompatActivity {
 
                 }
 
-                listAdapterUserPatient = new ListAdapterUserPatient(userPatientList, ListPatientActivity.this);
+
+                listAdapterUserPatient = new ListAdapterUserPatient(userPatientList, PatientListActivity.this, new ListAdapterUserPatient.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(UserPatient userPatient) {
+                        Intent stadisticIntent = new Intent(getApplicationContext(),StadisticActivity.class);
+                        stadisticIntent.putExtra("userPatient",userPatient.getNamePatient());
+                        startActivity(stadisticIntent);
+                    }
+                });
                 recyclerView.setAdapter(listAdapterUserPatient);
                 listAdapterUserPatient.notifyDataSetChanged();
             }

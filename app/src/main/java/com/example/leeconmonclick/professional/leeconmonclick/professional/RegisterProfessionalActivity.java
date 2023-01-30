@@ -38,6 +38,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_professional2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -59,7 +60,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         user.sendEmailVerification();

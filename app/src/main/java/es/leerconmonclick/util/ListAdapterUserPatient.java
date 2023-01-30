@@ -40,12 +40,19 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
     private String userCollection;
+    final ListAdapterUserPatient.OnItemClickListener listener;
 
 
-    public ListAdapterUserPatient(List<UserPatient> itemList, Context context){
+    public interface OnItemClickListener{
+        void onItemClick(UserPatient userPatient);
+    }
+
+
+    public ListAdapterUserPatient(List<UserPatient> itemList, Context context,ListAdapterUserPatient.OnItemClickListener listener){
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mDataPatient = itemList;
+        this.listener = listener;
     }
 
     @Override
@@ -154,6 +161,13 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                 @Override
                 public void onClick(View v) {
                     deleteUserPatient(userPatient);
+                }
+            });
+
+            itemView.setOnClickListener( new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(userPatient);
                 }
             });
 

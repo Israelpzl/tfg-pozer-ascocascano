@@ -13,13 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".professional.leeconmonclick.professional.RemeberPassActivity"
+            android:name=".professional.leeconmonclick.professional.StadisticActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
+            android:name=".professional.leeconmonclick.professional.RemeberPassActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".patient.ProgresionPatientActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".patient.SettingsPatientActivity"
             android:exported="false"
@@ -57,7 +61,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".professional.leeconmonclick.professional.ListPatientActivity"
+            android:name=".professional.leeconmonclick.professional.PatientListActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

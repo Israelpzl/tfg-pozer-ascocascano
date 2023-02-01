@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
@@ -56,8 +58,6 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private TextView saveText;
     private TextView logOutText;
     private String namePatient;
-
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -146,12 +146,10 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
     }
-
-
 
     public void saveChanges(View v){
 

@@ -7,15 +7,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +42,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     private String icon;
 
     private DatabaseReference databaseReference;
-    private StorageReference storageReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,7 +53,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         constraintLayout =  findViewById(R.id.progresionPatient);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -62,7 +62,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         namePatientText.setText(namePatient);
 
         imagePatient = findViewById(R.id.iconPatientProgresionId);
-
 
         //accesibility settings
         titleText = findViewById(R.id.textViewProgresionTitle);
@@ -126,7 +125,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
 

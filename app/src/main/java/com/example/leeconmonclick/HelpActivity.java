@@ -30,10 +30,10 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         message = findViewById(R.id.textView_message);
 
         ArrayList<String> options = new ArrayList<>();
-        options.add("Pregunta 1");
-        options.add("Pregunta 2");
-        options.add("Pregunta 3");
-        options.add("Pregunta 4");
+        options.add("¿Como puede un niño desbloquear mas imagenes?");
+        options.add("¿Como subo contenido propio?");
+        options.add("¿Que puedo hacer si pierdo mi usuario?");
+        options.add("¿Como funcionan los ajustes de accesibilidad?");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_itemms, options);
         spinner.setAdapter(adapter);
@@ -64,17 +64,17 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         String text_selection =  adapterView.getItemAtPosition(i).toString();
 
         switch (text_selection) {
-            case "Pregunta 1":
-                message.setText("Ayuda a mensaje 1");
+            case "¿Como puede un niño desbloquear mas imagenes?":
+                message.setText("Simplemente juagando, a medida que suban de nivel lo desbloquearan");
                 break;
-            case "Pregunta 2":
-                message.setText("Ayuda a mensaje 2");
+            case "¿Como subo contenido propio?":
+                message.setText("Desde la seccion de contenido los profesionales podran subir el contendio que quieran para luego usarse en sus terapias");
                 break;
-            case "Pregunta 3":
-                message.setText("Ayuda a mensaje 3");
+            case "¿Que puedo hacer si pierdo mi usuario?":
+                message.setText("Para los niños tendremos que crear un nuevo usuario, pero para los profesionales desde la pantalla de recuperar contraseña y siguiendo los pasos podremos recuperarla");
                 break;
-            case "Pregunta 4":
-                message.setText("Ayuda a mensaje 4");
+            case "¿Como funcionan los ajustes de accesibilidad?":
+                message.setText("Cada usuario podra activarlo en la seccion de ajustes y se aplicara los ajustes para la tritanopia ya que es la mas comun a dia de hoy");
                 break;
         }
     }

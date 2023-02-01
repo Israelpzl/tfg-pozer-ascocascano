@@ -2,10 +2,13 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
+
+
 public class StadisticActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
@@ -28,6 +35,13 @@ public class StadisticActivity extends AppCompatActivity {
     private Bundle data;
     private CircleImageView iconPatient;
     private Context context= this;
+
+    private FirstFragment firstFragment = new FirstFragment();
+    private SecondFragment secondFragment = new SecondFragment();
+    private ThirdFragment thirdFragment = new ThirdFragment();
+    private FourFragment fourFragment = new FourFragment();
+
+    private BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +53,35 @@ public class StadisticActivity extends AppCompatActivity {
         data = getIntent().getExtras();
         findElement();
 
+        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         getUserPatient();
 
 
+
+
     }
+
+    private  final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.firstFragment:
+                    loadFragment(firstFragment);
+                    return true;
+                case R.id.secondFragment:
+                    loadFragment(secondFragment);
+                    return true;
+                case R.id.thirdFragment:
+                    loadFragment(thirdFragment);
+                    return true;
+                case R.id.fourFragment:
+                    loadFragment(fourFragment);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     public void getUserPatient(){
 
@@ -76,9 +115,17 @@ public class StadisticActivity extends AppCompatActivity {
 
     }
 
-    private void findElement(){
+
+    public void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container,fragment);
+        transaction.commit();
+    }
+
+    public void findElement(){
         namePatient = findViewById(R.id.namePatient);
         iconPatient = findViewById(R.id.iconPatientId);
+        navigationView = findViewById(R.id.bottom_navigation_stadistic);
     }
 
 

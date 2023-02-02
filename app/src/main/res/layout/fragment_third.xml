@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".professional.leeconmonclick.professional.ThirdFragment">
+    tools:context=".professional.leeconmonclick.professional.ThirdFragment"
+    android:background="@color/background">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/button_red_cancel"
-        android:textSize="40dp"
-        android:text="Tercero Fragmento" />
+   <com.github.mikephil.charting.charts.BarChart
+       android:id="@+id/barChart"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 
 </FrameLayout>

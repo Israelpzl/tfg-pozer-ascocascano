@@ -35,6 +35,7 @@ public class StadisticActivity extends AppCompatActivity {
     private Bundle data;
     private CircleImageView iconPatient;
     private Context context= this;
+    private String nameUser;
 
     private FirstFragment firstFragment = new FirstFragment();
     private SecondFragment secondFragment = new SecondFragment();
@@ -55,7 +56,16 @@ public class StadisticActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        getUserPatient();
+        //getUserPatient();
+
+        Bundle bd = new Bundle();
+        bd.putString("namePatient",data.getString("userPatient"));
+        firstFragment.setArguments(bd);
+        secondFragment.setArguments(bd);
+        thirdFragment.setArguments(bd);
+        fourFragment.setArguments(bd);
+
+        loadFragment(firstFragment);
 
 
 
@@ -85,13 +95,13 @@ public class StadisticActivity extends AppCompatActivity {
 
     public void getUserPatient(){
 
-        namePatient.setText(data.getString("userPatient"));
 
        databaseReference.child("userPatient").child(data.getString("userPatient")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 namePatient.setText(snapshot.child("namePatient").getValue().toString());
+                nameUser = snapshot.child("namePatient").getValue().toString();
                 String icon = snapshot.child("icon").getValue().toString();
                 databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                     @Override

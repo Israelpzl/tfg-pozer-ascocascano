@@ -8,21 +8,6 @@
     android:background="@color/background">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconPatientId"
-        android:layout_width="51dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/mono"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view8"
-        app:layout_constraintVertical_bias="0.363" />
-
     <View
         android:id="@+id/view8"
         android:layout_width="fill_parent"
@@ -64,20 +49,6 @@
         app:layout_constraintVertical_bias="0.007"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
-    <TextView
-        android:id="@+id/namePatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:text="Nombre"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
-        app:layout_constraintHorizontal_bias="0.606"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view8"
-        app:layout_constraintVertical_bias="0.373" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_stadistic"
         style="@style/BottomNavigation"
@@ -85,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
         android:elevation="8dp"
         app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,10 +69,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_stadistic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

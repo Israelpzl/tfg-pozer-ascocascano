@@ -1,5 +1,6 @@
 package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,8 +25,15 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +47,14 @@ public class FirstFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private PieChart pieChart;
+
+    private TextView namePatient,agePatient,descriptionPatient,emailPatient;
+    private CircleImageView iconPatient;
+    private DatabaseReference databaseReference;
+    private Context context;
+
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,8 +96,13 @@ public class FirstFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-        pieChart = view.findViewById(R.id.radarChart);
 
+        namePatient = view.findViewById(R.id.namePatient);
+        agePatient = view.findViewById(R.id.agePatient);
+        descriptionPatient = view.findViewById(R.id.descriptionPatient);
+        emailPatient = view.findViewById(R.id.emailPatient);
+        iconPatient = view.findViewById(R.id.iconPatientId);
+        context = inflater.getContext();
 
         return view;
     }
@@ -90,31 +111,45 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        if (getArguments() != null){
+
+            String name = getArguments().getString("namePatient");
+            databaseReference.child("userPatient").child(name).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    namePatient.setText(name);
+                    agePatient.setText(snapshot.child("agePatient").getValue().toString());
+                    descriptionPatient.setText(snapshot.child("descriptionPatient").getValue().toString());
+                    emailPatient.setText(snapshot.child("emailPatient").getValue().toString());
+                    String icon = snapshot.child("icon").getValue().toString();
+                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
 
 
-        ArrayList<PieEntry> checkGame = new ArrayList<>();
-        checkGame.add(new PieEntry(100,"1"));
-        checkGame.add(new PieEntry(200,"2"));
-        checkGame.add(new PieEntry(300,"3"));
-        checkGame.add(new PieEntry(400,"4"));
-        checkGame.add(new PieEntry(500,"5"));
-        checkGame.add(new PieEntry(600,"6"));
-
-        PieDataSet pieDataSet = new PieDataSet(checkGame,"Juego 1");
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Juego 1");
-        pieChart.animate();
 
 
-        pieChart.setData(pieData);
     }
 }

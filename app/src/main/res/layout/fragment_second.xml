@@ -3,16 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".professional.leeconmonclick.professional.SecondFragment">
+    tools:context=".professional.leeconmonclick.professional.SecondFragment"
+    android:background="@color/background">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/button_red_cancel"
-        android:textSize="40dp"
-        android:text="Segundo Fragmento" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/radarChart1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/radarChart2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/radarChart3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+
 
 </FrameLayout>

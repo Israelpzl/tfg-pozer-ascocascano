@@ -17,7 +17,7 @@
 
     <style name="BottomNavigation">
         <item name="android:background">@color/task_item</item>
-        <item name="itemIconTint">@color/button_green_check</item>
-        <item name="itemTextColor">@color/button_edit</item>
+        <item name="itemIconTint">@color/teal_200</item>
+        <item name="itemTextColor">@color/black</item>
     </style>
 </resources>

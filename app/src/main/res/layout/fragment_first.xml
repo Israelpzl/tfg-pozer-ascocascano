@@ -6,13 +6,13 @@
     tools:context=".professional.leeconmonclick.professional.FirstFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/radarChart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/button_red_cancel"
-        android:textSize="40dp"
-        android:text="Primer Fragmento" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

@@ -123,4 +123,14 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
             Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String namePatient = preferences.getString("userPatient","null");
+        if(namePatient.equals("null")){
+            finish();
+        }
+    }
 }

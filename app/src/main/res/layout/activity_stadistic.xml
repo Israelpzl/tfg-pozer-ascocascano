@@ -7,6 +7,7 @@
     tools:context=".professional.leeconmonclick.professional.StadisticActivity"
     android:background="@color/background">
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientId"
         android:layout_width="51dp"
@@ -17,12 +18,10 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view8"
-        app:layout_constraintVertical_bias="0.031" />
-
-
+        app:layout_constraintVertical_bias="0.363" />
 
     <View
         android:id="@+id/view8"
@@ -65,21 +64,6 @@
         app:layout_constraintVertical_bias="0.007"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
-    <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="39dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="10dp"
-        android:background="@null"
-        android:onClick="goHelp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.974"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681"
-        app:srcCompat="@drawable/ic_help" />
-
     <TextView
         android:id="@+id/namePatient"
         android:layout_width="wrap_content"
@@ -89,38 +73,40 @@
         android:text="Nombre"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
-        app:layout_constraintHorizontal_bias="0.587"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view8"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.373" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_stadistic"
+        style="@style/BottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_alignParentEnd="true"
-        app:menu="@menu/bottom_navigation_stadistic"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
         android:elevation="8dp"
         app:labelVisibilityMode="selected"
-        style="@style/BottomNavigation"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:menu="@menu/bottom_navigation_stadistic" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_stadistic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/view8">
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

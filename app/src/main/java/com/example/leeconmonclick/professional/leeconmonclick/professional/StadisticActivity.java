@@ -41,6 +41,7 @@ public class StadisticActivity extends AppCompatActivity {
     private SecondFragment secondFragment = new SecondFragment();
     private ThirdFragment thirdFragment = new ThirdFragment();
     private FourFragment fourFragment = new FourFragment();
+    private FiveFragment fiveFragment = new FiveFragment();
 
     private BottomNavigationView navigationView;
 
@@ -64,6 +65,7 @@ public class StadisticActivity extends AppCompatActivity {
         secondFragment.setArguments(bd);
         thirdFragment.setArguments(bd);
         fourFragment.setArguments(bd);
+        fiveFragment.setArguments(bd);
 
         loadFragment(firstFragment);
 
@@ -87,6 +89,9 @@ public class StadisticActivity extends AppCompatActivity {
                     return true;
                 case R.id.fourFragment:
                     loadFragment(fourFragment);
+                    return true;
+                case R.id.fiveFragment:
+                    loadFragment(fiveFragment);
                     return true;
             }
             return false;

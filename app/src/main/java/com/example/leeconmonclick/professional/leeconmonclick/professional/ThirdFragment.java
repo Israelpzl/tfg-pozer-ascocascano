@@ -21,6 +21,11 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,10 +42,9 @@ public class ThirdFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private BarChart barChart;
+    private DatabaseReference databaseReference;
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -88,29 +92,54 @@ public class ThirdFragment extends Fragment {
         description.setText("Nº VECES JUGADAS");
         barChart.setDescription(description);*/
 
-        ArrayList<BarEntry> entries = new ArrayList<>();
+        if (getArguments() != null){
 
-        entries.add(new BarEntry(1,16));
-        entries.add(new BarEntry(2,9));
-        entries.add(new BarEntry(3,30));
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            String name = getArguments().getString("namePatient");
 
-        BarDataSet barDataSet = new BarDataSet(entries,"");
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        BarData barData = new BarData (barDataSet);
-        barChart.setData(barData);
-
-        String[] labels = new String[]{"","Juego 1", "Juego 2", "Juego 3"};
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        xAxis.setGranularity(1f);
-        xAxis.setLabelCount(labels.length);
-        barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(false);
+            databaseReference.child("userPatient").child(name).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-        barChart.invalidate();
+                    ArrayList<BarEntry> entries = new ArrayList<>();
+
+                    entries.add(new BarEntry(1,snapshot.child("joinWords").child("timesPlayed").getValue(Integer.class)));
+                    entries.add(new BarEntry(2,snapshot.child("letters").child("timesPlayed").getValue(Integer.class)));
+                    entries.add(new BarEntry(3,snapshot.child("syllables").child("timesPlayed").getValue(Integer.class)));
+
+                    BarDataSet barDataSet = new BarDataSet(entries,"");
+                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+                    BarData barData = new BarData (barDataSet);
+                    barChart.setData(barData);
+
+                    String[] labels = new String[]{"","Juego 1", "Juego 2", "Juego 3"};
+                    XAxis xAxis = barChart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                    xAxis.setGranularity(1f);
+                    xAxis.setLabelCount(labels.length);
+                    barChart.getDescription().setEnabled(false);
+                    barChart.getLegend().setEnabled(false);
+
+
+                    barChart.invalidate();
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+        }
+
+
 
     }
 }

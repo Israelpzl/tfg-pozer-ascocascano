@@ -35,7 +35,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     private TextView levelText,namePatientText,titleText;
     private Context context= this;
 
-    private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6;
+    private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6,saveChang;
 
     private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6,ima3Lvl6,imagePatient;
     private String namePatient;
@@ -71,6 +71,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         lvl4 = findViewById(R.id.textView20);
         lvl5 = findViewById(R.id.textView21);
         lvl6 = findViewById(R.id.textView22);
+        saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,6 +121,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    saveChang.setBackgroundResource(R.drawable.button_style_tritano);
                 }
             }
 

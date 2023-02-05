@@ -3,8 +3,10 @@ package com.example.leeconmonclick.patient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,6 +48,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     private TextView btnJugar,btnProgresion,btnsett;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,9 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         btnJugar = findViewById(R.id.button11);
         btnsett = findViewById(R.id.button13);
         btnProgresion = findViewById(R.id.progressBtnId);
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.homePatient);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,9 +126,10 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
+                    btnsett.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnJugar.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnProgresion.setBackgroundResource(R.drawable.button_style_tritano);
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
-                    logOutText.setBackgroundResource(R.drawable.button_style_red_tritano);
-                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
                 }
             }
 

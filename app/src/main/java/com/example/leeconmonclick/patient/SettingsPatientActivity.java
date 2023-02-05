@@ -1,5 +1,9 @@
 package com.example.leeconmonclick.patient;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -8,14 +12,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
@@ -39,10 +41,6 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
-    private String userCollection;
-    private FirebaseUser user;
-    private StorageReference storageReference;
-
     private TextView userName;
     private ToggleButton noDaltonic,daltonic,bigSize,midSize,smallSize;
     private Context context= this;
@@ -57,8 +55,6 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private TextView logOutText;
     private String namePatient;
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +62,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings_patient);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.settingsPatient);
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null");
@@ -88,6 +80,9 @@ public class SettingsPatientActivity extends AppCompatActivity {
         syzeText = findViewById(R.id.textViewSizePatient);
         saveText = findViewById(R.id.buttonSaveChangesPatient);
         logOutText = findViewById(R.id.buttonLogOutPatient);
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.settingPatients);
 
         getSettings();
 
@@ -138,20 +133,18 @@ public class SettingsPatientActivity extends AppCompatActivity {
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
                     logOutText.setBackgroundResource(R.drawable.button_style_red_tritano);
                     saveText.setBackgroundResource(R.drawable.button_style_tritano);
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
     }
-
-
 
     public void saveChanges(View v){
 

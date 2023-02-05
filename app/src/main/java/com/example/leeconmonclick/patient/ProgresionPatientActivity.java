@@ -7,15 +7,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,14 +35,13 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     private TextView levelText,namePatientText,titleText;
     private Context context= this;
 
-    private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6;
+    private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6,saveChang;
 
     private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6,ima3Lvl6,imagePatient;
     private String namePatient;
     private String icon;
 
     private DatabaseReference databaseReference;
-    private StorageReference storageReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,7 +53,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         constraintLayout =  findViewById(R.id.progresionPatient);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -63,7 +63,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
         imagePatient = findViewById(R.id.iconPatientProgresionId);
 
-
         //accesibility settings
         titleText = findViewById(R.id.textViewProgresionTitle);
         lvl1 = findViewById(R.id.textView10);
@@ -72,6 +71,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         lvl4 = findViewById(R.id.textView20);
         lvl5 = findViewById(R.id.textView21);
         lvl6 = findViewById(R.id.textView22);
+        saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,12 +121,13 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    saveChang.setBackgroundResource(R.drawable.button_style_tritano);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
 

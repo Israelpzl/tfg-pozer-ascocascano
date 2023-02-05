@@ -3,19 +3,25 @@ package com.example.leeconmonclick.patient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +44,11 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     private TextView levelText,namePatientText;
     private Context context = this;
     private CircleImageView iconPatient;
+    private ImageButton audio;
 
+    private TextView btnJugar,btnProgresion,btnsett;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +56,25 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        findElement();
+        AudioPlay.playAudio(this,R.raw.homeaudio);
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String namePatient = preferences.getString("userPatient","null");
 
+        levelText = findViewById(R.id.level);
+        namePatientText = findViewById(R.id.namePatientId);
+        iconPatient = findViewById(R.id.iconPatientId);
         namePatientText.setText(namePatient);
+
+        audio = (ImageButton) findViewById(R.id.nomuteHome);
+
+        btnJugar = findViewById(R.id.button11);
+        btnsett = findViewById(R.id.button13);
+        btnProgresion = findViewById(R.id.progressBtnId);
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.homePatient);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,7 +88,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        setContentView(R.layout.activity_error2);
                     }
                 });
 
@@ -74,20 +96,60 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
 
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    btnJugar.setTextSize(30);
+                    btnsett.setTextSize(30);
+                    btnProgresion.setTextSize(30);
+                    namePatientText.setTextSize(30);
+                    levelText.setTextSize(30);
+                }else if(size.equals("normal")){
+                    btnJugar.setTextSize(20);
+                    btnsett.setTextSize(20);
+                    btnProgresion.setTextSize(20);
+                    namePatientText.setTextSize(20);
+                    levelText.setTextSize(20);
+                }else if(size.equals("peque")){
+                    btnJugar.setTextSize(10);
+                    btnsett.setTextSize(10);
+                    btnProgresion.setTextSize(10);
+                    namePatientText.setTextSize(10);
+                    levelText.setTextSize(10);
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    btnsett.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnJugar.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnProgresion.setBackgroundResource(R.drawable.button_style_tritano);
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
             }
         });
 
     }
 
     public void goSettings(View v){
-        DialogSettingPatient dialogSettingPatient = new DialogSettingPatient();
-        dialogSettingPatient.show(getSupportFragmentManager(),"example");
+        Intent settIntent = new Intent(this, SettingsPatientActivity.class);
+        startActivity(settIntent);
     }
 
     public void goProgression(View v){
         Intent progress = new Intent(this, ProgresionPatientActivity.class);
         startActivity(progress);
+
     }
 
     public void goGameSelecction(View v){
@@ -95,7 +157,28 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         startActivity(gameSelecctionIntent);
     }
 
+    public void logOutPatient(View v){
+        Toast.makeText(getApplicationContext(),"LogOut",Toast.LENGTH_LONG).show();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.putString("user","null");
+        editor.putString("userName","null");
+        editor.apply();
+        Intent profilesActivity = new Intent(this, ProfilesActivity.class);
+        startActivity(profilesActivity);
+        finish();
+    }
 
+    public void Silenciar (View v){
+        if(AudioPlay.isIsplayingAudio()){
+            AudioPlay.stopAudio();
+            audio.setImageResource(R.drawable.mute);
+        }else{
+            AudioPlay.restart();
+            audio.setImageResource(R.drawable.nomute);
+        }
+    }
 
 
 
@@ -103,34 +186,9 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         finish();
     }
 
-    public void findElement(){
-
-        levelText = findViewById(R.id.level);
-        namePatientText = findViewById(R.id.namePatientId);
-        iconPatient = findViewById(R.id.iconPatientId);
-    }
-
 
     @Override
-    public void applyTexts(String number,int x,int y) {
-
-        int numeroInt = Integer.parseInt(number);
-
-        if ((x+y) == numeroInt){
-            Intent settingPatient = new Intent(this, SettingsPatientActivity.class);
-            startActivity(settingPatient);
-        }else{
-            Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userPatient","null");
-        if(namePatient.equals("null")){
-            finish();
-        }
+    public void applyTexts(String number) {
+        levelText.setText(number);
     }
 }

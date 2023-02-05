@@ -74,7 +74,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        setContentView(R.layout.activity_error2);
                     }
                 });
 
@@ -82,7 +82,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
     }
@@ -199,7 +199,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        setContentView(R.layout.activity_error2);
                     }
                 });
 
@@ -207,7 +207,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
 

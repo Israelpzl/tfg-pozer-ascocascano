@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity"
-    android:id="@+id/settingsPatient"
-    android:background="@color/background">
+    tools:context=".patient.SettingsPatientActivity"
+    android:background="@color/background"
+    android:id="@+id/settingPatients">
 
     <ImageButton
         android:id="@+id/btnImageBackScreenId6"

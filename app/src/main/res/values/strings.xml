@@ -63,4 +63,6 @@
     <string name="lvl4">NIVEL 4</string>
     <string name="lvl5">NIVEL 5</string>
     <string name="lvl6">NIVEL 6</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

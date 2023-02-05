@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
@@ -30,9 +31,6 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Switch remeberSession;
     private EditText email,pass;
-
-    private static final String STRING_PREFERENCES = "leeconmonclick.login";
-    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
 
     @Override
@@ -66,17 +64,25 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
         if (awesomeValidation.validate()){
 
-            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.signInWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()){
 
-                        String userCollection = email.getText().toString();
-                        String[] parts = userCollection.split("@");
-                        userCollection = parts[0];
-                        userCollection = userCollection.toLowerCase();
-                        goHomeProfesional(userCollection);
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        if (user.isEmailVerified()){
+                            String userCollection = email.getText().toString().trim();
+                            String[] parts = userCollection.split("@");
+                            userCollection = parts[0];
+                            userCollection = userCollection.toLowerCase();
+                            goHomeProfesional(userCollection);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Verifica el correo", Toast.LENGTH_LONG).show();
+                        }
+
+
                     }else{
                         String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                         dameToastdeerror(errorCode);
@@ -88,39 +94,15 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
     private void goHomeProfesional(String name){
         Intent i = new Intent(this, HomeProfesionalActivity.class);
-
-        /*
-        databaseReference.child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                User u = new User(
-                        snapshot.child("nombre").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        "pass",
-                        null
-                );
-
-                i.putExtra("userProfesional", (Parcelable) u);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-         */
-
         saveStateSession();
         startActivity(i);
         finish();
     }
 
-    public void rememberPass(View v){
-        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
-        startActivity(helpIntent);
+    public void goRememberPass(View v){
+        Intent rememberIntent = new Intent(this, RemeberPassActivity.class);
+        startActivity(rememberIntent);
+
     }
 
     public void back(View v){

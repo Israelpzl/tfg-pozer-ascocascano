@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class LetterGameActivity extends AppCompatActivity {
     private String category;
     private String difficultySelect;
     private String imgFinish;
+    private String namePatient;
+    private int countFailed,countSucces = 0;
 
 
     @Override
@@ -64,7 +67,7 @@ public class LetterGameActivity extends AppCompatActivity {
         listImg = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null");
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,10 +106,12 @@ public class LetterGameActivity extends AppCompatActivity {
                 String word = listImg.get(0);
 
                 if (correctWord.equals(word)){
+                    countSucces++;
                     alertFinishGame();
                     Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
+                    countFailed++;
                 }
             }
         });
@@ -117,10 +122,12 @@ public class LetterGameActivity extends AppCompatActivity {
                 String word = listImg.get(1);
 
                 if (correctWord.equals(word)){
+                    countSucces++;
                     alertFinishGame();
                     Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
+                    countFailed++;
                 }
             }
         });
@@ -131,10 +138,12 @@ public class LetterGameActivity extends AppCompatActivity {
                 String word = listImg.get(2);
 
                 if (correctWord.equals(word)){
+                    countSucces++;
                     alertFinishGame();
                     Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
+                    countFailed++;
                 }
             }
         });
@@ -207,6 +216,43 @@ public class LetterGameActivity extends AppCompatActivity {
     }
 
     private void alertFinishGame(){
+
+        databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+               countSucces = snapshot.child("difficulties").child(difficultySelect).child("succes").getValue(Integer.class) + countSucces;
+
+               countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
+
+                int t = snapshot.child("timesPlayed").getValue(Integer.class);
+                t++;
+
+                int z = snapshot.child("difficulties").child(difficultySelect).child("timesPlayed").getValue(Integer.class);
+                z++;
+
+                int c = snapshot.child("categories").child(category).child("timesPlayed").getValue(Integer.class);
+                c++;
+
+
+
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("timesPlayed").setValue(t);
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
+
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("categories").child(category).child("timesPlayed").setValue(c);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
 

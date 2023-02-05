@@ -15,12 +15,12 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -30,14 +30,15 @@ import es.leerconmonclick.util.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
 
-    AwesomeValidation awesomeValidation;
-    DatabaseReference databaseReference;
+    private AwesomeValidation awesomeValidation;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_professional2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -52,14 +53,17 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
 
         if(awesomeValidation.validate()){
-            FirebaseAuth db = FirebaseAuth.getInstance();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-            db.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        user.sendEmailVerification();
 
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
@@ -83,7 +87,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 
-                        goHome(userCollection);
+                        goLoginProfessional();
                         finish();
 
                         succesCreation();
@@ -101,7 +105,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
 
     public void succesCreation(){
-        Toast.makeText(getApplicationContext(),"Usuario creado correctamente",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Usuario creado correctamente, verifique el email",Toast.LENGTH_LONG).show();
     }
 
     public void necesaryInfo(){
@@ -190,11 +194,10 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     }
 
-    private void goHome(String email){
-        Intent i = new Intent(this, HomeProfesionalActivity.class);
-        i.putExtra("email",email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+    private void goLoginProfessional(){
+        Intent professionalIntent = new Intent(this, LoginProfesionalActivity.class);
+        professionalIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(professionalIntent);
     }
 
     public void goHelp(View v){

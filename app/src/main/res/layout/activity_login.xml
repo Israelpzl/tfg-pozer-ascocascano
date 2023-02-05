@@ -175,7 +175,7 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_style"
-        android:onClick="rememberPass"
+        android:onClick="goRememberPass"
         android:text="@string/forgot_password"
         app:layout_constraintBottom_toTopOf="@+id/button_login"
         app:layout_constraintEnd_toEndOf="parent"

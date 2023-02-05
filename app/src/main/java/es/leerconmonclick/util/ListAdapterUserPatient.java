@@ -40,12 +40,19 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
     private DatabaseReference databaseReference;
     private FirebaseAuth db = FirebaseAuth.getInstance();
     private String userCollection;
+    final ListAdapterUserPatient.OnItemClickListener listener;
 
 
-    public ListAdapterUserPatient(List<UserPatient> itemList, Context context){
+    public interface OnItemClickListener{
+        void onItemClick(UserPatient userPatient);
+    }
+
+
+    public ListAdapterUserPatient(List<UserPatient> itemList, Context context,ListAdapterUserPatient.OnItemClickListener listener){
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mDataPatient = itemList;
+        this.listener = listener;
     }
 
     @Override
@@ -86,7 +93,31 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             namePatientView.setText(userPatient.getNamePatient());
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
-            Glide.with(context).load(userPatient.getIcon()).into(circleImageView);
+
+
+            databaseReference.child("userPatient").child(userPatient.getNamePatient()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String icon = snapshot.child("icon").getValue().toString();
+                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             FirebaseUser user = db.getCurrentUser();
             userCollection = user.getEmail();
@@ -130,6 +161,13 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                 @Override
                 public void onClick(View v) {
                     deleteUserPatient(userPatient);
+                }
+            });
+
+            itemView.setOnClickListener( new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(userPatient);
                 }
             });
 

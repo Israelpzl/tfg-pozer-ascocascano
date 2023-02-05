@@ -42,10 +42,6 @@ public class GameSelecctionActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-
-
-
-
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
 

@@ -249,7 +249,9 @@ public class SettingsPatientActivity extends AppCompatActivity {
         }
     }
 
-    public void goBack(View view){finish();}
+    public void goBack(View v){
+        finish();
+    }
 
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);

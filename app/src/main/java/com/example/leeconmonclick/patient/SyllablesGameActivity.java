@@ -48,6 +48,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private boolean first,second;
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
+    private int countFailed,countSucces=  0;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -113,6 +114,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
                             if(puzzle1.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
                                 first = true;
+                            }else{
+                                countFailed++;
                             }
 
                             isIntersectPuzzle1 = true;
@@ -121,6 +124,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle1) {
                             if(puzzle1.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
                                 second = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle1 = true;
                         }
@@ -160,6 +165,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle2) {
                             if(puzzle2.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
                                 first = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle2 = true;
                         }
@@ -167,6 +174,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle2) {
                             if(puzzle2.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
                                 second = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle2 = true;
                         }
@@ -205,6 +214,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle3) {
                             if(puzzle3.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
                                 first = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle3 = true;
                         }
@@ -213,6 +224,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
                             if(puzzle3.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
                                 second = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle3 = true;
                         }
@@ -252,6 +265,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
                             if(puzzle4.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
                                 first = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle4 = true;
                         }
@@ -259,6 +274,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle4) {
                             if(puzzle4.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
                                 second = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle4 = true;
                         }
@@ -297,6 +314,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle5) {
                             if(puzzle5.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))){
                                 first = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle5 = true;
                         }
@@ -304,6 +323,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                         if (!isIntersectPuzzle5) {
                             if(puzzle5.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))){
                                 second = true;
+                            }else{
+                                countFailed++;
                             }
                             isIntersectPuzzle5 = true;
                         }
@@ -468,6 +489,32 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
 
     private void alertFinishGame(){
+
+
+        databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                countSucces = snapshot.child("succes").getValue(Integer.class) + 1;
+
+                countFailed = snapshot.child("failed").getValue(Integer.class) + countFailed;
+
+                int t = snapshot.child("timesPlayed").getValue(Integer.class);
+                t++;
+
+                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").child("succes").setValue(countSucces);
+                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").child("timesPlayed").setValue(t);
+                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").child("failed").setValue(countFailed);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
 

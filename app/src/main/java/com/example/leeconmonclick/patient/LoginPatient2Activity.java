@@ -70,10 +70,23 @@ public class LoginPatient2Activity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     boolean exitUser = false;
+                    String user = "";
                     for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                         String nPatient = (String) objDataSnapshot.child("namePatient").getValue();
-                        String pass = (String) objDataSnapshot.child("password").getValue();
 
+
+                        if (nPatient.equals(namePatient.getText().toString())){
+                            exitUser = true;
+                            user = nPatient;
+                            break;
+                        }
+
+                    }
+
+                    if (!exitUser){
+                        Toast.makeText(getApplicationContext(),"No se encuentra el usuario",Toast.LENGTH_LONG).show();
+                    }else{
+                        String pass = snapshot.child(user).child("password").getValue().toString();
 
                         try {
                             pass = decrypt(pass);
@@ -81,17 +94,12 @@ public class LoginPatient2Activity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        if (nPatient.equals(namePatient.getText().toString()) && pass.equals(passPatient.getText().toString())){
+                        if (pass.equals(passPatient.getText().toString())){
                             Toast.makeText(getApplicationContext(),"Usuario Encontrado",Toast.LENGTH_LONG).show();
-                            exitUser = true;
-                            break;
+                            goHomePatient();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"La contraseña no coincide",Toast.LENGTH_LONG).show();
                         }
-                    }
-
-                    if (!exitUser){
-                        Toast.makeText(getApplicationContext(),"No se encuentra el usuario",Toast.LENGTH_LONG).show();
-                    }else{
-                        goHomePatient();
                     }
 
 

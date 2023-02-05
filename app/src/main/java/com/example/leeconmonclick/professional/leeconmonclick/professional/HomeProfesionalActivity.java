@@ -151,7 +151,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
 
     public void goListPatient(View v){
-        Intent helpIntent = new Intent(this, ListPatientActivity.class);
+        Intent helpIntent = new Intent(this, PatientListActivity.class);
         startActivity(helpIntent);
     }
 

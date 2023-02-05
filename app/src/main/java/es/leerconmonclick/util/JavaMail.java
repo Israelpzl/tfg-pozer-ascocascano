@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.leeconmonclick.professional.leeconmonclick.professional.ListPatientActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 
 import java.util.Properties;
 
@@ -57,7 +57,7 @@ public class JavaMail extends AsyncTask<Void,Void,Void> {
 
         mProgressDialog.dismiss();
         Toast.makeText(mContext,"Usuario Paciente Creado",Toast.LENGTH_SHORT).show();
-        Intent homeProfesionalIntent = new Intent(mContext, ListPatientActivity.class);
+        Intent homeProfesionalIntent = new Intent(mContext, PatientListActivity.class);
         mContext.startActivity(homeProfesionalIntent);
     }
 

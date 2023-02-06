@@ -48,13 +48,14 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progresion_patient);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.progresionPatient);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null");
         /*levelText = findViewById(R.id.level);*/

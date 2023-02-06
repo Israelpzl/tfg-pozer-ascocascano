@@ -76,7 +76,7 @@ public class LetterGameActivity extends AppCompatActivity {
                 databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                        Glide.with(context.getApplicationContext()).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
                     }
 
                     @Override

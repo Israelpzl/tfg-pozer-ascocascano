@@ -88,12 +88,6 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
     public void readData(){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser user = db.getCurrentUser();
-        String userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-
         databaseReference.child("Users").child(userCollection).child("notas").addValueEventListener(new ValueEventListener() {
             @Override
             @SuppressLint("NotifyDataSetChanged")

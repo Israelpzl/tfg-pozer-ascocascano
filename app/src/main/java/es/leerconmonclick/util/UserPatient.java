@@ -1,10 +1,13 @@
 package es.leerconmonclick.util;
 
+import java.util.Map;
+
 public class UserPatient {
 
     private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon;
+    private Map<String,Game> stadistic;
 
-    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon) {
+    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic) {
         this.namePatient = namePatient;
         this.agePatient = agePatient;
         this.emailPatient = emailPatient;
@@ -12,6 +15,15 @@ public class UserPatient {
         this.descriptionPatient = descriptionPatient;
         this.nameProfessional = nameProfessional;
         this.icon = icon;
+        this.stadistic = stadistic;
+    }
+
+    public Map<String, Game> getStadistic() {
+        return stadistic;
+    }
+
+    public void setStadistics(Map<String, Game> stadistic) {
+        this.stadistic = stadistic;
     }
 
     public String getNameProfessional() {
@@ -70,11 +82,5 @@ public class UserPatient {
         this.descriptionPatient = descriptionPatient;
     }
 
-    public String getNameProfessionals() {
-        return nameProfessional;
-    }
 
-    public void setNameProfessionals(String nameProfessionals) {
-        this.nameProfessional = nameProfessionals;
-    }
 }

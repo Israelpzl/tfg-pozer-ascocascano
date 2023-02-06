@@ -113,14 +113,14 @@ public class PatientListActivity extends AppCompatActivity {
                     String namePatient = (String) objDataSnapshot.child("namePatient").getValue();
                     String age = (String) objDataSnapshot.child("agePatient").getValue();
                     String email = (String) objDataSnapshot.child("emailtacient").getValue();
-                    String nameProfessional = (String) objDataSnapshot.child("nameProfessionals").getValue();
+                    String nameProfessional = (String) objDataSnapshot.child("nameProfessional").getValue();
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
                     String icon = (String) objDataSnapshot.child("icon").getValue();
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null);
                         userPatientList.add(userPatient);
 
                     }

@@ -164,7 +164,6 @@ public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.
         addIntent.putExtra("word", content.getWord());
         addIntent.putExtra("image", content.getImg());
         addIntent.putExtra("determinant", content.getDifficulty());
-        //addIntent.putExtra("syllables", content.getSyllables());
         addIntent.putExtra("modeEdit", true);
         context.startActivity(addIntent);
     }

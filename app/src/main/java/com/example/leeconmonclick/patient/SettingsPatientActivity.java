@@ -182,6 +182,27 @@ public class SettingsPatientActivity extends AppCompatActivity {
         databaseReference.child("userPatient").child(namePatient).child("sett").child("1").setValue(dalto);
         databaseReference.child("userPatient").child(namePatient).child("sett").child("0").setValue(size);
 
+        databaseReference.child("userPatient").child(namePatient).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                databaseReference.child("userPatient").child(name).setValue(snapshot.getValue());
+
+                databaseReference.child("userPatient").child(namePatient).removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("userPatient",name);
+        editor.apply();
+
+
+
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
         //goHome();
         finish();

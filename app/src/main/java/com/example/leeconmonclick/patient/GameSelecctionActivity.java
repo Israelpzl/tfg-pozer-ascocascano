@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GameSelecctionActivity extends AppCompatActivity {
@@ -47,7 +49,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userPatient","null");
+        String namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         namePatientTxtView.setText(namePatient);
 

@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProgresionPatientActivity extends AppCompatActivity {
@@ -57,7 +59,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
         /*levelText = findViewById(R.id.level);*/
         namePatientText = findViewById(R.id.namePatientId);
         namePatientText.setText(namePatient);

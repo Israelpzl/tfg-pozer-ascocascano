@@ -68,7 +68,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         String userCollection = email.getText().toString();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
-                        userCollection = userCollection.toLowerCase();
+                        userCollection = userCollection.toLowerCase().trim();
 
                         ArrayList<String> settings = new ArrayList<>();
                         settings.add("normal");
@@ -83,7 +83,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         notas.add(generateNote);
 
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null,"maleDoctor");
+                        User usuario = new User(email.getText().toString().trim(),userCollection,settings,notas,null,null,"maleDoctor");
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

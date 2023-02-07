@@ -61,7 +61,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         findElements();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         listSylable = new ArrayList<>();
         l = new ArrayList<>();

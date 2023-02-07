@@ -36,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.security.Key;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -244,7 +245,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                 stadistic
         );
 
-        databaseReference.child("userPatient").child(namePatient.getText().toString()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

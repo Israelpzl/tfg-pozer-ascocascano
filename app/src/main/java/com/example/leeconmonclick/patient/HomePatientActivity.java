@@ -35,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.DialogSettingPatient;
 
@@ -62,8 +64,10 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         AudioPlay.playAudio(this, R.raw.homeaudio);
 
 
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient", "null");
+        namePatient = preferences.getString("userPatient", "null").toLowerCase(Locale.ROOT);
+
 
         findElements();
 
@@ -203,6 +207,11 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     @Override
     protected void onRestart() {
         super.onRestart();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient", "null");
+
+        namePatientText.setText(namePatient);
 
         if (namePatient.equals("null")) {
             finish();

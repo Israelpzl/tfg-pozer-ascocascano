@@ -1,7 +1,6 @@
-package com.example.leeconmonclick.professional.leeconmonclick.professional;
+package com.example.leeconmonclick.professional.leeconmonclick.professional.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.leeconmonclick.R;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;

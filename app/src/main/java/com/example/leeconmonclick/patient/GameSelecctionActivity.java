@@ -93,9 +93,9 @@ public class GameSelecctionActivity extends AppCompatActivity {
     }
 
     public void goGameSyllables(View v){
-        Intent categoryIntent = new Intent(this,SyllablesGameActivity.class);
-        categoryIntent.putExtra("game","s");
-        startActivity(categoryIntent);
+        Intent SyllablesIntent = new Intent(this,SyllablesGameActivity.class);
+        SyllablesIntent.putExtra("game","s");
+        startActivity(SyllablesIntent);
 
     }
 

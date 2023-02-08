@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private String difficultySelect;
     private String namePatient;
     private int countSucces,countFailed = 0;
+    private ImageButton refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         findElement();
+
+        if (!difficultySelect.equals("PRÁCTICA")){
+            refresh.setVisibility(View.INVISIBLE);
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -331,6 +337,8 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         wordSelect3 = findViewById(R.id.wordSelect3);
 
         iconPatient = findViewById(R.id.iconPatientId);
+
+        refresh = findViewById(R.id.refresh);
 
     }
 

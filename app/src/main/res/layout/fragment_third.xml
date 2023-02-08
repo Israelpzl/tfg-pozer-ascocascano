@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".professional.leeconmonclick.professional.ThirdFragment"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:padding="30dp">
 
    <com.github.mikephil.charting.charts.BarChart
        android:id="@+id/barChart"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent"
+      />
 
 </FrameLayout>

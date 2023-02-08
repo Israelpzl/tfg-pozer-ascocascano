@@ -34,7 +34,7 @@ import es.leerconmonclick.util.Note;
 public class PersonalNotesActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth;
     private ArrayList<Note> listNotes = new ArrayList<Note>();
     private ListAdapterNotes listAdapterNotes;
     private RecyclerView recyclerView;
@@ -57,13 +57,14 @@ public class PersonalNotesActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.personal_notes);
 
         readData();
 
-        user = db.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
@@ -87,6 +88,13 @@ public class PersonalNotesActivity extends AppCompatActivity {
     }
 
     public void readData(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
 
         databaseReference.child("Users").child(userCollection).child("notas").addValueEventListener(new ValueEventListener() {
             @Override

@@ -72,7 +72,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
                     boolean exitUser = false;
                     String user = "";
                     for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                        String nPatient = (String) objDataSnapshot.child("namePatient").getValue();
+                        String nPatient = objDataSnapshot.child("namePatient").getValue().toString().toLowerCase(Locale.ROOT);
 
 
                         if (nPatient.equals(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim())){

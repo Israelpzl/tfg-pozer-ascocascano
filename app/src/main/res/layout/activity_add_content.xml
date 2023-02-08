@@ -11,8 +11,8 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="298dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:text="@string/personalize_content"
@@ -26,8 +26,8 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="73dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="@string/img"
         app:layout_constraintBottom_toTopOf="@+id/spinnerId"
@@ -143,7 +143,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputWordId"
         android:layout_width="207dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.092"
@@ -156,13 +156,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/word"
-            android:maxLength="20"/>
+            android:maxLength="20" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
         android:id="@+id/spinnerId"
         android:layout_width="111dp"
-        android:layout_height="23dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imgViewId"
@@ -177,10 +177,10 @@
         android:layout_height="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="0.558"
         app:layout_constraintStart_toEndOf="@+id/textInputWordId"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.384"
+        app:layout_constraintVertical_bias="0.38"
         app:srcCompat="@drawable/button_style" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

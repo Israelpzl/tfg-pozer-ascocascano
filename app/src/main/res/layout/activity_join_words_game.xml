@@ -14,11 +14,11 @@
         android:background="@null"
         android:onClick="refreshBBDD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
+        app:layout_constraintHorizontal_bias="0.971"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041"
+        app:layout_constraintVertical_bias="0.02"
         app:srcCompat="@drawable/ic_refresh" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -186,7 +186,7 @@
                 android:layout_height="104dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Palabra"
+                android:text="@string/word"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
 
@@ -213,7 +213,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Palabra"
+                android:text="@string/word"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
 
@@ -240,7 +240,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Palabra"
+                android:text="@string/word"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
 

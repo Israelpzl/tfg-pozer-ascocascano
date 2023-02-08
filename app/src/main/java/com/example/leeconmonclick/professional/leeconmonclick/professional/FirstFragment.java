@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -116,7 +117,7 @@ public class FirstFragment extends Fragment {
 
         if (getArguments() != null){
 
-            String name = getArguments().getString("namePatient");
+            String name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
             databaseReference.child("userPatient").child(name).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

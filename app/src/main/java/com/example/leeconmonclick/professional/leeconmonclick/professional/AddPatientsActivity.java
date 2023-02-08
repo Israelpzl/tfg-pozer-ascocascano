@@ -92,7 +92,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         nameTitle = findViewById(R.id.nameId);
         ageTitle = findViewById(R.id.textView16);
         emailTitle = findViewById(R.id.textView17);
-        descriptionTitle = findViewById(R.id.age);
+        descriptionTitle = findViewById(R.id.descriptionPatient);
         title = findViewById(R.id.tittleAddPacientId);
 
         user = mAuth.getCurrentUser();

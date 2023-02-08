@@ -16,10 +16,10 @@
         android:onClick="goHelp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/button18"
-        app:layout_constraintVertical_bias="0.851"
+        app:layout_constraintVertical_bias="0.893"
         app:srcCompat="@drawable/ic_help" />
 
     <TextView
@@ -29,11 +29,11 @@
         android:layout_marginBottom="25dp"
         android:text="NOMBRE TERAPEUTA"
         app:layout_constraintBottom_toTopOf="@+id/button16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.791"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
+        app:layout_constraintHorizontal_bias="0.992"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.19" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iconPatientId"
@@ -45,82 +45,89 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/button16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.321"
-        app:layout_constraintStart_toEndOf="@+id/nameProfesionalId"
+        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <ImageView
         android:id="@+id/imageView10"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="50dp"
+        android:layout_width="401dp"
+        android:layout_height="404dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button17"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.505"
         app:srcCompat="@drawable/mono_transparente2" />
 
     <Button
         android:id="@+id/button17"
-        android:layout_width="wrap_content"
-        android:layout_height="57dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_note"
         android:onClick="goNotes"
         android:padding="15dp"
         android:text="Notas"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.654"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button18"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/button15"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintVertical_bias="0.191" />
 
     <Button
         android:id="@+id/button15"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_group"
         android:onClick="goListPatient"
         android:padding="15dp"
         android:text="Pacientes"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button16"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.307" />
+        app:layout_constraintVertical_bias="0.306" />
 
     <Button
         android:id="@+id/button19"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_settings"
         android:onClick="goSettiings"
         android:padding="15dp"
         android:text="@string/settings"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.409"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/button17"
-        app:layout_constraintVertical_bias="0.468" />
+        app:layout_constraintVertical_bias="0.311" />
 
     <Button
         android:id="@+id/button16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_category"
         android:onClick="goContent"
         android:padding="15dp"
         android:text="Contenido"
@@ -134,10 +141,11 @@
 
     <Button
         android:id="@+id/button18"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_calendar"
         android:onClick="goListTask"
         android:padding="15dp"
         android:text="Citas"
@@ -147,6 +155,6 @@
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toEndOf="@+id/button17"
         app:layout_constraintTop_toBottomOf="@+id/button16"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintVertical_bias="0.182" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

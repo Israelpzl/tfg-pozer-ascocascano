@@ -33,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsPatientActivity extends AppCompatActivity {
@@ -65,7 +67,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         userName = findViewById(R.id.editTextTextPersonNameEditPatient);
         noDaltonic = findViewById(R.id.toggleButtonNoDaltoPatient);
@@ -182,7 +184,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         databaseReference.child("userPatient").child(namePatient).child("sett").child("1").setValue(dalto);
         databaseReference.child("userPatient").child(namePatient).child("sett").child("0").setValue(size);
 
-        databaseReference.child("userPatient").child(namePatient).addListenerForSingleValueEvent(new ValueEventListener() {
+     /*   databaseReference.child("userPatient").child(namePatient).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 databaseReference.child("userPatient").child(name).setValue(snapshot.getValue());
@@ -194,7 +196,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();

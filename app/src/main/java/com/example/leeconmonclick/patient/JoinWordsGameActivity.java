@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.LineView;
@@ -78,7 +79,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         findElement();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override

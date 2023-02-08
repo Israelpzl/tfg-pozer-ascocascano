@@ -2,6 +2,7 @@ package es.leerconmonclick.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class User {
 
@@ -14,6 +15,7 @@ public class User {
     private ArrayList<String> settings;
     private String pass;
     private List<Task> taskList;
+
 
     public User(String email, String nombre, ArrayList<String> settings, ArrayList<Note> notas,String pass, List<Task> taskList,String icon ) {
         this.email = email;

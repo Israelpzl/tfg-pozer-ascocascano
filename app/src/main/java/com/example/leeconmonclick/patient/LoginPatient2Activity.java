@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.Key;
+import java.util.Locale;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -55,14 +56,13 @@ public class LoginPatient2Activity extends AppCompatActivity {
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
 
-
     }
 
     public void loginPatient(View v){
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         //awesomeValidation.addValidation(this,R.id.namePacientIId, Patterns., R.string.error_mail);
-        awesomeValidation.addValidation(this,R.id.passPacientId, ".{5,}", R.string.error_pass);
+        awesomeValidation.addValidation(this,R.id.passPacientId, ".{4,}", R.string.error_pass);
 
         if (awesomeValidation.validate()){
             databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,10 +72,10 @@ public class LoginPatient2Activity extends AppCompatActivity {
                     boolean exitUser = false;
                     String user = "";
                     for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
-                        String nPatient = (String) objDataSnapshot.child("namePatient").getValue();
+                        String nPatient = objDataSnapshot.child("namePatient").getValue().toString().toLowerCase(Locale.ROOT);
 
 
-                        if (nPatient.equals(namePatient.getText().toString())){
+                        if (nPatient.equals(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim())){
                             exitUser = true;
                             user = nPatient;
                             break;
@@ -148,7 +148,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isLoggedIn", remeberSession.isChecked());
         editor.putString("user","patient");
-        editor.putString("userPatient",namePatient.getText().toString());
+        editor.putString("userPatient",namePatient.getText().toString().toLowerCase(Locale.ROOT));
         editor.apply();
     }
 

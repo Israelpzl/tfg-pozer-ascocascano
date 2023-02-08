@@ -111,7 +111,7 @@
     <Button
         android:id="@+id/savenoteBtn"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
         android:layout_marginEnd="300dp"
         android:layout_marginBottom="5dp"

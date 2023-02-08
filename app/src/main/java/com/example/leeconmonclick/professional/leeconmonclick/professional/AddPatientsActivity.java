@@ -35,11 +35,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.security.Key;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import es.leerconmonclick.util.Categories;
+import es.leerconmonclick.util.Difficulties;
+import es.leerconmonclick.util.Game;
 import es.leerconmonclick.util.JavaMail;
 import es.leerconmonclick.util.UserPatient;
 
@@ -86,7 +92,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         nameTitle = findViewById(R.id.nameId);
         ageTitle = findViewById(R.id.textView16);
         emailTitle = findViewById(R.id.textView17);
-        descriptionTitle = findViewById(R.id.age);
+        descriptionTitle = findViewById(R.id.descriptionPatient);
         title = findViewById(R.id.tittleAddPacientId);
 
         user = mAuth.getCurrentUser();
@@ -147,12 +153,7 @@ public class AddPatientsActivity extends AppCompatActivity {
             }
         });
 
-        storageReference.child("iconos/mono"+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                icon = uri.toString();
-            }
-        });
+
 
 
 
@@ -209,6 +210,29 @@ public class AddPatientsActivity extends AppCompatActivity {
             passEncrypt = data.getString("passPatient");
         }
 
+        Difficulties difficultiesStadistic = new Difficulties(0,0,0);
+
+        Map<String,Difficulties> difficultiesMap = new HashMap<>();
+        difficultiesMap.put("FÁCIL",difficultiesStadistic);
+        difficultiesMap.put("NORMAL",difficultiesStadistic);
+        difficultiesMap.put("DIFÍCIL",difficultiesStadistic);
+        difficultiesMap.put("PRÁCTICA",difficultiesStadistic);
+
+        Categories categoryStadistic = new Categories(0);
+
+        Map<String,Categories> categoriesMap = new HashMap<>();
+        categoriesMap.put("Hogar",categoryStadistic);
+        categoriesMap.put("Animales",categoryStadistic);
+        categoriesMap.put("Comidas",categoryStadistic);
+        categoriesMap.put(userCollection,categoryStadistic);
+
+        Game gameStadistic = new Game(0,categoriesMap,difficultiesMap);
+
+        Map<String,Game> stadistic = new HashMap<>();
+        stadistic.put("joinWords",gameStadistic);
+        stadistic.put("letters",gameStadistic);
+
+        icon = "6lvl3";
 
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString(),
@@ -217,18 +241,21 @@ public class AddPatientsActivity extends AppCompatActivity {
                 passEncrypt,
                 descriptionPatient.getText().toString(),
                 userCollection,
-                icon
+                icon,
+                stadistic
         );
 
-        databaseReference.child("userPatient").child(namePatient.getText().toString()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Se ha añadido el paciente correctamente",Toast.LENGTH_LONG).show();
+                    databaseReference.child("userPatient").child(namePatient.getText().toString()).child("stadistic").child("syllables").setValue(difficultiesStadistic);
                 }
 
             }
         });
+
     }
 
     public void goBack(View view){finish();}

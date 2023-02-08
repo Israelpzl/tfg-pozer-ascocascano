@@ -98,18 +98,21 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             databaseReference.child("userPatient").child(userPatient.getNamePatient()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String icon = snapshot.child("icon").getValue().toString();
-                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
-                        }
+                    if(snapshot.child("icon").exists()) {
+                        String icon = snapshot.child("icon").getValue().toString();
+                        databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
 
                 }
 

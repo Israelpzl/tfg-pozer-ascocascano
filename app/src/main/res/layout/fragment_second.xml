@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="20dp">
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/radarChart1"
             android:layout_width="0dp"
@@ -39,14 +40,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
         <TextView
             android:id="@+id/percentage1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="percentage"/>
+            android:text="@string/percentage" />
 
         <TextView
             android:id="@+id/percentage2"
@@ -54,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="percentage"/>
+            android:text="@string/percentage" />
 
         <TextView
             android:id="@+id/percentage3"
@@ -62,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="percentage"/>
+            android:text="@string/percentage" />
     </LinearLayout>
 
 

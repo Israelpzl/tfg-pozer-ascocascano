@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +96,7 @@ public class ThirdFragment extends Fragment {
         if (getArguments() != null){
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
-            String name = getArguments().getString("namePatient");
+            String name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
 
             databaseReference.child("userPatient").child(name).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

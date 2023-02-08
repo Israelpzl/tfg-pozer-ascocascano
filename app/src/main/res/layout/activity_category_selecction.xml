@@ -10,56 +10,61 @@
 
     <Button
         android:id="@+id/button9"
-        android:layout_width="129dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginEnd="300dp"
         android:background="@drawable/button_style"
         android:drawableLeft="@drawable/ic_chair"
         android:onClick="goHouseCategory"
-        android:text="HOGAR"
+        android:text="@string/house"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.305"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewId4"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintVertical_bias="0.638" />
 
     <Spinner
         android:id="@+id/spinnerId"
-        android:layout_width="166dp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="100dp"
         android:background="@drawable/button_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.317"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.159" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DIFICULTAD"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="@string/difficulty"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerId"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId4"
+        app:layout_constraintVertical_bias="0.161" />
 
     <Button
         android:id="@+id/button8"
-        android:layout_width="129dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:background="@drawable/button_style"
         android:drawableLeft="@drawable/ic_food"
         android:onClick="goFoodCategory"
-        android:text="COMIDAS"
+        android:text="@string/food"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/viewId4"
         app:layout_constraintVertical_bias="0.397" />
 
@@ -125,10 +130,10 @@
 
     <TextView
         android:id="@+id/tittleActivityAddNoteId3"
-        android:layout_width="401dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="SELECCIÓN DE CATEGORÍA"
+        android:text="@string/tittle_category"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,31 +143,32 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="129dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:background="@drawable/button_style"
         android:drawableLeft="@drawable/ic_pets"
         android:onClick="goAnimalsCategory"
-        android:text="ANIMALES"
+        android:text="@string/animals"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewId4"
         app:layout_constraintVertical_bias="0.397" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="129dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="50dp"
         android:background="@drawable/button_style"
         android:drawableLeft="@drawable/ic_category"
         android:onClick="goPersonalCategory"
-        android:text="PERSONAL"
+        android:text="@string/category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button8"
         app:layout_constraintTop_toBottomOf="@+id/viewId4"
         app:layout_constraintVertical_bias="0.397" />
 </androidx.constraintlayout.widget.ConstraintLayout>

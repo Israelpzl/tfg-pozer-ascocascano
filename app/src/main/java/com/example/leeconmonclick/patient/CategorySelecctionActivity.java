@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,7 +56,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
         findElement();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null");
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
 
         String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};

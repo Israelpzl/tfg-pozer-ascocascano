@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,7 +88,7 @@ public class SecondFragment extends Fragment {
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
-            databaseReference.child("userPatient").child(getArguments().getString("namePatient")).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("userPatient").child(getArguments().getString("namePatient").toLowerCase(Locale.ROOT)).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 

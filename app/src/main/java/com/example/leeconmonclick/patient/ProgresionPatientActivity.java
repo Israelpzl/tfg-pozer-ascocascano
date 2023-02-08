@@ -55,6 +55,8 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.progresionPatient);
 
+        AudioPlay.restart();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
@@ -553,5 +555,16 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("6lvl3").getValue().toString()).into(ima3Lvl6);
             }
         });
+    }
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 }

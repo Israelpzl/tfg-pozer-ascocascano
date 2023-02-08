@@ -3,8 +3,10 @@ package com.example.leeconmonclick.patient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,9 +53,13 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private AlertDialog.Builder alertDialogBuilder;
     private int countFailed,countSucces=  0;
 
+<<<<<<< HEAD
 
 
     @SuppressLint("ClickableViewAccessibility")
+=======
+    @SuppressLint({"ClickableViewAccessibility", "MissingInflatedId"})
+>>>>>>> dev
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         findElements();
+
+        AudioPlay.restart();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -90,6 +98,24 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.syllableGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
             }
 
             @Override
@@ -566,5 +592,17 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 }

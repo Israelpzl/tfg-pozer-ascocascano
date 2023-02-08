@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +59,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private ImageButton refresh;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +76,8 @@ public class LetterGameActivity extends AppCompatActivity {
         if (!difficultySelect.equals("PRÁCTICA")){
             refresh.setVisibility(View.INVISIBLE);
         }
+
+        AudioPlay.restart();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -92,6 +98,24 @@ public class LetterGameActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.letterGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
             }
 
             @Override
@@ -402,7 +426,17 @@ public class LetterGameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
 
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
+    }
 
 
     public void goBack(View v){

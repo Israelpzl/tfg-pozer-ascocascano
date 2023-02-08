@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +68,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private int countSucces,countFailed = 0;
     private ImageButton refresh;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,8 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         findElement();
+
+        AudioPlay.restart();
 
         if (!difficultySelect.equals("PRÁCTICA")){
             refresh.setVisibility(View.INVISIBLE);
@@ -108,9 +114,41 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.wordsGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    word1.setTextSize(30);
+                    word2.setTextSize(30);
+                    word3.setTextSize(30);
+                }else if(size.equals("normal")){
+                    word1.setTextSize(20);
+                    word2.setTextSize(20);
+                    word3.setTextSize(20);
+                }else if(size.equals("peque")){
+                    word1.setTextSize(10);
+                    word2.setTextSize(10);
+                    word3.setTextSize(10);
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
         initBBDD();
         listenerClickSelect();
-
     }
 
 
@@ -452,5 +490,17 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 }

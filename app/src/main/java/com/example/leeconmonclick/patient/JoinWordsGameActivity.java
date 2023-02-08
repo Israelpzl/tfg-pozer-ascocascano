@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,6 +78,8 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         findElement();
+
+        AudioPlay.restart();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -479,5 +482,17 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 }

@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +47,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        AudioPlay.restart();
 
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
@@ -151,6 +153,18 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
     public void goBack(View view){
         onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 
 }

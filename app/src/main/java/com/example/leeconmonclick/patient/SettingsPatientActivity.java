@@ -66,6 +66,8 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        AudioPlay.restart();
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
@@ -292,5 +294,17 @@ public class SettingsPatientActivity extends AppCompatActivity {
         Intent profilesActivity = new Intent(this, ProfilesActivity.class);
         startActivity(profilesActivity);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        AudioPlay.restart();
+        super.onRestart();
     }
 }

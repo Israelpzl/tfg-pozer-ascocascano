@@ -205,8 +205,15 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     }
 
     @Override
+    protected void onPause() {
+        AudioPlay.stopAudio();
+        super.onPause();
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
+        AudioPlay.restart();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient", "null");

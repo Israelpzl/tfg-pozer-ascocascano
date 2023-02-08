@@ -2,7 +2,9 @@ package com.example.leeconmonclick.patient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,8 +33,9 @@ public class GameSelecctionActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private Context context = this;
     private CircleImageView iconPatient;
-    private TextView namePatientTxtView;
+    private TextView namePatientTxtView,btn1,btn2,btn3,titlePage;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,53 @@ public class GameSelecctionActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.gameSelect);
+
+        btn1 = findViewById(R.id.game1btnId);
+        btn2 = findViewById(R.id.game2btnId);
+        btn3 = findViewById(R.id.game3btnId);
+        titlePage = findViewById(R.id.tittleActivityAddNoteId2);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    btn1.setTextSize(30);
+                    btn2.setTextSize(30);
+                    btn3.setTextSize(30);
+                    titlePage.setTextSize(30);
+                    namePatientTxtView.setTextSize(30);
+                }else if(size.equals("normal")){
+                    btn1.setTextSize(20);
+                    btn2.setTextSize(20);
+                    btn3.setTextSize(20);
+                    titlePage.setTextSize(20);
+                    namePatientTxtView.setTextSize(20);
+                }else if(size.equals("peque")){
+                    btn1.setTextSize(10);
+                    btn2.setTextSize(10);
+                    btn3.setTextSize(10);
+                    titlePage.setTextSize(10);
+                    namePatientTxtView.setTextSize(10);
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    btn1.setBackgroundResource(R.drawable.button_style_tritano);
+                    btn2.setBackgroundResource(R.drawable.button_style_tritano);
+                    btn3.setBackgroundResource(R.drawable.button_style_tritano);
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
             }
 
             @Override

@@ -1,13 +1,15 @@
 package es.leerconmonclick.util;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class UserPatient {
 
     private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon;
     private Map<String,Game> stadistic;
+    private ArrayList<String> settings;
 
-    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic) {
+    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic,ArrayList<String> settings) {
         this.namePatient = namePatient;
         this.agePatient = agePatient;
         this.emailPatient = emailPatient;
@@ -16,6 +18,7 @@ public class UserPatient {
         this.nameProfessional = nameProfessional;
         this.icon = icon;
         this.stadistic = stadistic;
+        this.settings = settings;
     }
 
     public Map<String, Game> getStadistic() {
@@ -82,5 +85,15 @@ public class UserPatient {
         this.descriptionPatient = descriptionPatient;
     }
 
+    public void setStadistic(Map<String, Game> stadistic) {
+        this.stadistic = stadistic;
+    }
 
+    public ArrayList<String> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(ArrayList<String> settings) {
+        this.settings = settings;
+    }
 }

@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private AlertDialog.Builder alertDialogBuilder;
     private int countFailed,countSucces=  0;
 
-    @SuppressLint({"ClickableViewAccessibility", "MissingInflatedId"})
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +71,12 @@ public class SyllablesGameActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
+
         listSylable = new ArrayList<>();
         l = new ArrayList<>();
+
+
+
 
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -577,6 +582,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         puzzle5 = findViewById(R.id.puzzle5);
         yellow =findViewById(R.id.yellow);
         yellow2 =findViewById(R.id.yellow2);
+
 
 
     }

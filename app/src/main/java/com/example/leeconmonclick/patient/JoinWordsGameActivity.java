@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private String difficultySelect;
     private String namePatient;
     private int countSucces,countFailed = 0;
+    private ImageButton refresh;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -82,6 +84,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         Boolean valor = getIntent().getExtras().getBoolean("music");
         if(valor){
             AudioPlay.restart();
+        }
+
+        if (!difficultySelect.equals("PRÁCTICA")){
+            refresh.setVisibility(View.INVISIBLE);
         }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -373,6 +379,8 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         iconPatient = findViewById(R.id.iconPatientId);
 
+        refresh = findViewById(R.id.refresh);
+
     }
 
 
@@ -398,9 +406,12 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
 
 
+                if (!difficultySelect.equals("PRÁCTICA")){
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+                }
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
-                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);

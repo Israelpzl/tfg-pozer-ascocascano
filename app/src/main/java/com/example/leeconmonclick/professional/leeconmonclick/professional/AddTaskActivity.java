@@ -290,7 +290,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         taskDate.setText(data.getString("date"));
         taskTime.setText(data.getString("time"));
         TextView editTittle = (TextView) findViewById(R.id.tittleActivityAddNoteId);
-        editTittle.setText("Editar Tarea");
+        editTittle.setText("EDITAR TAREA");
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         Date d = f.parse(data.getString("date"));
         calendarView.setDate(d.getTime());

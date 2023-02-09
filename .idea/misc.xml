@@ -27,6 +27,9 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/notification_bar.xml" value="0.243" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/rounded_corner_back.xml" value="0.3645" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/separator.xml" value="0.3645" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/toggle_btn_daltonism.xml" value="0.367" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/toggle_button_checked_background.xml" value="0.247" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/drawable/toggle_button_unchecked_background.xml" value="0.247" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout-large/activity_error.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout-large/activity_login.xml" value="0.32115249472944485" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout-large/activity_login_patient.xml" value="0.88" />
@@ -38,7 +41,7 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_content.xml" value="0.33" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_note.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_pacients.xml" value="0.25" />
-        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_patients.xml" value="0.14" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_add_patients.xml" value="0.2" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_borrar.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_calendar.xml" value="0.2897119341563786" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_category_selecction.xml" value="0.23828125" />
@@ -69,8 +72,8 @@
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_register_professional.xml" value="0.21432291666666667" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_register_professional2.xml" value="0.19666524155622062" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_remeber_pass.xml" value="0.18333333333333332" />
-        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_settings.xml" value="0.2" />
-        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_settings_patient.xml" value="0.25" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_settings.xml" value="0.22" />
+        <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_settings_patient.xml" value="0.2" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_splash.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_stadistic.xml" value="0.23725671918443003" />
         <entry key="..\:/Users/israe/Documents/LeerConMonclick/app/src/main/res/layout/activity_syllables_game.xml" value="0.25" />

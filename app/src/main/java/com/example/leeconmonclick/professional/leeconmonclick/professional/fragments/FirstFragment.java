@@ -1,7 +1,6 @@
-package com.example.leeconmonclick.professional.leeconmonclick.professional;
+package com.example.leeconmonclick.professional.leeconmonclick.professional.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,23 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.data.RadarData;
-import com.github.mikephil.charting.data.RadarDataSet;
-import com.github.mikephil.charting.data.RadarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;

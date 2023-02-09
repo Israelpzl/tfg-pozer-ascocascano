@@ -35,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -185,6 +186,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         agePatient.setText(data.getString("agePatient"));
         emailPatient.setText(data.getString("emailPatient"));
         descriptionPatient.setText(data.getString("descriptionPatient"));
+        title.setText("EDITAR PACIENTE");
     }
 
     private void sendEmail()  {
@@ -234,6 +236,10 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         icon = "6lvl3";
 
+        ArrayList<String> settings = new ArrayList<>();
+        settings.add("normal");
+        settings.add("no");
+
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString(),
                 agePatient.getText().toString(),
@@ -242,7 +248,8 @@ public class AddPatientsActivity extends AppCompatActivity {
                 descriptionPatient.getText().toString(),
                 userCollection,
                 icon,
-                stadistic
+                stadistic,
+                settings
         );
 
         databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {

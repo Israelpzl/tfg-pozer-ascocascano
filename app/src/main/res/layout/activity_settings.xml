@@ -8,65 +8,6 @@
     android:id="@+id/settings"
     android:background="@color/background">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/femaleProfesorIconId"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/mono"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toEndOf="@+id/maleProfesorIconId"
-        app:layout_constraintTop_toBottomOf="@+id/editNameUser"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/maleProfesorIconId"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/mono"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
-        app:layout_constraintStart_toEndOf="@+id/femaleDoctorIconId"
-        app:layout_constraintTop_toBottomOf="@+id/editNameUser"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/femaleDoctorIconId"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/mono"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toEndOf="@+id/maleDoctorIconId"
-        app:layout_constraintTop_toBottomOf="@+id/editNameUser"
-        app:layout_constraintVertical_bias="0.04" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/maleDoctorIconId"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/mono"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.252"
-        app:layout_constraintStart_toEndOf="@+id/textViewIcon"
-        app:layout_constraintTop_toBottomOf="@+id/editNameUser"
-        app:layout_constraintVertical_bias="0.04" />
 
     <ImageButton
         android:id="@+id/btnImageBackScreenId6"
@@ -83,6 +24,35 @@
         app:layout_constraintVertical_bias="0.6"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
+
+
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
+
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/settings"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/imageButton10"
         android:layout_width="wrap_content"
@@ -97,213 +67,248 @@
         app:layout_constraintVertical_bias="0.979"
         app:srcCompat="@drawable/ic_help" />
 
-    <Button
-        android:id="@+id/buttonSaveChanges"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_style"
-        android:onClick="saveChanges"
-        android:text="@string/save_changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonSmall"
-        app:layout_constraintVertical_bias="0.497" />
-
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_style_red"
-        android:onClick="logOut"
-        android:text="@string/log_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.393"
-        app:layout_constraintStart_toEndOf="@+id/buttonSaveChanges"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonBig"
-        app:layout_constraintVertical_bias="0.432" />
-
-    <EditText
-        android:id="@+id/editNameUser"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginEnd="150dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        app:layout_constraintVertical_bias="0.126" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/name"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206" />
-
-    <TextView
-        android:id="@+id/textViewIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/icon"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName"
-        app:layout_constraintVertical_bias="0.079" />
-
-    <TextView
-        android:id="@+id/textViewDaltonism"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/datonisc"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewIcon"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <TextView
-        android:id="@+id/textViewSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/size_text"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDaltonism"
-        app:layout_constraintVertical_bias="0.297" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonNoDalto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="changeDalto"
-        android:text="ToggleButton"
-        android:textOff="@string/nothing"
-        android:textOn="@string/nothing"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toEndOf="@+id/textViewDaltonism"
-        app:layout_constraintTop_toBottomOf="@+id/maleDoctorIconId"
-        app:layout_constraintVertical_bias="0.049" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonDalto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="changeDalto"
-        android:text="ToggleButton"
-        android:textOff="@string/acromatic"
-        android:textOn="@string/acromatic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonNoDalto"
-        app:layout_constraintTop_toBottomOf="@+id/femaleProfesorIconId"
-        app:layout_constraintVertical_bias="0.067" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonBig"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_big"
-        android:textOn="@string/size_text_big"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonMid"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
-        app:layout_constraintVertical_bias="0.313" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonMid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_mid"
-        android:textOn="@string/size_text_mid"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.23"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonSmall"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDalto"
-        app:layout_constraintVertical_bias="0.267" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_small"
-        android:textOn="@string/size_text_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toEndOf="@+id/textViewSize"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDalto"
-        app:layout_constraintVertical_bias="0.26" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:text="@string/settings"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/name"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"/>
+
+            <EditText
+                android:id="@+id/editNameUser"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="150dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/name" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewIcon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="@string/icon"
+                android:textSize="20dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/femaleProfesorIconId"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:src="@drawable/mono"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/maleProfesorIconId"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:src="@drawable/mono"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/femaleDoctorIconId"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:src="@drawable/mono"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/maleDoctorIconId"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:src="@drawable/mono"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center"/>
+
+
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewDaltonism"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="@string/datonisc"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"/>
+
+        <ToggleButton
+            android:id="@+id/toggleButtonNoDalto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:onClick="changeDalto"
+            android:text="ToggleButton"
+            android:textOff="@string/nothing"
+            android:textOn="@string/nothing"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/toggle_btn_style"
+            />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonDalto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:onClick="changeDalto"
+            android:text="ToggleButton"
+            android:textOff="@string/acromatic"
+            android:textOn="@string/acromatic"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/toggle_btn_style"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="@string/size_text"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"/>
+
+        <ToggleButton
+            android:id="@+id/toggleButtonSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="changeSize"
+            android:text="ToggleButton"
+            android:textOff="@string/size_text_small"
+            android:textOn="@string/size_text_small"
+            android:background="@drawable/toggle_btn_style"
+        />
+
+
+        <ToggleButton
+            android:id="@+id/toggleButtonMid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="changeSize"
+            android:text="ToggleButton"
+            android:textOff="@string/size_text_mid"
+            android:textOn="@string/size_text_mid"
+            android:background="@drawable/toggle_btn_style"
+            android:layout_marginLeft="20dp"/>
+
+        <ToggleButton
+            android:id="@+id/toggleButtonBig"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="changeSize"
+            android:text="ToggleButton"
+            android:textOff="@string/size_text_big"
+            android:textOn="@string/size_text_big"
+            android:background="@drawable/toggle_btn_style"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"/>
+
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/buttonSaveChanges"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
+            android:onClick="saveChanges"
+            android:text="@string/save_changes"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_style_red"
+            android:onClick="logOut"
+            android:text="@string/log_out"
+            android:layout_marginRight="100dp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

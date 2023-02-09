@@ -69,11 +69,6 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
@@ -333,16 +328,11 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        AudioPlay.stopAudio();
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
         super.onRestart();
     }
 }

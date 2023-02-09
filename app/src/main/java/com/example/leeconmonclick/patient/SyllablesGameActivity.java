@@ -53,13 +53,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private AlertDialog.Builder alertDialogBuilder;
     private int countFailed,countSucces=  0;
 
-<<<<<<< HEAD
 
-
-    @SuppressLint("ClickableViewAccessibility")
-=======
-    @SuppressLint({"ClickableViewAccessibility", "MissingInflatedId"})
->>>>>>> dev
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

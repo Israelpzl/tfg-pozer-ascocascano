@@ -8,6 +8,21 @@
     android:background="@color/background"
     android:id="@+id/settingPatients">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iconPatientId"
+        android:layout_width="43dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/mono"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.987"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013" />
+
     <ImageButton
         android:id="@+id/btnImageBackScreenId6"
         android:layout_width="wrap_content"
@@ -37,191 +52,6 @@
         app:layout_constraintVertical_bias="0.979"
         app:srcCompat="@drawable/ic_help" />
 
-    <Button
-        android:id="@+id/buttonSaveChangesPatient"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_style"
-        android:onClick="saveChanges"
-        android:text="@string/save_changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonLogOutPatient"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonSmallPatient"
-        app:layout_constraintVertical_bias="0.372" />
-
-    <Button
-        android:id="@+id/buttonLogOutPatient"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_style_red"
-        android:onClick="logOut"
-        android:text="@string/log_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonSaveChangesPatient"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonBigPatient"
-        app:layout_constraintVertical_bias="0.372" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonNameEditPatient"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginEnd="150dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewNamePatient"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitlePatien"
-        app:layout_constraintVertical_bias="0.126" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
-
-    <TextView
-        android:id="@+id/textViewNamePatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/name"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206" />
-
-    <TextView
-        android:id="@+id/textViewDaltonismPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/datonisc"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNamePatient"
-        app:layout_constraintVertical_bias="0.217" />
-
-    <TextView
-        android:id="@+id/textViewSizePatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/size_text"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDaltonismPatient"
-        app:layout_constraintVertical_bias="0.271" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonNoDaltoPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:onClick="changeDalto"
-        android:text="ToggleButton"
-        android:textOff="@string/nothing"
-        android:textOn="@string/nothing"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
-        app:layout_constraintStart_toEndOf="@+id/textViewDaltonismPatient"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNameEditPatient"
-        app:layout_constraintVertical_bias="0.159" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonDaltoPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:onClick="changeDalto"
-        android:text="ToggleButton"
-        android:textOff="@string/acromatic"
-        android:textOn="@string/acromatic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.423"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonNoDaltoPatient"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNameEditPatient"
-        app:layout_constraintVertical_bias="0.162" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonBigPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_big"
-        android:textOn="@string/size_text_big"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonMidPatient"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDaltoPatient"
-        app:layout_constraintVertical_bias="0.141" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonMidPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_mid"
-        android:textOn="@string/size_text_mid"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.206"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonSmallPatient"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonDaltoPatient"
-        app:layout_constraintVertical_bias="0.141" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonSmallPatient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="changeSize"
-        android:text="ToggleButton"
-        android:textOff="@string/size_text_small"
-        android:textOn="@string/size_text_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toEndOf="@+id/textViewSizePatient"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonNoDaltoPatient"
-        app:layout_constraintVertical_bias="0.141" />
-
     <TextView
         android:id="@+id/textViewTitlePatien"
         android:layout_width="wrap_content"
@@ -235,5 +65,195 @@
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewNamePatient"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/name"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/editTextTextPersonNameEditPatient"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="150dp"
+                android:textSize="20dp"
+                android:inputType="textPersonName"
+                android:text="@string/name" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDaltonismPatient"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/datonisc"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButtonNoDaltoPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:onClick="changeDalto"
+                android:text="ToggleButton"
+                android:textOff="@string/nothing"
+                android:textOn="@string/nothing"
+                android:layout_marginLeft="45dp"
+                android:background="@drawable/toggle_btn_style"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButtonDaltoPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:onClick="changeDalto"
+                android:text="ToggleButton"
+                android:textOff="@string/acromatic"
+                android:textOn="@string/acromatic"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/toggle_btn_style"
+                android:layout_marginLeft="20dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewSizePatient"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/size_text"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButtonSmallPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="changeSize"
+                android:text="ToggleButton"
+                android:textOff="@string/size_text_small"
+                android:textOn="@string/size_text_small"
+                android:background="@drawable/toggle_btn_style"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButtonMidPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="changeSize"
+                android:text="ToggleButton"
+                android:textOff="@string/size_text_mid"
+                android:textOn="@string/size_text_mid"
+                android:background="@drawable/toggle_btn_style"
+                android:layout_marginLeft="20dp"/>
+
+
+
+            <ToggleButton
+                android:id="@+id/toggleButtonBigPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="changeSize"
+                android:text="ToggleButton"
+                android:textOff="@string/size_text_big"
+                android:textOn="@string/size_text_big"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/toggle_btn_style"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:padding="10dp">
+            <Button
+                android:id="@+id/buttonSaveChangesPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:onClick="saveChanges"
+                android:text="@string/save_changes"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/buttonLogOutPatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_red"
+                android:onClick="logOut"
+                android:text="@string/log_out"
+                android:layout_marginRight="100dp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

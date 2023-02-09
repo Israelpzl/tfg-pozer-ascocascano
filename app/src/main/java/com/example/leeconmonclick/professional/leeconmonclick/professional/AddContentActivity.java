@@ -113,6 +113,8 @@ public class AddContentActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.addContentLayoutId);
 
+
+
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -268,6 +270,7 @@ public class AddContentActivity extends AppCompatActivity {
         uriStr = data.getString("image");
         int selectionPosition= adapterSpinner.getPosition(data.getString("determinant"));
         spinner.setSelection(selectionPosition);
+        title.setText("EDITAR CONTENIDO");
     }
 
     private void editContent(){

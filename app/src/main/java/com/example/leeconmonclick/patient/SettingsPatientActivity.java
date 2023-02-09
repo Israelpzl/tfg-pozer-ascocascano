@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
@@ -47,6 +48,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private ToggleButton noDaltonic,daltonic,bigSize,midSize,smallSize;
     private Context context= this;
     private String icon;
+    private CircleImageView iconPatient;
 
     //Texts
     private TextView titleText;
@@ -56,6 +58,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private TextView saveText;
     private TextView logOutText;
     private String namePatient;
+    private ConstraintLayout constraintLayout;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -71,24 +74,32 @@ public class SettingsPatientActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
-        userName = findViewById(R.id.editTextTextPersonNameEditPatient);
-        noDaltonic = findViewById(R.id.toggleButtonNoDaltoPatient);
-        daltonic = findViewById(R.id.toggleButtonDaltoPatient);
-        bigSize = findViewById(R.id.toggleButtonBigPatient);
-        midSize = findViewById(R.id.toggleButtonMidPatient);
-        smallSize = findViewById(R.id.toggleButtonSmallPatient);
-
-        titleText = findViewById(R.id.textViewTitlePatien);
-        textName = findViewById(R.id.textViewNamePatient);
-        daltoText = findViewById(R.id.textViewDaltonismPatient);
-        syzeText = findViewById(R.id.textViewSizePatient);
-        saveText = findViewById(R.id.buttonSaveChangesPatient);
-        logOutText = findViewById(R.id.buttonLogOutPatient);
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.settingPatients);
-
+        findElements();
         getSettings();
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String icon = snapshot.child("icon").getValue().toString();
+                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Glide.with(context.getApplicationContext()).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        setContentView(R.layout.activity_error2);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -272,6 +283,27 @@ public class SettingsPatientActivity extends AppCompatActivity {
                 midSize.setChecked(false);
                 break;
         }
+    }
+
+
+    private void findElements(){
+
+        userName = findViewById(R.id.editTextTextPersonNameEditPatient);
+        noDaltonic = findViewById(R.id.toggleButtonNoDaltoPatient);
+        daltonic = findViewById(R.id.toggleButtonDaltoPatient);
+        bigSize = findViewById(R.id.toggleButtonBigPatient);
+        midSize = findViewById(R.id.toggleButtonMidPatient);
+        smallSize = findViewById(R.id.toggleButtonSmallPatient);
+
+        titleText = findViewById(R.id.textViewTitlePatien);
+        textName = findViewById(R.id.textViewNamePatient);
+        daltoText = findViewById(R.id.textViewDaltonismPatient);
+        syzeText = findViewById(R.id.textViewSizePatient);
+        saveText = findViewById(R.id.buttonSaveChangesPatient);
+        logOutText = findViewById(R.id.buttonLogOutPatient);
+        constraintLayout =  findViewById(R.id.settingPatients);
+        iconPatient = findViewById(R.id.iconPatientId);
+
     }
 
     public void goBack(View v){

@@ -28,14 +28,15 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="50dp"
         android:text="@string/img"
         app:layout_constraintBottom_toTopOf="@+id/spinnerId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.368" />
 
     <View
         android:id="@+id/view"
@@ -51,8 +52,9 @@
 
     <Button
         android:id="@+id/btnSaveId"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/button_style"
@@ -67,15 +69,17 @@
 
     <Button
         android:id="@+id/btnBackId"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/button_style_red"
         android:text="@string/cancel"
+        android:onClick="goBack"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnHelpId"
-        app:layout_constraintHorizontal_bias="0.551"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSaveId"
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:layout_constraintVertical_bias="0.99" />
 
@@ -88,10 +92,10 @@
         android:onClick="cameraImageBtn"
         app:layout_constraintBottom_toTopOf="@+id/textInputWordId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.347"
+        app:layout_constraintVertical_bias="0.482"
         app:srcCompat="@drawable/ic_photo_camera" />
 
     <ImageButton
@@ -103,10 +107,9 @@
         android:onClick="galeryImageBtn"
         app:layout_constraintBottom_toTopOf="@+id/textInputWordId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toEndOf="@+id/btnImgCameraId"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.353"
         app:srcCompat="@drawable/ic_photo_library" />
 
     <ImageButton
@@ -146,10 +149,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toEndOf="@+id/spinnerId"
+        app:layout_constraintHorizontal_bias="0.263"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.647">
+        app:layout_constraintVertical_bias="0.682">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/wordInputId"
@@ -161,15 +164,16 @@
 
     <Spinner
         android:id="@+id/spinnerId"
-        android:layout_width="111dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imgViewId"
-        app:layout_constraintHorizontal_bias="0.08"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveId"
+        app:layout_constraintEnd_toStartOf="@+id/textInputWordId"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.575" />
+        app:layout_constraintVertical_bias="0.658" />
 
     <ImageView
         android:id="@+id/imgViewId"

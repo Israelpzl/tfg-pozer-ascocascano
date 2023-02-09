@@ -120,7 +120,7 @@ public class PatientListActivity extends AppCompatActivity {
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null);
                         userPatientList.add(userPatient);
 
                     }

@@ -403,9 +403,12 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
 
 
+                if (!difficultySelect.equals("PRÁCTICA")){
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+                }
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
-                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);

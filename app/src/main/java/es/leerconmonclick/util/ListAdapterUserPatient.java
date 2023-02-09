@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -95,7 +96,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
 
 
 
-            databaseReference.child("userPatient").child(userPatient.getNamePatient()).addValueEventListener(new ValueEventListener() {
+            databaseReference.child("userPatient").child(userPatient.getNamePatient().toLowerCase(Locale.ROOT)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.child("icon").exists()) {

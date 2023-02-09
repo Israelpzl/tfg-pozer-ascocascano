@@ -79,7 +79,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         difficultySelect = data.getString("difficulty");
         findElement();
 
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -492,7 +495,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 }

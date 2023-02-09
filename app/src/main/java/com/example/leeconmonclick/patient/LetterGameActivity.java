@@ -71,7 +71,10 @@ public class LetterGameActivity extends AppCompatActivity {
         findElement();
         listImg = new ArrayList<>();
 
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -427,7 +430,10 @@ public class LetterGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 

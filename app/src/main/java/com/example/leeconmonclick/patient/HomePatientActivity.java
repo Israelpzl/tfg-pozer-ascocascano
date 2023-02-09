@@ -148,12 +148,14 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     public void goProgression(View v) {
         Intent progress = new Intent(this, ProgresionPatientActivity.class);
+        progress.putExtra("music", AudioPlay.isIsplayingAudio());
         startActivity(progress);
 
     }
 
     public void goGameSelecction(View v) {
         Intent gameSelecctionIntent = new Intent(this, GameSelecctionActivity.class);
+        gameSelecctionIntent.putExtra("music", AudioPlay.isIsplayingAudio());
         startActivity(gameSelecctionIntent);
     }
 
@@ -213,7 +215,10 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     @Override
     protected void onRestart() {
         super.onRestart();
-        AudioPlay.restart();
+        Boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.restart();
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient", "null");

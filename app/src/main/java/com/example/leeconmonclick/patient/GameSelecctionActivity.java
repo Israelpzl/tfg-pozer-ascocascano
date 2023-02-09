@@ -47,7 +47,10 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
 
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
@@ -134,6 +137,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
     public void goGameJoin(View v){
         Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
         categoryIntent.putExtra("game","j");
+        categoryIntent.putExtra("music", AudioPlay.isIsplayingAudio());
         startActivity(categoryIntent);
 
     }
@@ -141,12 +145,14 @@ public class GameSelecctionActivity extends AppCompatActivity {
     public void goGameLetters(View v){
         Intent categoryIntent = new Intent(this,CategorySelecctionActivity.class);
         categoryIntent.putExtra("game","l");
+        categoryIntent.putExtra("music", AudioPlay.isIsplayingAudio());
         startActivity(categoryIntent);
     }
 
     public void goGameSyllables(View v){
         Intent categoryIntent = new Intent(this,SyllablesGameActivity.class);
         categoryIntent.putExtra("game","s");
+        categoryIntent.putExtra("music", AudioPlay.isIsplayingAudio());
         startActivity(categoryIntent);
 
     }
@@ -163,7 +169,10 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 

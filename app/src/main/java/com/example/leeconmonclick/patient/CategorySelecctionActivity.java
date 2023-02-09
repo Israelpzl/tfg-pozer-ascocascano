@@ -53,7 +53,10 @@ public class CategorySelecctionActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
 
         findElement();
 
@@ -155,12 +158,14 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
             joinIntent.putExtra("category", "Animales");
             joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(joinIntent);
 
         }else if(type.equals("l")){
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Animales");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
 
@@ -176,12 +181,14 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
             joinIntent.putExtra("category", "Comidas");
             joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(joinIntent);
 
         }else if(type.equals("l")){
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Comidas");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
 
@@ -197,12 +204,14 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent joinIntent = new Intent(this, JoinWordsGameActivity.class);
             joinIntent.putExtra("category", "Hogar");
             joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(joinIntent);
 
         }else if(type.equals("l")){
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Hogar");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
 
@@ -242,12 +251,14 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                                     Intent joinIntent = new Intent(context, JoinWordsGameActivity.class);
                                     joinIntent.putExtra("category", nameProfessional);
                                     joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+                                    joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
                                     startActivity(joinIntent);
 
                                 }else if(type.equals("l")){
                                     Intent lettersIntent = new Intent(context, LetterGameActivity.class);
                                     lettersIntent.putExtra("category", nameProfessional);
                                     lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+                                    lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
                                     startActivity(lettersIntent);
                                 }
                             }else{
@@ -289,7 +300,10 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 }

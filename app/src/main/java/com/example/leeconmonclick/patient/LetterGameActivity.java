@@ -296,6 +296,7 @@ public class LetterGameActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDialog.dismiss();
                 finish();
             }
         });
@@ -308,6 +309,7 @@ public class LetterGameActivity extends AppCompatActivity {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+                alertDialog.dismiss();
                 finish();
             }
         });

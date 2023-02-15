@@ -26,7 +26,6 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -56,7 +55,6 @@ public class LetterGameActivity extends AppCompatActivity {
     private String imgFinish;
     private String namePatient;
     private int countFailed,countSucces = 0;
-    private ImageButton refresh;
 
 
     @SuppressLint("MissingInflatedId")
@@ -73,11 +71,10 @@ public class LetterGameActivity extends AppCompatActivity {
         findElement();
         listImg = new ArrayList<>();
 
-        if (!difficultySelect.equals("PRÁCTICA")){
-            refresh.setVisibility(View.INVISIBLE);
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
         }
-
-        AudioPlay.restart();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
@@ -268,12 +265,9 @@ public class LetterGameActivity extends AppCompatActivity {
 
 
 
-                if (!difficultySelect.equals("PRÁCTICA")){
-                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("timesPlayed").setValue(t);
-                }
-
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
+               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("timesPlayed").setValue(t);
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("categories").child(category).child("timesPlayed").setValue(c);
@@ -325,7 +319,6 @@ public class LetterGameActivity extends AppCompatActivity {
         cardViewImg1 = findViewById(R.id.cardViewImage1);
         cardViewImg2 = findViewById(R.id.cardViewImage2);
         cardViewImg3 = findViewById(R.id.cardViewImage3);
-        refresh = findViewById(R.id.refresh);
     }
 
     private void selectLetter (char c){
@@ -439,7 +432,10 @@ public class LetterGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 

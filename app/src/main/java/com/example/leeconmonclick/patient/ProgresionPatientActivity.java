@@ -55,7 +55,10 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.progresionPatient);
 
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -564,7 +567,10 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        AudioPlay.restart();
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
         super.onRestart();
     }
 }

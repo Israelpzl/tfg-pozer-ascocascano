@@ -146,7 +146,7 @@ public class AddContentActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 

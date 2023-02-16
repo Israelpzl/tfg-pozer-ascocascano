@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -55,7 +56,15 @@ public class LoginPatient2Activity extends AppCompatActivity {
         passPatient = findViewById(R.id.passPacientId);
         remeberSession = (Switch) findViewById(R.id.switch_remember1);
 
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(LoginPatient2Activity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
 
     public void loginPatient(View v){
@@ -108,7 +117,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    setContentView(R.layout.activity_error2);
+
                 }
             });
         }

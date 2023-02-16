@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.AudioPlay;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -91,7 +93,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        setContentView(R.layout.activity_error2);
+
                     }
                 });
 
@@ -99,7 +101,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 
@@ -117,7 +119,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 
@@ -376,7 +378,15 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
         initBBDD();
 
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(SyllablesGameActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
 
     }
 
@@ -422,7 +432,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    setContentView(R.layout.activity_error2);
+
                 }
             });
 
@@ -475,7 +485,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
     }
@@ -511,7 +521,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 

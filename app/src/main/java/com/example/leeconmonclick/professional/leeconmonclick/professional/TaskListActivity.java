@@ -89,7 +89,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
     }
@@ -133,7 +133,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
     }
@@ -182,7 +182,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 

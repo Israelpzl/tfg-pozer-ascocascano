@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.leeconmonclick.patient.ProgresionPatientActivity;
+
 import java.util.ArrayList;
 
 public class HelpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -38,6 +40,16 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_itemms, options);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(HelpActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
     public void home(View v){
         Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda

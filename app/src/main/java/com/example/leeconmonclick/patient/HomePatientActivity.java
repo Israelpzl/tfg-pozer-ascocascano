@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.AudioPlay;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,7 +84,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        setContentView(R.layout.activity_error2);
+
                     }
                 });
 
@@ -91,7 +92,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 
@@ -135,10 +136,18 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(HomePatientActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
 
     public void goSettings(View v) {
@@ -148,7 +157,8 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     public void goProgression(View v) {
         Intent progress = new Intent(this, ProgresionPatientActivity.class);
-        progress.putExtra("music", AudioPlay.isIsplayingAudio());
+        Boolean test = AudioPlay.isIsplayingAudio();
+        progress.putExtra("music", test);
         startActivity(progress);
 
     }
@@ -208,13 +218,16 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     @Override
     protected void onPause() {
+        Boolean valor = AudioPlay.isIsplayingAudio();
         AudioPlay.stopAudio();
+        if(valor){
+            AudioPlay.setIsplayingAudio(true);
+        }
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
-        super.onRestart();
         Boolean valor = AudioPlay.isIsplayingAudio();
         if(valor){
             AudioPlay.restart();
@@ -228,5 +241,14 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         if (namePatient.equals("null")) {
             finish();
         }
+        super.onRestart();
     }
+
+/*    protected void onRestart() {
+        Boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+        super.onRestart();
+    }*/
 }

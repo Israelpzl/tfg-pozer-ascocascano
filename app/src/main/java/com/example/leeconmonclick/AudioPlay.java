@@ -27,10 +27,16 @@ public class AudioPlay {
 
     public static void restart(){
         isplayingAudio=true;
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 
     public static boolean isIsplayingAudio() {
         return isplayingAudio;
+    }
+
+    public static void setIsplayingAudio(boolean isplayingAudio) {
+        AudioPlay.isplayingAudio = isplayingAudio;
     }
 }

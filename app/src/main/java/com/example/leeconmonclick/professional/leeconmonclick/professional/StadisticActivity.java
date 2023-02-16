@@ -14,8 +14,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.fragments.FirstFragment;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.fragments.FiveFragment;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.fragments.FourFragment;
@@ -75,7 +77,15 @@ public class StadisticActivity extends AppCompatActivity {
         loadFragment(firstFragment);
 
 
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(StadisticActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
 
     }
 

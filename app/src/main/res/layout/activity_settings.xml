@@ -124,8 +124,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/femaleProfesorIconId"
-                android:layout_width="70dp"
-                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/mono"
                 app:civ_border_color="#FF000000"
@@ -135,8 +135,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/maleProfesorIconId"
-                android:layout_width="70dp"
-                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/mono"
                 app:civ_border_color="#FF000000"
@@ -145,8 +145,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/femaleDoctorIconId"
-                android:layout_width="70dp"
-                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/mono"
                 app:civ_border_color="#FF000000"
@@ -155,8 +155,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/maleDoctorIconId"
-                android:layout_width="70dp"
-                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/mono"
                 app:civ_border_color="#FF000000"

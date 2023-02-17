@@ -18,8 +18,6 @@ import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.SettingsActivity;
-import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -114,27 +112,31 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     }
                 });
                 String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    nameProfesional.setTextSize(30);
-                    btnPatients.setTextSize(30);
-                    btnContent.setTextSize(30);
-                    btnSett.setTextSize(30);
-                    btnNotes.setTextSize(30);
-                    btnDates.setTextSize(30);
-                }else if(size.equals("normal")){
-                    nameProfesional.setTextSize(20);
-                    btnPatients.setTextSize(20);
-                    btnContent.setTextSize(20);
-                    btnSett.setTextSize(20);
-                    btnNotes.setTextSize(20);
-                    btnDates.setTextSize(20);
-                }else if(size.equals("peque")){
-                    nameProfesional.setTextSize(10);
-                    btnPatients.setTextSize(10);
-                    btnContent.setTextSize(10);
-                    btnSett.setTextSize(10);
-                    btnNotes.setTextSize(10);
-                    btnDates.setTextSize(10);
+                switch (size) {
+                    case "grande":
+                        nameProfesional.setTextSize(30);
+                        btnPatients.setTextSize(30);
+                        btnContent.setTextSize(30);
+                        btnSett.setTextSize(30);
+                        btnNotes.setTextSize(30);
+                        btnDates.setTextSize(30);
+                        break;
+                    case "normal":
+                        nameProfesional.setTextSize(20);
+                        btnPatients.setTextSize(20);
+                        btnContent.setTextSize(20);
+                        btnSett.setTextSize(20);
+                        btnNotes.setTextSize(20);
+                        btnDates.setTextSize(20);
+                        break;
+                    case "peque":
+                        nameProfesional.setTextSize(10);
+                        btnPatients.setTextSize(10);
+                        btnContent.setTextSize(10);
+                        btnSett.setTextSize(10);
+                        btnNotes.setTextSize(10);
+                        btnDates.setTextSize(10);
+                        break;
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){

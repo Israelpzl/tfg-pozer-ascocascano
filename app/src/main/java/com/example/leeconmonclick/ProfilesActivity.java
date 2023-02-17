@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.leeconmonclick.patient.LoginPatient2Activity;
+import com.example.leeconmonclick.patient.ProgresionPatientActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.LoginProfesionalActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +28,15 @@ public class ProfilesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profiles2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(ProfilesActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
 
     public void goPatient(View v){

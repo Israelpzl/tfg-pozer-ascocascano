@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
+import es.leerconmonclick.util.AudioPlay;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,10 +23,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,8 +34,8 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import es.leerconmonclick.util.Content;
-import es.leerconmonclick.util.Syllable;
+import es.leerconmonclick.util.utils.Content;
+import es.leerconmonclick.util.utils.Syllable;
 
 public class SyllablesGameActivity extends AppCompatActivity {
 
@@ -262,7 +260,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
                                 String syllable = objSnapshot.child("syllables").getValue().toString();
                                 String img = objSnapshot.child("img").getValue().toString();
                                 String word = objSnapshot.child("word").getValue().toString();
-                                Content content = new Content(word, img, syllable, null);
+                                Content content = new Content(word, img, syllable, null,false);
                                 listContent.add(content);
                             }
                         }

@@ -21,18 +21,19 @@ public class RemeberPassActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private EditText email;
-    private Context context = this;
+    private final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remeber_pass);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        firebaseAuth = FirebaseAuth.getInstance();
+
         findElement();
     }
 
     private void findElement(){
+        firebaseAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email);
     }
 

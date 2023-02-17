@@ -1,4 +1,4 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.List;
+
+import es.leerconmonclick.util.utils.Content;
 
 public class ListAdapterContent extends RecyclerView.Adapter<ListAdapterContent.ViewHolder> {
 

@@ -196,6 +196,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/button_style"
                 android:text="@string/add"
+                android:onClick="savePatient"
                 android:layout_marginRight="100dp"
                 android:layout_marginLeft="100dp" />
 

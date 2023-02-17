@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.SettingsActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,14 +32,12 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
     private TextView nameProfesional;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser user;
     private DatabaseReference databaseReference;
 
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
     private CircleImageView iconProfesional;
-    private Context context = this;
-
+    private final Context context = this;
 
     private TextView btnPatients;
     private TextView btnContent;
@@ -59,27 +56,36 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_profesional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
+        findElements();
+        getSettings();
 
-        constraintLayout = findViewById(R.id.home_profesional);
+    }
+
+    private void findElements(){
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         nameProfesional = findViewById(R.id.nameProfesionalId);
         iconProfesional = findViewById(R.id.iconPatientId);
-
+        btnPatients = findViewById(R.id.button15);
+        btnContent = findViewById(R.id.button16);
+        btnSett = findViewById(R.id.button19);
+        btnNotes = findViewById(R.id.button17);
+        btnDates = findViewById(R.id.button18);
+        constraintLayout = findViewById(R.id.home_profesional);
 
         userCollection = user.getEmail();
         String[] parts = userCollection.split("@");
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-        btnPatients = findViewById(R.id.button15);
-        btnContent = findViewById(R.id.button16);
-        btnSett = findViewById(R.id.button19);
-        btnNotes = findViewById(R.id.button17);
-        btnDates = findViewById(R.id.button18);
 
+    }
+
+    private void getSettings(){
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -139,9 +145,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                 setContentView(R.layout.activity_error2);
             }
         });
-
-
-
     }
 
     public void goHelp(View v){
@@ -174,7 +177,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
 
     public void goNotes(View v){
-        Intent helpIntent = new Intent(this, PersonalNotesActivity.class);
+        Intent helpIntent = new Intent(this, NotesListActivity.class);
         startActivity(helpIntent);
     }
 
@@ -192,19 +195,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,false).apply();
     }
 
-
-    /*
-
-      public void goListNotes(View v){
-        Intent helpIntent = new Intent(this, ListNotes.class);
-        startActivity(helpIntent);
-    }
-
-    public void goSettings(View v){
-        Intent helpIntent = new Intent(this, Setting.class);
-        startActivity(helpIntent);
-    }
-    */
 
     @Override
     protected void onRestart() {

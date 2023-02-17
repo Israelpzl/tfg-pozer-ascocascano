@@ -1,6 +1,5 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.utils;
 
-import java.util.List;
 import java.util.Map;
 
 public class Game {

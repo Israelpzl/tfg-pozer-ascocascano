@@ -29,30 +29,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import es.leerconmonclick.util.ListAdapterTask;
-import es.leerconmonclick.util.Task;
+import es.leerconmonclick.util.adapters.ListAdapterTask;
+import es.leerconmonclick.util.utils.Task;
 
 public class TaskListActivity extends AppCompatActivity implements Comparator<Task> {
 
     private List<Task> taskItems;
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth db;
 
     private RecyclerView recyclerView;
     private ListAdapterTask listAdapterTask;
     private String userCollection;
-    private StorageReference storageReference;
 
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
     private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp;
 
     @SuppressLint("MissingInflatedId")
@@ -62,44 +57,15 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         setContentView(R.layout.activity_task_list);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        taskItems = new ArrayList<>();
-        db = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
+        findElements();
+        getSettings();
 
-        recyclerView = findViewById(R.id.listTaskRecycleView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
+        readData();
 
-
-       readData();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.taskList);
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
-            }
-        });
     }
 
     private void readData(){
-        FirebaseUser user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
+
 
         databaseReference.child("Users").child(userCollection).child("taskList").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -128,7 +94,6 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
                 recyclerView.setAdapter(listAdapterTask);
                 listAdapterTask.notifyDataSetChanged();
 
-
             }
 
             @Override
@@ -138,17 +103,10 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         });
     }
 
-    public void goCalendar (View v){
-        Intent calendarIntent = new Intent(this, AddTaskActivity.class);
-        calendarIntent.putExtra("modeEdit",false);
-        startActivity(calendarIntent);
-    }
-
     private void popUpDescriptionTask(Task task) {
 
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View taskPopUpView = getLayoutInflater().inflate(R.layout.taskpopup,null);
-
 
         descriptionTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.descriptionPopUpId);
         tittleTaskPopUp = (TextView) taskPopUpView.findViewById(R.id.tittlePopUpId);
@@ -157,26 +115,29 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         ImageButton editBtn = (ImageButton) taskPopUpView.findViewById(R.id.editBtnPopUpId);
         ImageButton deleteBtn = (ImageButton) taskPopUpView.findViewById(R.id.deleteBtnId);
 
-
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    descriptionTaskPopUp.setTextSize(30);
-                    tittleTaskPopUp.setTextSize(30);
-                    timeTaskPopUp.setTextSize(30);
-                }else if(size.equals("normal")){
-                    descriptionTaskPopUp.setTextSize(20);
-                    tittleTaskPopUp.setTextSize(20);
-                    dateTaskPopUp.setTextSize(20);
-                    timeTaskPopUp.setTextSize(20);
-                }else if(size.equals("peque")){
-                    descriptionTaskPopUp.setTextSize(10);
-                    tittleTaskPopUp.setTextSize(10);
-                    dateTaskPopUp.setTextSize(10);
-                    timeTaskPopUp.setTextSize(10);
+                switch (size) {
+                    case "grande":
+                        descriptionTaskPopUp.setTextSize(30);
+                        tittleTaskPopUp.setTextSize(30);
+                        timeTaskPopUp.setTextSize(30);
+                        break;
+                    case "normal":
+                        descriptionTaskPopUp.setTextSize(20);
+                        tittleTaskPopUp.setTextSize(20);
+                        dateTaskPopUp.setTextSize(20);
+                        timeTaskPopUp.setTextSize(20);
+                        break;
+                    case "peque":
+                        descriptionTaskPopUp.setTextSize(10);
+                        tittleTaskPopUp.setTextSize(10);
+                        dateTaskPopUp.setTextSize(10);
+                        timeTaskPopUp.setTextSize(10);
+                        break;
                 }
             }
 
@@ -201,8 +162,6 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
             }
         });
 
-
-
         descriptionTaskPopUp.setText(task.getDescription());
         tittleTaskPopUp.setText(task.getTittle());
         dateTaskPopUp.setText(task.getDate());
@@ -211,7 +170,6 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         alertDialogBuilder.setView(taskPopUpView);
         alertDialog =  alertDialogBuilder.create();
         alertDialog.show();
-
 
     }
 
@@ -256,6 +214,54 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     private void deleteNotify (String tag){
         WorkManager.getInstance(this).cancelAllWorkByTag(tag);
     }
+
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.taskList);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+    }
+
+    private void findElements(){
+
+        taskItems = new ArrayList<>();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        recyclerView = findViewById(R.id.listTaskRecycleView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(TaskListActivity.this));
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+    }
+
+
+    public void goAddTask(View v){
+        Intent calendarIntent = new Intent(this, AddTaskActivity.class);
+        calendarIntent.putExtra("modeEdit",false);
+        startActivity(calendarIntent);
+    }
+
 
     public void goBack(View view){finish();}
 

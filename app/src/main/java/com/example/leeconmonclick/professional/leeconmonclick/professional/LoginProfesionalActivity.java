@@ -3,6 +3,7 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,8 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
-    private AwesomeValidation awesomeValidation;
     private FirebaseAuth firebaseAuth;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch remeberSession;
     private EditText email,pass;
 
@@ -39,26 +40,14 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_professional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        findElements();
 
-        remeberSession = (Switch) findViewById(R.id.switch_remember);
-        email = findViewById(R.id.editTextTextPersonName);
-        pass = findViewById(R.id.editTextTextPassword);
     }
 
-    public void help(View v){
-        Intent helpIntent = new Intent(this, HelpActivity.class);
-        startActivity(helpIntent);
-    }
-
-    public void register(View v){
-        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
-        startActivity(helpIntent);
-    }
 
     public void login (View v){
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
         awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
 
@@ -92,11 +81,12 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         }
     }
 
-    private void goHomeProfesional(String name){
-        Intent i = new Intent(this, HomeProfesionalActivity.class);
-        saveStateSession();
-        startActivity(i);
-        finish();
+    public void saveStateSession(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", remeberSession.isChecked());
+        editor.putString("user","professional");
+        editor.apply();
     }
 
     public void goRememberPass(View v){
@@ -105,17 +95,34 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
     }
 
-    public void back(View v){
+    public void help(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void register(View v){
+        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
+        startActivity(helpIntent);
+    }
+
+
+    private void goHomeProfesional(String name){
+        Intent i = new Intent(this, HomeProfesionalActivity.class);
+        saveStateSession();
+        startActivity(i);
         finish();
     }
 
-    public void saveStateSession(){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLoggedIn", remeberSession.isChecked());
-        editor.putString("user","professional");
-        editor.apply();
+    private void findElements(){
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        remeberSession = (Switch) findViewById(R.id.switch_remember);
+        email = findViewById(R.id.editTextTextPersonName);
+        pass = findViewById(R.id.editTextTextPassword);
+
     }
+
 
     private void dameToastdeerror(String error) {
         EditText email = findViewById(R.id.editTextTextPersonName);

@@ -7,7 +7,7 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.leeconmonclick.professional.leeconmonclick.professional.PersonalNotesActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.NotesListActivity;
 
 public class PBAnimation extends Animation {
 
@@ -33,7 +33,7 @@ public class PBAnimation extends Animation {
         tv.setText((int) value + " %");
 
         if (value == to) {
-            context.startActivity(new Intent(context, PersonalNotesActivity.class));
+            context.startActivity(new Intent(context, NotesListActivity.class));
         }
     }
 }

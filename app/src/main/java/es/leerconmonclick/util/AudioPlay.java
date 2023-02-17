@@ -1,4 +1,4 @@
-package com.example.leeconmonclick;
+package es.leerconmonclick.util;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;

@@ -25,12 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
-import es.leerconmonclick.util.Note;
-import es.leerconmonclick.util.User;
+import es.leerconmonclick.util.utils.Note;
+import es.leerconmonclick.util.utils.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
 
-    private AwesomeValidation awesomeValidation;
     private DatabaseReference databaseReference;
 
     @Override
@@ -38,7 +37,9 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_professional2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        findElements();
+
     }
 
 
@@ -46,7 +47,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
     public void createUser(View v){
         EditText email = findViewById(R.id.editTextTextPersonName4);
         EditText pass = findViewById(R.id.editTextTextPassword4);
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
         awesomeValidation.addValidation(this,R.id.editTextTextPassword4, ".{6,}", R.string.error_pass);
         awesomeValidation.addValidation(this, R.id.editTextTextPassword5, R.id.editTextTextPassword4, R.string.error_pass_confirmation);
@@ -60,9 +61,8 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-
-
                         FirebaseUser user = firebaseAuth.getCurrentUser();
+                        assert user != null;
                         user.sendEmailVerification();
 
                         String userCollection = email.getText().toString();
@@ -101,6 +101,11 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
             necesaryInfo();
         }
 
+    }
+
+    private void findElements(){
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
 

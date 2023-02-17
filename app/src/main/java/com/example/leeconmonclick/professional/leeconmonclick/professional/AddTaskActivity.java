@@ -69,7 +69,6 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         getSettings();
         setDateAndTime();
 
-
         if (data.getBoolean("modeEdit")){
             try {
                 modeEditOn(calendarView);
@@ -77,6 +76,16 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                 e.printStackTrace();
             }
         }
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(AddTaskActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
 
     }
 
@@ -108,15 +117,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                 taskDate.setText(date);
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(AddTaskActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
+
 
     }
 

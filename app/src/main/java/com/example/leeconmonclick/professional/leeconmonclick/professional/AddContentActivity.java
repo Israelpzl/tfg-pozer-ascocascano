@@ -90,7 +90,16 @@ public class AddContentActivity extends AppCompatActivity {
         //Comprobar si nos encontramos en modo edición de un contenido y si es así, recupera los valores del contenido a modificar
         if (data.getBoolean("modeEdit")){modeEditOn();}
 
-        spinner.setAdapter(adapterSpinner);
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(AddContentActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+
 
     }
 
@@ -127,15 +136,6 @@ public class AddContentActivity extends AppCompatActivity {
                         }
                     }
                 });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(AddContentActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
 
 
     }
@@ -337,6 +337,7 @@ public class AddContentActivity extends AppCompatActivity {
 
 
         adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DIFFICULTIES);
+        spinner.setAdapter(adapterSpinner);
 
     }
 

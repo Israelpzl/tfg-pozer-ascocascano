@@ -17,6 +17,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
@@ -73,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings();
         setIconProfesional();
 
+        
     }
 
     public void saveChanges(View v){
@@ -157,7 +159,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
-
 
     @SuppressLint("NonConstantResourceId")
     public void changeDalto(View v){

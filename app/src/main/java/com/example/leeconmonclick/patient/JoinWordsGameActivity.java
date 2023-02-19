@@ -54,17 +54,15 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private boolean select;
     private int points;
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
-    private float cardImageX,cardImageY,cardWordX,cardWordY;
-    private Context context = this;
+    private float cardImageX;
+    private float cardImageY;
+    private final Context context = this;
     private boolean cardWordFinish1, cardWordFinish2, cardWordFinish3 = false;
     private boolean cardImageFinish1, cardImageFinish2, cardImageFinish3 = false;
     private int numSelect;
     private List<String> listImg,listWord;
-    private final float OPACITY = (float) 0.2;
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
-    private Bundle data;
     private String category;
     private String difficultySelect;
     private String namePatient;
@@ -79,22 +77,19 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        data = getIntent().getExtras();
+        Bundle data = getIntent().getExtras();
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         findElement();
+        getSettings();
+        music();
 
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+
 
         if (!difficultySelect.equals("PRÁCTICA")){
             refresh.setVisibility(View.INVISIBLE);
         }
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,41 +115,25 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.wordsGame);
-
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    word1.setTextSize(30);
-                    word2.setTextSize(30);
-                    word3.setTextSize(30);
-                }else if(size.equals("normal")){
-                    word1.setTextSize(20);
-                    word2.setTextSize(20);
-                    word3.setTextSize(20);
-                }else if(size.equals("peque")){
-                    word1.setTextSize(10);
-                    word2.setTextSize(10);
-                    word3.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         initBBDD();
         listenerClickSelect();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(JoinWordsGameActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
     }
 
 
@@ -293,6 +272,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         points++;
 
         int[] loc = new int[2];
+        float OPACITY = (float) 0.2;
         switch (num){
             case 1:{
                 cardViewWord1.getLocationOnScreen(loc);
@@ -316,9 +296,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         }
 
 
-        cardWordX = loc[0];
-        cardWordY = loc[1];
-        LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
+        float cardWordX = loc[0];
+        float cardWordY = loc[1];
+        LineView lineView = new LineView(context,cardImageX+350,cardImageY+75, cardWordX -385, cardWordY +150);
         addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
         switch (numSelect){
@@ -384,6 +364,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         refresh = findViewById(R.id.refresh);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
     }
 
 
@@ -426,7 +409,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
         Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
 
@@ -496,15 +479,47 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+    }
+
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.wordsGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(JoinWordsGameActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        word1.setTextSize(30);
+                        word2.setTextSize(30);
+                        word3.setTextSize(30);
+                        break;
+                    case "normal":
+                        word1.setTextSize(20);
+                        word2.setTextSize(20);
+                        word3.setTextSize(20);
+                        break;
+                    case "peque":
+                        word1.setTextSize(10);
+                        word2.setTextSize(10);
+                        word3.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
     }
 
 
@@ -520,10 +535,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 }

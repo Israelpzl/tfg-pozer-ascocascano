@@ -40,7 +40,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     private DatabaseReference databaseReference;
     private TextView levelText, namePatientText;
-    private Context context = this;
+    private final Context context = this;
     private CircleImageView iconPatient;
     private ImageButton audio;
     private String namePatient;
@@ -58,13 +58,8 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
         AudioPlay.playAudio(this, R.raw.homeaudio);
 
-
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient", "null").toLowerCase(Locale.ROOT);
-
-
         findElements();
+        getSettings();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,49 +85,6 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
             }
         });
 
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if (size.equals("grande")) {
-                    btnJugar.setTextSize(30);
-                    btnsett.setTextSize(30);
-                    btnProgresion.setTextSize(30);
-                    namePatientText.setTextSize(30);
-                    levelText.setTextSize(30);
-                } else if (size.equals("normal")) {
-                    btnJugar.setTextSize(20);
-                    btnsett.setTextSize(20);
-                    btnProgresion.setTextSize(20);
-                    namePatientText.setTextSize(20);
-                    levelText.setTextSize(20);
-                } else if (size.equals("peque")) {
-                    btnJugar.setTextSize(10);
-                    btnsett.setTextSize(10);
-                    btnProgresion.setTextSize(10);
-                    namePatientText.setTextSize(10);
-                    levelText.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if (dalto.equals("tritanopia")) {
-                    btnsett.setBackgroundResource(R.drawable.button_style_tritano);
-                    btnJugar.setBackgroundResource(R.drawable.button_style_tritano);
-                    btnProgresion.setBackgroundResource(R.drawable.button_style_tritano);
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }else{
-                    constraintLayout.setBackgroundResource(R.color.background);
-                    btnJugar.setBackgroundResource(R.drawable.button_style);
-                    btnsett.setBackgroundResource(R.drawable.button_style);
-                    btnProgresion.setBackgroundResource(R.drawable.button_style);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -179,7 +131,61 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         finish();
     }
 
+    private void getSettings(){
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        btnJugar.setTextSize(30);
+                        btnsett.setTextSize(30);
+                        btnProgresion.setTextSize(30);
+                        namePatientText.setTextSize(30);
+                        levelText.setTextSize(30);
+                        break;
+                    case "normal":
+                        btnJugar.setTextSize(20);
+                        btnsett.setTextSize(20);
+                        btnProgresion.setTextSize(20);
+                        namePatientText.setTextSize(20);
+                        levelText.setTextSize(20);
+                        break;
+                    case "peque":
+                        btnJugar.setTextSize(10);
+                        btnsett.setTextSize(10);
+                        btnProgresion.setTextSize(10);
+                        namePatientText.setTextSize(10);
+                        levelText.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if (dalto.equals("tritanopia")) {
+                    btnsett.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnJugar.setBackgroundResource(R.drawable.button_style_tritano);
+                    btnProgresion.setBackgroundResource(R.drawable.button_style_tritano);
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }else{
+                    constraintLayout.setBackgroundResource(R.color.background);
+                    btnJugar.setBackgroundResource(R.drawable.button_style);
+                    btnsett.setBackgroundResource(R.drawable.button_style);
+                    btnProgresion.setBackgroundResource(R.drawable.button_style);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void findElements(){
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient", "null").toLowerCase(Locale.ROOT);
 
         levelText = findViewById(R.id.level);
         namePatientText = findViewById(R.id.namePatientId);
@@ -197,7 +203,6 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     }
 
-
     public void applyTexts(String number, int x, int y) {
 
         int numeroInt = Integer.parseInt(number);
@@ -212,7 +217,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     @Override
     protected void onPause() {
-        Boolean valor = AudioPlay.isIsplayingAudio();
+        boolean valor = AudioPlay.isIsplayingAudio();
         AudioPlay.stopAudio();
         if(valor){
             AudioPlay.setIsplayingAudio(true);
@@ -222,7 +227,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     @Override
     protected void onRestart() {
-        Boolean valor = AudioPlay.isIsplayingAudio();
+        boolean valor = AudioPlay.isIsplayingAudio();
         if(valor){
             AudioPlay.restart();
         }
@@ -238,11 +243,4 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         super.onRestart();
     }
 
-/*    protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-        super.onRestart();
-    }*/
 }

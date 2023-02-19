@@ -43,42 +43,36 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
-    private Context context = this;
+    private final Context context = this;
     private String namePatient;
     private ImageView puzzle1, puzzle2, puzzle3, puzzle4,puzzle5,yellow,yellow2;
-    private boolean isIntersectPuzzle1, isIntersectPuzzle2, isIntersectPuzzle3, isIntersectPuzzle4,isIntersectPuzzle5,intersectPuzzle = false;
+    private boolean intersectPuzzle = false;
     private List<Syllable> listSylable;
     private  List<Content> l;
     private boolean first,second;
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
     private int countFailed,countSucces=  0;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllables_game);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
         findElements();
+        getSettings();
 
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
-
-
-        listSylable = new ArrayList<>();
-        l = new ArrayList<>();
-
-
-
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(SyllablesGameActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,25 +97,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             }
         });
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.syllableGame);
-
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
 
         puzzle1.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -165,11 +140,35 @@ public class SyllablesGameActivity extends AppCompatActivity {
             }
         });
 
-
         initBBDD();
 
+    }
 
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+    }
 
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.syllableGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void checkPuzzle (ImageView puzzle, MotionEvent event){
@@ -182,14 +181,10 @@ public class SyllablesGameActivity extends AppCompatActivity {
         yellow.getHitRect(rect2);
         yellow2.getHitRect(rect3);
 
-
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
             puzzle.setX(event.getRawX() - puzzle.getWidth() / 2);
             puzzle.setY(event.getRawY() - puzzle.getHeight() / 2);
-
-            boolean failedInCurrentPosition = false;
-
 
             String[] sy = l.get(0).getSyllables().split("-");
 
@@ -208,10 +203,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
             }else{
                 intersectPuzzle = false;
             }
-
         }
-
-
         if (event.getAction() == MotionEvent.ACTION_UP){
 
             if (!Rect.intersects(rect1, rect2) && !Rect.intersects(rect1, rect3)) {
@@ -228,22 +220,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 countFailed++;
                 Toast.makeText(getApplicationContext(), "Pieza Incorrecta", Toast.LENGTH_LONG).show();
             }
-
         }
-
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(SyllablesGameActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
-
     }
-
-
 
     public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG).show();
         recreate();
@@ -382,14 +360,12 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     }
 
-
     private void alertFinishGame(){
 
 
         databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
 
                 countSucces = snapshot.child("succes").getValue(Integer.class) + 1;
 
@@ -402,7 +378,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").child("timesPlayed").setValue(t);
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").child("failed").setValue(countFailed);
 
-
             }
 
             @Override
@@ -410,13 +385,11 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             }
         });
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
 
         ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
         Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
-
-
 
         Glide.with(context).load(l.get(0).getImg()).into(img);
 
@@ -434,19 +407,15 @@ public class SyllablesGameActivity extends AppCompatActivity {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-
                 alertDialog.dismiss();
                 finish();
-
-
             }
         });
-
-
     }
 
 
     private void findElements(){
+
         iconPatient = findViewById(R.id.iconPatientId);
 
         puzzle1 =  findViewById(R.id.puzzle1);
@@ -457,7 +426,13 @@ public class SyllablesGameActivity extends AppCompatActivity {
         yellow =findViewById(R.id.yellow);
         yellow2 =findViewById(R.id.yellow2);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
+
+        listSylable = new ArrayList<>();
+        l = new ArrayList<>();
 
     }
 
@@ -474,10 +449,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 

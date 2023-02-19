@@ -32,8 +32,8 @@ import es.leerconmonclick.util.AudioPlay;
 
 public class ProgresionPatientActivity extends AppCompatActivity {
 
-    private TextView levelText,namePatientText,titleText;
-    private Context context= this;
+    private TextView namePatientText,titleText;
+    private final Context context= this;
 
     private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6,saveChang;
 
@@ -50,34 +50,31 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_progresion_patient);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
+
+
+        findElements();
+        getSettings();
+        music();
+
+        getIcons();
+        setIconPatient();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(ProgresionPatientActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void getSettings(){
+
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.progresionPatient);
-
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
-        /*levelText = findViewById(R.id.level);*/
-        namePatientText = findViewById(R.id.namePatientId);
-        namePatientText.setText(namePatient);
-
-        imagePatient = findViewById(R.id.iconPatientProgresionId);
-
-        //accesibility settings
-        titleText = findViewById(R.id.textViewProgresionTitle);
-        lvl1 = findViewById(R.id.textView10);
-        lvl2 = findViewById(R.id.textView18);
-        lvl3 = findViewById(R.id.textView19);
-        lvl4 = findViewById(R.id.textView20);
-        lvl5 = findViewById(R.id.textView21);
-        lvl6 = findViewById(R.id.textView22);
-        saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,33 +93,37 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 });
 
                 String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    lvl1.setTextSize(30);
-                    lvl2.setTextSize(30);
-                    lvl3.setTextSize(30);
-                    lvl4.setTextSize(30);
-                    lvl5.setTextSize(30);
-                    lvl6.setTextSize(30);
-                    namePatientText.setTextSize(30);
-                    titleText.setTextSize(30);
-                }else if(size.equals("normal")){
-                    lvl1.setTextSize(20);
-                    lvl2.setTextSize(20);
-                    lvl3.setTextSize(20);
-                    lvl4.setTextSize(20);
-                    lvl5.setTextSize(20);
-                    lvl6.setTextSize(20);
-                    namePatientText.setTextSize(20);
-                    titleText.setTextSize(20);
-                }else if(size.equals("peque")){
-                    lvl1.setTextSize(10);
-                    lvl2.setTextSize(10);
-                    lvl3.setTextSize(10);
-                    lvl4.setTextSize(10);
-                    lvl5.setTextSize(10);
-                    lvl6.setTextSize(10);
-                    namePatientText.setTextSize(10);
-                    titleText.setTextSize(10);
+                switch (size) {
+                    case "grande":
+                        lvl1.setTextSize(30);
+                        lvl2.setTextSize(30);
+                        lvl3.setTextSize(30);
+                        lvl4.setTextSize(30);
+                        lvl5.setTextSize(30);
+                        lvl6.setTextSize(30);
+                        namePatientText.setTextSize(30);
+                        titleText.setTextSize(30);
+                        break;
+                    case "normal":
+                        lvl1.setTextSize(20);
+                        lvl2.setTextSize(20);
+                        lvl3.setTextSize(20);
+                        lvl4.setTextSize(20);
+                        lvl5.setTextSize(20);
+                        lvl6.setTextSize(20);
+                        namePatientText.setTextSize(20);
+                        titleText.setTextSize(20);
+                        break;
+                    case "peque":
+                        lvl1.setTextSize(10);
+                        lvl2.setTextSize(10);
+                        lvl3.setTextSize(10);
+                        lvl4.setTextSize(10);
+                        lvl5.setTextSize(10);
+                        lvl6.setTextSize(10);
+                        namePatientText.setTextSize(10);
+                        titleText.setTextSize(10);
+                        break;
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
@@ -136,30 +137,44 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        getIcons();
-        setIconPatient();
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+    }
 
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(ProgresionPatientActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
+    private void findElements(){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
+        namePatientText = findViewById(R.id.namePatientId);
+        namePatientText.setText(namePatient);
+
+        imagePatient = findViewById(R.id.iconPatientProgresionId);
+
+        //accesibility settings
+        titleText = findViewById(R.id.textViewProgresionTitle);
+        lvl1 = findViewById(R.id.textView10);
+        lvl2 = findViewById(R.id.textView18);
+        lvl3 = findViewById(R.id.textView19);
+        lvl4 = findViewById(R.id.textView20);
+        lvl5 = findViewById(R.id.textView21);
+        lvl6 = findViewById(R.id.textView22);
+        saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
+
     }
 
     public void saveChanges(View v){
 
         //Icono
         icon = setIconPatient();
-
         databaseReference.child("userPatient").child(namePatient).child("icon").setValue(icon);
-
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
-        //goHome();
         finish();
 
     }
@@ -172,8 +187,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 icon = dataSnapshot.child("icon").getValue().toString();
             }
         });
-
-
 
         ima1Lvl1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -569,7 +582,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause() {
-        Boolean valor = AudioPlay.isIsplayingAudio();
+        boolean valor = AudioPlay.isIsplayingAudio();
         AudioPlay.stopAudio();
         if(valor){
             AudioPlay.setIsplayingAudio(true);
@@ -579,7 +592,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
+        boolean valor = getIntent().getExtras().getBoolean("music");
         if(valor){
             AudioPlay.restart();
         }

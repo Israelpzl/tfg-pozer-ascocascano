@@ -35,13 +35,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SettingsPatientActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private static final String STRING_PREFERENCES = "leeconmonclick.login";
-    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
 
     private TextView userName;
     private ToggleButton noDaltonic,daltonic,bigSize,midSize,smallSize;
-    private Context context= this;
-    private String icon;
+    private final Context context= this;
     private CircleImageView iconPatient;
 
     //Texts
@@ -52,7 +50,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
     private TextView saveText;
     private TextView logOutText;
     private String namePatient;
-    private ConstraintLayout constraintLayout;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,13 +59,10 @@ public class SettingsPatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings_patient);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         findElements();
         getSettings();
+        settings();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,64 +88,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    userName.setTextSize(30);
-                    titleText.setTextSize(30);
-                    textName.setTextSize(30);
-                    daltoText.setTextSize(30);
-                    syzeText.setTextSize(30);
-                    saveText.setTextSize(30);
-                    logOutText.setTextSize(30);
-                    noDaltonic.setTextSize(30);
-                    daltonic.setTextSize(30);
-                    bigSize.setTextSize(30);
-                    midSize.setTextSize(30);
-                    smallSize.setTextSize(30);
-                }else if(size.equals("normal")){
-                    userName.setTextSize(20);
-                    titleText.setTextSize(20);
-                    textName.setTextSize(20);
-                    daltoText.setTextSize(20);
-                    syzeText.setTextSize(20);
-                    saveText.setTextSize(20);
-                    logOutText.setTextSize(20);
-                    noDaltonic.setTextSize(20);
-                    daltonic.setTextSize(20);
-                    bigSize.setTextSize(20);
-                    midSize.setTextSize(20);
-                    smallSize.setTextSize(20);
-                }else if(size.equals("peque")){
-                    userName.setTextSize(10);
-                    titleText.setTextSize(10);
-                    textName.setTextSize(10);
-                    daltoText.setTextSize(10);
-                    syzeText.setTextSize(10);
-                    saveText.setTextSize(10);
-                    logOutText.setTextSize(10);
-                    noDaltonic.setTextSize(10);
-                    daltonic.setTextSize(10);
-                    bigSize.setTextSize(10);
-                    midSize.setTextSize(10);
-                    smallSize.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    logOutText.setBackgroundResource(R.drawable.button_style_red_tritano);
-                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -198,26 +136,10 @@ public class SettingsPatientActivity extends AppCompatActivity {
         databaseReference.child("userPatient").child(namePatient).child("sett").child("1").setValue(dalto);
         databaseReference.child("userPatient").child(namePatient).child("sett").child("0").setValue(size);
 
-     /*   databaseReference.child("userPatient").child(namePatient).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child("userPatient").child(name).setValue(snapshot.getValue());
-
-                databaseReference.child("userPatient").child(namePatient).removeValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("userPatient",name);
         editor.apply();
-
-
 
         Toast.makeText(getApplicationContext(),"Datos guardados correctamente",Toast.LENGTH_LONG).show();
         //goHome();
@@ -225,7 +147,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
     }
 
-    public void getSettings(){
+    public void settings(){
 
         databaseReference.child("userPatient").child(namePatient).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -253,6 +175,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void changeDalto(View v){
         ToggleButton noDaltonic = findViewById(R.id.toggleButtonNoDaltoPatient);
         ToggleButton daltonic = findViewById(R.id.toggleButtonDaltoPatient);
@@ -266,6 +189,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void changeSize(View v){
         ToggleButton bigSize = findViewById(R.id.toggleButtonBigPatient);
         ToggleButton midSize = findViewById(R.id.toggleButtonMidPatient);
@@ -286,8 +210,81 @@ public class SettingsPatientActivity extends AppCompatActivity {
         }
     }
 
+    private void getSettings(){
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.settingPatients);
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        userName.setTextSize(30);
+                        titleText.setTextSize(30);
+                        textName.setTextSize(30);
+                        daltoText.setTextSize(30);
+                        syzeText.setTextSize(30);
+                        saveText.setTextSize(30);
+                        logOutText.setTextSize(30);
+                        noDaltonic.setTextSize(30);
+                        daltonic.setTextSize(30);
+                        bigSize.setTextSize(30);
+                        midSize.setTextSize(30);
+                        smallSize.setTextSize(30);
+                        break;
+                    case "normal":
+                        userName.setTextSize(20);
+                        titleText.setTextSize(20);
+                        textName.setTextSize(20);
+                        daltoText.setTextSize(20);
+                        syzeText.setTextSize(20);
+                        saveText.setTextSize(20);
+                        logOutText.setTextSize(20);
+                        noDaltonic.setTextSize(20);
+                        daltonic.setTextSize(20);
+                        bigSize.setTextSize(20);
+                        midSize.setTextSize(20);
+                        smallSize.setTextSize(20);
+                        break;
+                    case "peque":
+                        userName.setTextSize(10);
+                        titleText.setTextSize(10);
+                        textName.setTextSize(10);
+                        daltoText.setTextSize(10);
+                        syzeText.setTextSize(10);
+                        saveText.setTextSize(10);
+                        logOutText.setTextSize(10);
+                        noDaltonic.setTextSize(10);
+                        daltonic.setTextSize(10);
+                        bigSize.setTextSize(10);
+                        midSize.setTextSize(10);
+                        smallSize.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    logOutText.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void findElements(){
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         userName = findViewById(R.id.editTextTextPersonNameEditPatient);
         noDaltonic = findViewById(R.id.toggleButtonNoDaltoPatient);
@@ -302,7 +299,7 @@ public class SettingsPatientActivity extends AppCompatActivity {
         syzeText = findViewById(R.id.textViewSizePatient);
         saveText = findViewById(R.id.buttonSaveChangesPatient);
         logOutText = findViewById(R.id.buttonLogOutPatient);
-        constraintLayout =  findViewById(R.id.settingPatients);
+
         iconPatient = findViewById(R.id.iconPatientId);
 
     }

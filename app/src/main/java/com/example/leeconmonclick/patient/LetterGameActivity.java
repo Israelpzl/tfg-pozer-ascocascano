@@ -41,15 +41,12 @@ public class LetterGameActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
-    private Context context =this;
+    private final Context context =this;
     private ImageView image1, image2,image3, imgLetter;
     private CardView cardViewImg1, cardViewImg2,cardViewImg3;
     private List<String> listImg;
-
     private String correctWord;
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
-    private Bundle data;
     private String category;
     private String difficultySelect;
     private String imgFinish;
@@ -64,20 +61,9 @@ public class LetterGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_letter_game);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        data = getIntent().getExtras();
-        category = data.getString("category");
-        difficultySelect = data.getString("difficulty");
         findElement();
-        listImg = new ArrayList<>();
-
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+        getSettings();
+        music();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,26 +89,9 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.letterGame);
-
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         initBBDD ();
-        listenerOnclick ();
+        listenerOnclick();
 
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -133,6 +102,14 @@ public class LetterGameActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+
     }
 
     private void listenerOnclick (){
@@ -186,7 +163,8 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
-    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
+    public void refreshBBDD(View v){
+        Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
         recreate();
     }
 
@@ -208,8 +186,6 @@ public class LetterGameActivity extends AppCompatActivity {
                         contentList.add(w);
                     }
                 }
-
-
                 Collections.shuffle(contentList);
                 int i = 0;
                 for (String content :contentList){
@@ -225,18 +201,12 @@ public class LetterGameActivity extends AppCompatActivity {
                         break;
                     }
                 }
-
-
                 selectLetter(listImg.get(0).charAt(0));
 
                 correctWord = listImg.get(0);
                 imgFinish =snapshot.child(listImg.get(0)).child("img").getValue().toString();
 
-
                 Collections.shuffle(listImg);
-
-
-
 
                 Glide.with(context).load(snapshot.child(listImg.get(0)).child("img").getValue().toString()).into(image1);
                 Glide.with(context).load(snapshot.child(listImg.get(1)).child("img").getValue().toString()).into(image2);
@@ -249,7 +219,6 @@ public class LetterGameActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void alertFinishGame(){
@@ -288,9 +257,7 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
-
-
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
 
         ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
@@ -318,6 +285,26 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.letterGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void findElement(){
 
         iconPatient = findViewById(R.id.iconPatientId);
@@ -328,6 +315,15 @@ public class LetterGameActivity extends AppCompatActivity {
         cardViewImg1 = findViewById(R.id.cardViewImage1);
         cardViewImg2 = findViewById(R.id.cardViewImage2);
         cardViewImg3 = findViewById(R.id.cardViewImage3);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        Bundle data = getIntent().getExtras();
+        category = data.getString("category");
+        difficultySelect = data.getString("difficulty");
+        listImg = new ArrayList<>();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
     }
 
     private void selectLetter (char c){
@@ -429,7 +425,6 @@ public class LetterGameActivity extends AppCompatActivity {
                 imgLetter.setImageResource(R.drawable.letra_z);
                 break;
             }
-
         }
     }
 
@@ -441,10 +436,7 @@ public class LetterGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 

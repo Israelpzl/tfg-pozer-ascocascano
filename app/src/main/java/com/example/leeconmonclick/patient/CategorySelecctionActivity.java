@@ -51,26 +51,11 @@ public class CategorySelecctionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_selecction);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
 
         findElement();
+        getSettings();
+        music();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
-
-
-        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
-
-        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterSpinner);
-
-
-        namePatientTxtView.setText(namePatient);
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -86,23 +71,27 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(CategorySelecctionActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void getSettings() {
 
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.categorySection);
-
-        btn1 = findViewById(R.id.button9);
-        btn2 = findViewById(R.id.button5);
-        btn3 = findViewById(R.id.button8);
-        btn4 = findViewById(R.id.button4);
-        titlePage = findViewById(R.id.tittleActivityAddNoteId3);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,15 +136,13 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(CategorySelecctionActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
     }
 
     public void goAnimalsCategory(View v) {
@@ -297,6 +284,25 @@ public class CategorySelecctionActivity extends AppCompatActivity {
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
         spinner = (Spinner) findViewById(R.id.spinnerId);
+        btn1 = findViewById(R.id.button9);
+        btn2 = findViewById(R.id.button5);
+        btn3 = findViewById(R.id.button8);
+        btn4 = findViewById(R.id.button4);
+        titlePage = findViewById(R.id.tittleActivityAddNoteId3);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
+
+        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
+
+        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        spinner.setAdapter(adapterSpinner);
+
+
+        namePatientTxtView.setText(namePatient);
     }
 
     public void goBack(View v){finish();}
@@ -309,10 +315,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 }

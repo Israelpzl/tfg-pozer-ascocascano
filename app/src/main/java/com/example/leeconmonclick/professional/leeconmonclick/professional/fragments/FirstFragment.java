@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -111,14 +112,14 @@ public class FirstFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     namePatient.setText(name);
-                    agePatient.setText(snapshot.child("agePatient").getValue().toString());
-                    descriptionPatient.setText(snapshot.child("descriptionPatient").getValue().toString());
-                    emailPatient.setText(snapshot.child("emailPatient").getValue().toString());
-                    String icon = snapshot.child("icon").getValue().toString();
+                    agePatient.setText(Objects.requireNonNull(snapshot.child("agePatient").getValue()).toString());
+                    descriptionPatient.setText(Objects.requireNonNull(snapshot.child("descriptionPatient").getValue()).toString());
+                    emailPatient.setText(Objects.requireNonNull(snapshot.child("emailPatient").getValue()).toString());
+                    String icon = Objects.requireNonNull(snapshot.child("icon").getValue()).toString();
                     databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                            Glide.with(context).load(Objects.requireNonNull(snapshot.child(icon).getValue()).toString()).into(iconPatient);
                         }
 
                         @Override

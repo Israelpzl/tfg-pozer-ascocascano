@@ -158,11 +158,11 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                     deleteNotify(data.getString("tagNoty"));
                     String tag = generateKey();
 
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tagNoty").setValue(tag);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("tagNoty").setValue(tag);
 
                     Long alertTime = calendar.getTimeInMillis() - System.currentTimeMillis() - 30000;
                     int random = (int) (Math.random() * 50 + 1);
@@ -176,7 +176,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                     Toast.makeText(getApplicationContext(),"Tarea editada correctamente",Toast.LENGTH_LONG).show();
 
                 }else{
-                    databaseReference.child(userCollection).child("taskList").removeValue();
+                    databaseReference.child("Users").child(userCollection).child("taskList").removeValue();
                     contador = 0;
                     for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                         String tittle = (String) objDataSnapshot.child("tittle").getValue();
@@ -185,7 +185,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                         String description = (String) objDataSnapshot.child("description").getValue();
                         String tag = (String) objDataSnapshot.child("tagNoty").getValue();
                         Task t =  new Task(contador,tittle,date,time,description,tag);
-                        databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(t);
+                        databaseReference.child("Users").child(userCollection).child("taskList").child(contador+"").setValue(t);
                         contador +=1;
 
                     }

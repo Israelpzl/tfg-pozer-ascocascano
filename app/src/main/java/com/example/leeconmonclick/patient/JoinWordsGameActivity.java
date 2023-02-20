@@ -381,26 +381,23 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
                 countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
 
-                int t = snapshot.child("timesPlayed").getValue(Integer.class);
-                t++;
+                int t = snapshot.child("timesPlayed").getValue(Integer.class) + 1;
 
-                int z = snapshot.child("difficulties").child(difficultySelect).child("timesPlayed").getValue(Integer.class);
-                z++;
+                int z = snapshot.child("difficulties").child(difficultySelect).child("timesPlayed").getValue(Integer.class) + 1;
 
-                int c = snapshot.child("categories").child(category).child("timesPlayed").getValue(Integer.class);
-                c++;
-
+                int c = snapshot.child("categories").child(category).child("timesPlayed").getValue(Integer.class) + 1;
 
 
                 if (!difficultySelect.equals("PRÁCTICA")){
                     databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);
                 }
+
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
-
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
-                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);
+
             }
 
             @Override

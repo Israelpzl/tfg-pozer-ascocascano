@@ -245,14 +245,14 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                                 if (type.equals("j")){
 
                                     Intent joinIntent = new Intent(context, JoinWordsGameActivity.class);
-                                    joinIntent.putExtra("category", nameProfessional);
+                                    joinIntent.putExtra("category", nameProfessional.toLowerCase(Locale.ROOT).trim());
                                     joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
                                     joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
                                     startActivity(joinIntent);
 
                                 }else if(type.equals("l")){
                                     Intent lettersIntent = new Intent(context, LetterGameActivity.class);
-                                    lettersIntent.putExtra("category", nameProfessional);
+                                    lettersIntent.putExtra("category", nameProfessional.toLowerCase(Locale.ROOT).toLowerCase(Locale.ROOT));
                                     lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
                                     lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
                                     startActivity(lettersIntent);

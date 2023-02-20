@@ -66,6 +66,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private String userCollection;
+    private String lvlPatient="1";
 
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
@@ -260,7 +261,8 @@ public class AddPatientsActivity extends AppCompatActivity {
                 userCollection,
                 icon,
                 stadistic,
-                settings
+                settings,
+                lvlPatient
         );
 
         databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {

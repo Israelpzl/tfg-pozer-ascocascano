@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
@@ -47,7 +48,7 @@ public class PatientListActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseAuth db = FirebaseAuth.getInstance();
     private String userCollection;
-
+    private TextView title;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,20 @@ public class PatientListActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.listPatient);
 
+        title = findViewById(R.id.tittleContentListId2);
+
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    title.setTextSize(30);
+                }else if(size.equals("normal")){
+                    title.setTextSize(20);
+                }else if(size.equals("peque")){
+                    title.setTextSize(10);
+                }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
@@ -128,10 +139,11 @@ public class PatientListActivity extends AppCompatActivity {
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
                     String icon = (String) objDataSnapshot.child("icon").getValue();
+                    String lvlPatient = (String) objDataSnapshot.child("lvlPatient").getValue();
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null,lvlPatient);
                         userPatientList.add(userPatient);
 
                     }

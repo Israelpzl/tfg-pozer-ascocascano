@@ -12,11 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +44,7 @@ public class PersonalNotesActivity extends AppCompatActivity {
     private String userCollection;
     private FirebaseUser user;
     private StorageReference storageReference;
+    private TextView title;
 
 
     @SuppressLint("MissingInflatedId")
@@ -72,9 +73,19 @@ public class PersonalNotesActivity extends AppCompatActivity {
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
+        title = findViewById(R.id.titleTask);
+
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    title.setTextSize(30);
+                }else if(size.equals("normal")){
+                    title.setTextSize(20);
+                }else if(size.equals("peque")){
+                    title.setTextSize(10);
+                }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);

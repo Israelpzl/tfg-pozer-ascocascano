@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.DialogSettingPatient;
@@ -51,6 +52,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     private ImageButton audio;
     private String namePatient;
     private  ConstraintLayout constraintLayout;
+    private int points;
 
     private TextView btnJugar, btnProgresion, btnsett;
 
@@ -71,6 +73,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
 
         findElements();
+        setLvl();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -214,6 +217,46 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         } else {
             Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void setLvl(){
+        databaseReference.child("userPatient").child(namePatient).child("stadistic").addValueEventListener(new ValueEventListener() {
+            double totalbien = 0;
+            int nuevolvl = 0;
+            String dificilDB;
+            String normalDB;
+            String facilDB;
+            int facil,normal,dificil;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot objDataSnapshot : snapshot.getChildren()) {
+                    if(Objects.equals(objDataSnapshot.getKey(), "syllables")){
+                        dificilDB = objDataSnapshot.child("succes").getValue().toString();
+                        dificil += Integer.parseInt(dificilDB);
+                    }else{
+                        dificilDB = objDataSnapshot.child("difficulties").child("DIFÍCIL").child("succes").getValue().toString();
+                        normalDB = objDataSnapshot.child("difficulties").child("NORMAL").child("succes").getValue().toString();
+                        facilDB = objDataSnapshot.child("difficulties").child("FÁCIL").child("succes").getValue().toString();
+                        facil += Integer.parseInt(facilDB);
+                        normal += Integer.parseInt(normalDB);
+                        dificil += Integer.parseInt(dificilDB);
+                    }
+
+                }
+                totalbien = facil + (normal*2) + (dificil*3);
+                totalbien = totalbien / 20;
+                nuevolvl = (int) Math.floor(totalbien);
+                if(nuevolvl < 1){
+                    nuevolvl = 1;
+                }
+                //dar valor en firebase
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

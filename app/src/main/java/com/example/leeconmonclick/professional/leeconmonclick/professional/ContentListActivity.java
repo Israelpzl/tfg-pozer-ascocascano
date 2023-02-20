@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
@@ -46,6 +47,7 @@ public class ContentListActivity extends AppCompatActivity {
     private String userCollection;
     private StorageReference storageReference;
     private FirebaseUser user;
+    private TextView title;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,10 +74,19 @@ public class ContentListActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.contentList);
 
+        title = findViewById(R.id.tittleContentListId);
+
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                if(size.equals("grande")){
+                    title.setTextSize(30);
+                }else if(size.equals("normal")){
+                    title.setTextSize(20);
+                }else if(size.equals("peque")){
+                    title.setTextSize(10);
+                }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);

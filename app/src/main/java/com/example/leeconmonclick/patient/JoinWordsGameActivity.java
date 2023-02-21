@@ -12,6 +12,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -147,6 +151,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!cardImageFinish1){
+
                     imageSelect1.setVisibility(View.VISIBLE);
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
@@ -154,10 +159,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =1;
 
-                    int[] loc = new int[2];
-                    cardViewImage1.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage1.getLeft() + cardViewImage1.getWidth() / 2;
+                    cardImageY = cardViewImage1.getTop() + cardViewImage1.getHeight() / 2;
                 }
 
             }
@@ -174,10 +178,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =2;
 
-                    int[] loc = new int[2];
-                    cardViewImage2.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage2.getLeft() + cardViewImage2.getWidth() / 2;
+                    cardImageY = cardViewImage2.getTop() + cardViewImage2.getHeight() / 2;
                 }
 
             }
@@ -194,10 +197,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =3;
 
-                    int[] loc = new int[2];
-                    cardViewImage3.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage3.getLeft() + cardViewImage3.getWidth() / 2;
+                    cardImageY = cardViewImage3.getTop() + cardViewImage3.getHeight() / 2;
                 }
 
             }
@@ -271,23 +273,19 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         points++;
 
-        int[] loc = new int[2];
         float OPACITY = (float) 0.2;
         switch (num){
             case 1:{
-                cardViewWord1.getLocationOnScreen(loc);
                 cardWordFinish1 = true;
                 wordSelect1.setVisibility(View.INVISIBLE);
                 cardViewWord1.setAlpha(OPACITY);
                 break;
             } case 2:{
-                cardViewWord2.getLocationOnScreen(loc);
                 cardWordFinish2 = true;
                 wordSelect2.setVisibility(View.INVISIBLE);
                 cardViewWord2.setAlpha(OPACITY);
                 break;
             } case 3:{
-                cardViewWord3.getLocationOnScreen(loc);
                 cardWordFinish3 = true;
                 wordSelect3.setVisibility(View.INVISIBLE);
                 cardViewWord3.setAlpha(OPACITY);
@@ -296,27 +294,52 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         }
 
 
-        float cardWordX = loc[0];
-        float cardWordY = loc[1];
-        LineView lineView = new LineView(context,cardImageX+350,cardImageY+75, cardWordX -385, cardWordY +150);
-        addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
 
         switch (numSelect){
             case 1:{
                 cardViewImage1.setAlpha(OPACITY);
                 cardImageFinish1 = true;
                 imageSelect1.setVisibility(View.INVISIBLE);
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord3);
+                }
+
                 break;
             }
             case 2:{
                 cardViewImage2.setAlpha(OPACITY);
                 cardImageFinish2 = true;
                 imageSelect2.setVisibility(View.INVISIBLE);
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord3);
+                }
+
                 break;
             } case 3: {
                 cardViewImage3.setAlpha(OPACITY);
                 cardImageFinish3 = true;
                 imageSelect3.setVisibility(View.INVISIBLE);
+
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord3);
+                }
+
                 break;
             }
         }
@@ -367,6 +390,33 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
+    }
+
+    private void drawLineBetweenCardViews(CardView cardView1, CardView cardView2) {
+        int[] cardView1Location = new int[2];
+        cardView1.getLocationOnScreen(cardView1Location);
+        int cardView1CenterX = cardView1Location[0] + cardView1.getWidth() / 2;
+        int cardView1CenterY = cardView1Location[1] + cardView1.getHeight() / 2;
+
+        int[] cardView2Location = new int[2];
+        cardView2.getLocationOnScreen(cardView2Location);
+        int cardView2CenterX = cardView2Location[0] + cardView2.getWidth() / 2;
+        int cardView2CenterY = cardView2Location[1] + cardView2.getHeight() / 2;
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(10);
+
+        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        Bitmap bitmap = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        canvas.drawLine(cardView1CenterX, cardView1CenterY, cardView2CenterX, cardView2CenterY, paint);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap);
+
+        addContentView(imageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
 

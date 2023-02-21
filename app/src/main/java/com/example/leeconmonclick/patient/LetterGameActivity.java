@@ -51,7 +51,8 @@ public class LetterGameActivity extends AppCompatActivity {
     private String difficultySelect;
     private String imgFinish;
     private String namePatient;
-    private int countFailed,countSucces = 0;
+    private Bundle data;
+    private int countSucces,countFailed = 0;
 
 
     @SuppressLint("MissingInflatedId")
@@ -90,7 +91,10 @@ public class LetterGameActivity extends AppCompatActivity {
         });
 
 
+
         initBBDD ();
+        countSucces = data.getInt("succes");
+        countFailed = data.getInt("failed");
         listenerOnclick();
 
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -121,11 +125,23 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                         goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                }
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
                 }
             }
         });
@@ -137,11 +153,25 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                    }
+
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
+
                 }
             }
         });
@@ -153,11 +183,23 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                    }
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
                 }
             }
         });
@@ -166,6 +208,18 @@ public class LetterGameActivity extends AppCompatActivity {
     public void refreshBBDD(View v){
         Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
         recreate();
+    }
+
+    private void goLetterGame(){
+        Intent lettersIntent = new Intent(context, LetterGameActivity.class);
+        lettersIntent.putExtra("category", category);
+        lettersIntent.putExtra("difficulty", difficultySelect);
+        lettersIntent.putExtra("numberGame",  data.getInt("numberGame")+ 1);
+        lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
+        lettersIntent.putExtra("succes",  countSucces);
+        lettersIntent.putExtra("failed",  countFailed);
+        startActivity(lettersIntent);
+        finish();
     }
 
     private void  initBBDD () {
@@ -228,9 +282,9 @@ public class LetterGameActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-               countSucces = snapshot.child("difficulties").child(difficultySelect).child("succes").getValue(Integer.class) + countSucces;
+                countSucces = snapshot.child("difficulties").child(difficultySelect).child("succes").getValue(Integer.class) +  countSucces;
 
-               countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
+                countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
 
                 int t = snapshot.child("timesPlayed").getValue(Integer.class);
                 t++;
@@ -320,7 +374,7 @@ public class LetterGameActivity extends AppCompatActivity {
         cardViewImg3 = findViewById(R.id.cardViewImage3);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Bundle data = getIntent().getExtras();
+        data = getIntent().getExtras();
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         listImg = new ArrayList<>();

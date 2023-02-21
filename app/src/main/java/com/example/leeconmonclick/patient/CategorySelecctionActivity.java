@@ -183,6 +183,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Animales");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -205,6 +206,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Comidas");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -227,6 +229,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Hogar");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -250,6 +253,9 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(context, LetterGameActivity.class);
             lettersIntent.putExtra("category", nameProfessional.toLowerCase(Locale.ROOT).toLowerCase(Locale.ROOT));
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
+            lettersIntent.putExtra("succes",  0);
+            lettersIntent.putExtra("failed",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }

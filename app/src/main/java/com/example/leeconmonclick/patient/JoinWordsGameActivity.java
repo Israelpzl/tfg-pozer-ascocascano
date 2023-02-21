@@ -398,6 +398,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
 
+
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.example.leeconmonclick.professional.leeconmonclick.professional.fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -68,6 +69,7 @@ public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         pieChart1 = view.findViewById(R.id.radarChart1);
         pieChart2 = view.findViewById(R.id.radarChart2);
@@ -75,153 +77,84 @@ public class SecondFragment extends Fragment {
         percentage1 = view.findViewById(R.id.percentage1);
         percentage2 = view.findViewById(R.id.percentage2);
         percentage3 = view.findViewById(R.id.percentage3);
+
         return view;
+    }
+
+    private void pieChartFunction(String game, PieChart pieChart,TextView percentage,String gameText){
+        databaseReference.child("userPatient").child(getArguments().getString("namePatient").toLowerCase(Locale.ROOT)).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                List<Integer> colors = new ArrayList<>();
+                colors.add(ContextCompat.getColor(getContext(), R.color.button_green_check));
+                colors.add(ContextCompat.getColor(getContext(), R.color.button_red_cancel));
+
+                ArrayList<PieEntry> entries = new ArrayList<>();
+                int auxS;
+                int auxF;
+
+                if (game.equals("joinWords") || game.equals("letters")) {
+
+                    auxS = snapshot.child(game).child("difficulties").child("FÁCIL").child("succes").getValue(Integer.class)
+                            + snapshot.child(game).child("difficulties").child("NORMAL").child("succes").getValue(Integer.class)
+                            + snapshot.child(game).child("difficulties").child("DIFÍCIL").child("succes").getValue(Integer.class);
+                    auxF = snapshot.child(game).child("difficulties").child("FÁCIL").child("failed").getValue(Integer.class)
+                            + snapshot.child(game).child("difficulties").child("NORMAL").child("failed").getValue(Integer.class)
+                            + snapshot.child(game).child("difficulties").child("DIFÍCIL").child("failed").getValue(Integer.class);
+
+                }else{
+
+                    auxS = snapshot.child(game).child("succes").getValue(Integer.class);
+                    auxF = snapshot.child(game).child("failed").getValue(Integer.class);
+
+                }
+
+                if (snapshot.child(game).child("timesPlayed").getValue(Integer.class) != 0) {
+                    percentageSucces = (auxS * 100) / (auxS + auxF);
+                } else {
+                    percentageSucces = 0;
+                }
+
+                percentage.setText(percentageSucces + "" + "%");
+
+                entries.add(new PieEntry(auxS, "Acertado"));
+                entries.add(new PieEntry(auxF, "Fallado"));
+
+                PieDataSet pieDataSet = new PieDataSet(entries,gameText);
+                pieDataSet.setColors(colors);
+                pieDataSet.setValueTextColor(Color.BLACK);
+                pieDataSet.setValueTextSize(14f);
+
+                PieData pieData = new PieData(pieDataSet);
+                pieChart.getDescription().setEnabled(false);
+                pieChart.setCenterText(gameText);
+                pieChart.getLegend().setEnabled(false);
+                pieChart.setBackgroundColor(Color.TRANSPARENT);
+                pieChart.animate();
+
+                pieChart.setData(pieData);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         if (getArguments() != null){
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
-            databaseReference.child("userPatient").child(getArguments().getString("namePatient").toLowerCase(Locale.ROOT)).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-
-                    //GET COLORS
-                    List<Integer> colors = new ArrayList<>();
-                    colors.add(ContextCompat.getColor(getContext(), R.color.button_green_check));
-                    colors.add(ContextCompat.getColor(getContext(), R.color.button_red_cancel));
-
-                    //GAME 1
-
-                    int sf = snapshot.child("joinWords").child("difficulties").child("FÁCIL").child("succes").getValue(Integer.class);
-                    int ff = snapshot.child("joinWords").child("difficulties").child("FÁCIL").child("failed").getValue(Integer.class);
-                    int sn = snapshot.child("joinWords").child("difficulties").child("NORMAL").child("succes").getValue(Integer.class);
-                    int fn = snapshot.child("joinWords").child("difficulties").child("NORMAL").child("failed").getValue(Integer.class);
-                    int sd = snapshot.child("joinWords").child("difficulties").child("DIFÍCIL").child("succes").getValue(Integer.class);
-                    int fd = snapshot.child("joinWords").child("difficulties").child("DIFÍCIL").child("failed").getValue(Integer.class);
-
-                    int auxS = sf + sn + sd;
-                    int auxF = ff + fn + fd;
-
-
-
-                    if ( snapshot.child("joinWords").child("timesPlayed").getValue(Integer.class) != 0){
-                        percentageSucces =(auxS * 100) / (auxS + auxF);
-                    }else{
-                        percentageSucces = 0;
-                    }
-
-                    percentage1.setText(percentageSucces+""+"%");
-
-
-                    ArrayList<PieEntry> entries1 = new ArrayList<>();
-                    entries1.add(new PieEntry(auxS,"Acertado"));
-                    entries1.add(new PieEntry(auxF,"Fallado"));
-
-
-                    PieDataSet pieDataSet1 = new PieDataSet(entries1,"Unir Palabras");
-                    pieDataSet1.setColors(colors);
-                    pieDataSet1.setValueTextColor(Color.BLACK);
-                    pieDataSet1.setValueTextSize(14f);
-
-                    PieData pieData1 = new PieData(pieDataSet1);
-                    pieChart1.getDescription().setEnabled(false);
-                    pieChart1.setCenterText("Unir Palabras");
-                    pieChart1.setBackgroundColor(Color.TRANSPARENT);
-                    pieChart1.animate();
-
-                    pieChart1.setData(pieData1);
-
-                    //GAME 2
-
-                    sf = snapshot.child("letters").child("difficulties").child("FÁCIL").child("succes").getValue(Integer.class);
-                    ff = snapshot.child("letters").child("difficulties").child("FÁCIL").child("failed").getValue(Integer.class);
-                    sn = snapshot.child("letters").child("difficulties").child("NORMAL").child("succes").getValue(Integer.class);
-                    fn = snapshot.child("letters").child("difficulties").child("NORMAL").child("failed").getValue(Integer.class);
-                    sd = snapshot.child("letters").child("difficulties").child("DIFÍCIL").child("succes").getValue(Integer.class);
-                    fd = snapshot.child("letters").child("difficulties").child("DIFÍCIL").child("failed").getValue(Integer.class);
-
-                    auxS = sf + sn + sd;
-                    auxF = ff + fn + fd;
-
-                    if ( snapshot.child("letters").child("timesPlayed").getValue(Integer.class) != 0){
-                        percentageSucces =(auxS * 100) / (auxS + auxF);
-                    }else{
-                        percentageSucces = 0;
-                    }
-
-                    percentage2.setText(percentageSucces+""+"%");
-
-                    ArrayList<PieEntry> entries2 = new ArrayList<>();
-                    entries2.add(new PieEntry(auxS,"Acertado"));
-                    entries2.add(new PieEntry(auxF,"Fallado"));
-
-
-                    PieDataSet pieDataSet2 = new PieDataSet(entries2,"Letras");
-                    pieDataSet2.setColors(colors);
-                    pieDataSet2.setValueTextColor(Color.BLACK);
-                    pieDataSet2.setValueTextSize(14f);
-
-                    PieData pieData2 = new PieData(pieDataSet2);
-                    pieChart2.getDescription().setEnabled(false);
-                    pieChart2.setCenterText("Letras");
-                    pieChart2.setBackgroundColor(Color.TRANSPARENT);
-                    pieChart2.getLegend().setEnabled(false);
-                    pieChart2.animate();
-
-                    pieChart2.setData(pieData2);
-
-                    //GAME 3
-                    int s = snapshot.child("syllables").child("succes").getValue(Integer.class);
-                    int f = snapshot.child("syllables").child("failed").getValue(Integer.class);
-
-                    if ( snapshot.child("syllables").child("timesPlayed").getValue(Integer.class) != 0){
-                        percentageSucces =(s * 100) / (s + f);
-                    }else{
-                        percentageSucces = 0;
-                    }
-
-                    percentage3.setText(percentageSucces+""+"%");
-
-                    ArrayList<PieEntry> entries3 = new ArrayList<>();
-                    entries3.add(new PieEntry(s,"Acertado"));
-                    entries3.add(new PieEntry(f,"Fallado"));
-
-
-                    PieDataSet pieDataSet3 = new PieDataSet(entries3,"Sílabas");
-                    pieDataSet3.setColors(colors);
-                    pieDataSet3.setValueTextColor(Color.BLACK);
-                    pieDataSet3.setValueTextSize(14f);
-
-                    PieData pieData3 = new PieData(pieDataSet3);
-                    pieChart3.getDescription().setEnabled(false);
-                    pieChart3.setCenterText("Sílabas");
-                    pieChart3.getLegend().setEnabled(false);
-                    pieChart3.setBackgroundColor(Color.TRANSPARENT);
-                    pieChart3.animate();
-
-                    pieChart3.setData(pieData3);
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+            pieChartFunction("joinWords",pieChart1,percentage1,"Unir Palabras");
+            pieChartFunction("letters",pieChart2,percentage2,"Letras");
+            pieChartFunction("syllables",pieChart3,percentage3,"Sílabas");
 
         }
-
-
-
     }
 }

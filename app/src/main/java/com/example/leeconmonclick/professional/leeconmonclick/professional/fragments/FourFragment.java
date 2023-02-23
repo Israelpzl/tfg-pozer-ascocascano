@@ -98,42 +98,28 @@ public class FourFragment extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference();
             String name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
 
-            databaseReference.child("userPatient").child(name).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("userPatient").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                    int jh = snapshot.child("joinWords").child("categories").child("Hogar").child("timesPlayed").getValue(Integer.class);
-                    int ja = snapshot.child("joinWords").child("categories").child("Animales").child("timesPlayed").getValue(Integer.class);
-                    int jc = snapshot.child("joinWords").child("categories").child("Comidas").child("timesPlayed").getValue(Integer.class);
-
-                    int lh = snapshot.child("letters").child("categories").child("Hogar").child("timesPlayed").getValue(Integer.class);
-                    int la = snapshot.child("letters").child("categories").child("Animales").child("timesPlayed").getValue(Integer.class);
-                    int lc = snapshot.child("letters").child("categories").child("Comidas").child("timesPlayed").getValue(Integer.class);
-
-                    int jf = snapshot.child("joinWords").child("difficulties").child("FÁCIL").child("timesPlayed").getValue(Integer.class);
-                    int jn = snapshot.child("joinWords").child("difficulties").child("NORMAL").child("timesPlayed").getValue(Integer.class);
-                    int jd = snapshot.child("joinWords").child("difficulties").child("DIFÍCIL").child("timesPlayed").getValue(Integer.class);
-                    int jp = snapshot.child("joinWords").child("difficulties").child("PRÁCTICA").child("timesPlayed").getValue(Integer.class);
-
-
-                    int lf = snapshot.child("letters").child("difficulties").child("FÁCIL").child("timesPlayed").getValue(Integer.class);
-                    int ln = snapshot.child("letters").child("difficulties").child("NORMAL").child("timesPlayed").getValue(Integer.class);
-                    int ld = snapshot.child("letters").child("difficulties").child("DIFÍCIL").child("timesPlayed").getValue(Integer.class);
-                    int lp = snapshot.child("letters").child("difficulties").child("PRÁCTICA").child("timesPlayed").getValue(Integer.class);
-
+                    String nameProfessioanl = snapshot.child("nameProfessional").getValue().toString();
 
                     //BarChart Category
 
                     ArrayList<BarEntry> entriesC = new ArrayList<>();
 
-                    entriesC.add(new BarEntry(1,jh+lh));
-                    entriesC.add(new BarEntry(2,jc+lc));
-                    entriesC.add(new BarEntry(3,ja+la));
-                    entriesC.add(new BarEntry(4,0));
+                    entriesC.add(new BarEntry(1,snapshot.child("stadistic").child("joinWords").child("categories").child("Hogar").child("timesPlayed").getValue(Integer.class)
+                            + snapshot.child("stadistic").child("letters").child("categories").child("Hogar").child("timesPlayed").getValue(Integer.class) ));
+                    entriesC.add(new BarEntry(2,snapshot.child("stadistic").child("joinWords").child("categories").child("Comidas").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("categories").child("Comidas").child("timesPlayed").getValue(Integer.class)));
+                    entriesC.add(new BarEntry(3,snapshot.child("stadistic").child("joinWords").child("categories").child("Animales").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("categories").child("Animales").child("timesPlayed").getValue(Integer.class)));
+                    entriesC.add(new BarEntry(4, snapshot.child("stadistic").child("joinWords").child("categories").child(nameProfessioanl).child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("categories").child(nameProfessioanl).child("timesPlayed").getValue(Integer.class)));
 
                     BarDataSet barDataSetC = new BarDataSet(entriesC,"");
-                    barDataSetC.setColors(ColorTemplate.COLORFUL_COLORS);
+                    barDataSetC.setColors(ColorTemplate.JOYFUL_COLORS);
 
                     BarData barDataC = new BarData (barDataSetC);
                     barChartCategory.setData(barDataC);
@@ -147,16 +133,19 @@ public class FourFragment extends Fragment {
                     barChartCategory.getDescription().setEnabled(false);
                     barChartCategory.getLegend().setEnabled(false);
 
-
                     barChartCategory.invalidate();
 
                     //BarChartDifficulty
                     ArrayList<BarEntry> entriesD = new ArrayList<>();
 
-                    entriesD.add(new BarEntry(1,jf+lf));
-                    entriesD.add(new BarEntry(2,jn+ln));
-                    entriesD.add(new BarEntry(3,jd+ld));
-                    entriesD.add(new BarEntry(4,jp+lp));
+                    entriesD.add(new BarEntry(1, snapshot.child("stadistic").child("joinWords").child("difficulties").child("FÁCIL").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("difficulties").child("FÁCIL").child("timesPlayed").getValue(Integer.class)));
+                    entriesD.add(new BarEntry(2,snapshot.child("stadistic").child("joinWords").child("difficulties").child("NORMAL").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("difficulties").child("NORMAL").child("timesPlayed").getValue(Integer.class)));
+                    entriesD.add(new BarEntry(3,snapshot.child("stadistic").child("joinWords").child("difficulties").child("DIFÍCIL").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("difficulties").child("DIFÍCIL").child("timesPlayed").getValue(Integer.class)));
+                    entriesD.add(new BarEntry(4,snapshot.child("stadistic").child("joinWords").child("difficulties").child("PRÁCTICA").child("timesPlayed").getValue(Integer.class)
+                            +snapshot.child("stadistic").child("letters").child("difficulties").child("PRÁCTICA").child("timesPlayed").getValue(Integer.class)));
 
                     BarDataSet barDataSetD = new BarDataSet(entriesD,"");
                     barDataSetD.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -173,9 +162,7 @@ public class FourFragment extends Fragment {
                     barChartfDifficulty.getDescription().setEnabled(false);
                     barChartfDifficulty.getLegend().setEnabled(false);
 
-
                     barChartfDifficulty.invalidate();
-
 
                 }
 

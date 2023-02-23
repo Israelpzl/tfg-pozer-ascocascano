@@ -401,4 +401,16 @@
         app:layout_constraintTop_toBottomOf="@+id/iconPatientlvl4a"
         app:layout_constraintVertical_bias="0.227" />
 
+    <ProgressBar
+        android:id="@+id/lvlProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="135dp"
+        android:layout_height="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

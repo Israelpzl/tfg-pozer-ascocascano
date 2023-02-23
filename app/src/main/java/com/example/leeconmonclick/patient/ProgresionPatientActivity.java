@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6,ima3Lvl6,imagePatient;
     private String namePatient;
     private String icon;
+    private ProgressBar pb;
 
     private DatabaseReference databaseReference;
 
@@ -82,6 +84,21 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         lvl5 = findViewById(R.id.textView21);
         lvl6 = findViewById(R.id.textView22);
         saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
+
+        pb = findViewById(R.id.lvlProgressBar);
+        pb.setMax(100);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int progreso = Integer.parseInt(snapshot.child("progression").getValue().toString());
+                pb.setProgress(progreso);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override

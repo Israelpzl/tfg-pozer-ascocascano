@@ -78,6 +78,18 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                levelText.setText("Nivel "+snapshot.child("lvlPatient").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String icon = snapshot.child("icon").getValue().toString();
                 databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -220,9 +232,13 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     }
 
     public void setLvl(){
+        final int[] lvl = new int[1];
+        final double[] progresionLvl = new double[1];
         databaseReference.child("userPatient").child(namePatient).child("stadistic").addValueEventListener(new ValueEventListener() {
             double totalbien = 0;
             int nuevolvl = 0;
+            double progress = 0;
+            double progressAux = 0;
             String dificilDB;
             String normalDB;
             String facilDB;
@@ -246,10 +262,17 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                 totalbien = facil + (normal*2) + (dificil*3);
                 totalbien = totalbien / 20;
                 nuevolvl = (int) Math.floor(totalbien);
+                progressAux = (double) totalbien;
+                progress = (progressAux % 1) * 100;
+                progress = Math.floor(progress);
                 if(nuevolvl < 1){
                     nuevolvl = 1;
                 }
-                //dar valor en firebase
+                lvl[0] = nuevolvl;
+                progresionLvl[0] = progress;
+
+                databaseReference.child("userPatient").child(namePatient).child("lvlPatient").setValue(lvl[0]);
+                databaseReference.child("userPatient").child(namePatient).child("progression").setValue(progresionLvl[0]);
             }
 
             @Override
@@ -257,6 +280,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
             }
         });
+
     }
 
     @Override

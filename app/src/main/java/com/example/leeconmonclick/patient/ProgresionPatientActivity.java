@@ -45,6 +45,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
     private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6,ima3Lvl6,imagePatient;
     private String namePatient;
     private String icon;
+    private int actualLvl;
     private ProgressBar pb;
 
     private DatabaseReference databaseReference;
@@ -191,355 +192,409 @@ public class ProgresionPatientActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 icon = dataSnapshot.child("icon").getValue().toString();
+                String patientLvl = dataSnapshot.child("lvlPatient").getValue().toString();
+                actualLvl = Integer.parseInt(patientLvl);
+
+                ima1Lvl1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ima1Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
+                        ima2Lvl1.setBackground(null);
+                        ima1Lvl2.setBackground(null);
+                        ima2Lvl2.setBackground(null);
+                        ima3Lvl2.setBackground(null);
+                        ima1Lvl3.setBackground(null);
+                        ima2Lvl3.setBackground(null);
+                        ima1Lvl4.setBackground(null);
+                        ima2Lvl4.setBackground(null);
+                        ima3Lvl4.setBackground(null);
+                        ima1Lvl5.setBackground(null);
+                        ima2Lvl5.setBackground(null);
+                        ima1Lvl6.setBackground(null);
+                        ima2Lvl6.setBackground(null);
+                        ima3Lvl6.setBackground(null);
+                        icon = "1lvl1";
+                    }
+                });
+
+                ima2Lvl1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ima1Lvl1.setBackground(null);
+                        ima2Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
+                        ima1Lvl2.setBackground(null);
+                        ima2Lvl2.setBackground(null);
+                        ima3Lvl2.setBackground(null);
+                        ima1Lvl3.setBackground(null);
+                        ima2Lvl3.setBackground(null);
+                        ima1Lvl4.setBackground(null);
+                        ima2Lvl4.setBackground(null);
+                        ima3Lvl4.setBackground(null);
+                        ima1Lvl5.setBackground(null);
+                        ima2Lvl5.setBackground(null);
+                        ima1Lvl6.setBackground(null);
+                        ima2Lvl6.setBackground(null);
+                        ima3Lvl6.setBackground(null);
+                        icon = "1lvl2";
+
+                    }
+                });
+
+                ima1Lvl2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 2) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "2lvl1";
+                        }
+
+                    }
+                });
+
+                ima2Lvl2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 2) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "2lvl2";
+                        }
+                    }
+                });
+
+                ima3Lvl2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 2) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "2lvl3";
+                        }
+                    }
+                });
+
+                ima1Lvl3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 3) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "3lvl1";
+                        }
+                    }
+                });
+
+                ima2Lvl3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 3) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "3lvl2";
+                        }
+                    }
+                });
+
+                ima1Lvl4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 4) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "4lvl1";
+                        }
+                    }
+                });
+
+                ima2Lvl4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 4) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "4lvl2";
+                        }
+                    }
+                });
+
+                ima3Lvl4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 4) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "4lvl3";
+                        }
+                    }
+                });
+
+                ima1Lvl5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 5) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "5lvl1";
+                        }
+                    }
+                });
+
+                ima2Lvl5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 5) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "5lvl2";
+                        }
+                    }
+                });
+
+                ima1Lvl6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 6) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackground(null);
+                            icon = "6lvl1";
+                        }
+                    }
+                });
+
+                ima2Lvl6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 6) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
+                            ima3Lvl6.setBackground(null);
+                            icon = "6lvl2";
+                        }
+                    }
+                });
+
+                ima3Lvl6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 6) {
+                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            ima1Lvl2.setClickable(false);
+                        } else {
+                            ima1Lvl1.setBackground(null);
+                            ima2Lvl1.setBackground(null);
+                            ima1Lvl2.setBackground(null);
+                            ima2Lvl2.setBackground(null);
+                            ima3Lvl2.setBackground(null);
+                            ima1Lvl3.setBackground(null);
+                            ima2Lvl3.setBackground(null);
+                            ima1Lvl4.setBackground(null);
+                            ima2Lvl4.setBackground(null);
+                            ima3Lvl4.setBackground(null);
+                            ima1Lvl5.setBackground(null);
+                            ima2Lvl5.setBackground(null);
+                            ima1Lvl6.setBackground(null);
+                            ima2Lvl6.setBackground(null);
+                            ima3Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
+                            icon = "6lvl3";
+                        }
+                    }
+                });
+
             }
         });
-
-
-
-        ima1Lvl1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "1lvl1";
-            }
-        });
-
-        ima2Lvl1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "1lvl2";
-
-            }
-        });
-
-        ima1Lvl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "2lvl1";
-
-            }
-        });
-
-        ima2Lvl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "2lvl2";
-
-            }
-        });
-
-        ima3Lvl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "2lvl3";
-
-            }
-        });
-
-        ima1Lvl3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "3lvl1";
-
-            }
-        });
-
-        ima2Lvl3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "3lvl2";
-
-            }
-        });
-
-        ima1Lvl4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "4lvl1";
-
-            }
-        });
-
-        ima2Lvl4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "4lvl2";
-
-            }
-        });
-
-        ima3Lvl4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "4lvl3";
-
-            }
-        });
-
-        ima1Lvl5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "5lvl1";
-
-            }
-        });
-
-        ima2Lvl5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "5lvl2";
-
-            }
-        });
-
-        ima1Lvl6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackground(null);
-                icon = "6lvl1";
-
-            }
-        });
-
-        ima2Lvl6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                ima3Lvl6.setBackground(null);
-                icon = "6lvl2";
-
-            }
-        });
-
-        ima3Lvl6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ima1Lvl1.setBackground(null);
-                ima2Lvl1.setBackground(null);
-                ima1Lvl2.setBackground(null);
-                ima2Lvl2.setBackground(null);
-                ima3Lvl2.setBackground(null);
-                ima1Lvl3.setBackground(null);
-                ima2Lvl3.setBackground(null);
-                ima1Lvl4.setBackground(null);
-                ima2Lvl4.setBackground(null);
-                ima3Lvl4.setBackground(null);
-                ima1Lvl5.setBackground(null);
-                ima2Lvl5.setBackground(null);
-                ima1Lvl6.setBackground(null);
-                ima2Lvl6.setBackground(null);
-                ima3Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                icon = "6lvl3";
-
-            }
-        });
-
         return icon;
 
     }

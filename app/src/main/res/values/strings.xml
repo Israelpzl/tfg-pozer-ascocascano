@@ -59,6 +59,7 @@
     <string name="clock">RELOJ</string>
     <!--Patient-PROGRESS-->
     <string name="progression">PROGRESO</string>
+    <string name="actualLvlText">NIVEL ACTUAL:</string>
     <string name="lvl1">NIVEL 1</string>
     <string name="lvl2">NIVEL 2</string>
     <string name="lvl3">NIVEL 3</string>

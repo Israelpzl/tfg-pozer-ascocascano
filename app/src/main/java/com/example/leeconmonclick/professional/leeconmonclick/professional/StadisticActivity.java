@@ -4,8 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,31 +23,17 @@ import com.example.leeconmonclick.professional.leeconmonclick.professional.fragm
 import com.example.leeconmonclick.professional.leeconmonclick.professional.fragments.SecondFragment;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.fragments.ThirdFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-
 
 
 public class StadisticActivity extends AppCompatActivity {
 
-    private DatabaseReference databaseReference;
-    private TextView namePatient;
     private Bundle data;
-    private CircleImageView iconPatient;
-    private Context context= this;
-    private String nameUser;
 
-    private FirstFragment firstFragment = new FirstFragment();
-    private SecondFragment secondFragment = new SecondFragment();
-    private ThirdFragment thirdFragment = new ThirdFragment();
-    private FourFragment fourFragment = new FourFragment();
-    private FiveFragment fiveFragment = new FiveFragment();
+    private final FirstFragment firstFragment = new FirstFragment();
+    private final SecondFragment secondFragment = new SecondFragment();
+    private final ThirdFragment thirdFragment = new ThirdFragment();
+    private final FourFragment fourFragment = new FourFragment();
+    private final FiveFragment fiveFragment = new FiveFragment();
 
     private BottomNavigationView navigationView;
 
@@ -58,13 +43,11 @@ public class StadisticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stadistic);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        data = getIntent().getExtras();
+
         findElement();
+        getSettings();
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        //getUserPatient();
 
         Bundle bd = new Bundle();
         bd.putString("namePatient",data.getString("userPatient"));
@@ -90,6 +73,7 @@ public class StadisticActivity extends AppCompatActivity {
     }
 
     private  final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
@@ -113,38 +97,6 @@ public class StadisticActivity extends AppCompatActivity {
         }
     };
 
-    public void getUserPatient(){
-
-
-       databaseReference.child("userPatient").child(data.getString("userPatient")).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                namePatient.setText(snapshot.child("namePatient").getValue().toString());
-                nameUser = snapshot.child("namePatient").getValue().toString();
-                String icon = snapshot.child("icon").getValue().toString();
-                databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
-
 
     public void loadFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -152,12 +104,14 @@ public class StadisticActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void findElement(){
-        namePatient = findViewById(R.id.namePatient);
-        iconPatient = findViewById(R.id.iconPatientId);
-        navigationView = findViewById(R.id.bottom_navigation_stadistic);
+    private void getSettings(){
+
     }
 
+    public void findElement(){
+        data = getIntent().getExtras();
+        navigationView = findViewById(R.id.bottom_navigation_stadistic);
+    }
 
 
     public void goHelp(View v){

@@ -54,16 +54,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.454">
@@ -73,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -99,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -124,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -149,26 +152,27 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458">
+        app:layout_constraintVertical_bias="0.454">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewWord1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -183,8 +187,8 @@
 
             <TextView
                 android:id="@+id/word1"
-                android:layout_width="100dp"
-                android:layout_height="104dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/word"
@@ -196,6 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -210,8 +215,8 @@
 
             <TextView
                 android:id="@+id/word2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/word"
@@ -223,6 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="@color/task_item"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -237,8 +243,8 @@
 
             <TextView
                 android:id="@+id/word3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/word"

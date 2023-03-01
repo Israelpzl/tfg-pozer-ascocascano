@@ -24,29 +24,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import es.leerconmonclick.util.ListAdapterTask;
-import es.leerconmonclick.util.ListAdapterUserPatient;
-import es.leerconmonclick.util.Task;
-import es.leerconmonclick.util.UserPatient;
+import es.leerconmonclick.util.adapters.ListAdapterUserPatient;
+import es.leerconmonclick.util.utils.UserPatient;
 
 public class PatientListActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
-
     private List<UserPatient> userPatientList;
     private ListAdapterUserPatient listAdapterUserPatient;
     private RecyclerView recyclerView;
-    private StorageReference storageReference;
-
-    private FirebaseUser user;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
     private String userCollection;
     private TextView title;
     @SuppressLint("MissingInflatedId")
@@ -54,55 +45,13 @@ public class PatientListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        userPatientList = new ArrayList<>();
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
-        mAuth =  FirebaseAuth.getInstance();
-
-        recyclerView = findViewById(R.id.recycleViewUserPatientId);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PatientListActivity.this));
-
-        user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.listPatient);
-
-        title = findViewById(R.id.tittleContentListId2);
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    title.setTextSize(30);
-                }else if(size.equals("normal")){
-                    title.setTextSize(20);
-                }else if(size.equals("peque")){
-                    title.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        findElements();
+        getSettings();
 
         getListUserPatient();
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -115,7 +64,6 @@ public class PatientListActivity extends AppCompatActivity {
     }
 
 
-
     private void getListUserPatient() {
 
         databaseReference.child("userPatient").addValueEventListener(new ValueEventListener() {
@@ -123,11 +71,6 @@ public class PatientListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                FirebaseUser user = mAuth.getCurrentUser();
-                String userCollection = user.getEmail();
-                String[] parts = userCollection.split("@");
-                userCollection = parts[0];
-                userCollection = userCollection.toLowerCase();
 
                 userPatientList.clear();
 
@@ -170,12 +113,52 @@ public class PatientListActivity extends AppCompatActivity {
         });
     }
 
+    private void getSettings(){
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout = findViewById(R.id.listPatient);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+
+    }
+
+    private void findElements(){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        userPatientList = new ArrayList<>();
+
+        recyclerView = findViewById(R.id.recycleViewUserPatientId);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(PatientListActivity.this));
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+    }
+
     public void goBack(View view){finish();}
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
-
 
     public void goAddPatient(View v){
         Intent addPatientIntent = new Intent(this, AddPatientsActivity.class);

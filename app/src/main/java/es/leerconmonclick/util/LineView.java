@@ -1,14 +1,16 @@
 package es.leerconmonclick.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
+@SuppressLint("ViewConstructor")
 public class LineView  extends View {
-    private float x1, y1, x2, y2;
-    private Paint paint = new Paint();
+    private final float x1,y1,x2,y2;
+    private final Paint paint = new Paint();
 
     public LineView(Context context, float x1, float y1, float x2, float y2) {
         super(context);

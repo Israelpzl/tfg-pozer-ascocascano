@@ -1,4 +1,4 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leeconmonclick.professional.leeconmonclick.professional.AddNoteActivity;
@@ -30,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+
+import es.leerconmonclick.util.utils.Note;
 
 public class ListAdapterNotes extends RecyclerView.Adapter<ListAdapterNotes.MyViewHolder>{
 

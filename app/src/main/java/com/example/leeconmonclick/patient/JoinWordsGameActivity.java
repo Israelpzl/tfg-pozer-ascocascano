@@ -12,6 +12,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -24,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
+
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.LineView;
 
 public class JoinWordsGameActivity extends AppCompatActivity {
@@ -53,17 +58,15 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private boolean select;
     private int points;
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
-    private float cardImageX,cardImageY,cardWordX,cardWordY;
-    private Context context = this;
+    private float cardImageX;
+    private float cardImageY;
+    private final Context context = this;
     private boolean cardWordFinish1, cardWordFinish2, cardWordFinish3 = false;
     private boolean cardImageFinish1, cardImageFinish2, cardImageFinish3 = false;
     private int numSelect;
     private List<String> listImg,listWord;
-    private final float OPACITY = (float) 0.2;
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
-    private Bundle data;
     private String category;
     private String difficultySelect;
     private String namePatient;
@@ -78,22 +81,19 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        data = getIntent().getExtras();
+        Bundle data = getIntent().getExtras();
         category = data.getString("category");
         difficultySelect = data.getString("difficulty");
         findElement();
+        getSettings();
+        music();
 
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+
 
         if (!difficultySelect.equals("PRÁCTICA")){
             refresh.setVisibility(View.INVISIBLE);
         }
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,41 +119,25 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.wordsGame);
-
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    word1.setTextSize(30);
-                    word2.setTextSize(30);
-                    word3.setTextSize(30);
-                }else if(size.equals("normal")){
-                    word1.setTextSize(20);
-                    word2.setTextSize(20);
-                    word3.setTextSize(20);
-                }else if(size.equals("peque")){
-                    word1.setTextSize(10);
-                    word2.setTextSize(10);
-                    word3.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         initBBDD();
         listenerClickSelect();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(JoinWordsGameActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
     }
 
 
@@ -167,6 +151,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!cardImageFinish1){
+
                     imageSelect1.setVisibility(View.VISIBLE);
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
@@ -174,10 +159,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =1;
 
-                    int[] loc = new int[2];
-                    cardViewImage1.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage1.getLeft() + cardViewImage1.getWidth() / 2;
+                    cardImageY = cardViewImage1.getTop() + cardViewImage1.getHeight() / 2;
                 }
 
             }
@@ -194,10 +178,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =2;
 
-                    int[] loc = new int[2];
-                    cardViewImage2.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage2.getLeft() + cardViewImage2.getWidth() / 2;
+                    cardImageY = cardViewImage2.getTop() + cardViewImage2.getHeight() / 2;
                 }
 
             }
@@ -214,10 +197,9 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     select = true;
                     numSelect =3;
 
-                    int[] loc = new int[2];
-                    cardViewImage3.getLocationOnScreen(loc);
-                    cardImageX = loc[0];
-                    cardImageY = loc[1];
+
+                    cardImageX = cardViewImage3.getLeft() + cardViewImage3.getWidth() / 2;
+                    cardImageY = cardViewImage3.getTop() + cardViewImage3.getHeight() / 2;
                 }
 
             }
@@ -291,22 +273,19 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         points++;
 
-        int[] loc = new int[2];
+        float OPACITY = (float) 0.2;
         switch (num){
             case 1:{
-                cardViewWord1.getLocationOnScreen(loc);
                 cardWordFinish1 = true;
                 wordSelect1.setVisibility(View.INVISIBLE);
                 cardViewWord1.setAlpha(OPACITY);
                 break;
             } case 2:{
-                cardViewWord2.getLocationOnScreen(loc);
                 cardWordFinish2 = true;
                 wordSelect2.setVisibility(View.INVISIBLE);
                 cardViewWord2.setAlpha(OPACITY);
                 break;
             } case 3:{
-                cardViewWord3.getLocationOnScreen(loc);
                 cardWordFinish3 = true;
                 wordSelect3.setVisibility(View.INVISIBLE);
                 cardViewWord3.setAlpha(OPACITY);
@@ -315,27 +294,52 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         }
 
 
-        cardWordX = loc[0];
-        cardWordY = loc[1];
-        LineView lineView = new LineView(context,cardImageX+350,cardImageY+75,cardWordX-385,cardWordY+150);
-        addContentView(lineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
 
         switch (numSelect){
             case 1:{
                 cardViewImage1.setAlpha(OPACITY);
                 cardImageFinish1 = true;
                 imageSelect1.setVisibility(View.INVISIBLE);
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage1,cardViewWord3);
+                }
+
                 break;
             }
             case 2:{
                 cardViewImage2.setAlpha(OPACITY);
                 cardImageFinish2 = true;
                 imageSelect2.setVisibility(View.INVISIBLE);
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage2,cardViewWord3);
+                }
+
                 break;
             } case 3: {
                 cardViewImage3.setAlpha(OPACITY);
                 cardImageFinish3 = true;
                 imageSelect3.setVisibility(View.INVISIBLE);
+
+
+                if(num==1){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord1);
+                }else if(num==2){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord2);
+                }else if(num==3){
+                    drawLineBetweenCardViews(cardViewImage3,cardViewWord3);
+                }
+
                 break;
             }
         }
@@ -383,6 +387,36 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
         refresh = findViewById(R.id.refresh);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
+    }
+
+    private void drawLineBetweenCardViews(CardView cardView1, CardView cardView2) {
+        int[] cardView1Location = new int[2];
+        cardView1.getLocationOnScreen(cardView1Location);
+        int cardView1CenterX = cardView1Location[0] + cardView1.getWidth() / 2;
+        int cardView1CenterY = cardView1Location[1] + cardView1.getHeight() / 2;
+
+        int[] cardView2Location = new int[2];
+        cardView2.getLocationOnScreen(cardView2Location);
+        int cardView2CenterX = cardView2Location[0] + cardView2.getWidth() / 2;
+        int cardView2CenterY = cardView2Location[1] + cardView2.getHeight() / 2;
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(10);
+
+        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        Bitmap bitmap = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        canvas.drawLine(cardView1CenterX, cardView1CenterY, cardView2CenterX, cardView2CenterY, paint);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap);
+
+        addContentView(imageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
 
@@ -397,26 +431,24 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
                 countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
 
-                int t = snapshot.child("timesPlayed").getValue(Integer.class);
-                t++;
+                int t = snapshot.child("timesPlayed").getValue(Integer.class) + 1;
 
-                int z = snapshot.child("difficulties").child(difficultySelect).child("timesPlayed").getValue(Integer.class);
-                z++;
+                int z = snapshot.child("difficulties").child(difficultySelect).child("timesPlayed").getValue(Integer.class) + 1;
 
-                int c = snapshot.child("categories").child(category).child("timesPlayed").getValue(Integer.class);
-                c++;
-
+                int c = snapshot.child("categories").child(category).child("timesPlayed").getValue(Integer.class) + 1;
 
 
                 if (!difficultySelect.equals("PRÁCTICA")){
                     databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("timesPlayed").setValue(t);
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);
                 }
+
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
-
                 databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
-                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("joinWords").child("categories").child(category).child("timesPlayed").setValue(c);
+
+
             }
 
             @Override
@@ -425,7 +457,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
         Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
 
@@ -495,15 +527,47 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+    }
+
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.wordsGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(JoinWordsGameActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        word1.setTextSize(30);
+                        word2.setTextSize(30);
+                        word3.setTextSize(30);
+                        break;
+                    case "normal":
+                        word1.setTextSize(20);
+                        word2.setTextSize(20);
+                        word3.setTextSize(20);
+                        break;
+                    case "peque":
+                        word1.setTextSize(10);
+                        word2.setTextSize(10);
+                        word3.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
     }
 
 
@@ -519,10 +583,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 }

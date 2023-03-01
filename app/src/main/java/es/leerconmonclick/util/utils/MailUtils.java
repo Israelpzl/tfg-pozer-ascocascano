@@ -1,4 +1,4 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.utils;
 
 public class MailUtils {
 

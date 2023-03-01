@@ -12,14 +12,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.ErrorActivity;
-import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,14 +26,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class GameSelecctionActivity extends AppCompatActivity {
 
 
     private DatabaseReference databaseReference;
-    private Context context = this;
+    private final Context context = this;
     private CircleImageView iconPatient;
     private TextView namePatientTxtView,btn1,btn2,btn3,titlePage;
+    private String namePatient;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,22 +44,10 @@ public class GameSelecctionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_selecction);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        findElements();
+        getSettings();
 
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
-        iconPatient = findViewById(R.id.iconPatientId);
-        namePatientTxtView = findViewById(R.id.namePatientId);
-
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
-
-        namePatientTxtView.setText(namePatient);
-
+        music();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,37 +73,56 @@ public class GameSelecctionActivity extends AppCompatActivity {
             }
         });
 
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(GameSelecctionActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+    }
+
+    private void getSettings(){
+
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.gameSelect);
-
-        btn1 = findViewById(R.id.game1btnId);
-        btn2 = findViewById(R.id.game2btnId);
-        btn3 = findViewById(R.id.game3btnId);
-        titlePage = findViewById(R.id.tittleActivityAddNoteId2);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    btn1.setTextSize(30);
-                    btn2.setTextSize(30);
-                    btn3.setTextSize(30);
-                    titlePage.setTextSize(30);
-                    namePatientTxtView.setTextSize(30);
-                }else if(size.equals("normal")){
-                    btn1.setTextSize(20);
-                    btn2.setTextSize(20);
-                    btn3.setTextSize(20);
-                    titlePage.setTextSize(20);
-                    namePatientTxtView.setTextSize(20);
-                }else if(size.equals("peque")){
-                    btn1.setTextSize(10);
-                    btn2.setTextSize(10);
-                    btn3.setTextSize(10);
-                    titlePage.setTextSize(10);
-                    namePatientTxtView.setTextSize(10);
+                switch (size) {
+                    case "grande":
+                        btn1.setTextSize(30);
+                        btn2.setTextSize(30);
+                        btn3.setTextSize(30);
+                        titlePage.setTextSize(30);
+                        namePatientTxtView.setTextSize(30);
+                        break;
+                    case "normal":
+                        btn1.setTextSize(20);
+                        btn2.setTextSize(20);
+                        btn3.setTextSize(20);
+                        titlePage.setTextSize(20);
+                        namePatientTxtView.setTextSize(20);
+                        break;
+                    case "peque":
+                        btn1.setTextSize(10);
+                        btn2.setTextSize(10);
+                        btn3.setTextSize(10);
+                        titlePage.setTextSize(10);
+                        namePatientTxtView.setTextSize(10);
+                        break;
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
@@ -133,15 +138,27 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(GameSelecctionActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
+    }
+
+    private void findElements(){
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        iconPatient = findViewById(R.id.iconPatientId);
+        namePatientTxtView = findViewById(R.id.namePatientId);
+
+        btn1 = findViewById(R.id.game1btnId);
+        btn2 = findViewById(R.id.game2btnId);
+        btn3 = findViewById(R.id.game3btnId);
+        titlePage = findViewById(R.id.tittleActivityAddNoteId2);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
+        namePatientTxtView.setText(namePatient);
+
+
+
     }
 
     public void goGameJoin(View v){
@@ -173,7 +190,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Boolean valor = AudioPlay.isIsplayingAudio();
+        boolean valor = AudioPlay.isIsplayingAudio();
         AudioPlay.stopAudio();
         if(valor){
             AudioPlay.setIsplayingAudio(true);
@@ -183,10 +200,7 @@ public class GameSelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 

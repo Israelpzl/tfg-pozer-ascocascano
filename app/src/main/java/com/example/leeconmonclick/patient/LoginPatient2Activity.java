@@ -3,15 +3,14 @@ package com.example.leeconmonclick.patient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Base64;
-import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -39,7 +38,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
     private static final String KEY = "1Hbfh667adfDEJ78";
 
     private EditText namePatient, passPatient;
-    private AwesomeValidation awesomeValidation;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch remeberSession;
 
     private DatabaseReference databaseReference;
@@ -50,11 +49,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_login_patient2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        namePatient =  findViewById(R.id.namePacientIId);
-        passPatient = findViewById(R.id.passPacientId);
-        remeberSession = (Switch) findViewById(R.id.switch_remember1);
+        findElements();
 
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -69,8 +64,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
 
     public void loginPatient(View v){
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(this,R.id.namePacientIId, Patterns., R.string.error_mail);
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.passPacientId, ".{4,}", R.string.error_pass);
 
         if (awesomeValidation.validate()){
@@ -110,19 +104,21 @@ public class LoginPatient2Activity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"La contraseña no coincide",Toast.LENGTH_LONG).show();
                         }
                     }
-
-
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });
         }
+    }
 
+    private void findElements(){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        namePatient =  findViewById(R.id.namePacientIId);
+        passPatient = findViewById(R.id.passPacientId);
+        remeberSession = (Switch) findViewById(R.id.switch_remember1);
     }
 
     public void goBack(View v){
@@ -147,8 +143,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
     }
 
     private Key generateKeyPassword() throws Exception {
-        Key key = new SecretKeySpec(KEY.getBytes(),ALGORITHM);
-        return key;
+        return new SecretKeySpec(KEY.getBytes(),ALGORITHM);
     }
 
     public void saveStateSession(){

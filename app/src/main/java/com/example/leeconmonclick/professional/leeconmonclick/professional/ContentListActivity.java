@@ -26,28 +26,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import es.leerconmonclick.util.Content;
-import es.leerconmonclick.util.ListAdapterContent;
+import es.leerconmonclick.util.utils.Content;
+import es.leerconmonclick.util.adapters.ListAdapterContent;
 
 
 public class ContentListActivity extends AppCompatActivity {
 
     private List<Content> contentItems;
     private DatabaseReference databaseReference;
-    private FirebaseAuth db;
     private RecyclerView recyclerView;
     private ListAdapterContent listAdapterContent;
 
     private String userCollection;
-    private StorageReference storageReference;
-    private FirebaseUser user;
-    private TextView title;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,50 +51,14 @@ public class ContentListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_content_list);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        contentItems = new ArrayList<>();
-        db = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
+        findElements();
+        getSettings();
 
-        recyclerView = findViewById(R.id.listContentRecyclerViewId);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(ContentListActivity.this,3));
 
-        user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.contentList);
-
-        title = findViewById(R.id.tittleContentListId);
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    title.setTextSize(30);
-                }else if(size.equals("normal")){
-                    title.setTextSize(20);
-                }else if(size.equals("peque")){
-                    title.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         readData();
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -123,10 +82,9 @@ public class ContentListActivity extends AppCompatActivity {
                 for (DataSnapshot objDataSnapshot : snapshot.getChildren()){
 
                     String word  = (String) objDataSnapshot.child("word").getValue();
-                    String determinant  = (String) objDataSnapshot.child("determinant").getValue();
+                    String difficulty  = (String) objDataSnapshot.child("difficulty").getValue();
                     String img  = (String) objDataSnapshot.child("img").getValue();
-                    //List<String> syllables = (List<String>) objDataSnapshot.child("syllables").getValue();
-                    Content content = new Content(word,img,null,determinant);
+                    Content content = new Content(word,img,"",difficulty,false);
                     contentItems.add(content);
 
                 }
@@ -141,6 +99,46 @@ public class ContentListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getSettings(){
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.contentList);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+    }
+
+    private void findElements(){
+        contentItems = new ArrayList<>();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        recyclerView = findViewById(R.id.listContentRecyclerViewId);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        userCollection = user.getEmail();
+        assert userCollection != null;
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+
     }
 
     public void goBack(View view){

@@ -53,7 +53,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".professional.leeconmonclick.professional.PersonalNotesActivity"
+            android:name=".professional.leeconmonclick.professional.NotesListActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -93,7 +93,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".professional.leeconmonclick.professional.SettingsActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

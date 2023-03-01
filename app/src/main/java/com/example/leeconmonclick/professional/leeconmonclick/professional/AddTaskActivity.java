@@ -33,8 +33,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,9 +41,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.UUID;
 
-import es.leerconmonclick.util.Task;
+import es.leerconmonclick.util.utils.Task;
 import es.leerconmonclick.util.WorkManagerNoti;
 
+@SuppressLint("UseSwitchCompatOrMaterialCode")
 public class AddTaskActivity extends AppCompatActivity implements Comparator<Task> {
 
     private Bundle data;
@@ -53,13 +52,10 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
     private EditText taskDescription,taskTittle;
     private String date,time,userCollection;
     private  Calendar calendar,c;
-
     private Switch noty;
     private int contador;
-    private StorageReference storageReference;
-
+    private CalendarView calendarView;
     private DatabaseReference databaseReference;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
 
 
     @SuppressLint("MissingInflatedId")
@@ -69,35 +65,37 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         setContentView(R.layout.activity_calendar);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        c  = Calendar.getInstance();
-        calendar = Calendar.getInstance();
+        findElements();
+        getSettings();
+        setDateAndTime();
+
+        if (data.getBoolean("modeEdit")){
+            try {
+                modeEditOn(calendarView);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(AddTaskActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+
+    }
+
+    private void setDateAndTime(){
 
         int year =  c.get(Calendar.YEAR);
         int month =  c.get(Calendar.MONTH) + 1;
         int day =  c.get(Calendar.DAY_OF_MONTH);
         int hourDay = c.get(Calendar.HOUR_OF_DAY);
         int minuteDay = c.get(Calendar.MINUTE);
-
-        taskDate = (TextView) findViewById(R.id.dateTaskId);
-        taskTime = (TextView) findViewById(R.id.timeTaskId);
-        taskTittle = (EditText) findViewById(R.id.textView12);
-        taskDescription = (EditText) findViewById(R.id.descriptionTaskId);
-        title = findViewById(R.id.tittleActivityAddNoteId);
-        noty =(Switch) findViewById(R.id.switch1);
-        saveText = findViewById(R.id.button6);
-        cancelText = findViewById(R.id.button7);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
-
-        FirebaseUser user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.tittleTaskId);
 
         date = day + "/" + month + "/" + year;
         if (Integer.toString(minuteDay).length() == 1){
@@ -109,74 +107,17 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         taskDate.setText(date);
         taskTime.setText(time);
 
-
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-           public void onSelectedDayChange(@NonNull CalendarView calendarView, int year1, int month1, int day1) {
-               date =  day1+ "/" + (month1 + 1)  + "/" + year1;
-               calendar.set(Calendar.DAY_OF_MONTH,day1);
-               calendar.set(Calendar.MONTH,month1);
-               calendar.set(Calendar.YEAR,year1);
-               taskDate.setText(date);
-           }
-       });
-
-        data = getIntent().getExtras();
-        if (data.getBoolean("modeEdit")){
-            try {
-                modeEditOn(calendarView);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    taskDate.setTextSize(30);
-                    taskTime.setTextSize(30);
-                    taskTittle.setTextSize(30);
-                    taskDescription.setTextSize(30);
-                    title.setTextSize(30);
-                }else if(size.equals("normal")){
-                    taskDate.setTextSize(20);
-                    taskTime.setTextSize(20);
-                    taskTittle.setTextSize(20);
-                    taskDescription.setTextSize(20);
-                    title.setTextSize(20);
-                }else if(size.equals("peque")){
-                    taskDate.setTextSize(10);
-                    taskTime.setTextSize(10);
-                    taskTittle.setTextSize(10);
-                    taskDescription.setTextSize(10);
-                    title.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                    cancelText.setBackgroundResource(R.drawable.button_style_red_tritano);
-                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year1, int month1, int day1) {
+                date =  day1+ "/" + (month1 + 1)  + "/" + year1;
+                calendar.set(Calendar.DAY_OF_MONTH,day1);
+                calendar.set(Calendar.MONTH,month1);
+                calendar.set(Calendar.YEAR,year1);
+                taskDate.setText(date);
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(AddTaskActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
+
 
     }
 
@@ -190,8 +131,6 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         TimePickerDialog tpd = new TimePickerDialog( this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-
-
 
                 if (Integer.toString(minute).length() == 1){
                     time =hour + ":" + "0" + minute;
@@ -219,11 +158,11 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                     deleteNotify(data.getString("tagNoty"));
                     String tag = generateKey();
 
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
-                    databaseReference.child(userCollection).child("taskList").child(data.getInt("id")+"").child("tagNoty").setValue(tag);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("tittle").setValue(taskTittle.getText().toString());
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("description").setValue(taskDescription.getText().toString());
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("date").setValue(date);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("time").setValue(time);
+                    databaseReference.child("Users").child(userCollection).child("taskList").child(data.getInt("id")+"").child("tagNoty").setValue(tag);
 
                     Long alertTime = calendar.getTimeInMillis() - System.currentTimeMillis() - 30000;
                     int random = (int) (Math.random() * 50 + 1);
@@ -237,7 +176,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                     Toast.makeText(getApplicationContext(),"Tarea editada correctamente",Toast.LENGTH_LONG).show();
 
                 }else{
-                    databaseReference.child(userCollection).child("taskList").removeValue();
+                    databaseReference.child("Users").child(userCollection).child("taskList").removeValue();
                     contador = 0;
                     for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                         String tittle = (String) objDataSnapshot.child("tittle").getValue();
@@ -246,7 +185,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                         String description = (String) objDataSnapshot.child("description").getValue();
                         String tag = (String) objDataSnapshot.child("tagNoty").getValue();
                         Task t =  new Task(contador,tittle,date,time,description,tag);
-                        databaseReference.child(userCollection).child("taskList").child(contador+"").setValue(t);
+                        databaseReference.child("Users").child(userCollection).child("taskList").child(contador+"").setValue(t);
                         contador +=1;
 
                     }
@@ -302,7 +241,7 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
         taskTime.setText(data.getString("time"));
         TextView editTittle = (TextView) findViewById(R.id.tittleActivityAddNoteId);
         editTittle.setText("EDITAR TAREA");
-        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         Date d = f.parse(data.getString("date"));
         calendarView.setDate(d.getTime());
 
@@ -322,6 +261,86 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
                 .putString("tittle",tittle)
                 .putString("description",description)
                 .putInt("idNoty",idNoty).build();
+    }
+
+    private void getSettings(){
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.addTaskId);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        taskDate.setTextSize(30);
+                        taskTime.setTextSize(30);
+                        taskTittle.setTextSize(30);
+                        taskDescription.setTextSize(30);
+                        title.setTextSize(30);
+                        break;
+                    case "normal":
+                        taskDate.setTextSize(20);
+                        taskTime.setTextSize(20);
+                        taskTittle.setTextSize(20);
+                        taskDescription.setTextSize(20);
+                        title.setTextSize(20);
+                        break;
+                    case "peque":
+                        taskDate.setTextSize(10);
+                        taskTime.setTextSize(10);
+                        taskTittle.setTextSize(10);
+                        taskDescription.setTextSize(10);
+                        title.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    cancelText.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveText.setBackgroundResource(R.drawable.button_style_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+
+    }
+    private void findElements(){
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        c  = Calendar.getInstance();
+        calendar = Calendar.getInstance();
+        data = getIntent().getExtras();
+
+
+
+        taskDate = (TextView) findViewById(R.id.dateTaskId);
+        taskTime = (TextView) findViewById(R.id.timeTaskId);
+        taskTittle = (EditText) findViewById(R.id.textView12);
+        taskDescription = (EditText) findViewById(R.id.descriptionTaskId);
+        title = findViewById(R.id.tittleActivityAddNoteId);
+        noty =(Switch) findViewById(R.id.switch1);
+        saveText = findViewById(R.id.button6);
+        cancelText = findViewById(R.id.button7);
+        calendarView = (CalendarView) findViewById(R.id.calendarView);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        userCollection = user.getEmail();
+        assert userCollection != null;
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+
     }
 
     public void goBack(View view){finish();}

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +21,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,18 +32,19 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class CategorySelecctionActivity extends AppCompatActivity {
 
     private Spinner spinner;
-    private ArrayAdapter<String> adapterSpinner;
-    private Context context = this;
+    private final Context context = this;
     private CircleImageView iconPatient;
     private DatabaseReference databaseReference;
     private Bundle data;
-    private TextView namePatientTxtView,btn1,btn2,btn3,btn4,titlePage;
+    private TextView namePatientTxtView,btn1,btn2,btn3,btn4,btn5,titlePage;
     private String namePatient;
     private String nameProfessional;
+    private final List<String>  contentList = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,26 +52,36 @@ public class CategorySelecctionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_selecction);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
 
         findElement();
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
-
-
-        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
-
-        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterSpinner);
+        getSettings();
+        music();
 
 
-        namePatientTxtView.setText(namePatient);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0){
+                    securityPersonalContent("PRÁCTICA");
+                }else if (position == 1){
+                    securityPersonalContent("FÁCIL");
+                }else if (position == 2){
+                    securityPersonalContent("NORMAL");
+                }else if(position == 3){
+                    securityPersonalContent("DIFÍCIL");
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -87,23 +97,28 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(CategorySelecctionActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+    private void getSettings() {
+
         final ConstraintLayout constraintLayout;
         constraintLayout =  findViewById(R.id.categorySection);
-
-        btn1 = findViewById(R.id.button9);
-        btn2 = findViewById(R.id.button5);
-        btn3 = findViewById(R.id.button8);
-        btn4 = findViewById(R.id.button4);
-        titlePage = findViewById(R.id.tittleActivityAddNoteId3);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,19 +163,12 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(CategorySelecctionActivity.this, ErrorActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(1);
-            }
-        });
     }
 
+
+
     public void goAnimalsCategory(View v) {
-        data = getIntent().getExtras();
+
         String type =  data.getString("game");
 
         if (type.equals("j")){
@@ -175,6 +183,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Animales");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -183,7 +192,6 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     public void goFoodCategory(View v) {
 
-        data = getIntent().getExtras();
         String type =  data.getString("game");
 
         if (type.equals("j")){
@@ -198,6 +206,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Comidas");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -206,7 +215,6 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     public void goHouseCategory(View v) {
 
-        data = getIntent().getExtras();
         String type =  data.getString("game");
 
         if (type.equals("j")){
@@ -221,6 +229,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
             Intent lettersIntent = new Intent(this, LetterGameActivity.class);
             lettersIntent.putExtra("category", "Hogar");
             lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
             lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
             startActivity(lettersIntent);
         }
@@ -230,10 +239,31 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     public void goPersonalCategory (View view){
 
-        data = getIntent().getExtras();
         String type = data.getString("game");
 
-        List<String> contentList = new ArrayList<>();
+        if (type.equals("j")){
+
+            Intent joinIntent = new Intent(context, JoinWordsGameActivity.class);
+            joinIntent.putExtra("category", nameProfessional.toLowerCase(Locale.ROOT).trim());
+            joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
+            startActivity(joinIntent);
+
+        }else if(type.equals("l")){
+            Intent lettersIntent = new Intent(context, LetterGameActivity.class);
+            lettersIntent.putExtra("category", nameProfessional.toLowerCase(Locale.ROOT).toLowerCase(Locale.ROOT));
+            lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
+            lettersIntent.putExtra("numberGame",  0);
+            lettersIntent.putExtra("succes",  0);
+            lettersIntent.putExtra("failed",  0);
+            lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
+            startActivity(lettersIntent);
+        }
+
+    }
+
+    private void securityPersonalContent(String difficulty){
+
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -244,37 +274,24 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                 databaseReference.child("content").child(nameProfessional).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        contentList.clear();
                         for (DataSnapshot objDataSnapshot : snapshot.getChildren()) {
                             String w = (String) objDataSnapshot.child("word").getValue();
                             String difficulty = objDataSnapshot.child("difficulty").getValue().toString();
 
-                            if (difficulty.equals(spinner.getSelectedItem().toString())) {
+                            if (difficulty.equals(difficulty)) {
                                 contentList.add(w);
-                            } else if (spinner.getSelectedItem().toString().equals("PRÁCTICA")) {
+                            } else if (difficulty.equals("PRÁCTICA")) {
                                 contentList.add(w);
                             }
                         }
 
-                            if (contentList.size()>3){
-                                if (type.equals("j")){
-
-                                    Intent joinIntent = new Intent(context, JoinWordsGameActivity.class);
-                                    joinIntent.putExtra("category", nameProfessional);
-                                    joinIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
-                                    joinIntent.putExtra("music", AudioPlay.isIsplayingAudio());
-                                    startActivity(joinIntent);
-
-                                }else if(type.equals("l")){
-                                    Intent lettersIntent = new Intent(context, LetterGameActivity.class);
-                                    lettersIntent.putExtra("category", nameProfessional);
-                                    lettersIntent.putExtra("difficulty",  spinner.getSelectedItem().toString());
-                                    lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
-                                    startActivity(lettersIntent);
-                                }
-                            }else{
-                                Toast.makeText(getApplicationContext(), "Tiene que haber más contenido personalizado", Toast.LENGTH_LONG).show();
-                            }
-
+                        if (contentList.size()>3) {
+                            btn5.setVisibility(View.VISIBLE);
+                        }else{
+                            btn5.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(), "Tiene que haber más contenido personalizado", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
@@ -293,11 +310,43 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     }
 
+
+    @SuppressLint("CutPasteId")
     private void findElement(){
 
         iconPatient = findViewById(R.id.iconPatientId);
         namePatientTxtView = findViewById(R.id.namePatientId);
-        spinner = (Spinner) findViewById(R.id.spinnerId);
+        spinner = findViewById(R.id.spinnerId);
+        btn1 = findViewById(R.id.button9);
+        btn2 = findViewById(R.id.button5);
+        btn3 = findViewById(R.id.button8);
+        btn4 = findViewById(R.id.button4);
+        btn5 = findViewById(R.id.button5);
+        btn5.setVisibility(View.INVISIBLE);
+        titlePage = findViewById(R.id.tittleActivityAddNoteId3);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        data = getIntent().getExtras();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+
+
+        String[] opciones = {"PRÁCTICA", "FÁCIL", "NORMAL", "DIFÍCIL"};
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
+        spinner.setAdapter(adapterSpinner);
+
+
+        namePatientTxtView.setText(namePatient);
+
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
     }
 
     public void goBack(View v){finish();}
@@ -310,10 +359,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 }

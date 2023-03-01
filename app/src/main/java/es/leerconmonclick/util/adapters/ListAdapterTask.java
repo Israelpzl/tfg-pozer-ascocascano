@@ -1,20 +1,16 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkManager;
 
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,10 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import es.leerconmonclick.util.utils.Task;
 
 public class ListAdapterTask extends RecyclerView.Adapter<ListAdapterTask.ViewHolder> {
 

@@ -24,28 +24,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import es.leerconmonclick.util.ListAdapterNotes;
-import es.leerconmonclick.util.Note;
+import es.leerconmonclick.util.adapters.ListAdapterNotes;
+import es.leerconmonclick.util.utils.Note;
 
 
-public class PersonalNotesActivity extends AppCompatActivity {
+public class NotesListActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
-    private ArrayList<Note> listNotes = new ArrayList<Note>();
+    private ArrayList<Note> listNotes;
     private ListAdapterNotes listAdapterNotes;
     private RecyclerView recyclerView;
-    private ImageButton addNoteBtn;
     private String userCollection;
-    private FirebaseUser user;
-    private StorageReference storageReference;
-    private TextView title;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,67 +46,23 @@ public class PersonalNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_notes);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        recyclerView = findViewById(R.id.recycleview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PersonalNotesActivity.this));
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.personal_notes);
-
+        findElements();
+        getSettings();
         readData();
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
-        title = findViewById(R.id.titleTask);
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    title.setTextSize(30);
-                }else if(size.equals("normal")){
-                    title.setTextSize(20);
-                }else if(size.equals("peque")){
-                    title.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
-                Intent intent = new Intent(PersonalNotesActivity.this, ErrorActivity.class);
+                Intent intent = new Intent(NotesListActivity.this, ErrorActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 System.exit(1);
             }
         });
+
     }
 
     public void readData(){
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
 
 
         databaseReference.child("Users").child(userCollection).child("notas").addValueEventListener(new ValueEventListener() {
@@ -134,16 +82,57 @@ public class PersonalNotesActivity extends AppCompatActivity {
                     noteExist.setTime(date);
                     listNotes.add(noteExist);
                 }
-                listAdapterNotes = new ListAdapterNotes(PersonalNotesActivity.this,listNotes);
+                listAdapterNotes = new ListAdapterNotes(NotesListActivity.this,listNotes);
                 recyclerView.setAdapter(listAdapterNotes);
                 listAdapterNotes.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                setContentView(R.layout.activity_error2);
             }
         });
+
+    }
+
+    private void getSettings(){
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.personal_notes);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+    }
+
+    private void findElements(){
+
+        recyclerView = findViewById(R.id.recycleview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(NotesListActivity.this));
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        listNotes = new ArrayList<Note>();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
 
     }
 

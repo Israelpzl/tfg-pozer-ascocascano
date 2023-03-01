@@ -1,4 +1,4 @@
-package es.leerconmonclick.util;
+package es.leerconmonclick.util.adapters;
 
 
 import android.content.Context;
@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.utils.UserPatient;
 
 public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUserPatient.ViewHolder> {
 

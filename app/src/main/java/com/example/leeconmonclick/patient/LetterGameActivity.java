@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -36,26 +34,25 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 
 public class LetterGameActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private CircleImageView iconPatient;
-    private Context context =this;
+    private final Context context =this;
     private ImageView image1, image2,image3, imgLetter;
     private CardView cardViewImg1, cardViewImg2,cardViewImg3;
     private List<String> listImg;
-
     private String correctWord;
     private AlertDialog alertDialog;
-    private AlertDialog.Builder alertDialogBuilder;
-    private Bundle data;
     private String category;
     private String difficultySelect;
     private String imgFinish;
     private String namePatient;
-    private int countFailed,countSucces = 0;
+    private Bundle data;
+    private int countSucces,countFailed = 0;
 
 
     @SuppressLint("MissingInflatedId")
@@ -65,20 +62,9 @@ public class LetterGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_letter_game);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        data = getIntent().getExtras();
-        category = data.getString("category");
-        difficultySelect = data.getString("difficulty");
         findElement();
-        listImg = new ArrayList<>();
-
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
+        getSettings();
+        music();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,26 +90,13 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.letterGame);
 
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         initBBDD ();
-        listenerOnclick ();
+        countSucces = data.getInt("succes");
+        countFailed = data.getInt("failed");
+        listenerOnclick();
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -135,6 +108,14 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+
+    }
+
     private void listenerOnclick (){
 
         cardViewImg1.setOnClickListener(new View.OnClickListener() {
@@ -144,11 +125,23 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                         goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                }
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
                 }
             }
         });
@@ -160,11 +153,25 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                    }
+
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
+
                 }
             }
         });
@@ -176,18 +183,43 @@ public class LetterGameActivity extends AppCompatActivity {
 
                 if (correctWord.equals(word)){
                     countSucces++;
-                    alertFinishGame();
-                    Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        goLetterGame();
+                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                    }
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "Has fallado, intentalo de nuevo", Toast.LENGTH_LONG).show();
                     countFailed++;
+                    if (data.getInt("numberGame")>=2){
+                        alertFinishGame();
+                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                        goLetterGame();
+                    }
                 }
             }
         });
     }
 
-    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
+    public void refreshBBDD(View v){
+        Toast.makeText(getApplicationContext(), "Cargando nuevo contenido...", Toast.LENGTH_LONG).show();
         recreate();
+    }
+
+    private void goLetterGame(){
+        Intent lettersIntent = new Intent(context, LetterGameActivity.class);
+        lettersIntent.putExtra("category", category);
+        lettersIntent.putExtra("difficulty", difficultySelect);
+        lettersIntent.putExtra("numberGame",  data.getInt("numberGame")+ 1);
+        lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
+        lettersIntent.putExtra("succes",  countSucces);
+        lettersIntent.putExtra("failed",  countFailed);
+        startActivity(lettersIntent);
+        finish();
     }
 
     private void  initBBDD () {
@@ -208,8 +240,6 @@ public class LetterGameActivity extends AppCompatActivity {
                         contentList.add(w);
                     }
                 }
-
-
                 Collections.shuffle(contentList);
                 int i = 0;
                 for (String content :contentList){
@@ -225,18 +255,12 @@ public class LetterGameActivity extends AppCompatActivity {
                         break;
                     }
                 }
-
-
                 selectLetter(listImg.get(0).charAt(0));
 
                 correctWord = listImg.get(0);
                 imgFinish =snapshot.child(listImg.get(0)).child("img").getValue().toString();
 
-
                 Collections.shuffle(listImg);
-
-
-
 
                 Glide.with(context).load(snapshot.child(listImg.get(0)).child("img").getValue().toString()).into(image1);
                 Glide.with(context).load(snapshot.child(listImg.get(1)).child("img").getValue().toString()).into(image2);
@@ -249,7 +273,6 @@ public class LetterGameActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void alertFinishGame(){
@@ -259,9 +282,9 @@ public class LetterGameActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-               countSucces = snapshot.child("difficulties").child(difficultySelect).child("succes").getValue(Integer.class) + countSucces;
+                countSucces = snapshot.child("difficulties").child(difficultySelect).child("succes").getValue(Integer.class) +  countSucces;
 
-               countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
+                countFailed = snapshot.child("difficulties").child(difficultySelect).child("failed").getValue(Integer.class) + countFailed;
 
                 int t = snapshot.child("timesPlayed").getValue(Integer.class);
                 t++;
@@ -273,13 +296,16 @@ public class LetterGameActivity extends AppCompatActivity {
                 c++;
 
 
+                if (!difficultySelect.equals("PRÁCTICA")){
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("timesPlayed").setValue(t);
+                    databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("categories").child(category).child("timesPlayed").setValue(c);
+                }
 
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("succes").setValue(countSucces);
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("timesPlayed").setValue(z);
-               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("timesPlayed").setValue(t);
                databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("difficulties").child(difficultySelect).child("failed").setValue(countFailed);
 
-               databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").child("categories").child(category).child("timesPlayed").setValue(c);
+
             }
 
             @Override
@@ -288,9 +314,7 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
-
-
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
 
         ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
@@ -318,6 +342,26 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.letterGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void findElement(){
 
         iconPatient = findViewById(R.id.iconPatientId);
@@ -328,6 +372,15 @@ public class LetterGameActivity extends AppCompatActivity {
         cardViewImg1 = findViewById(R.id.cardViewImage1);
         cardViewImg2 = findViewById(R.id.cardViewImage2);
         cardViewImg3 = findViewById(R.id.cardViewImage3);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        data = getIntent().getExtras();
+        category = data.getString("category");
+        difficultySelect = data.getString("difficulty");
+        listImg = new ArrayList<>();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        namePatient = preferences.getString("userPatient","null").toLowerCase(Locale.ROOT);
     }
 
     private void selectLetter (char c){
@@ -429,7 +482,6 @@ public class LetterGameActivity extends AppCompatActivity {
                 imgLetter.setImageResource(R.drawable.letra_z);
                 break;
             }
-
         }
     }
 
@@ -441,10 +493,7 @@ public class LetterGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
+        music();
         super.onRestart();
     }
 

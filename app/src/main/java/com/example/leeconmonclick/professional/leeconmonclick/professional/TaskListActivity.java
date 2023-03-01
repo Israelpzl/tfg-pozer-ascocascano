@@ -51,6 +51,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
 
     private AlertDialog alertDialog;
     private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp;
+    private TextView title;
 
     @SuppressLint("MissingInflatedId")
     @Override

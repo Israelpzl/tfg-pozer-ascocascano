@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class UserPatient {
 
-    private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon;
+    private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon,lvlPatient;
     private Map<String,Game> stadistic;
     private ArrayList<String> settings;
 
-    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic,ArrayList<String> settings) {
+    public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic,ArrayList<String> settings,String lvlPatient) {
         this.namePatient = namePatient;
         this.agePatient = agePatient;
         this.emailPatient = emailPatient;
@@ -19,6 +19,7 @@ public class UserPatient {
         this.icon = icon;
         this.stadistic = stadistic;
         this.settings = settings;
+        this.lvlPatient = lvlPatient;
     }
 
     public Map<String, Game> getStadistic() {
@@ -95,5 +96,13 @@ public class UserPatient {
 
     public void setSettings(ArrayList<String> settings) {
         this.settings = settings;
+    }
+
+    public String getLvlPatient() {
+        return lvlPatient;
+    }
+
+    public void setLvlPatient(String lvlPatient) {
+        this.lvlPatient = lvlPatient;
     }
 }

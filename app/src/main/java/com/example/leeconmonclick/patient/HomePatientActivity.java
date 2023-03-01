@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.leerconmonclick.util.AudioPlay;
@@ -45,6 +46,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     private ImageButton audio;
     private String namePatient;
     private  ConstraintLayout constraintLayout;
+    private int points;
 
     private TextView btnJugar, btnProgresion, btnsett;
 
@@ -59,6 +61,19 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         AudioPlay.playAudio(this, R.raw.homeaudio);
 
         findElements();
+        setLvl();
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                levelText.setText("Nivel "+snapshot.child("lvlPatient").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         getSettings();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -213,6 +228,58 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         } else {
             Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void setLvl(){
+        final int[] lvl = new int[1];
+        final double[] progresionLvl = new double[1];
+        databaseReference.child("userPatient").child(namePatient).child("stadistic").addValueEventListener(new ValueEventListener() {
+            double totalbien = 0;
+            int nuevolvl = 0;
+            double progress = 0;
+            double progressAux = 0;
+            String dificilDB;
+            String normalDB;
+            String facilDB;
+            int facil,normal,dificil;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot objDataSnapshot : snapshot.getChildren()) {
+                    if(Objects.equals(objDataSnapshot.getKey(), "syllables")){
+                        dificilDB = objDataSnapshot.child("succes").getValue().toString();
+                        dificil += Integer.parseInt(dificilDB);
+                    }else{
+                        dificilDB = objDataSnapshot.child("difficulties").child("DIFÍCIL").child("succes").getValue().toString();
+                        normalDB = objDataSnapshot.child("difficulties").child("NORMAL").child("succes").getValue().toString();
+                        facilDB = objDataSnapshot.child("difficulties").child("FÁCIL").child("succes").getValue().toString();
+                        facil += Integer.parseInt(facilDB);
+                        normal += Integer.parseInt(normalDB);
+                        dificil += Integer.parseInt(dificilDB);
+                    }
+
+                }
+                totalbien = facil + (normal*2) + (dificil*3);
+                totalbien = totalbien / 20;
+                nuevolvl = (int) Math.floor(totalbien);
+                progressAux = (double) totalbien;
+                progress = (progressAux % 1) * 100;
+                progress = Math.floor(progress);
+                if(nuevolvl < 1){
+                    nuevolvl = 1;
+                }
+                lvl[0] = nuevolvl;
+                progresionLvl[0] = progress;
+
+                databaseReference.child("userPatient").child(namePatient).child("lvlPatient").setValue(lvl[0]);
+                databaseReference.child("userPatient").child(namePatient).child("progression").setValue(progresionLvl[0]);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override

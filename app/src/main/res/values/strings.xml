@@ -46,7 +46,7 @@
     <string name="age">EDAD</string>
     <string name="name_patient">NOMBRE PACIENTE</string>
     <string name="progress">PROGRESO</string>
-    <string name="level">NIVEL 2</string>
+    <string name="level">NIVEL 1</string>
     <string name="play">JUGAR</string>
     <!--Professional-Task and Calendar-->
     <string name="list_Task">LISTA DE TAREAS</string>
@@ -59,6 +59,7 @@
     <string name="clock">RELOJ</string>
     <!--Patient-PROGRESS-->
     <string name="progression">PROGRESO</string>
+    <string name="actualLvlText">NIVEL ACTUAL:</string>
     <string name="lvl1">NIVEL 1</string>
     <string name="lvl2">NIVEL 2</string>
     <string name="lvl3">NIVEL 3</string>

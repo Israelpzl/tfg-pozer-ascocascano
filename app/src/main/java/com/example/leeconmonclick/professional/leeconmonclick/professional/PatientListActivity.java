@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
@@ -38,7 +39,7 @@ public class PatientListActivity extends AppCompatActivity {
     private ListAdapterUserPatient listAdapterUserPatient;
     private RecyclerView recyclerView;
     private String userCollection;
-
+    private TextView title;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +82,11 @@ public class PatientListActivity extends AppCompatActivity {
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
                     String icon = (String) objDataSnapshot.child("icon").getValue();
+                    String lvlPatient = (String) objDataSnapshot.child("lvlPatient").getValue();
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null,lvlPatient);
                         userPatientList.add(userPatient);
 
                     }

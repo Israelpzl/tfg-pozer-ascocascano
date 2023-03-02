@@ -1,19 +1,27 @@
 package com.example.leeconmonclick.professional.leeconmonclick.professional.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +50,8 @@ public class FirstFragment extends Fragment {
     private CircleImageView iconPatient;
     private DatabaseReference databaseReference;
     private Context context;
+    private String name;
+    private ImageButton deleteBtn;
 
 
 
@@ -93,6 +103,8 @@ public class FirstFragment extends Fragment {
         emailPatient = view.findViewById(R.id.emailPatient);
         iconPatient = view.findViewById(R.id.iconPatientId);
         context = inflater.getContext();
+        deleteBtn = view.findViewById(R.id.deleteBtn2);
+
 
         return view;
     }
@@ -106,27 +118,30 @@ public class FirstFragment extends Fragment {
 
         if (getArguments() != null){
 
-            String name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
+            name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
             databaseReference.child("userPatient").child(name).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    namePatient.setText(name);
-                    agePatient.setText(Objects.requireNonNull(snapshot.child("agePatient").getValue()).toString());
-                    descriptionPatient.setText(Objects.requireNonNull(snapshot.child("descriptionPatient").getValue()).toString());
-                    emailPatient.setText(Objects.requireNonNull(snapshot.child("emailPatient").getValue()).toString());
-                    String icon = Objects.requireNonNull(snapshot.child("icon").getValue()).toString();
-                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Glide.with(context).load(Objects.requireNonNull(snapshot.child(icon).getValue()).toString()).into(iconPatient);
-                        }
+                    if (snapshot.exists()){
+                        namePatient.setText(name);
+                        agePatient.setText(snapshot.child("agePatient").getValue().toString());
+                        descriptionPatient.setText(snapshot.child("descriptionPatient").getValue().toString());
+                        emailPatient.setText(snapshot.child("emailPatient").getValue().toString());
+                        String icon = snapshot.child("icon").getValue().toString();
+                        databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Glide.with(context.getApplicationContext()).load((snapshot.child(icon).getValue()).toString()).into(iconPatient);
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
 
                 }
 
@@ -136,10 +151,43 @@ public class FirstFragment extends Fragment {
                 }
             });
 
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    builder.setMessage("¿Quieres borrar el paciente?");
+                    builder.setTitle("Borrado");
+                    builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            databaseReference.child("userPatient").child(name).removeValue();
+                            Toast.makeText(context, "Usuario Paciente borrado con éxito", Toast.LENGTH_LONG).show();
+                            Intent patientListIntent = new Intent(context, PatientListActivity.class);
+                            patientListIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(patientListIntent);
+
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {}
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+
         }
 
 
 
 
     }
+
+
+
+
+
 }

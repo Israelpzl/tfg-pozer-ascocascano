@@ -156,11 +156,12 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         String icon = "6lvl3";
 
-        ArrayList<String> settings = new ArrayList<>();
-        settings.add("normal");
-        settings.add("no");
+        ArrayList<String> sett = new ArrayList<>();
+        sett.add("normal");
+        sett.add("no");
 
         String lvlPatient = "1";
+        
         UserPatient userPatient = new UserPatient(
                 namePatient.getText().toString().toLowerCase(Locale.ROOT).trim(),
                 agePatient.getText().toString(),
@@ -170,7 +171,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                 userCollection,
                 icon,
                 stadistic,
-                settings,
+                sett,
                 lvlPatient
         );
 

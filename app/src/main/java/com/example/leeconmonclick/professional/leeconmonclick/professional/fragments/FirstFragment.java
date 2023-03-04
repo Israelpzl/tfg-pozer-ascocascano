@@ -103,7 +103,6 @@ public class FirstFragment extends Fragment {
         emailPatient = view.findViewById(R.id.emailPatient);
         iconPatient = view.findViewById(R.id.iconPatientId);
         context = inflater.getContext();
-        deleteBtn = view.findViewById(R.id.deleteBtn2);
 
 
         return view;

@@ -73,7 +73,7 @@ public class PatientListActivity extends AppCompatActivity {
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
                     String icon = (String) objDataSnapshot.child("icon").getValue();
-                    String lvlPatient = (String) objDataSnapshot.child("lvlPatient").getValue();
+                    String lvlPatient = objDataSnapshot.child("lvlPatient").getValue().toString();
 
                     if (nameProfessional.equals(userCollection)){
 

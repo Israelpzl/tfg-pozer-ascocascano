@@ -252,9 +252,9 @@ public class AddContentActivity extends AppCompatActivity {
     }
 
     private void editContent(){
-        databaseReference.child("content").child(data.getString("word")).removeValue();
+        databaseReference.child("content").child(userCollection).child(data.getString("word")).removeValue();
         Content content = new Content(Objects.requireNonNull(word.getText()).toString(), uriStr ,"" , spinner.getSelectedItem().toString(),false);
-        databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("content").child(userCollection).child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(getApplicationContext(),"Se ha editado el contenido correctamente",Toast.LENGTH_LONG).show();

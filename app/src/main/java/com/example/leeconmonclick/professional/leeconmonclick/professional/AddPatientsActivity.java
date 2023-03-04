@@ -37,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,9 +59,9 @@ public class AddPatientsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private  String pass;
     private Bundle data;
+    private boolean find = false;
 
     private String userCollection;
-    private String lvlPatient="1";
 
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
@@ -99,15 +100,9 @@ public class AddPatientsActivity extends AppCompatActivity {
 
     }
 
-    public void savePatient(View view){
+    public void savePatient(View view) throws Exception {
 
-        try {
-            registerPatient();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        sendEmail();
+        registerPatient();
 
 
     }
@@ -134,6 +129,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         if (data.getBoolean("modeEdit")){
             passEncrypt = data.getString("passPatient");
+            databaseReference.child("userPatient").child(data.getString("namePatient")).removeValue();
         }
 
         Difficulties difficultiesStadistic = new Difficulties(0,0,0);
@@ -161,12 +157,14 @@ public class AddPatientsActivity extends AppCompatActivity {
         String icon = "6lvl3";
         String progress = "0";
 
-        ArrayList<String> settings = new ArrayList<>();
-        settings.add("normal");
-        settings.add("no");
+        ArrayList<String> sett = new ArrayList<>();
+        sett.add("normal");
+        sett.add("no");
+
+        String lvlPatient = "1";
 
         UserPatient userPatient = new UserPatient(
-                namePatient.getText().toString(),
+                namePatient.getText().toString().toLowerCase(Locale.ROOT).trim(),
                 agePatient.getText().toString(),
                 emailPatient.getText().toString(),
                 passEncrypt,
@@ -174,21 +172,57 @@ public class AddPatientsActivity extends AppCompatActivity {
                 userCollection,
                 icon,
                 stadistic,
-                settings,
+                sett,
                 lvlPatient,
                 progress
         );
 
-        databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Se ha añadido el paciente correctamente",Toast.LENGTH_LONG).show();
-                    databaseReference.child("userPatient").child(namePatient.getText().toString()).child("stadistic").child("syllables").setValue(difficultiesStadistic);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                List<String> listPatient = new ArrayList<>();
+
+                for(DataSnapshot objDataSnapshot: snapshot.getChildren()){
+                    listPatient.add(objDataSnapshot.child("namePatient").getValue().toString());
                 }
+
+                if (!listPatient.contains(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim())){
+                    databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+
+                                if (!data.getBoolean("modeEdit")){
+                                    Toast.makeText(getApplicationContext(),"Se ha añadido el paciente correctamente",Toast.LENGTH_LONG).show();
+                                    sendEmail();
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"Se ha editado el paciente correctamente",Toast.LENGTH_LONG).show();
+                                }
+                                databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).child("stadistic").child("syllables").setValue(difficultiesStadistic);
+                            }
+                        }
+                    });
+
+
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"Nombre ocupado",Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+
+        if (data.getBoolean("modeEdit")){
+            finish();
+        }
+
+
     }
 
     public String encrypt(String value) throws Exception {

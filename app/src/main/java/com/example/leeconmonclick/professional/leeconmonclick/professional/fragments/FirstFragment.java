@@ -1,20 +1,28 @@
 package com.example.leeconmonclick.professional.leeconmonclick.professional.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +54,7 @@ public class FirstFragment extends Fragment {
     private DatabaseReference databaseReference;
     private Context context;
     private String userCollection;
+    private String name;
 
 
 
@@ -156,6 +165,7 @@ public class FirstFragment extends Fragment {
         });
 
 
+
         return view;
     }
 
@@ -168,27 +178,30 @@ public class FirstFragment extends Fragment {
 
         if (getArguments() != null){
 
-            String name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
+            name = getArguments().getString("namePatient").toLowerCase(Locale.ROOT);
             databaseReference.child("userPatient").child(name).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    namePatient.setText(name);
-                    agePatient.setText(Objects.requireNonNull(snapshot.child("agePatient").getValue()).toString());
-                    descriptionPatient.setText(Objects.requireNonNull(snapshot.child("descriptionPatient").getValue()).toString());
-                    emailPatient.setText(Objects.requireNonNull(snapshot.child("emailPatient").getValue()).toString());
-                    String icon = Objects.requireNonNull(snapshot.child("icon").getValue()).toString();
-                    databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Glide.with(context).load(Objects.requireNonNull(snapshot.child(icon).getValue()).toString()).into(iconPatient);
-                        }
+                    if (snapshot.exists()){
+                        namePatient.setText(name);
+                        agePatient.setText(snapshot.child("agePatient").getValue().toString());
+                        descriptionPatient.setText(snapshot.child("descriptionPatient").getValue().toString());
+                        emailPatient.setText(snapshot.child("emailPatient").getValue().toString());
+                        String icon = snapshot.child("icon").getValue().toString();
+                        databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Glide.with(context.getApplicationContext()).load((snapshot.child(icon).getValue()).toString()).into(iconPatient);
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
 
                 }
 

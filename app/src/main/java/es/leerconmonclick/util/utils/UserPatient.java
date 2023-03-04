@@ -7,7 +7,7 @@ public class UserPatient {
 
     private String namePatient, agePatient, emailPatient, password,descriptionPatient, nameProfessional,icon,lvlPatient,progression;
     private Map<String,Game> stadistic;
-    private ArrayList<String> settings;
+    private ArrayList<String> sett;
 
     public UserPatient(String namePatient, String agePatient, String emailPatient, String password, String descriptionPatient, String nameProfessional,String icon , Map<String,Game> stadistic,ArrayList<String> settings,String lvlPatient,String progression) {
         this.namePatient = namePatient;
@@ -18,10 +18,12 @@ public class UserPatient {
         this.nameProfessional = nameProfessional;
         this.icon = icon;
         this.stadistic = stadistic;
-        this.settings = settings;
+        this.sett = settings;
         this.lvlPatient = lvlPatient;
         this.progression = progression;
     }
+
+
 
     public Map<String, Game> getStadistic() {
         return stadistic;
@@ -91,12 +93,12 @@ public class UserPatient {
         this.stadistic = stadistic;
     }
 
-    public ArrayList<String> getSettings() {
-        return settings;
+    public ArrayList<String> getSett() {
+        return sett;
     }
 
-    public void setSettings(ArrayList<String> settings) {
-        this.settings = settings;
+    public void setSett(ArrayList<String> sett) {
+        this.sett = sett;
     }
 
     public String getLvlPatient() {

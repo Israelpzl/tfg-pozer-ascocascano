@@ -4,6 +4,8 @@ package es.leerconmonclick.util.adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +107,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                         databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
+                                Glide.with(context.getApplicationContext()).load(snapshot.child(icon).getValue().toString()).into(circleImageView);
                             }
 
                             @Override
@@ -191,6 +193,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             public void onClick(DialogInterface dialogInterface, int i) {
                 databaseReference.child("userPatient").child(userPatient.getNamePatient()).removeValue();
                 Toast.makeText(context, "Usuario Paciente borrado con éxito", Toast.LENGTH_LONG).show();
+
             }
         });
 

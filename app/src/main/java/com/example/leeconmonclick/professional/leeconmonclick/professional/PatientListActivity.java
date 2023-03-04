@@ -13,10 +13,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.leeconmonclick.ErrorActivity;
+import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -77,7 +76,7 @@ public class PatientListActivity extends AppCompatActivity {
                 for(DataSnapshot objDataSnapshot : snapshot.getChildren()){
                     String namePatient = (String) objDataSnapshot.child("namePatient").getValue();
                     String age = (String) objDataSnapshot.child("agePatient").getValue();
-                    String email = (String) objDataSnapshot.child("emailtacient").getValue();
+                    String email = (String) objDataSnapshot.child("emailPatient").getValue();
                     String nameProfessional = (String) objDataSnapshot.child("nameProfessional").getValue();
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
@@ -130,7 +129,7 @@ public class PatientListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                setContentView(R.layout.activity_error2);
+
             }
         });
 
@@ -167,4 +166,10 @@ public class PatientListActivity extends AppCompatActivity {
     }
 
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Glide.with(this).pauseRequests();
+    }
 }

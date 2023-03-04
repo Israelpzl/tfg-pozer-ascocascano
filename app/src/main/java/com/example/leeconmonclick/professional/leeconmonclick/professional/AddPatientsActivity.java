@@ -159,6 +159,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         stadistic.put("letters",gameStadistic);
 
         String icon = "6lvl3";
+        String progress = "0";
 
         ArrayList<String> settings = new ArrayList<>();
         settings.add("normal");
@@ -174,7 +175,8 @@ public class AddPatientsActivity extends AppCompatActivity {
                 icon,
                 stadistic,
                 settings,
-                lvlPatient
+                lvlPatient,
+                progress
         );
 
         databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {

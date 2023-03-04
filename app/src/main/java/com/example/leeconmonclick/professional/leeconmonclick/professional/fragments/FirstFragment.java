@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,10 +41,11 @@ public class FirstFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-    private TextView namePatient,agePatient,descriptionPatient,emailPatient;
+    private TextView namePatient,agePatient,descriptionPatient,emailPatient,title1,title2,title3,title4;
     private CircleImageView iconPatient;
     private DatabaseReference databaseReference;
     private Context context;
+    private String userCollection;
 
 
 
@@ -92,7 +96,65 @@ public class FirstFragment extends Fragment {
         descriptionPatient = view.findViewById(R.id.descriptionPatient);
         emailPatient = view.findViewById(R.id.emailPatient);
         iconPatient = view.findViewById(R.id.iconPatientId);
+        title1 = view.findViewById(R.id.nameId);
+        title2 = view.findViewById(R.id.textView16);
+        title3 = view.findViewById(R.id.textView17);
+        title4 = view.findViewById(R.id.description);
         context = inflater.getContext();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        namePatient.setTextSize(30);
+                        agePatient.setTextSize(30);
+                        descriptionPatient.setTextSize(30);
+                        emailPatient.setTextSize(30);
+                        title1.setTextSize(30);
+                        title2.setTextSize(30);
+                        title3.setTextSize(30);
+                        title4.setTextSize(30);
+                        break;
+                    case "normal":
+                        namePatient.setTextSize(20);
+                        agePatient.setTextSize(20);
+                        descriptionPatient.setTextSize(20);
+                        emailPatient.setTextSize(20);
+                        title1.setTextSize(20);
+                        title2.setTextSize(20);
+                        title3.setTextSize(20);
+                        title4.setTextSize(20);
+                        break;
+                    case "peque":
+                        namePatient.setTextSize(10);
+                        agePatient.setTextSize(10);
+                        descriptionPatient.setTextSize(10);
+                        emailPatient.setTextSize(10);
+                        title1.setTextSize(10);
+                        title2.setTextSize(10);
+                        title3.setTextSize(10);
+                        title4.setTextSize(10);
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         return view;
     }

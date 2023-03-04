@@ -66,7 +66,7 @@ public class PatientListActivity extends AppCompatActivity {
 
     private void getListUserPatient() {
 
-        databaseReference.child("userPatient").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,11 +82,11 @@ public class PatientListActivity extends AppCompatActivity {
                     String pass = (String) objDataSnapshot.child("password").getValue();
                     String description = (String) objDataSnapshot.child("descriptionPatient").getValue();
                     String icon = (String) objDataSnapshot.child("icon").getValue();
-                    String lvlPatient = (String) objDataSnapshot.child("lvlPatient").getValue();
+                    String lvlPatient = objDataSnapshot.child("lvlPatient").getValue().toString();
 
                     if (nameProfessional.equals(userCollection)){
 
-                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null,lvlPatient);
+                        UserPatient userPatient = new UserPatient(namePatient,age,email,pass,description,nameProfessional,icon,null,null,lvlPatient,null);
                         userPatientList.add(userPatient);
 
                     }
@@ -165,4 +165,6 @@ public class PatientListActivity extends AppCompatActivity {
         addPatientIntent.putExtra("modeEdit",false);
         startActivity(addPatientIntent);
     }
+
+
 }

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".professional.leeconmonclick.professional.fragments.SecondFragment"
-    android:background="@color/background">
+    tools:context=".professional.leeconmonclick.professional.fragments.SecondFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,21 +16,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/background"
             />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/radarChart2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/background" />
+            android:layout_weight="1" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/radarChart3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@color/background"
             android:layout_weight="1"/>
 
     </LinearLayout>

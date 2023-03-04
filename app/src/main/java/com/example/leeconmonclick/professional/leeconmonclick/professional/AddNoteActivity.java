@@ -100,7 +100,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
                 if (data.getBoolean("modeEdit")){
                     removeNote();
-                    newNote.setTime(date);
+                    long createdTimeAux = System.currentTimeMillis();
+                    newNote.setTime(createdTimeAux);
                 }else{
                     long createdTime = System.currentTimeMillis();
                     newNote.setTime(createdTime);

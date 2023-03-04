@@ -161,9 +161,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     public void goHelp(View v){

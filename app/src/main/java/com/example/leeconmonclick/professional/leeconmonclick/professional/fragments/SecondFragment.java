@@ -19,6 +19,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +47,7 @@ public class SecondFragment extends Fragment {
     private DatabaseReference databaseReference;
     private TextView percentage1,percentage2,percentage3;
     private  int percentageSucces =0;
+    private String userCollection;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -77,6 +80,43 @@ public class SecondFragment extends Fragment {
         percentage1 = view.findViewById(R.id.percentage1);
         percentage2 = view.findViewById(R.id.percentage2);
         percentage3 = view.findViewById(R.id.percentage3);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        percentage1.setTextSize(30);
+                        percentage2.setTextSize(30);
+                        percentage3.setTextSize(30);
+                        break;
+                    case "normal":
+                        percentage1.setTextSize(20);
+                        percentage2.setTextSize(20);
+                        percentage3.setTextSize(20);
+                        break;
+                    case "peque":
+                        percentage1.setTextSize(10);
+                        percentage2.setTextSize(10);
+                        percentage3.setTextSize(10);
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return view;
     }

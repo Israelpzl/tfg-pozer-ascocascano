@@ -8,18 +8,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.leeconmonclick.AudioPlay;
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,12 +25,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class ProgresionPatientActivity extends AppCompatActivity {
 
@@ -84,10 +80,10 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         lvl4 = findViewById(R.id.textView20);
         lvl5 = findViewById(R.id.textView21);
         lvl6 = findViewById(R.id.textView22);
-        lvlText = findViewById(R.id.actualLvlPatient);
         saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
-
         pb = findViewById(R.id.lvlProgressBar);
+        lvlText = findViewById(R.id.actualLvlPatient);
+
         pb.setMax(100);
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -173,6 +169,8 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
+
+        opacity();
     }
 
     public void saveChanges(View v){
@@ -200,21 +198,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 ima1Lvl1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ima1Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
-                        ima2Lvl1.setBackground(null);
-                        ima1Lvl2.setBackground(null);
-                        ima2Lvl2.setBackground(null);
-                        ima3Lvl2.setBackground(null);
-                        ima1Lvl3.setBackground(null);
-                        ima2Lvl3.setBackground(null);
-                        ima1Lvl4.setBackground(null);
-                        ima2Lvl4.setBackground(null);
-                        ima3Lvl4.setBackground(null);
-                        ima1Lvl5.setBackground(null);
-                        ima2Lvl5.setBackground(null);
-                        ima1Lvl6.setBackground(null);
-                        ima2Lvl6.setBackground(null);
-                        ima3Lvl6.setBackground(null);
+                        inicializateBackgroundIcon(ima1Lvl1);
                         icon = "1lvl1";
                     }
                 });
@@ -222,21 +206,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 ima2Lvl1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ima1Lvl1.setBackground(null);
-                        ima2Lvl1.setBackgroundResource(R.drawable.bg_select_icon);
-                        ima1Lvl2.setBackground(null);
-                        ima2Lvl2.setBackground(null);
-                        ima3Lvl2.setBackground(null);
-                        ima1Lvl3.setBackground(null);
-                        ima2Lvl3.setBackground(null);
-                        ima1Lvl4.setBackground(null);
-                        ima2Lvl4.setBackground(null);
-                        ima3Lvl4.setBackground(null);
-                        ima1Lvl5.setBackground(null);
-                        ima2Lvl5.setBackground(null);
-                        ima1Lvl6.setBackground(null);
-                        ima2Lvl6.setBackground(null);
-                        ima3Lvl6.setBackground(null);
+                        inicializateBackgroundIcon(ima2Lvl1);
                         icon = "1lvl2";
 
                     }
@@ -249,22 +219,8 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+
+                            inicializateBackgroundIcon(ima1Lvl2);
                             icon = "2lvl1";
                         }
 
@@ -278,21 +234,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima2Lvl2);
                             icon = "2lvl2";
                         }
                     }
@@ -305,21 +247,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima3Lvl2);
                             icon = "2lvl3";
                         }
                     }
@@ -332,21 +260,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima1Lvl3);
                             icon = "3lvl1";
                         }
                     }
@@ -359,21 +273,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima2Lvl3);
                             icon = "3lvl2";
                         }
                     }
@@ -386,21 +286,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima1Lvl4);
                             icon = "4lvl1";
                         }
                     }
@@ -413,21 +299,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima2Lvl4);
                             icon = "4lvl2";
                         }
                     }
@@ -440,21 +312,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima3Lvl4);
                             icon = "4lvl3";
                         }
                     }
@@ -467,21 +325,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima1Lvl5);
                             icon = "5lvl1";
                         }
                     }
@@ -494,21 +338,8 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
+                            inicializateBackgroundIcon(ima2Lvl5);
                             ima2Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
                             icon = "5lvl2";
                         }
                     }
@@ -521,21 +352,8 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
+                            inicializateBackgroundIcon(ima1Lvl6);
                             ima1Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackground(null);
                             icon = "6lvl1";
                         }
                     }
@@ -548,21 +366,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                            ima3Lvl6.setBackground(null);
+                            inicializateBackgroundIcon(ima2Lvl6);
                             icon = "6lvl2";
                         }
                     }
@@ -575,21 +379,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
                         } else {
-                            ima1Lvl1.setBackground(null);
-                            ima2Lvl1.setBackground(null);
-                            ima1Lvl2.setBackground(null);
-                            ima2Lvl2.setBackground(null);
-                            ima3Lvl2.setBackground(null);
-                            ima1Lvl3.setBackground(null);
-                            ima2Lvl3.setBackground(null);
-                            ima1Lvl4.setBackground(null);
-                            ima2Lvl4.setBackground(null);
-                            ima3Lvl4.setBackground(null);
-                            ima1Lvl5.setBackground(null);
-                            ima2Lvl5.setBackground(null);
-                            ima1Lvl6.setBackground(null);
-                            ima2Lvl6.setBackground(null);
-                            ima3Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
+                            inicializateBackgroundIcon(ima3Lvl6);
                             icon = "6lvl3";
                         }
                     }
@@ -603,6 +393,99 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+    private void opacity(){
+
+        float OPACITY = (float) 0.2;
+        float OPACITYY = (float) 1;
+
+        ima1Lvl2.setAlpha(OPACITY);
+        ima2Lvl2.setAlpha(OPACITY);
+        ima3Lvl2.setAlpha(OPACITY);
+        ima1Lvl3.setAlpha(OPACITY);
+        ima2Lvl3.setAlpha(OPACITY);
+        ima1Lvl4.setAlpha(OPACITY);
+        ima2Lvl4.setAlpha(OPACITY);
+        ima3Lvl4.setAlpha(OPACITY);
+        ima1Lvl5.setAlpha(OPACITY);
+        ima2Lvl5.setAlpha(OPACITY);
+        ima1Lvl6.setAlpha(OPACITY);
+        ima2Lvl6.setAlpha(OPACITY);
+        ima3Lvl6.setAlpha(OPACITY);
+
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String lvl = snapshot.child("lvlPatient").getValue().toString();
+
+
+                switch (lvl){
+                    case "2":{
+                        ima1Lvl2.setAlpha(OPACITYY);
+                        ima2Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl2.setAlpha(OPACITYY);
+                        break;
+                    }
+                    case "3":{
+                        ima1Lvl2.setAlpha(OPACITYY);
+                        ima2Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl2.setAlpha(OPACITYY);
+                        ima1Lvl3.setAlpha(OPACITYY);
+                        ima2Lvl3.setAlpha(OPACITYY);
+                        break;
+                    }
+                    case "4":{
+                        ima1Lvl2.setAlpha(OPACITYY);
+                        ima2Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl2.setAlpha(OPACITYY);
+                        ima1Lvl3.setAlpha(OPACITYY);
+                        ima2Lvl3.setAlpha(OPACITYY);
+                        ima1Lvl4.setAlpha(OPACITYY);
+                        ima2Lvl4.setAlpha(OPACITYY);
+                        ima3Lvl4.setAlpha(OPACITYY);
+                        break;
+                    }
+                    case "5":{
+                        ima1Lvl2.setAlpha(OPACITYY);
+                        ima2Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl2.setAlpha(OPACITYY);
+                        ima1Lvl3.setAlpha(OPACITYY);
+                        ima2Lvl3.setAlpha(OPACITYY);
+                        ima1Lvl4.setAlpha(OPACITYY);
+                        ima2Lvl4.setAlpha(OPACITYY);
+                        ima3Lvl4.setAlpha(OPACITYY);
+                        ima1Lvl5.setAlpha(OPACITYY);
+                        ima2Lvl5.setAlpha(OPACITYY);
+                        break;
+                    }
+                    case "6":{
+                        ima1Lvl2.setAlpha(OPACITYY);
+                        ima2Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl2.setAlpha(OPACITYY);
+                        ima1Lvl3.setAlpha(OPACITYY);
+                        ima2Lvl3.setAlpha(OPACITYY);
+                        ima1Lvl4.setAlpha(OPACITYY);
+                        ima2Lvl4.setAlpha(OPACITYY);
+                        ima3Lvl4.setAlpha(OPACITYY);
+                        ima1Lvl5.setAlpha(OPACITYY);
+                        ima2Lvl5.setAlpha(OPACITYY);
+                        ima1Lvl6.setAlpha(OPACITYY);
+                        ima2Lvl6.setAlpha(OPACITYY);
+                        ima3Lvl6.setAlpha(OPACITYY);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void getIcons(){
@@ -645,6 +528,29 @@ public class ProgresionPatientActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void inicializateBackgroundIcon(CircleImageView circleImageView){
+
+        ima1Lvl1.setBackground(null);
+        ima2Lvl1.setBackground(null);
+        ima1Lvl2.setBackground(null);
+        ima2Lvl2.setBackground(null);
+        ima3Lvl2.setBackground(null);
+        ima1Lvl3.setBackground(null);
+        ima2Lvl3.setBackground(null);
+        ima1Lvl4.setBackground(null);
+        ima2Lvl4.setBackground(null);
+        ima3Lvl4.setBackground(null);
+        ima1Lvl5.setBackground(null);
+        ima2Lvl5.setBackground(null);
+        ima1Lvl6.setBackground(null);
+        ima2Lvl6.setBackground(null);
+        ima3Lvl6.setBackground(null);
+
+        circleImageView.setBackgroundResource(R.drawable.bg_select_icon);
+    }
+
+
     @Override
     protected void onPause() {
         Boolean valor = AudioPlay.isIsplayingAudio();

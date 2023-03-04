@@ -233,7 +233,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     public void setLvl(){
         final int[] lvl = new int[1];
         final double[] progresionLvl = new double[1];
-        databaseReference.child("userPatient").child(namePatient).child("stadistic").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("userPatient").child(namePatient).child("stadistic").addListenerForSingleValueEvent(new ValueEventListener() {
             double totalbien = 0;
             int nuevolvl = 0;
             double progress = 0;
@@ -258,7 +258,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                     }
 
                 }
-                totalbien = facil + (normal*2) + (dificil*3);
+                totalbien = (facil*0.5) + (normal) + (dificil*1.5);
                 totalbien = totalbien / 20;
                 nuevolvl = (int) Math.floor(totalbien);
                 progressAux = (double) totalbien;
@@ -307,6 +307,8 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         if (namePatient.equals("null")) {
             finish();
         }
+
+        setLvl();
         super.onRestart();
     }
 

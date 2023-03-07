@@ -88,36 +88,6 @@ public class SecondFragment extends Fragment {
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                switch (size) {
-                    case "grande":
-                        percentage1.setTextSize(30);
-                        percentage2.setTextSize(30);
-                        percentage3.setTextSize(30);
-                        break;
-                    case "normal":
-                        percentage1.setTextSize(20);
-                        percentage2.setTextSize(20);
-                        percentage3.setTextSize(20);
-                        break;
-                    case "peque":
-                        percentage1.setTextSize(10);
-                        percentage2.setTextSize(10);
-                        percentage3.setTextSize(10);
-                        break;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         return view;
     }
 
@@ -128,8 +98,8 @@ public class SecondFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 List<Integer> colors = new ArrayList<>();
-                colors.add(ContextCompat.getColor(getContext(), R.color.button_green_check));
-                colors.add(ContextCompat.getColor(getContext(), R.color.button_red_cancel));
+                colors.add(ContextCompat.getColor(getContext(), R.color.succes));
+                colors.add(ContextCompat.getColor(getContext(), R.color.failed));
 
                 ArrayList<PieEntry> entries = new ArrayList<>();
                 int auxS;
@@ -191,10 +161,49 @@ public class SecondFragment extends Fragment {
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
+
+            getSettings();
+
+
             pieChartFunction("joinWords",pieChart1,percentage1,"Unir Palabras");
             pieChartFunction("letters",pieChart2,percentage2,"Letras");
             pieChartFunction("syllables",pieChart3,percentage3,"Sílabas");
 
         }
+    }
+
+    public void getSettings(){
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        percentage1.setTextSize(30);
+                        percentage2.setTextSize(30);
+                        percentage3.setTextSize(30);
+                        break;
+                    case "normal":
+                        percentage1.setTextSize(20);
+                        percentage2.setTextSize(20);
+                        percentage3.setTextSize(20);
+                        break;
+                    case "peque":
+                        percentage1.setTextSize(10);
+                        percentage2.setTextSize(10);
+                        percentage3.setTextSize(10);
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 }

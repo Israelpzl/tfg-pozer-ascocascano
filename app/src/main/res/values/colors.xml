@@ -14,6 +14,8 @@
     <color name="button_edit">#7160EA</color>
     <color name="task_item">#e1e5f2</color>
     <color name="gray">#656563</color>
+    <color name="succes">#18DA15</color>
+    <color name="failed">#DA0E0E</color>
 
 <!--    Daltonic-->
     <color name="background_tritano">#275960</color>

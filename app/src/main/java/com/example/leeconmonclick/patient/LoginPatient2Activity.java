@@ -152,7 +152,7 @@ public class LoginPatient2Activity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isLoggedIn", remeberSession.isChecked());
         editor.putString("user","patient");
-        editor.putString("userPatient",namePatient.getText().toString().toLowerCase(Locale.ROOT));
+        editor.putString("userPatient",namePatient.getText().toString().toLowerCase(Locale.ROOT).trim());
         editor.apply();
     }
 

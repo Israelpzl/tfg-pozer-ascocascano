@@ -193,13 +193,18 @@ public class ProgresionPatientActivity extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 icon = dataSnapshot.child("icon").getValue().toString();
                 String patientLvl = dataSnapshot.child("lvlPatient").getValue().toString();
+                String tritano = dataSnapshot.child("sett").child("1").getValue().toString();
                 actualLvl = Integer.parseInt(patientLvl);
 
                 ima1Lvl1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         inicializateBackgroundIcon(ima1Lvl1);
-                        icon = "1lvl1";
+                        if(tritano.equals("no")){
+                            icon = "1lvl1";
+                        }else{
+                            icon = "1lvl1Tritano";
+                        }
                     }
                 });
 
@@ -207,8 +212,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         inicializateBackgroundIcon(ima2Lvl1);
-                        icon = "1lvl2";
-
+                        if(tritano.equals("no")){
+                            icon = "1lvl2";
+                        }else{
+                            icon = "1lvl2Tritano";
+                        }
                     }
                 });
 
@@ -221,7 +229,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         } else {
 
                             inicializateBackgroundIcon(ima1Lvl2);
-                            icon = "2lvl1";
+                            if(tritano.equals("no")){
+                                icon = "2lvl1";
+                            }else{
+                                icon = "2lvl1Tritano";
+                            }
                         }
 
                     }
@@ -235,7 +247,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl2);
-                            icon = "2lvl2";
+                            if(tritano.equals("no")){
+                                icon = "2lvl2";
+                            }else{
+                                icon = "2lvl2Tritano";
+                            }
                         }
                     }
                 });
@@ -248,7 +264,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima3Lvl2);
-                            icon = "2lvl3";
+                            if(tritano.equals("no")){
+                                icon = "2lvl3";
+                            }else{
+                                icon = "2lvl3Tritano";
+                            }
                         }
                     }
                 });
@@ -261,7 +281,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl3);
-                            icon = "3lvl1";
+                            if(tritano.equals("no")){
+                                icon = "3lvl1";
+                            }else{
+                                icon = "3lvl1Tritano";
+                            }
                         }
                     }
                 });
@@ -274,7 +298,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl3);
-                            icon = "3lvl2";
+                            if(tritano.equals("no")){
+                                icon = "3lvl2";
+                            }else{
+                                icon = "3lvl2Tritano";
+                            }
                         }
                     }
                 });
@@ -287,7 +315,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl4);
-                            icon = "4lvl1";
+                            if(tritano.equals("no")){
+                                icon = "4lvl1";
+                            }else{
+                                icon = "4lvl1Tritano";
+                            }
                         }
                     }
                 });
@@ -300,7 +332,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl4);
-                            icon = "4lvl2";
+                            if(tritano.equals("no")){
+                                icon = "4lvl2";
+                            }else{
+                                icon = "4lvl2Tritano";
+                            }
                         }
                     }
                 });
@@ -313,7 +349,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima3Lvl4);
-                            icon = "4lvl3";
+                            if(tritano.equals("no")){
+                                icon = "4lvl3";
+                            }else{
+                                icon = "4lvl3Tritano";
+                            }
                         }
                     }
                 });
@@ -326,7 +366,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl5);
-                            icon = "5lvl1";
+                            if(tritano.equals("no")){
+                                icon = "5lvl1";
+                            }else{
+                                icon = "5lvl1Tritano";
+                            }
                         }
                     }
                 });
@@ -340,7 +384,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         } else {
                             inicializateBackgroundIcon(ima2Lvl5);
                             ima2Lvl5.setBackgroundResource(R.drawable.bg_select_icon);
-                            icon = "5lvl2";
+                            if(tritano.equals("no")){
+                                icon = "5lvl2";
+                            }else{
+                                icon = "5lvl2Tritano";
+                            }
                         }
                     }
                 });
@@ -354,7 +402,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         } else {
                             inicializateBackgroundIcon(ima1Lvl6);
                             ima1Lvl6.setBackgroundResource(R.drawable.bg_select_icon);
-                            icon = "6lvl1";
+                            if(tritano.equals("no")){
+                                icon = "6lvl1";
+                            }else{
+                                icon = "6lvl1Tritano";
+                            }
                         }
                     }
                 });
@@ -367,7 +419,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl6);
-                            icon = "6lvl2";
+                            if(tritano.equals("no")){
+                                icon = "6lvl2";
+                            }else{
+                                icon = "6lvl2Tritano";
+                            }
                         }
                     }
                 });
@@ -380,7 +436,11 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima3Lvl6);
-                            icon = "6lvl3";
+                            if(tritano.equals("no")){
+                                icon = "6lvl3";
+                            }else{
+                                icon = "6lvl3Tritano";
+                            }
                         }
                     }
                 });
@@ -507,6 +567,20 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima3Lvl6 = findViewById(R.id.iconPatientlvl6c);
 
 
+        databaseReference.child("userPatient").child(namePatient).child("sett").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("1").getValue().toString().equals("no")){
+                    iconsNormal();
+                }else{
+                    iconsTritano();
+                }
+            }
+        });
+
+    }
+
+    private void iconsNormal(){
         databaseReference.child("iconPatient").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -525,6 +599,29 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("6lvl1").getValue().toString()).into(ima1Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl2").getValue().toString()).into(ima2Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl3").getValue().toString()).into(ima3Lvl6);
+            }
+        });
+    }
+
+    private void iconsTritano(){
+        databaseReference.child("iconPatient").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Glide.with(context).load(dataSnapshot.child("1lvl1Tritano").getValue().toString()).into(ima1Lvl1);
+                Glide.with(context).load(dataSnapshot.child("1lvl2Tritano").getValue().toString()).into(ima2Lvl1);
+                Glide.with(context).load(dataSnapshot.child("2lvl1Tritano").getValue().toString()).into(ima1Lvl2);
+                Glide.with(context).load(dataSnapshot.child("2lvl2Tritano").getValue().toString()).into(ima2Lvl2);
+                Glide.with(context).load(dataSnapshot.child("2lvl3Tritano").getValue().toString()).into(ima3Lvl2);
+                Glide.with(context).load(dataSnapshot.child("3lvl1Tritano").getValue().toString()).into(ima1Lvl3);
+                Glide.with(context).load(dataSnapshot.child("3lvl2Tritano").getValue().toString()).into(ima2Lvl3);
+                Glide.with(context).load(dataSnapshot.child("4lvl1Tritano").getValue().toString()).into(ima1Lvl4);
+                Glide.with(context).load(dataSnapshot.child("4lvl2Tritano").getValue().toString()).into(ima2Lvl4);
+                Glide.with(context).load(dataSnapshot.child("4lvl3Tritano").getValue().toString()).into(ima3Lvl4);
+                Glide.with(context).load(dataSnapshot.child("5lvl1Tritano").getValue().toString()).into(ima1Lvl5);
+                Glide.with(context).load(dataSnapshot.child("5lvl2Tritano").getValue().toString()).into(ima2Lvl5);
+                Glide.with(context).load(dataSnapshot.child("6lvl1Tritano").getValue().toString()).into(ima1Lvl6);
+                Glide.with(context).load(dataSnapshot.child("6lvl2Tritano").getValue().toString()).into(ima2Lvl6);
+                Glide.with(context).load(dataSnapshot.child("6lvl3Tritano").getValue().toString()).into(ima3Lvl6);
             }
         });
     }
@@ -567,6 +664,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         if(valor){
             AudioPlay.restart();
         }
+        getIcons();
         super.onRestart();
     }
 }

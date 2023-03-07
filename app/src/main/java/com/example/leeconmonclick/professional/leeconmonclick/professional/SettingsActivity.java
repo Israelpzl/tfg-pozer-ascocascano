@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -137,13 +138,13 @@ public class SettingsActivity extends AppCompatActivity {
                 userName.setText(Objects.requireNonNull(dataSnapshot.child("nombre").getValue()).toString());
                 // Pendiente de como se programa los iconos
                 String icon = Objects.requireNonNull(dataSnapshot.child("icon").getValue()).toString();
-                if (icon.equals("maleDoctor")){
+                if (icon.equals("maleDoctor") || icon.equals("maleDoctorTritano")){
                     maleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                }else if(icon.equals("femaleDoctor")){
+                }else if(icon.equals("femaleDoctor") || icon.equals("femaleDoctorTritano")){
                     femaleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                }else if(icon.equals("maleProfesor")){
+                }else if(icon.equals("maleProfesor") || icon.equals("maleProfesorTritano")){
                     maleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                }else if(icon.equals("femaleProfesor")){
+                }else if(icon.equals("femaleProfesor") || icon.equals("femaleProfesorTritano")){
                     femaleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
                 }
                 //Seccion para daltonismo
@@ -216,62 +217,87 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 icon = dataSnapshot.child("icon").getValue().toString();
+                String tritano = dataSnapshot.child("sett").child("1").getValue().toString();
+
+                maleDoctorIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        maleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
+                        maleProfesorIcon.setBackground(null);
+                        femaleDoctorIcon.setBackground(null);
+                        femaleProfesorIcon.setBackground(null);
+                        if(tritano.equals("no")){
+                            icon = "maleDoctor";
+                        }else{
+                            icon = "maleDoctorTritano";
+                        }
+                    }
+                });
+
+                femaleDoctorIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        femaleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
+                        maleDoctorIcon.setBackground(null);
+                        maleProfesorIcon.setBackground(null);
+                        femaleProfesorIcon.setBackground(null);
+                        if(tritano.equals("no")){
+                            icon = "femaleDoctor";
+                        }else{
+                            icon = "femaleDoctorTritano";
+                        }
+                    }
+                });
+
+                maleProfesorIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        maleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
+                        femaleDoctorIcon.setBackground(null);
+                        maleDoctorIcon.setBackground(null);
+                        femaleProfesorIcon.setBackground(null);
+                        if(tritano.equals("no")){
+                            icon = "maleProfesor";
+                        }else{
+                            icon = "maleProfesorTritano";
+                        }
+                    }
+                });
+
+                femaleProfesorIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        femaleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
+                        femaleDoctorIcon.setBackground(null);
+                        maleDoctorIcon.setBackground(null);
+                        maleProfesorIcon.setBackground(null);
+                        if(tritano.equals("no")){
+                            icon = "femaleProfesor";
+                        }else{
+                            icon = "femaleProfesorTritano";
+                        }
+                    }
+                });
             }
         });
-
-        maleDoctorIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                maleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                maleProfesorIcon.setBackground(null);
-                femaleDoctorIcon.setBackground(null);
-                femaleProfesorIcon.setBackground(null);
-                icon = "maleDoctor";
-            }
-        });
-
-        femaleDoctorIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                femaleDoctorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                maleDoctorIcon.setBackground(null);
-                maleProfesorIcon.setBackground(null);
-                femaleProfesorIcon.setBackground(null);
-                icon = "femaleDoctor";
-
-            }
-        });
-
-        maleProfesorIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                maleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                femaleDoctorIcon.setBackground(null);
-                maleDoctorIcon.setBackground(null);
-                femaleProfesorIcon.setBackground(null);
-                icon = "maleProfesor";
-
-            }
-        });
-
-        femaleProfesorIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                femaleProfesorIcon.setBackgroundResource(R.drawable.bg_select_icon);
-                femaleDoctorIcon.setBackground(null);
-                maleDoctorIcon.setBackground(null);
-                maleProfesorIcon.setBackground(null);
-                icon = "femaleProfesor";
-
-            }
-        });
-
         return icon;
-
     }
 
     private void getIcons(){
 
+        databaseReference.child("Users").child(userCollection).child("sett").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("1").getValue().toString().equals("no")){
+                    iconsNormal();
+                }else{
+                    iconsTritano();
+                }
+            }
+        });
+    }
+
+    private void iconsNormal(){
         databaseReference.child("iconImg").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -279,6 +305,18 @@ public class SettingsActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("femaleDoctor").getValue().toString()).into(femaleDoctorIcon);
                 Glide.with(context).load(dataSnapshot.child("maleProfesor").getValue().toString()).into(maleProfesorIcon);
                 Glide.with(context).load(dataSnapshot.child("femaleProfesor").getValue().toString()).into(femaleProfesorIcon);
+            }
+        });
+    }
+
+    private void iconsTritano(){
+        databaseReference.child("iconImg").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Glide.with(context).load(dataSnapshot.child("maleDoctorTritano").getValue().toString()).into(maleDoctorIcon);
+                Glide.with(context).load(dataSnapshot.child("femaleDoctorTritano").getValue().toString()).into(femaleDoctorIcon);
+                Glide.with(context).load(dataSnapshot.child("maleProfesorTritano").getValue().toString()).into(maleProfesorIcon);
+                Glide.with(context).load(dataSnapshot.child("femaleProfesorTritano").getValue().toString()).into(femaleProfesorIcon);
             }
         });
     }
@@ -410,9 +448,9 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-
-
-
-
-
+    @Override
+    protected void onRestart() {
+        getIcons();
+        super.onRestart();
+    }
 }

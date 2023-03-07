@@ -58,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
         };
         thread.start();
     }
-    public Boolean getStateSession(){
+    public boolean getStateSession(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         user = preferences.getString("user","null");
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn",false);

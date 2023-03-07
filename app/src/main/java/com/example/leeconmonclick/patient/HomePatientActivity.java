@@ -202,6 +202,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         namePatient = preferences.getString("userPatient", "null").toLowerCase(Locale.ROOT);
 
+
         levelText = findViewById(R.id.level);
         namePatientText = findViewById(R.id.namePatientId);
         iconPatient = findViewById(R.id.iconPatientId);
@@ -300,6 +301,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         namePatient = preferences.getString("userPatient", "null");
 
         namePatientText.setText(namePatient);

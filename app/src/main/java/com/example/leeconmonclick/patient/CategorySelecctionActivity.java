@@ -262,7 +262,7 @@ public class CategorySelecctionActivity extends AppCompatActivity {
 
     }
 
-    private void securityPersonalContent(String difficulty){
+    private void securityPersonalContent(String difficultySpinner){
 
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -279,9 +279,9 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                             String w = (String) objDataSnapshot.child("word").getValue();
                             String difficulty = objDataSnapshot.child("difficulty").getValue().toString();
 
-                            if (difficulty.equals(difficulty)) {
+                            if (difficultySpinner.equals(difficulty)) {
                                 contentList.add(w);
-                            } else if (difficulty.equals("PRÁCTICA")) {
+                            } else if (difficultySpinner.equals("PRÁCTICA")) {
                                 contentList.add(w);
                             }
                         }

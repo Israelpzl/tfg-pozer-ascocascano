@@ -83,7 +83,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                 databaseReference.child("iconPatient").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Glide.with(context).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
+                        Glide.with(getApplicationContext()).load(snapshot.child(icon).getValue().toString()).into(iconPatient);
                     }
 
                     @Override

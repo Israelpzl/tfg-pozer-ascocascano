@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.LoadActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.AddPatientsActivity;
 import com.example.leeconmonclick.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -193,7 +194,8 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             public void onClick(DialogInterface dialogInterface, int i) {
                 databaseReference.child("userPatient").child(userPatient.getNamePatient()).removeValue();
                 Toast.makeText(context, "Usuario Paciente borrado con éxito", Toast.LENGTH_LONG).show();
-
+                Intent addPatientIntent = new Intent(context, LoadActivity.class);
+                context.startActivity(addPatientIntent);
             }
         });
 

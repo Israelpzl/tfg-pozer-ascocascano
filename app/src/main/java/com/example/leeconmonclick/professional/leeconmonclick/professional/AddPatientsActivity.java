@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.LoadActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.SplashActivity;
 import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 
@@ -221,7 +223,9 @@ public class AddPatientsActivity extends AppCompatActivity {
 
 
         if (data.getBoolean("modeEdit")){
-            finish();
+            Intent addPatientIntent = new Intent(this, LoadActivity.class);
+            addPatientIntent.putExtra("add","addPatient");
+            startActivity(addPatientIntent);
         }
 
 

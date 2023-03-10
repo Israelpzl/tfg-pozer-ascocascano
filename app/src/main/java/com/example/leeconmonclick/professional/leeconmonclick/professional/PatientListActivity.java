@@ -173,4 +173,11 @@ public class PatientListActivity extends AppCompatActivity {
         super.onStop();
         Glide.with(this).pauseRequests();
     }
+
+    @Override
+    protected void onRestart() {
+
+        super.onRestart();
+    }
+
 }

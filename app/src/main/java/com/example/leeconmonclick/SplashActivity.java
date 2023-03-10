@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.example.leeconmonclick.patient.HomePatientActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -18,6 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
     private String user;
+    private Bundle data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,25 +34,31 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(3000);//abre la StartActivity tras 3 segundos
-
-                    if (getStateSession()) {
-                        switch (user){
-                            case("patient"):{
-                                startActivity(new Intent(getApplicationContext(), HomePatientActivity.class));
-                                finish();
-                                break;
+                    data = getIntent().getExtras();
+                    if(data == null){
+                        if (getStateSession()) {
+                            switch (user){
+                                case("patient"):{
+                                    startActivity(new Intent(getApplicationContext(), HomePatientActivity.class));
+                                    finish();
+                                    break;
+                                }
+                                case ("professional"):{
+                                    startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
+                                    finish();
+                                    break;
+                                }
                             }
-                            case ("professional"):{
-                                startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
-                                finish();
-                                break;
-                            }
+                        }else{
+                            startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
+                            finish();
                         }
                     }else{
-                        startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
-                        finish();
+                        if(data.getString("add").equals("addPatient")){
+                            startActivity(new Intent(getApplicationContext(), PatientListActivity.class));
+                            finish();
+                        }
                     }
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -290,7 +290,6 @@ public class CategorySelecctionActivity extends AppCompatActivity {
                             btn5.setVisibility(View.VISIBLE);
                         }else{
                             btn5.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Tiene que haber más contenido personalizado", Toast.LENGTH_LONG).show();
                         }
                     }
 

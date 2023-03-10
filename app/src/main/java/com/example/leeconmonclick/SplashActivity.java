@@ -15,11 +15,9 @@ import com.example.leeconmonclick.professional.leeconmonclick.professional.Patie
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final String STRING_PREFERENCES = "leeconmonclick.login";
-    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
+
 
     private String user;
-    private Bundle data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,37 +32,32 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(3000);//abre la StartActivity tras 3 segundos
-                    data = getIntent().getExtras();
-                    if(data == null){
-                        if (getStateSession()) {
-                            switch (user){
-                                case("patient"):{
-                                    startActivity(new Intent(getApplicationContext(), HomePatientActivity.class));
-                                    finish();
-                                    break;
-                                }
-                                case ("professional"):{
-                                    startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
-                                    finish();
-                                    break;
-                                }
+
+                    if (getStateSession()) {
+                        switch (user){
+                            case("patient"):{
+                                startActivity(new Intent(getApplicationContext(), HomePatientActivity.class));
+                                finish();
+                                break;
                             }
-                        }else{
-                            startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
-                            finish();
+                            case ("professional"):{
+                                startActivity(new Intent(getApplicationContext(), HomeProfesionalActivity.class));
+                                finish();
+                                break;
+                            }
                         }
                     }else{
-                        if(data.getString("add").equals("addPatient")){
-                            startActivity(new Intent(getApplicationContext(), PatientListActivity.class));
-                            finish();
-                        }
+                        startActivity(new Intent(getApplicationContext(),ProfilesActivity.class));
+                        finish();
                     }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         };
         thread.start();
+
     }
     public boolean getStateSession(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

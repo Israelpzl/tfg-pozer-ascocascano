@@ -71,7 +71,7 @@ public class StadisticActivity extends AppCompatActivity {
         secondFragment.setArguments(bd);
         thirdFragment.setArguments(bd);
         fourFragment.setArguments(bd);
-        fiveFragment.setArguments(bd);
+       // fiveFragment.setArguments(bd);
 
         loadFragment(firstFragment);
 
@@ -105,9 +105,12 @@ public class StadisticActivity extends AppCompatActivity {
                 case R.id.fourFragment:
                     loadFragment(fourFragment);
                     return true;
+                    /*
                 case R.id.fiveFragment:
                     loadFragment(fiveFragment);
                     return true;
+                     */
+
             }
             return false;
         }

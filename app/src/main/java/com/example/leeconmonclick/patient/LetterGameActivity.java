@@ -54,7 +54,6 @@ public class LetterGameActivity extends AppCompatActivity {
     private Bundle data;
     private int countSucces,countFailed = 0;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,21 +125,21 @@ public class LetterGameActivity extends AppCompatActivity {
                 if (correctWord.equals(word)){
                     countSucces++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(true);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
-                         goLetterGame();
+                         goLetterGame(true);
                         Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
                 }
 
                 }else{
                     countFailed++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(false);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame();
+                        goLetterGame(false);
                     }
                 }
             }
@@ -154,10 +153,10 @@ public class LetterGameActivity extends AppCompatActivity {
                 if (correctWord.equals(word)){
                     countSucces++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(true);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
-                        goLetterGame();
+                        goLetterGame(true);
                         Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
                     }
 
@@ -165,11 +164,11 @@ public class LetterGameActivity extends AppCompatActivity {
                 }else{
                     countFailed++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(false);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame();
+                        goLetterGame(false);
                     }
 
                 }
@@ -184,21 +183,21 @@ public class LetterGameActivity extends AppCompatActivity {
                 if (correctWord.equals(word)){
                     countSucces++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(true);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
-                        goLetterGame();
+                        goLetterGame(true);
                         Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
                     }
 
                 }else{
                     countFailed++;
                     if (data.getInt("numberGame")>=2){
-                        alertFinishGame();
+                        alertFinishGame(false);
                         Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame();
+                        goLetterGame(false);
                     }
                 }
             }
@@ -210,7 +209,7 @@ public class LetterGameActivity extends AppCompatActivity {
         recreate();
     }
 
-    private void goLetterGame(){
+    private void goLetterGame(boolean c){
         Intent lettersIntent = new Intent(context, LetterGameActivity.class);
         lettersIntent.putExtra("category", category);
         lettersIntent.putExtra("difficulty", difficultySelect);
@@ -218,6 +217,17 @@ public class LetterGameActivity extends AppCompatActivity {
         lettersIntent.putExtra("music", AudioPlay.isIsplayingAudio());
         lettersIntent.putExtra("succes",  countSucces);
         lettersIntent.putExtra("failed",  countFailed);
+
+        if(data.getInt("numberGame") == 0){
+            lettersIntent.putExtra("img1b",c);
+            lettersIntent.putExtra("img1",  imgFinish);
+        }else if(data.getInt("numberGame")== 1){
+            lettersIntent.putExtra("img1",  data.getString("img1"));
+            lettersIntent.putExtra("img1b",data.getBoolean("img1b"));
+            lettersIntent.putExtra("img2b",c);
+            lettersIntent.putExtra("img2",  imgFinish);
+        }
+
         startActivity(lettersIntent);
         finish();
     }
@@ -275,7 +285,7 @@ public class LetterGameActivity extends AppCompatActivity {
         });
     }
 
-    private void alertFinishGame(){
+    private void alertFinishGame(boolean b){
 
         databaseReference.child("userPatient").child(namePatient).child("stadistic").child("letters").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -315,9 +325,16 @@ public class LetterGameActivity extends AppCompatActivity {
         });
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game,null);
+        final View finishGamePopUp = getLayoutInflater().inflate(R.layout.finish_game_letters,null);
 
-        ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
+        ImageView img1 = (ImageView) finishGamePopUp.findViewById(R.id.img);
+        ImageView img2 = (ImageView) finishGamePopUp.findViewById(R.id.img2);
+        ImageView img3 = (ImageView) finishGamePopUp.findViewById(R.id.img3);
+
+        ImageView succes1 = (ImageView) finishGamePopUp.findViewById(R.id.succes1);
+        ImageView succes2 = (ImageView) finishGamePopUp.findViewById(R.id.succes2);
+        ImageView succes3 = (ImageView) finishGamePopUp.findViewById(R.id.succes3);
+
         Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -328,7 +345,21 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
-        Glide.with(context).load(imgFinish).into(img);
+        Glide.with(getApplicationContext()).load(data.getString("img1")).into(img1);
+        Glide.with(getApplicationContext()).load(data.getString("img2")).into(img2);
+        Glide.with(getApplicationContext()).load(imgFinish).into(img3);
+
+        if(!data.getBoolean("img1b")){
+            succes1.setImageResource(R.drawable.failed_letters);
+        }
+        if(!data.getBoolean("img2b")){
+            succes2.setImageResource(R.drawable.failed_letters);
+        }
+
+        if(!b){
+            succes3.setImageResource(R.drawable.failed_letters);
+        }
+
 
         alertDialogBuilder.setView(finishGamePopUp);
         alertDialog =  alertDialogBuilder.create();

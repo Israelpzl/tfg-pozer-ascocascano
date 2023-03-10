@@ -49,8 +49,8 @@
     <string name="level">NIVEL 1</string>
     <string name="play">JUGAR</string>
     <!--Professional-Task and Calendar-->
-    <string name="list_Task">LISTA DE TAREAS</string>
-    <string name="add_task">AÑADIR TAREAS</string>
+    <string name="list_Task">LISTA DE CITAS</string>
+    <string name="add_task">AÑADIR CITA</string>
     <string name="noti">NOTI</string>
     <string name="date">FECHA</string>
     <string name="time">TIEMPO</string>

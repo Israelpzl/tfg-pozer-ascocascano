@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/thirdFragment"
-        android:icon="@drawable/ic_bar_chart"
+        android:icon="@drawable/ic_123"
         android:title="NºJuegos jugados"/>
 
     <item
@@ -21,9 +21,11 @@
         android:icon="@drawable/ic_bar_chart"
         android:title="Categorías y Dificultades"/>
 
-    <item
+    <!--    <item
         android:id="@+id/fiveFragment"
         android:icon="@drawable/ic_radar_chart"
         android:title="Cinco"/>
+    -->
+
 
 </menu>

@@ -200,6 +200,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
     private void findElements(){
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         namePatient = preferences.getString("userPatient", "null").toLowerCase(Locale.ROOT);
 
 

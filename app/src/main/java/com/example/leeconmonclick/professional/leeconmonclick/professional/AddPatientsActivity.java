@@ -63,6 +63,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
     private String userCollection;
 
+
     private static final String ALGORITHM = "AES";
     private static final String KEY = "1Hbfh667adfDEJ78";
 
@@ -113,6 +114,7 @@ public class AddPatientsActivity extends AppCompatActivity {
         emailPatient.setText(data.getString("emailPatient"));
         descriptionPatient.setText(data.getString("descriptionPatient"));
         title.setText("EDITAR PACIENTE");
+        addPatientBtn.setText("EDITAR");
     }
 
     private void sendEmail()  {
@@ -199,7 +201,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                                 }else{
                                     Toast.makeText(getApplicationContext(),"Se ha editado el paciente correctamente",Toast.LENGTH_LONG).show();
                                 }
-                                databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT)).child("stadistic").child("syllables").setValue(difficultiesStadistic);
+                                databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).child("stadistic").child("syllables").setValue(difficultiesStadistic);
                             }
                         }
                     });

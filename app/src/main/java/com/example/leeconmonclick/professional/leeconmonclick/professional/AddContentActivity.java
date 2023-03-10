@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,6 +70,8 @@ public class AddContentActivity extends AppCompatActivity {
     private StorageReference filePath;
     private String userCollection;
     private final String[] DIFFICULTIES = { "FÁCIL", "NORMAL", "DIFÍCIL"};
+
+    private Button addContentBtn;
 
 
     @SuppressLint("MissingInflatedId")
@@ -249,6 +252,7 @@ public class AddContentActivity extends AppCompatActivity {
         int selectionPosition= adapterSpinner.getPosition(data.getString("determinant"));
         spinner.setSelection(selectionPosition);
         title.setText("EDITAR CONTENIDO");
+        saveButt.setText("EDITAR");
     }
 
     private void editContent(){

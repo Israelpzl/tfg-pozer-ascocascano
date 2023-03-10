@@ -68,7 +68,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
         if(awesomeValidation.validate()){
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().toLowerCase().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
@@ -77,7 +77,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
                         assert user != null;
                         user.sendEmailVerification();
 
-                        String userCollection = email.getText().toString();
+                        String userCollection = email.getText().toString().trim().toLowerCase();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
                         userCollection = userCollection.toLowerCase().trim();
@@ -95,7 +95,7 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         notas.add(generateNote);
 
-                        User usuario = new User(email.getText().toString().trim(),userCollection,settings,notas,null,null,"maleDoctor");
+                        User usuario = new User(email.getText().toString().trim().toLowerCase(),userCollection,settings,notas,null,null,"maleDoctor");
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 

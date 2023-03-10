@@ -42,6 +42,7 @@ public class SecondFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private String trita;
 
     private PieChart pieChart1,pieChart2,pieChart3;
     private DatabaseReference databaseReference;
@@ -88,6 +89,7 @@ public class SecondFragment extends Fragment {
         userCollection = parts[0];
         userCollection = userCollection.toLowerCase();
 
+
         return view;
     }
 
@@ -98,8 +100,14 @@ public class SecondFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 List<Integer> colors = new ArrayList<>();
-                colors.add(ContextCompat.getColor(getContext(), R.color.succes));
-                colors.add(ContextCompat.getColor(getContext(), R.color.failed));
+                if (trita.equals("tritanopia")){
+                    colors.add(ContextCompat.getColor(getContext(), R.color.succes_trita));
+                    colors.add(ContextCompat.getColor(getContext(), R.color.failed_trita));
+                }else{
+                    colors.add(ContextCompat.getColor(getContext(), R.color.succes));
+                    colors.add(ContextCompat.getColor(getContext(), R.color.failed));
+                }
+
 
                 ArrayList<PieEntry> entries = new ArrayList<>();
                 int auxS;
@@ -179,6 +187,7 @@ public class SecondFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String size = snapshot.child("sett").child("0").getValue().toString();
+                trita = snapshot.child("sett").child("1").getValue().toString();
                 switch (size) {
                     case "grande":
                         percentage1.setTextSize(30);

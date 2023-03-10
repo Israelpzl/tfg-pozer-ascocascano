@@ -132,103 +132,98 @@ public class AddPatientsActivity extends AppCompatActivity {
         String passEncrypt = encrypt(pass);
 
         if (data.getBoolean("modeEdit")){
-            passEncrypt = data.getString("passPatient");
-            databaseReference.child("userPatient").child(data.getString("namePatient")).removeValue();
-        }
 
-        Difficulties difficultiesStadistic = new Difficulties(0,0,0);
-
-        Map<String,Difficulties> difficultiesMap = new HashMap<>();
-        difficultiesMap.put("FÁCIL",difficultiesStadistic);
-        difficultiesMap.put("NORMAL",difficultiesStadistic);
-        difficultiesMap.put("DIFÍCIL",difficultiesStadistic);
-        difficultiesMap.put("PRÁCTICA",difficultiesStadistic);
-
-        Categories categoryStadistic = new Categories(0);
-
-        Map<String,Categories> categoriesMap = new HashMap<>();
-        categoriesMap.put("Hogar",categoryStadistic);
-        categoriesMap.put("Animales",categoryStadistic);
-        categoriesMap.put("Comidas",categoryStadistic);
-        categoriesMap.put(userCollection,categoryStadistic);
-
-        Game gameStadistic = new Game(0,categoriesMap,difficultiesMap);
-
-        Map<String,Game> stadistic = new HashMap<>();
-        stadistic.put("joinWords",gameStadistic);
-        stadistic.put("letters",gameStadistic);
-
-        String icon = "6lvl3";
-        String progress = "0";
-
-        ArrayList<String> sett = new ArrayList<>();
-        sett.add("normal");
-        sett.add("no");
-
-        String lvlPatient = "1";
-
-        UserPatient userPatient = new UserPatient(
-                namePatient.getText().toString().toLowerCase(Locale.ROOT).trim(),
-                agePatient.getText().toString(),
-                emailPatient.getText().toString(),
-                passEncrypt,
-                descriptionPatient.getText().toString(),
-                userCollection,
-                icon,
-                stadistic,
-                sett,
-                lvlPatient,
-                progress
-        );
-
-        databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                List<String> listPatient = new ArrayList<>();
-
-                for(DataSnapshot objDataSnapshot: snapshot.getChildren()){
-                    listPatient.add(objDataSnapshot.child("namePatient").getValue().toString());
-                }
-
-                if (!listPatient.contains(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim())){
-                    databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-
-                                if (!data.getBoolean("modeEdit")){
-                                    Toast.makeText(getApplicationContext(),"Se ha añadido el paciente correctamente",Toast.LENGTH_LONG).show();
-                                    sendEmail();
-                                }else{
-                                    Toast.makeText(getApplicationContext(),"Se ha editado el paciente correctamente",Toast.LENGTH_LONG).show();
-                                }
-                                databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).child("stadistic").child("syllables").setValue(difficultiesStadistic);
-                            }
-                        }
-                    });
-
-
-
-                }else {
-                    Toast.makeText(getApplicationContext(),"Nombre ocupado",Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        if (data.getBoolean("modeEdit")){
+            databaseReference.child("userPatient").child(data.getString("namePatient")).child("namePatient").setValue(namePatient.getText().toString().toLowerCase().trim());
+            databaseReference.child("userPatient").child(data.getString("namePatient")).child("emailPatient").setValue(emailPatient.getText().toString().toLowerCase().trim());
+            databaseReference.child("userPatient").child(data.getString("namePatient")).child("agePatient").setValue(agePatient.getText().toString().toLowerCase().trim());
+            databaseReference.child("userPatient").child(data.getString("namePatient")).child("descriptionPatient").setValue(descriptionPatient.getText().toString().toLowerCase());
             Intent addPatientIntent = new Intent(this, LoadActivity.class);
             addPatientIntent.putExtra("add","addPatient");
             startActivity(addPatientIntent);
+        }else{
+            Difficulties difficultiesStadistic = new Difficulties(0,0,0);
+
+            Map<String,Difficulties> difficultiesMap = new HashMap<>();
+            difficultiesMap.put("FÁCIL",difficultiesStadistic);
+            difficultiesMap.put("NORMAL",difficultiesStadistic);
+            difficultiesMap.put("DIFÍCIL",difficultiesStadistic);
+            difficultiesMap.put("PRÁCTICA",difficultiesStadistic);
+
+            Categories categoryStadistic = new Categories(0);
+
+            Map<String,Categories> categoriesMap = new HashMap<>();
+            categoriesMap.put("Hogar",categoryStadistic);
+            categoriesMap.put("Animales",categoryStadistic);
+            categoriesMap.put("Comidas",categoryStadistic);
+            categoriesMap.put(userCollection,categoryStadistic);
+
+            Game gameStadistic = new Game(0,categoriesMap,difficultiesMap);
+
+            Map<String,Game> stadistic = new HashMap<>();
+            stadistic.put("joinWords",gameStadistic);
+            stadistic.put("letters",gameStadistic);
+
+            String icon = "6lvl3";
+            String progress = "0";
+
+            ArrayList<String> sett = new ArrayList<>();
+            sett.add("normal");
+            sett.add("no");
+
+            String lvlPatient = "1";
+
+            UserPatient userPatient = new UserPatient(
+                    namePatient.getText().toString().toLowerCase(Locale.ROOT).trim(),
+                    agePatient.getText().toString(),
+                    emailPatient.getText().toString(),
+                    passEncrypt,
+                    descriptionPatient.getText().toString(),
+                    userCollection,
+                    icon,
+                    stadistic,
+                    sett,
+                    lvlPatient,
+                    progress
+            );
+
+            databaseReference.child("userPatient").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    List<String> listPatient = new ArrayList<>();
+
+                    for(DataSnapshot objDataSnapshot: snapshot.getChildren()){
+                        listPatient.add(objDataSnapshot.child("namePatient").getValue().toString());
+                    }
+
+                    if (!listPatient.contains(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim())){
+                        databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).setValue(userPatient).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+
+                                    if (!data.getBoolean("modeEdit")){
+                                        Toast.makeText(getApplicationContext(),"Se ha añadido el paciente correctamente",Toast.LENGTH_LONG).show();
+                                        sendEmail();
+                                    }
+                                    databaseReference.child("userPatient").child(namePatient.getText().toString().toLowerCase(Locale.ROOT).trim()).child("stadistic").child("syllables").setValue(difficultiesStadistic);
+                                }
+                            }
+                        });
+
+
+
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Nombre ocupado",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
-
-
     }
 
     public String encrypt(String value) throws Exception {

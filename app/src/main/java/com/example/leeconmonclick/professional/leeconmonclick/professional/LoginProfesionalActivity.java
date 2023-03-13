@@ -134,6 +134,11 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
     }
 
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
 
     private void dameToastdeerror(String error) {
         EditText email = findViewById(R.id.editTextTextPersonName);

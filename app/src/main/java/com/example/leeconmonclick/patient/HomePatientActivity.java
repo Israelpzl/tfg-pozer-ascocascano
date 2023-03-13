@@ -61,6 +61,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         AudioPlay.playAudio(this, R.raw.homeaudio);
 
         findElements();
+        getSettings();
         setLvl();
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -74,7 +75,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
             }
         });
-        getSettings();
+
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
@@ -178,11 +179,22 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if (dalto.equals("tritanopia")) {
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    if(iconText.indexOf("T") == -1){
+                        iconText = iconText+"Tritano";
+                        databaseReference.child("userPatient").child(namePatient).child("icon").setValue(iconText);
+                    }
                     btnsett.setBackgroundResource(R.drawable.button_style_tritano);
                     btnJugar.setBackgroundResource(R.drawable.button_style_tritano);
                     btnProgresion.setBackgroundResource(R.drawable.button_style_tritano);
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
                 }else{
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    if(iconText.indexOf("T") != -1){
+                        String[] parts = iconText.split("T");
+                        String datePart = parts[0];
+                        databaseReference.child("userPatient").child(namePatient).child("icon").setValue(datePart);
+                    }
                     constraintLayout.setBackgroundResource(R.color.background);
                     btnJugar.setBackgroundResource(R.drawable.button_style);
                     btnsett.setBackgroundResource(R.drawable.button_style);

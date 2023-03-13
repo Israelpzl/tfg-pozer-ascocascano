@@ -140,6 +140,7 @@ public class AddPatientsActivity extends AppCompatActivity {
             Intent addPatientIntent = new Intent(this, LoadActivity.class);
             addPatientIntent.putExtra("add","addPatient");
             startActivity(addPatientIntent);
+            finish();
         }else{
             Difficulties difficultiesStadistic = new Difficulties(0,0,0);
 
@@ -279,6 +280,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                         ageTitle.setTextSize(30);
                         emailTitle.setTextSize(30);
                         descriptionTitle.setTextSize(30);
+                        title.setTextSize(30);
                         break;
                     case "normal":
                         namePatient.setTextSize(20);
@@ -290,6 +292,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                         ageTitle.setTextSize(20);
                         emailTitle.setTextSize(20);
                         descriptionTitle.setTextSize(20);
+                        title.setTextSize(20);
                         break;
                     case "peque":
                         namePatient.setTextSize(10);
@@ -301,6 +304,7 @@ public class AddPatientsActivity extends AppCompatActivity {
                         ageTitle.setTextSize(10);
                         emailTitle.setTextSize(10);
                         descriptionTitle.setTextSize(10);
+                        title.setTextSize(10);
                         break;
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();

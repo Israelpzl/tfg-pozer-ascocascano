@@ -50,7 +50,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     private String userCollection;
 
     private AlertDialog alertDialog;
-    private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp;
+    private TextView descriptionTaskPopUp, tittleTaskPopUp, dateTaskPopUp, timeTaskPopUp,titlePage;
     private TextView title;
 
     @SuppressLint("MissingInflatedId")
@@ -235,6 +235,19 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        titlePage.setTextSize(30);
+                        break;
+                    case "normal":
+                        titlePage.setTextSize(20);
+                        break;
+                    case "peque":
+                        titlePage.setTextSize(10);
+                        break;
+                }
+
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
@@ -254,6 +267,7 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
         taskItems = new ArrayList<>();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        titlePage = findViewById(R.id.titleTask);
 
         recyclerView = findViewById(R.id.listTaskRecycleView);
         recyclerView.setHasFixedSize(true);

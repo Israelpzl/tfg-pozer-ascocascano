@@ -39,7 +39,7 @@ public class PatientListActivity extends AppCompatActivity {
     private ListAdapterUserPatient listAdapterUserPatient;
     private RecyclerView recyclerView;
     private String userCollection;
-    private TextView title;
+    private TextView titlePage;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +121,18 @@ public class PatientListActivity extends AppCompatActivity {
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        titlePage.setTextSize(30);
+                        break;
+                    case "normal":
+                        titlePage.setTextSize(20);
+                        break;
+                    case "peque":
+                        titlePage.setTextSize(10);
+                        break;
+                }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
@@ -145,6 +156,7 @@ public class PatientListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleViewUserPatientId);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PatientListActivity.this));
+        titlePage = findViewById(R.id.tittleContentListId);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         userCollection = user.getEmail();

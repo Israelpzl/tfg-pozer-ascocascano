@@ -52,6 +52,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private boolean first,second;
     private AlertDialog alertDialog;
     private int countFailed,countSucces=  0;
+    private Toast myToast;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -192,13 +193,17 @@ public class SyllablesGameActivity extends AppCompatActivity {
             if (Rect.intersects(rect1, rect2)) {
                 intersectPuzzle = true;
                 if (puzzle.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))) {
-                    Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG).show();
+                    myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
+                    myToast.show();
+                    myToast.cancel();
                     first = true;
                 }
             } else if (Rect.intersects(rect1, rect3)) {
                 intersectPuzzle = true;
                 if (puzzle.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))) {
-                    Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG).show();
+                    myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
+                    myToast.show();
+                    myToast.cancel();
                     second = true;
                 }
             }else{
@@ -219,12 +224,14 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
             if (intersectPuzzle && !first && !second){
                 countFailed++;
-                Toast.makeText(getApplicationContext(), "Pieza Incorrecta", Toast.LENGTH_LONG).show();
+                myToast = Toast.makeText(getApplicationContext(), "Pieza Incorrecta", Toast.LENGTH_LONG);
+                myToast.show();
             }
         }
     }
 
-    public void refreshBBDD(View v){   Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG).show();
+    public void refreshBBDD(View v){   myToast = Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG);
+        myToast.show();
         recreate();
     }
 
@@ -454,6 +461,9 @@ public class SyllablesGameActivity extends AppCompatActivity {
         super.onRestart();
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        myToast.cancel();
+        super.onDestroy();
+    }
 }

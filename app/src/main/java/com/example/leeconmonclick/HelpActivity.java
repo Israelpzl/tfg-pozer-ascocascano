@@ -20,7 +20,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner spinner;
     TextView message;
-    String url = "https://www.youtube.com/watch?v=s-aph61W300";
+    String url = "https://youtu.be/GCtEZU_49KU";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void email(View v){
         Intent video = new Intent(Intent.ACTION_SENDTO);
-        video.setData(Uri.parse("mailto:theyecoca@gmail.com"));
+        video.setData(Uri.parse("mailto:pozeriaspozeriascocascano@gmail.com"));
         startActivity(video);
     }
 

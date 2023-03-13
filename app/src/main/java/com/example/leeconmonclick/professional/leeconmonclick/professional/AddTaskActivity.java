@@ -345,10 +345,14 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
 
     }
 
-    public void goBack(View view){finish();}
+    public void goBack(View view){
+        onBackPressed();
+    }
 
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
+
+
 }

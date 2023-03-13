@@ -41,6 +41,7 @@ public class ContentListActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private ListAdapterContent listAdapterContent;
+    private TextView titlePage;
 
     private String userCollection;
 
@@ -110,6 +111,19 @@ public class ContentListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        titlePage.setTextSize(30);
+                        break;
+                    case "normal":
+                        titlePage.setTextSize(20);
+                        break;
+                    case "peque":
+                        titlePage.setTextSize(10);
+                        break;
+                }
+
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
@@ -129,6 +143,7 @@ public class ContentListActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         recyclerView = findViewById(R.id.listContentRecyclerViewId);
+        titlePage = findViewById(R.id.tittleContentListId);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;

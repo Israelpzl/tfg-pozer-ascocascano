@@ -137,7 +137,7 @@ public class NotesListActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        titlePage = findViewById(R.id.tittleContentListId);
+        titlePage = findViewById(R.id.titleTask);
 
         listNotes = new ArrayList<Note>();
 

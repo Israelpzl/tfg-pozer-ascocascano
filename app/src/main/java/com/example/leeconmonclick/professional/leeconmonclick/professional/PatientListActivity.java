@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.patient.GameSelecctionActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.adapters.ListAdapterUserPatient;
 import es.leerconmonclick.util.utils.UserPatient;
 
@@ -166,7 +168,10 @@ public class PatientListActivity extends AppCompatActivity {
 
     }
 
-    public void goBack(View view){finish();}
+    public void goBack(View view){
+        Intent goHome = new Intent(this, HomeProfesionalActivity.class);
+        startActivity(goHome);
+    }
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);

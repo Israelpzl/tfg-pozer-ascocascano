@@ -463,7 +463,9 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        myToast.cancel();
+        if(myToast != null){
+            myToast.cancel();
+        }
         super.onDestroy();
     }
 }

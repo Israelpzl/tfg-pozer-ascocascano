@@ -77,11 +77,12 @@
         android:src="@drawable/mono"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/viewId4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.014" />
 
     <TextView
         android:id="@+id/namePatientId"
@@ -120,12 +121,13 @@
         android:id="@+id/viewId4"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/separator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tittleActivityAddNoteId3"
+        app:layout_constraintTop_toBottomOf="@+id/iconPatientId"
         app:layout_constraintVertical_bias="0.016" />
 
     <TextView
@@ -133,9 +135,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/tittle_category"
         android:textAlignment="center"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewId4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"

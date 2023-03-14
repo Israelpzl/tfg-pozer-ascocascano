@@ -251,7 +251,6 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
 
     private void deleteNotify (String tag){
         WorkManager.getInstance(this).cancelAllWorkByTag(tag);
-        Toast.makeText(getApplicationContext(),"Notificación Eliminada",Toast.LENGTH_LONG).show();
     }
 
     private String generateKey(){

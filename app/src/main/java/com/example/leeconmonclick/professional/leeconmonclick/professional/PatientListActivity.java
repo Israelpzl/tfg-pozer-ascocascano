@@ -156,7 +156,7 @@ public class PatientListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleViewUserPatientId);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PatientListActivity.this));
-        titlePage = findViewById(R.id.tittleContentListId);
+        titlePage = findViewById(R.id.tittleContentListId2);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         userCollection = user.getEmail();

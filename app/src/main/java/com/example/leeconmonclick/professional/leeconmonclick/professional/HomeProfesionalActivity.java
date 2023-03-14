@@ -140,6 +140,11 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    if (iconText.indexOf("Tri") == -1){
+                        iconText = iconText + "Tritano";
+                    }
+                    databaseReference.child("Users").child(userCollection).child("icon").setValue(iconText);
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
                     btnPatients.setBackgroundResource(R.drawable.button_style_tritano);
                     btnContent.setBackgroundResource(R.drawable.button_style_tritano);
@@ -147,6 +152,10 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     btnNotes.setBackgroundResource(R.drawable.button_style_tritano);
                     btnDates.setBackgroundResource(R.drawable.button_style_tritano);
                 }else {
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    String[] parts = iconText.split("Trita");
+                    String datePart = parts[0];
+                    databaseReference.child("Users").child(userCollection).child("icon").setValue(datePart);
                     constraintLayout.setBackgroundResource(R.color.background);
                     btnPatients.setBackgroundResource(R.drawable.button_style);
                     btnContent.setBackgroundResource(R.drawable.button_style);
@@ -220,5 +229,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
        if (u == null){
            finish();
        }
+       getSettings();
     }
 }

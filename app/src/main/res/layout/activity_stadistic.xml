@@ -37,16 +37,15 @@
         android:id="@+id/btnImageBackScreenId16"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@null"
         android:onClick="goBack"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.022"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.007"
         app:srcCompat="@drawable/ic_arrow_back_android" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

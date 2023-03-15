@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private String namePatient;
     private Bundle data;
     private int countSucces,countFailed = 0;
+    private TextToSpeech tts;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -89,6 +91,16 @@ public class LetterGameActivity extends AppCompatActivity {
             }
         });
 
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.getDefault());
+                }
+
+            }
+        });
+
 
 
         initBBDD ();
@@ -121,6 +133,7 @@ public class LetterGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String word = listImg.get(0);
+                tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
 
                 if (correctWord.equals(word)){
                     countSucces++;
@@ -149,6 +162,7 @@ public class LetterGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String word = listImg.get(1);
+                tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
 
                 if (correctWord.equals(word)){
                     countSucces++;
@@ -179,6 +193,7 @@ public class LetterGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String word = listImg.get(2);
+                tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
 
                 if (correctWord.equals(word)){
                     countSucces++;

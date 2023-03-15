@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -73,6 +74,8 @@ public class JoinWordsGameActivity extends AppCompatActivity {
     private int countSucces,countFailed = 0;
     private ImageButton refresh;
 
+    private TextToSpeech tts;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,15 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         music();
 
 
+         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+               if(i != TextToSpeech.ERROR){
+                   tts.setLanguage(Locale.getDefault());
+               }
+
+            }
+        });
 
         if (!difficultySelect.equals("PRÁCTICA")){
             refresh.setVisibility(View.INVISIBLE);
@@ -156,6 +168,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
                     img = listImg.get(0);
+                    tts.speak(img, TextToSpeech.QUEUE_FLUSH, null);
                     select = true;
                     numSelect =1;
 
@@ -175,6 +188,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect2.setVisibility(View.VISIBLE);
                     imageSelect3.setVisibility(View.INVISIBLE);
                     img = listImg.get(1);
+                    tts.speak(img, TextToSpeech.QUEUE_FLUSH, null);
                     select = true;
                     numSelect =2;
 
@@ -194,6 +208,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     imageSelect2.setVisibility(View.INVISIBLE);
                     imageSelect3.setVisibility(View.VISIBLE);
                     img = listImg.get(2);
+                    tts.speak(img, TextToSpeech.QUEUE_FLUSH, null);
                     select = true;
                     numSelect =3;
 
@@ -214,6 +229,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     wordSelect2.setVisibility(View.INVISIBLE);
                     wordSelect3.setVisibility(View.INVISIBLE);
                     word = listWord.get(0);
+                    tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
 
                     if (img.equals(word)){
                         check(1);
@@ -235,6 +251,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     wordSelect2.setVisibility(View.VISIBLE);
                     wordSelect3.setVisibility(View.INVISIBLE);
                     word = listWord.get(1);
+                    tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
                     if (img.equals(word)) {
                         check(2);
                     }else{
@@ -255,6 +272,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     wordSelect2.setVisibility(View.INVISIBLE);
                     wordSelect3.setVisibility(View.VISIBLE);
                     word = listWord.get(2);
+                    tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
                     if (img.equals(word)){
                         check(3);
                     }else{

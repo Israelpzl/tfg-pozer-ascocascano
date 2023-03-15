@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -53,6 +54,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private int countFailed,countSucces=  0;
     private Toast myToast;
+    private TextToSpeech tts;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -73,6 +75,16 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 System.exit(1);
+            }
+        });
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.getDefault());
+                }
+
             }
         });
 
@@ -103,6 +115,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         puzzle1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                tts.speak(puzzle1.getTag().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 checkPuzzle(puzzle1,event);
                 return true;
             }
@@ -112,6 +125,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                tts.speak(puzzle2.getTag().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 checkPuzzle(puzzle2,event);
                 return true;
             }
@@ -120,7 +134,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         puzzle3.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+                tts.speak(puzzle3.getTag().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 checkPuzzle(puzzle3,event);
                 return true;
             }
@@ -129,6 +143,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         puzzle4.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                tts.speak(puzzle4.getTag().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 checkPuzzle(puzzle4,event);
                 return true;
             }
@@ -137,6 +152,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         puzzle5.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                tts.speak(puzzle5.getTag().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 checkPuzzle(puzzle5,event);
                 return true;
             }
@@ -286,6 +302,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
                                 String word = objSnapshot.child("word").getValue().toString();
                                 Content content = new Content(word, img, syllable, null,false);
                                 listContent.add(content);
+
                             }
                         }
                     }
@@ -305,6 +322,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 }
             });
 
+            
     }
 
     private void randomPuzzle(){

@@ -108,19 +108,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/join_words" />
+                app:srcCompat="@drawable/join_words"
+                android:onClick="goGameJoin"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/letters" />
+                app:srcCompat="@drawable/letters"
+                android:onClick="goGameLetters"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/syllable" />
+                app:srcCompat="@drawable/syllable"
+                android:onClick="goGameSyllables"/>
 
         </LinearLayout>
 

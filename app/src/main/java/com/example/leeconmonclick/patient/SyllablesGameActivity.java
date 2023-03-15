@@ -194,29 +194,47 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 intersectPuzzle = true;
                 if (puzzle.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))) {
                     myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
+                    yellow.setImageResource(R.drawable.bg_select_cardview_succes);
                     myToast.show();
                     myToast.cancel();
                     first = true;
+                }else{
+                    yellow.setImageResource(R.drawable.bg_select_cardview_failed);
                 }
             } else if (Rect.intersects(rect1, rect3)) {
                 intersectPuzzle = true;
                 if (puzzle.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))) {
                     myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
+                    yellow2.setImageResource(R.drawable.bg_select_cardview_succes);
                     myToast.show();
                     myToast.cancel();
                     second = true;
+                }else {
+                    yellow2.setImageResource(R.drawable.bg_select_cardview_failed);
                 }
             }else{
                 intersectPuzzle = false;
+
+
+
+
             }
         }
+
+
+
         if (event.getAction() == MotionEvent.ACTION_UP){
+
+
 
             if (!Rect.intersects(rect1, rect2) && !Rect.intersects(rect1, rect3)) {
                 intersectPuzzle = false;
                 first = false;
                 second = false;
+                yellow2.setImageResource(R.drawable.bg_select_cardview);
             }
+
+
 
             if (first && second) {
                 alertFinishGame();
@@ -228,6 +246,16 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 myToast.show();
             }
         }
+
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            if(!first){
+                yellow.setImageResource(R.drawable.bg_select_cardview);
+
+            }else if(!second){
+                yellow2.setImageResource(R.drawable.bg_select_cardview);
+            }
+        }
+
     }
 
     public void refreshBBDD(View v){   myToast = Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG);

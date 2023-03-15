@@ -234,14 +234,17 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
 
     public void applyTexts(String number, int x, int y) {
 
-        int numeroInt = Integer.parseInt(number);
+        if (number.matches("\\d+")){
+            int numeroInt = Integer.parseInt(number);
 
-        if ((x + y) == numeroInt) {
-            Intent settingPatient = new Intent(this, SettingsPatientActivity.class);
-            startActivity(settingPatient);
-        } else {
-            Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
+            if ((x + y) == numeroInt) {
+                Intent settingPatient = new Intent(this, SettingsPatientActivity.class);
+                startActivity(settingPatient);
+            } else {
+                Toast.makeText(getApplicationContext(), "Suma Incorrecta", Toast.LENGTH_LONG).show();
+            }
         }
+
     }
 
     public void setLvl(){
@@ -283,6 +286,11 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
                 }
                 lvl[0] = nuevolvl;
                 progresionLvl[0] = progress;
+
+                if (lvl[0] >= 6){
+                    progresionLvl[0] = 0;
+                    lvl[0] = 6;
+                }
 
                 databaseReference.child("userPatient").child(namePatient).child("lvlPatient").setValue(lvl[0]);
                 databaseReference.child("userPatient").child(namePatient).child("progression").setValue(progresionLvl[0]);

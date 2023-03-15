@@ -38,7 +38,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6,saveChang,lvlText;
 
-    private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6,ima3Lvl6,imagePatient;
+    private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6, ima3Lvl1,imagePatient;
     private String namePatient;
     private String icon;
     private int actualLvl;
@@ -89,9 +89,15 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int progreso = Integer.parseInt(snapshot.child("progression").getValue().toString());
-                pb.setProgress(progreso);
-                lvlText.setText("NIVEL ACTUAL: "+snapshot.child("lvlPatient").getValue().toString()+"."+snapshot.child("progression").getValue().toString());
+                if( Integer.parseInt(snapshot.child("lvlPatient").getValue().toString()) == 6){
+                    pb.setProgress(100);
+                    lvlText.setText("NIVEL ACTUAL: 6 MÁX");
+                }else{
+                    int progreso = Integer.parseInt(snapshot.child("progression").getValue().toString());
+                    pb.setProgress(progreso);
+                    lvlText.setText("NIVEL ACTUAL: "+snapshot.child("lvlPatient").getValue().toString()+"."+snapshot.child("progression").getValue().toString());
+                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -428,21 +434,17 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     }
                 });
 
-                ima3Lvl6.setOnClickListener(new View.OnClickListener() {
+                ima3Lvl1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (actualLvl < 6) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
                             ima1Lvl2.setClickable(false);
-                        } else {
-                            inicializateBackgroundIcon(ima3Lvl6);
+                            inicializateBackgroundIcon(ima3Lvl1);
                             if(tritano.equals("no")){
                                 icon = "6lvl3";
                             }else{
                                 icon = "6lvl3Tritano";
                             }
                         }
-                    }
                 });
 
             }
@@ -472,7 +474,6 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima2Lvl5.setAlpha(OPACITY);
         ima1Lvl6.setAlpha(OPACITY);
         ima2Lvl6.setAlpha(OPACITY);
-        ima3Lvl6.setAlpha(OPACITY);
 
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -487,6 +488,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima1Lvl2.setAlpha(OPACITYY);
                         ima2Lvl2.setAlpha(OPACITYY);
                         ima3Lvl2.setAlpha(OPACITYY);
+                        ima3Lvl1.setAlpha(OPACITYY);
                         break;
                     }
                     case "3":{
@@ -495,6 +497,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima3Lvl2.setAlpha(OPACITYY);
                         ima1Lvl3.setAlpha(OPACITYY);
                         ima2Lvl3.setAlpha(OPACITYY);
+                        ima3Lvl1.setAlpha(OPACITYY);
                         break;
                     }
                     case "4":{
@@ -506,6 +509,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima1Lvl4.setAlpha(OPACITYY);
                         ima2Lvl4.setAlpha(OPACITYY);
                         ima3Lvl4.setAlpha(OPACITYY);
+                        ima3Lvl1.setAlpha(OPACITYY);
                         break;
                     }
                     case "5":{
@@ -519,6 +523,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima3Lvl4.setAlpha(OPACITYY);
                         ima1Lvl5.setAlpha(OPACITYY);
                         ima2Lvl5.setAlpha(OPACITYY);
+                        ima3Lvl1.setAlpha(OPACITYY);
                         break;
                     }
                     case "6":{
@@ -534,7 +539,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima2Lvl5.setAlpha(OPACITYY);
                         ima1Lvl6.setAlpha(OPACITYY);
                         ima2Lvl6.setAlpha(OPACITYY);
-                        ima3Lvl6.setAlpha(OPACITYY);
+                        ima3Lvl1.setAlpha(OPACITYY);
                         break;
                     }
                 }
@@ -552,6 +557,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
         ima1Lvl1 = findViewById(R.id.iconPatientlvl1a);
         ima2Lvl1 = findViewById(R.id.iconPatientlvl1b);
+        ima3Lvl1 = findViewById(R.id.iconPatientlvl6c);
         ima1Lvl2 = findViewById(R.id.iconPatientlvl2a);
         ima2Lvl2 = findViewById(R.id.iconPatientlvl2b);
         ima3Lvl2 = findViewById(R.id.iconPatientlvl2c);
@@ -564,7 +570,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima2Lvl5 = findViewById(R.id.iconPatientlvl5b);
         ima1Lvl6 = findViewById(R.id.iconPatientlvl6a);
         ima2Lvl6 = findViewById(R.id.iconPatientlvl6b);
-        ima3Lvl6 = findViewById(R.id.iconPatientlvl6c);
+
 
 
         databaseReference.child("userPatient").child(namePatient).child("sett").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -598,7 +604,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("5lvl2").getValue().toString()).into(ima2Lvl5);
                 Glide.with(context).load(dataSnapshot.child("6lvl1").getValue().toString()).into(ima1Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl2").getValue().toString()).into(ima2Lvl6);
-                Glide.with(context).load(dataSnapshot.child("6lvl3").getValue().toString()).into(ima3Lvl6);
+                Glide.with(context).load(dataSnapshot.child("6lvl3").getValue().toString()).into(ima3Lvl1);
             }
         });
     }
@@ -621,7 +627,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("5lvl2Tritano").getValue().toString()).into(ima2Lvl5);
                 Glide.with(context).load(dataSnapshot.child("6lvl1Tritano").getValue().toString()).into(ima1Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl2Tritano").getValue().toString()).into(ima2Lvl6);
-                Glide.with(context).load(dataSnapshot.child("6lvl3Tritano").getValue().toString()).into(ima3Lvl6);
+                Glide.with(context).load(dataSnapshot.child("6lvl3Tritano").getValue().toString()).into(ima3Lvl1);
             }
         });
     }
@@ -642,7 +648,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima2Lvl5.setBackground(null);
         ima1Lvl6.setBackground(null);
         ima2Lvl6.setBackground(null);
-        ima3Lvl6.setBackground(null);
+        ima3Lvl1.setBackground(null);
 
         circleImageView.setBackgroundResource(R.drawable.bg_select_icon);
     }

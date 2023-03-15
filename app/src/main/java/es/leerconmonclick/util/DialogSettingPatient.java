@@ -51,8 +51,13 @@ public class DialogSettingPatient extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 String number = EditNumber.getText().toString();
-                listener.applyTexts(number,x,y);
+                if(number.matches("\\d+")){
+                    listener.applyTexts(number,x,y);
+
+                }
+
                 dismiss();
+
             }
         });
 

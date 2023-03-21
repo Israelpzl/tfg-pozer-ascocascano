@@ -11,15 +11,15 @@
 
     <ImageView
         android:id="@+id/yellow2"
-        android:layout_width="125dp"
-        android:layout_height="103dp"
+        android:layout_width="112dp"
+        android:layout_height="98dp"
         android:layout_marginStart="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/yellow"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.048"
         app:srcCompat="@drawable/bg_select_cardview" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -93,28 +93,28 @@
         android:layout_height="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintHorizontal_bias="0.665"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.683"
+        app:layout_constraintVertical_bias="0.686"
         app:srcCompat="@drawable/button_style" />
 
     <ImageView
         android:id="@+id/yellow"
-        android:layout_width="125dp"
-        android:layout_height="103dp"
+        android:layout_width="99dp"
+        android:layout_height="91dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.318"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.048"
         app:srcCompat="@drawable/bg_select_cardview" />
 
     <ImageView
         android:id="@+id/puzzle5"
-        android:layout_width="110dp"
-        android:layout_height="79dp"
+        android:layout_width="119dp"
+        android:layout_height="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.865"
@@ -127,14 +127,28 @@
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="552dp"
+        android:layout_marginEnd="19dp"
         android:background="@null"
         android:onClick="refreshBBDD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
-        app:layout_constraintHorizontal_bias="0.969"
+        app:layout_constraintEnd_toStartOf="@+id/info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041"
+        app:layout_constraintVertical_bias="0.039"
         app:srcCompat="@drawable/ic_refresh" />
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:background="@null"
+        android:onClick="getInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
+        app:layout_constraintStart_toEndOf="@+id/refresh"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024"
+        app:srcCompat="@drawable/ic_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

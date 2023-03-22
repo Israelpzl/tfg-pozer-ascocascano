@@ -80,7 +80,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView namePatientView;
-        private ImageButton deleteBtn,editBtn;
+        private ImageButton deleteBtn,editBtn,stadistic;
         private CircleImageView circleImageView;
 
         ViewHolder(View itemView) {
@@ -89,6 +89,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
             namePatientView =  itemView.findViewById(R.id.namePatientItemId);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
+            stadistic = itemView.findViewById(R.id.accesStadistic);
             circleImageView = itemView.findViewById(R.id.iconPatientId);
 
         }
@@ -149,6 +150,7 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                     if(dalto.equals("tritanopia")){
                         editBtn.setBackgroundResource(R.color.button_edit_tritano);
                         deleteBtn.setBackgroundResource(R.color.butto_red_tritano);
+                        stadistic.setBackgroundResource(R.color.yellow_tritano);
                     }
                 }
 
@@ -162,6 +164,13 @@ public class ListAdapterUserPatient extends RecyclerView.Adapter<ListAdapterUser
                 @Override
                 public void onClick(View v) {
                     editUserPatient(userPatient);
+                }
+            });
+
+            stadistic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(userPatient);
                 }
             });
 

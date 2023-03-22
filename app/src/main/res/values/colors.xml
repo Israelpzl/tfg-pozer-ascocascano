@@ -18,6 +18,8 @@
     <color name="failed">#DA0E0E</color>
     <color name="succes_trita">#65C9D9</color>
     <color name="failed_trita">#D9160F</color>
+    <color name="yellow">#FFC107</color>
+    <color name="yellow_tritano">#FFB6C1</color>
 
 <!--    Daltonic-->
     <color name="background_tritano">#275960</color>

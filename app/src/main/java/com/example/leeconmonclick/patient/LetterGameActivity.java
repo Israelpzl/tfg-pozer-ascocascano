@@ -44,6 +44,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private CircleImageView iconPatient;
     private final Context context =this;
     private ImageView image1, image2,image3, imgLetter;
+    private ImageView imageSelect1,imageSelect2,imageSelect3;
     private CardView cardViewImg1, cardViewImg2,cardViewImg3;
     private List<String> listImg;
     private String correctWord;
@@ -53,6 +54,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private String imgFinish;
     private String namePatient;
     private Bundle data;
+    private Button nextPicture;
     private int countSucces,countFailed = 0;
     private TextToSpeech tts;
 
@@ -67,6 +69,7 @@ public class LetterGameActivity extends AppCompatActivity {
         getSettings();
         music();
 
+        nextPicture.setVisibility(View.GONE);
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -134,27 +137,17 @@ public class LetterGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String word = listImg.get(0);
                 tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                imageSelect1.setVisibility(View.VISIBLE);
+                imageSelect2.setVisibility(View.INVISIBLE);
+                imageSelect3.setVisibility(View.INVISIBLE);
 
-                if (correctWord.equals(word)){
-                    countSucces++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(true);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                         goLetterGame(true);
-                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
-                }
-
-                }else{
-                    countFailed++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(false);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame(false);
+                nextPicture.setVisibility(View.VISIBLE);
+                nextPicture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkWord(word);
                     }
-                }
+                });
             }
         });
 
@@ -163,29 +156,17 @@ public class LetterGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String word = listImg.get(1);
                 tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                imageSelect1.setVisibility(View.INVISIBLE);
+                imageSelect2.setVisibility(View.VISIBLE);
+                imageSelect3.setVisibility(View.INVISIBLE);
 
-                if (correctWord.equals(word)){
-                    countSucces++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(true);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                        goLetterGame(true);
-                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                nextPicture.setVisibility(View.VISIBLE);
+                nextPicture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkWord(word);
                     }
-
-
-                }else{
-                    countFailed++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(false);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame(false);
-                    }
-
-                }
+                });
             }
         });
 
@@ -194,27 +175,17 @@ public class LetterGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String word = listImg.get(2);
                 tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                imageSelect1.setVisibility(View.INVISIBLE);
+                imageSelect2.setVisibility(View.INVISIBLE);
+                imageSelect3.setVisibility(View.VISIBLE);
 
-                if (correctWord.equals(word)){
-                    countSucces++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(true);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                        goLetterGame(true);
-                        Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+                nextPicture.setVisibility(View.VISIBLE);
+                nextPicture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkWord(word);
                     }
-
-                }else{
-                    countFailed++;
-                    if (data.getInt("numberGame")>=2){
-                        alertFinishGame(false);
-                        Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
-                        goLetterGame(false);
-                    }
-                }
+                });
             }
         });
     }
@@ -298,6 +269,29 @@ public class LetterGameActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkWord(String word){
+        if (correctWord.equals(word)){
+            countSucces++;
+            if (data.getInt("numberGame")>=2){
+                alertFinishGame(true);
+                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+            }else{
+                goLetterGame(true);
+                Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
+            }
+
+        }else{
+            countFailed++;
+            if (data.getInt("numberGame")>=2){
+                alertFinishGame(false);
+                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
+                goLetterGame(false);
+            }
+        }
     }
 
     private void alertFinishGame(boolean b){
@@ -418,6 +412,10 @@ public class LetterGameActivity extends AppCompatActivity {
         cardViewImg1 = findViewById(R.id.cardViewImage1);
         cardViewImg2 = findViewById(R.id.cardViewImage2);
         cardViewImg3 = findViewById(R.id.cardViewImage3);
+        nextPicture = findViewById(R.id.button10);
+        imageSelect1 = findViewById(R.id.imageSelectd1);
+        imageSelect2 = findViewById(R.id.imageSelectd2);
+        imageSelect3 = findViewById(R.id.imageSelectd3);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         data = getIntent().getExtras();

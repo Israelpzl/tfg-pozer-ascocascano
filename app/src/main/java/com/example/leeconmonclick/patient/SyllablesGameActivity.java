@@ -32,10 +32,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,7 +50,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private String namePatient;
     private ImageView puzzle1, puzzle2, puzzle3, puzzle4,puzzle5,yellow,yellow2;
     private List<Syllable> listSylable;
-    private  List<Content> l;
+    private  List<Content> listWord;
     private AlertDialog alertDialog;
     private int countFailed,countSucces=  0;
     private Toast myToast;
@@ -61,9 +59,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private String syllable1;
     private String syllable2;
 
-    private Rect[] rectList = new Rect[5];
-
-    private Rect rect1,rect2,rect3,rect4,rect5,box1,box2;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -166,34 +161,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
             }
         });
 
-        initBBDDv2();
-
-    }
-
-    private void getRectList(){
-
-        rect1 = new Rect();
-        rect2 = new Rect();
-        rect3 = new Rect();
-        rect4 = new Rect();
-        rect5 = new Rect();
-        box1 = new Rect();
-        box2 = new Rect();
-
-        puzzle1.getHitRect(rect1);
-        puzzle2.getHitRect(rect2);
-        puzzle3.getHitRect(rect3);
-        puzzle4.getHitRect(rect4);
-        puzzle5.getHitRect(rect5);
-
-        yellow.getHitRect(box1);
-        yellow2.getHitRect(box2);
-
-        rectList[0] = rect1;
-        rectList[1] = rect2;
-        rectList[2] = rect3;
-        rectList[3] = rect4;
-        rectList[4] = rect5;
+        initBBDD();
 
     }
 
@@ -209,27 +177,27 @@ public class SyllablesGameActivity extends AppCompatActivity {
         yellow.getHitRect(box1);
         yellow2.getHitRect(box2);
 
-        getRectList();
-
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
             puzzle.setX(event.getRawX() - puzzle.getWidth() / 2);
             puzzle.setY(event.getRawY() - puzzle.getHeight() / 2);
 
-            if (Rect.intersects(puzzleRect, box1)) {
-                  syllable1 = puzzle.getTag().toString();
-              }else{
-                syllable1 = null;
-            }
 
-              if (Rect.intersects(puzzleRect, box2)) {
-                  syllable2 = puzzle.getTag().toString();
-              }else{
-                  syllable2 = null;
-              }
         }
 
         if (event.getAction() == MotionEvent.ACTION_UP){
+
+            if (Rect.intersects(puzzleRect, box1)) {
+                syllable1 = puzzle.getTag().toString();
+            } else if (Rect.intersects(puzzleRect, box2)) {
+                syllable2 = puzzle.getTag().toString();
+            }else{
+                if (puzzle.getTag().toString().equals(syllable1)){
+                    syllable1 = null;
+                }else if (puzzle.getTag().toString().equals(syllable2)){
+                    syllable2 = null;
+                }
+            }
 
             if(syllable1 != null && syllable2!= null){
 
@@ -239,11 +207,9 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
                         for (DataSnapshot objSnapshot : snapshot.getChildren()) {
 
                             if(objSnapshot.getKey().toLowerCase().equals(word)){
-
                                 alertFinishGame(objSnapshot.child("img").getValue().toString(),word);
                                 break;
                             }
@@ -264,7 +230,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         recreate();
     }
 
-    private void initBBDDv2 (){
+    private void initBBDD(){
 
         String[] listCategory = {"Hogar","Animales","Comidas"};
         List<Content> listContent = new ArrayList<>();
@@ -287,10 +253,10 @@ public class SyllablesGameActivity extends AppCompatActivity {
                 }
 
                 Collections.shuffle(listContent);
-                l.add(listContent.get(0));
+                listWord.add(listContent.get(0));
 
-                Collections.shuffle(l);
-                getImgPuzzle(l.get(0));
+                Collections.shuffle(listWord);
+                getImgPuzzle(listWord.get(0));
 
             }
 
@@ -308,7 +274,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                String[] sy = l.get(0).getSyllables().split("-");
+                String[] sy = listWord.get(0).getSyllables().split("-");
                 List<String> sl = new ArrayList<>();
 
                 for (DataSnapshot objSnapshot : snapshot.getChildren()){
@@ -462,7 +428,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
 
         listSylable = new ArrayList<>();
-        l = new ArrayList<>();
+        listWord = new ArrayList<>();
 
     }
 

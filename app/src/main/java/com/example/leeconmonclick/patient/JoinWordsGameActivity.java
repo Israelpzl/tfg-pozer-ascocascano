@@ -234,7 +234,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     if (img.equals(word)){
                         check(1);
                     }else{
-                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        tts.speak("fallado, inténtelo de nuevo", TextToSpeech.QUEUE_FLUSH, null);
                         countFailed++;
                         word = "";
                         wordSelect1.setVisibility(View.INVISIBLE);
@@ -255,7 +255,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     if (img.equals(word)) {
                         check(2);
                     }else{
-                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        tts.speak("fallado, inténtelo de nuevo", TextToSpeech.QUEUE_FLUSH, null);
                         countFailed++;
                         word = "";
                         wordSelect2.setVisibility(View.INVISIBLE);
@@ -276,7 +276,7 @@ public class JoinWordsGameActivity extends AppCompatActivity {
                     if (img.equals(word)){
                         check(3);
                     }else{
-                        Toast.makeText(getApplicationContext(), "Fallado", Toast.LENGTH_LONG).show();
+                        tts.speak("fallado, inténtelo de nuevo", TextToSpeech.QUEUE_FLUSH, null);
                         countFailed++;
                         word = "";
                         wordSelect3.setVisibility(View.INVISIBLE);
@@ -363,7 +363,6 @@ public class JoinWordsGameActivity extends AppCompatActivity {
         }
 
         if (points == 3){
-            Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
             alertFinishGame();
 
         }
@@ -586,6 +585,10 @@ public class JoinWordsGameActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void getInfo(View view){
+        tts.speak("Úna las imágenes con sus palabras", TextToSpeech.QUEUE_FLUSH, null);
     }
 
 

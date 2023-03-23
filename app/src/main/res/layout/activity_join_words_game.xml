@@ -9,6 +9,20 @@
     tools:context=".patient.JoinWordsGameActivity">
 
     <ImageButton
+        android:id="@+id/info3"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:background="@null"
+        android:onClick="getInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957"
+        app:srcCompat="@drawable/ic_help" />
+
+    <ImageButton
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

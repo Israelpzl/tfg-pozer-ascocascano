@@ -26,6 +26,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ public class LetterGameActivity extends AppCompatActivity {
     private String imgFinish;
     private String namePatient;
     private Bundle data;
-    private Button nextPicture;
+    private ImageButton nextPicture;
     private int countSucces,countFailed = 0;
     private TextToSpeech tts;
 
@@ -276,19 +277,15 @@ public class LetterGameActivity extends AppCompatActivity {
             countSucces++;
             if (data.getInt("numberGame")>=2){
                 alertFinishGame(true);
-                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
             }else{
                 goLetterGame(true);
-                Toast.makeText(getApplicationContext(), "Has acertado", Toast.LENGTH_LONG).show();
             }
 
         }else{
             countFailed++;
             if (data.getInt("numberGame")>=2){
                 alertFinishGame(false);
-                Toast.makeText(getApplicationContext(), "Juego Terminado", Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(getApplicationContext(), "Has fallado", Toast.LENGTH_LONG).show();
                 goLetterGame(false);
             }
         }
@@ -527,6 +524,10 @@ public class LetterGameActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    public void getInfo(View view){
+        tts.speak("Escoge la imágen que empiece por la letra mostrada en pantalla", TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override

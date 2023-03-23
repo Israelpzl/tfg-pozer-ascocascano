@@ -53,7 +53,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private  List<Content> listWord;
     private AlertDialog alertDialog;
     private int countFailed,countSucces=  0;
-    private Toast myToast;
+
     private TextToSpeech tts;
 
     private String syllable1;
@@ -207,13 +207,21 @@ public class SyllablesGameActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                        boolean check = false;
                         for (DataSnapshot objSnapshot : snapshot.getChildren()) {
 
                             if(objSnapshot.getKey().toLowerCase().equals(word)){
                                 alertFinishGame(objSnapshot.child("img").getValue().toString(),word);
+                                check = true;
                                 break;
                             }
                         }
+
+                        if (!check){
+                            countFailed++;
+                        }
+
+
                     }
 
                     @Override
@@ -225,8 +233,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
         }
     }
 
-    public void refreshBBDD(View v){   myToast = Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG);
-        myToast.show();
+    public void refreshBBDD(View v){  Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG);
         recreate();
     }
 
@@ -482,9 +489,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(myToast != null){
-            myToast.cancel();
-        }
         super.onDestroy();
     }
 }

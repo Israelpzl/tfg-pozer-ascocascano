@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -38,12 +39,12 @@ public class ProgresionPatientActivity extends AppCompatActivity {
 
     private TextView lvl1,lvl2,lvl3,lvl4,lvl5,lvl6,saveChang,lvlText;
 
-    private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6, ima3Lvl1,imagePatient;
+    private CircleImageView ima1Lvl1,ima2Lvl1,ima1Lvl2,ima2Lvl2,ima3Lvl2,ima1Lvl3,ima2Lvl3,ima1Lvl4,ima2Lvl4,ima3Lvl4,ima1Lvl5,ima2Lvl5,ima1Lvl6,ima2Lvl6, ima3Lvl1,ima3Lvl6,imagePatient;
     private String namePatient;
     private String icon;
     private int actualLvl;
     private ProgressBar pb;
-
+    private TextToSpeech tts;
     private DatabaseReference databaseReference;
 
     @SuppressLint("MissingInflatedId")
@@ -83,6 +84,16 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         saveChang = findViewById(R.id.buttonSaveProgresionPatient2);
         pb = findViewById(R.id.lvlProgressBar);
         lvlText = findViewById(R.id.actualLvlPatient);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.getDefault());
+                }
+
+            }
+        });
 
         pb.setMax(100);
 
@@ -230,7 +241,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 2) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
 
@@ -249,7 +260,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 2) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl2);
@@ -266,7 +277,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 2) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima3Lvl2);
@@ -283,7 +294,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 3) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl3);
@@ -300,7 +311,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 3) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl3);
@@ -317,7 +328,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 4) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl4);
@@ -334,7 +345,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 4) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl4);
@@ -351,7 +362,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 4) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima3Lvl4);
@@ -368,7 +379,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 5) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl5);
@@ -385,7 +396,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 5) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl5);
@@ -403,7 +414,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 6) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima1Lvl6);
@@ -421,7 +432,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (actualLvl < 6) {
-                            Toast.makeText(getApplicationContext(), "Aun no tienes suficiente nivel", Toast.LENGTH_LONG).show();
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
                             ima1Lvl2.setClickable(false);
                         } else {
                             inicializateBackgroundIcon(ima2Lvl6);
@@ -445,6 +456,24 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                                 icon = "6lvl3Tritano";
                             }
                         }
+                });
+
+                ima3Lvl6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (actualLvl < 6) {
+                            tts.speak("Aún no tienes suficiente nivel", TextToSpeech.QUEUE_FLUSH, null);
+                            ima1Lvl2.setClickable(false);
+                        }else{
+                            inicializateBackgroundIcon(ima3Lvl6);
+                            if(tritano.equals("no")){
+                                icon = "6lvl4";
+                            }else{
+                                icon = "6lvl4";
+                            }
+                        }
+
+                    }
                 });
 
             }
@@ -474,6 +503,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima2Lvl5.setAlpha(OPACITY);
         ima1Lvl6.setAlpha(OPACITY);
         ima2Lvl6.setAlpha(OPACITY);
+        ima3Lvl6.setAlpha(OPACITY);
 
 
         databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
@@ -540,6 +570,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                         ima1Lvl6.setAlpha(OPACITYY);
                         ima2Lvl6.setAlpha(OPACITYY);
                         ima3Lvl1.setAlpha(OPACITYY);
+                        ima3Lvl6.setAlpha(OPACITYY);
                         break;
                     }
                 }
@@ -570,6 +601,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
         ima2Lvl5 = findViewById(R.id.iconPatientlvl5b);
         ima1Lvl6 = findViewById(R.id.iconPatientlvl6a);
         ima2Lvl6 = findViewById(R.id.iconPatientlvl6b);
+        ima3Lvl6 = findViewById(R.id.iconPatientlvl6d);
 
 
 
@@ -605,6 +637,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("6lvl1").getValue().toString()).into(ima1Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl2").getValue().toString()).into(ima2Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl3").getValue().toString()).into(ima3Lvl1);
+                Glide.with(context).load(dataSnapshot.child("6lvl4").getValue().toString()).into(ima3Lvl6);
             }
         });
     }

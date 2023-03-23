@@ -393,6 +393,15 @@
                     app:civ_border_width="2dp"
                     android:layout_marginLeft="20dp"/>
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl6d"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
 
 
 

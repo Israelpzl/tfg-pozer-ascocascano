@@ -1,5 +1,7 @@
 package com.example.leeconmonclick.patient;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,14 +49,15 @@ public class SyllablesGameActivity extends AppCompatActivity {
     private final Context context = this;
     private String namePatient;
     private ImageView puzzle1, puzzle2, puzzle3, puzzle4,puzzle5,yellow,yellow2;
-    private boolean intersectPuzzle = false;
     private List<Syllable> listSylable;
-    private  List<Content> l;
-    private boolean first,second;
+    private  List<Content> listWord;
     private AlertDialog alertDialog;
     private int countFailed,countSucces=  0;
     private Toast myToast;
     private TextToSpeech tts;
+
+    private String syllable1;
+    private String syllable2;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -162,116 +165,64 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     }
 
-    private void music(){
-        boolean valor = getIntent().getExtras().getBoolean("music");
-        if(valor){
-            AudioPlay.restart();
-        }
-    }
 
-    private void getSettings(){
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.syllableGame);
-
-        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void checkPuzzle (ImageView puzzle, MotionEvent event){
 
-        Rect rect1 = new Rect();
-        Rect rect2 = new Rect();
-        Rect rect3 = new Rect();
+        Rect puzzleRect = new Rect();
+        Rect box1 = new Rect();
+        Rect box2 = new Rect();
 
-        puzzle.getHitRect(rect1);
-        yellow.getHitRect(rect2);
-        yellow2.getHitRect(rect3);
+        puzzle.getHitRect(puzzleRect);
+        yellow.getHitRect(box1);
+        yellow2.getHitRect(box2);
 
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
             puzzle.setX(event.getRawX() - puzzle.getWidth() / 2);
             puzzle.setY(event.getRawY() - puzzle.getHeight() / 2);
 
-            String[] sy = l.get(0).getSyllables().split("-");
 
-            if (Rect.intersects(rect1, rect2)) {
-                intersectPuzzle = true;
-                if (puzzle.getTag().toString().equals(sy[0].toLowerCase(Locale.ROOT))) {
-                    myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
-                    yellow.setImageResource(R.drawable.bg_select_cardview_succes);
-                    myToast.show();
-                    myToast.cancel();
-                    first = true;
-                }else{
-                    yellow.setImageResource(R.drawable.bg_select_cardview_failed);
-                }
-            } else if (Rect.intersects(rect1, rect3)) {
-                intersectPuzzle = true;
-                if (puzzle.getTag().toString().equals(sy[1].toLowerCase(Locale.ROOT))) {
-                    myToast = Toast.makeText(getApplicationContext(), "Pieza Correcta", Toast.LENGTH_LONG);
-                    yellow2.setImageResource(R.drawable.bg_select_cardview_succes);
-                    myToast.show();
-                    myToast.cancel();
-                    second = true;
-                }else {
-                    yellow2.setImageResource(R.drawable.bg_select_cardview_failed);
-                }
-            }else{
-                intersectPuzzle = false;
-
-
-
-
-            }
         }
-
-
 
         if (event.getAction() == MotionEvent.ACTION_UP){
 
-
-
-            if (!Rect.intersects(rect1, rect2) && !Rect.intersects(rect1, rect3)) {
-                intersectPuzzle = false;
-                first = false;
-                second = false;
-                yellow2.setImageResource(R.drawable.bg_select_cardview);
+            if (Rect.intersects(puzzleRect, box1)) {
+                syllable1 = puzzle.getTag().toString();
+            } else if (Rect.intersects(puzzleRect, box2)) {
+                syllable2 = puzzle.getTag().toString();
+            }else{
+                if (puzzle.getTag().toString().equals(syllable1)){
+                    syllable1 = null;
+                }else if (puzzle.getTag().toString().equals(syllable2)){
+                    syllable2 = null;
+                }
             }
 
+            if(syllable1 != null && syllable2!= null){
 
+                String word = syllable1 + syllable2;
 
-            if (first && second) {
-                alertFinishGame();
-            }
+                databaseReference.child("content").child("Sílabas-content").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            if (intersectPuzzle && !first && !second){
-                countFailed++;
-                myToast = Toast.makeText(getApplicationContext(), "Pieza Incorrecta", Toast.LENGTH_LONG);
-                myToast.show();
+                        for (DataSnapshot objSnapshot : snapshot.getChildren()) {
+
+                            if(objSnapshot.getKey().toLowerCase().equals(word)){
+                                alertFinishGame(objSnapshot.child("img").getValue().toString(),word);
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         }
-
-        if(event.getAction() == MotionEvent.ACTION_UP){
-            if(!first){
-                yellow.setImageResource(R.drawable.bg_select_cardview);
-
-            }else if(!second){
-                yellow2.setImageResource(R.drawable.bg_select_cardview);
-            }
-        }
-
     }
 
     public void refreshBBDD(View v){   myToast = Toast.makeText(getApplicationContext(), "Cargando nuevo puzzle...", Toast.LENGTH_LONG);
@@ -279,50 +230,42 @@ public class SyllablesGameActivity extends AppCompatActivity {
         recreate();
     }
 
-    private void initBBDD (){
+    private void initBBDD(){
 
         String[] listCategory = {"Hogar","Animales","Comidas"};
-
         List<Content> listContent = new ArrayList<>();
+        databaseReference.child("content").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                for (String categoty : listCategory){
+                    for (DataSnapshot objSnapshot : snapshot.child(categoty).getChildren()) {
+                        boolean isSyllable =  (boolean) objSnapshot.child("isSyllable").getValue();
+                        if (isSyllable) {
+                            String syllable = objSnapshot.child("syllables").getValue().toString().toLowerCase();
+                            String img = objSnapshot.child("img").getValue().toString();
+                            String word = objSnapshot.child("word").getValue().toString();
+                            Content content = new Content(word, img, syllable, null,false);
+                            listContent.add(content);
 
-            databaseReference.child("content").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-                    for (String categoty : listCategory){
-                        for (DataSnapshot objSnapshot : snapshot.child(categoty).getChildren()) {
-
-                            boolean isSyllable =  (boolean) objSnapshot.child("isSyllable").getValue();
-                            if (isSyllable) {
-                                String syllable = objSnapshot.child("syllables").getValue().toString();
-                                String img = objSnapshot.child("img").getValue().toString();
-                                String word = objSnapshot.child("word").getValue().toString();
-                                Content content = new Content(word, img, syllable, null,false);
-                                listContent.add(content);
-
-                            }
                         }
                     }
-
-                    Collections.shuffle(listContent);
-                    l.add(listContent.get(0));
-                    l.add(listContent.get(1));
-
-                    Collections.shuffle(l);
-                    getImgPuzzle(l.get(0));
-
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                Collections.shuffle(listContent);
+                listWord.add(listContent.get(0));
 
-                }
-            });
+                Collections.shuffle(listWord);
+                getImgPuzzle(listWord.get(0));
 
-            
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void randomPuzzle(){
@@ -331,7 +274,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                String[] sy = l.get(0).getSyllables().split("-");
+                String[] sy = listWord.get(0).getSyllables().split("-");
                 List<String> sl = new ArrayList<>();
 
                 for (DataSnapshot objSnapshot : snapshot.getChildren()){
@@ -381,7 +324,6 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
         String[] sy = content.getSyllables().split("-");
 
-
         databaseReference.child("content").child("Puzzle").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -414,8 +356,7 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
     }
 
-    private void alertFinishGame(){
-
+    private void alertFinishGame(String wordImg,String word){
 
         databaseReference.child("userPatient").child(namePatient).child("stadistic").child("syllables").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -445,7 +386,8 @@ public class SyllablesGameActivity extends AppCompatActivity {
         ImageView img = (ImageView) finishGamePopUp.findViewById(R.id.img);
         Button btn = (Button) finishGamePopUp.findViewById(R.id.btn);
 
-        Glide.with(context).load(l.get(0).getImg()).into(img);
+        tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+        Glide.with(context).load(wordImg).into(img);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,8 +428,39 @@ public class SyllablesGameActivity extends AppCompatActivity {
 
 
         listSylable = new ArrayList<>();
-        l = new ArrayList<>();
+        listWord = new ArrayList<>();
 
+    }
+
+    public void getInfo(View view){
+        tts.speak("Coloca las piezas en los recuadros amarillos para formar una palabra", TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    private void music(){
+        boolean valor = getIntent().getExtras().getBoolean("music");
+        if(valor){
+            AudioPlay.restart();
+        }
+    }
+
+    private void getSettings(){
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.syllableGame);
+
+        databaseReference.child("userPatient").child(namePatient).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void goBack(View v){

@@ -8,18 +8,30 @@
     android:background="@color/background"
     tools:context=".patient.SyllablesGameActivity"
     >
+    <ImageView
+        android:id="@+id/yellow"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048"
+        app:srcCompat="@drawable/bg_select_cardview" />
+
 
     <ImageView
         android:id="@+id/yellow2"
-        android:layout_width="125dp"
-        android:layout_height="103dp"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
         android:layout_marginStart="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/yellow"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.048"
         app:srcCompat="@drawable/bg_select_cardview" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -54,15 +66,15 @@
 
     <ImageView
         android:id="@+id/puzzle1"
-        android:layout_width="87dp"
-        android:layout_height="67dp"
+        android:layout_width="96dp"
+        android:layout_height="77dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.654"
-        app:srcCompat="@drawable/calendar_style" />
+        app:layout_constraintVertical_bias="0.748"
+        app:srcCompat="@drawable/puzzle" />
 
     <ImageView
         android:id="@+id/puzzle2"
@@ -70,22 +82,22 @@
         android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657"
-        app:srcCompat="@drawable/button_style_green" />
+        app:layout_constraintVertical_bias="0.741"
+        app:srcCompat="@drawable/puzzle" />
 
     <ImageView
         android:id="@+id/puzzle3"
-        android:layout_width="87dp"
-        android:layout_height="78dp"
+        android:layout_width="94dp"
+        android:layout_height="87dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642"
-        app:srcCompat="@drawable/button_style_red_tritano" />
+        app:layout_constraintVertical_bias="0.75"
+        app:srcCompat="@drawable/puzzle" />
 
     <ImageView
         android:id="@+id/puzzle4"
@@ -93,35 +105,24 @@
         android:layout_height="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.683"
-        app:srcCompat="@drawable/button_style" />
+        app:layout_constraintVertical_bias="0.747"
+        app:srcCompat="@drawable/puzzle" />
 
-    <ImageView
-        android:id="@+id/yellow"
-        android:layout_width="125dp"
-        android:layout_height="103dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
-        app:srcCompat="@drawable/bg_select_cardview" />
 
     <ImageView
         android:id="@+id/puzzle5"
-        android:layout_width="110dp"
-        android:layout_height="79dp"
+        android:layout_width="119dp"
+        android:layout_height="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintHorizontal_bias="0.895"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686"
-        app:srcCompat="@drawable/bg_select_icon" />
+        app:layout_constraintVertical_bias="0.743"
+        app:srcCompat="@drawable/puzzle" />
 
     <ImageButton
         android:id="@+id/refresh"
@@ -131,10 +132,24 @@
         android:onClick="refreshBBDD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
-        app:layout_constraintHorizontal_bias="0.969"
+        app:layout_constraintHorizontal_bias="0.971"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041"
+        app:layout_constraintVertical_bias="0.039"
         app:srcCompat="@drawable/ic_refresh" />
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:background="@null"
+        android:onClick="getInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957"
+        app:srcCompat="@drawable/ic_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

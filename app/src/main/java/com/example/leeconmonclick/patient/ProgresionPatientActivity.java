@@ -661,6 +661,7 @@ public class ProgresionPatientActivity extends AppCompatActivity {
                 Glide.with(context).load(dataSnapshot.child("6lvl1Tritano").getValue().toString()).into(ima1Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl2Tritano").getValue().toString()).into(ima2Lvl6);
                 Glide.with(context).load(dataSnapshot.child("6lvl3Tritano").getValue().toString()).into(ima3Lvl1);
+                Glide.with(context).load(dataSnapshot.child("6lvl4Tritano").getValue().toString()).into(ima3Lvl6);
             }
         });
     }

@@ -453,4 +453,13 @@ public class SettingsActivity extends AppCompatActivity {
         getIcons();
         super.onRestart();
     }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
+    }
 }

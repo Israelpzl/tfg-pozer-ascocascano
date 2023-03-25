@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class ProfilesActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -52,6 +54,15 @@ public class ProfilesActivity extends AppCompatActivity {
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 
     @Override

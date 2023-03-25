@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.adapters.ListAdapterNotes;
 import es.leerconmonclick.util.utils.Note;
 
@@ -161,6 +162,15 @@ public class NotesListActivity extends AppCompatActivity {
         Intent addNoteIntent = new Intent(this, AddNoteActivity.class);
         addNoteIntent.putExtra("modeEdit",false);
         startActivity(addNoteIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 
 

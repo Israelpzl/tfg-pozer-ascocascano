@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.adapters.ListAdapterTask;
 import es.leerconmonclick.util.utils.Task;
 
@@ -301,5 +302,14 @@ public class TaskListActivity extends AppCompatActivity implements Comparator<Ta
     @Override
     public int compare(Task t1, Task t2) {
         return t1.getDate().compareTo(t2.getDate());
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

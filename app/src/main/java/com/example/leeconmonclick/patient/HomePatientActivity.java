@@ -311,6 +311,7 @@ public class HomePatientActivity extends AppCompatActivity implements DialogSett
         if(valor){
             AudioPlay.setIsplayingAudio(true);
         }
+
         super.onPause();
     }
 

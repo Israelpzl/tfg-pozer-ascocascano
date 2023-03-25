@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class SettingsPatientActivity extends AppCompatActivity {
 
@@ -328,6 +329,10 @@ public class SettingsPatientActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
         super.onPause();
     }
 

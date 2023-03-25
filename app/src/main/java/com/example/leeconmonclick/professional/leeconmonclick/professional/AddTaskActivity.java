@@ -41,6 +41,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.UUID;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Task;
 import es.leerconmonclick.util.WorkManagerNoti;
 
@@ -351,6 +352,15 @@ public class AddTaskActivity extends AppCompatActivity implements Comparator<Tas
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 
 

@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Content;
 import es.leerconmonclick.util.adapters.ListAdapterContent;
 
@@ -169,6 +170,15 @@ public class ContentListActivity extends AppCompatActivity {
         Intent addContent = new Intent(this, AddContentActivity.class);
         addContent.putExtra("modeEdit",false);
         startActivity(addContent);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 
 

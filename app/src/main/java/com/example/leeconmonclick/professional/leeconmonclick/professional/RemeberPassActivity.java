@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class RemeberPassActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -74,5 +76,14 @@ public class RemeberPassActivity extends AppCompatActivity {
               }
           }
       });
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

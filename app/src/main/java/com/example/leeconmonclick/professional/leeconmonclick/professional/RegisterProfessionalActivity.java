@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Note;
 import es.leerconmonclick.util.utils.User;
 
@@ -224,5 +225,15 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

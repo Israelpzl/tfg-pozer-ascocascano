@@ -49,6 +49,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 import java.util.Vector;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Content;
 
 
@@ -355,4 +356,12 @@ public class AddContentActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
+    }
 }

@@ -13,6 +13,8 @@ import com.example.leeconmonclick.patient.HomePatientActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class SplashActivity extends AppCompatActivity {
 
 
@@ -65,5 +67,14 @@ public class SplashActivity extends AppCompatActivity {
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn",false);
         return isLoggedIn;
 
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

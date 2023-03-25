@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Note;
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -228,6 +229,15 @@ public class AddNoteActivity extends AppCompatActivity {
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 
 }

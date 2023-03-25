@@ -47,6 +47,7 @@ import java.util.Map;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.utils.Categories;
 import es.leerconmonclick.util.utils.Difficulties;
 import es.leerconmonclick.util.utils.Game;
@@ -357,4 +358,12 @@ public class AddPatientsActivity extends AppCompatActivity {
         startActivity(helpIntent);
     }
 
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
+    }
 }

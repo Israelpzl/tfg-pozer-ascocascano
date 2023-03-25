@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import com.example.leeconmonclick.patient.HomePatientActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class ErrorActivity extends AppCompatActivity {
 
     private String user;
@@ -60,5 +62,14 @@ public class ErrorActivity extends AppCompatActivity {
 
     public void goBack(View view){
         onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

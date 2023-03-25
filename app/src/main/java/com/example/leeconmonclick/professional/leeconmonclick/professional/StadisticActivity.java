@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+import es.leerconmonclick.util.AudioPlay;
+
 
 public class StadisticActivity extends AppCompatActivity {
 
@@ -172,5 +174,13 @@ public class StadisticActivity extends AppCompatActivity {
     }
     public void goBack(View v){
         finish();
+    }
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

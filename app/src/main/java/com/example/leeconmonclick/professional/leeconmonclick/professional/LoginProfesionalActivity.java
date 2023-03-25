@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class LoginProfesionalActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -220,5 +222,14 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

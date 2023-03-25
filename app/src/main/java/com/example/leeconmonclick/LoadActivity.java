@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
 
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.PBAnimation;
 
 public class LoadActivity extends AppCompatActivity {
@@ -45,5 +46,14 @@ public class LoadActivity extends AppCompatActivity {
         anim.setDuration(8000);
         sleep(500);
         pb.setAnimation(anim);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

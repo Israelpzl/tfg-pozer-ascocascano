@@ -16,6 +16,8 @@ import com.example.leeconmonclick.patient.ProgresionPatientActivity;
 
 import java.util.ArrayList;
 
+import es.leerconmonclick.util.AudioPlay;
+
 public class HelpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
@@ -99,5 +101,14 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void goBack(View view){
         onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

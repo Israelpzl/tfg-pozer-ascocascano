@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".patient.HomePatientActivity"
     android:background="@color/background"
-    tools:context=".patient.HomePatientActivity">
+    android:id="@+id/homePatient">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconProfesionalId2"
+        android:id="@+id/iconPatientId"
         android:layout_width="51dp"
         android:layout_height="49dp"
         android:layout_marginStart="30dp"
@@ -42,28 +43,32 @@
     <Button
         android:id="@+id/button11"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="104dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_play"
+        android:onClick="goGameSelecction"
         android:text="@string/play"
-        app:layout_constraintBottom_toTopOf="@+id/button12"
+        app:layout_constraintBottom_toTopOf="@+id/progressBtnId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/progressBtnId"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="26dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_person"
+        android:onClick="goProgression"
         android:text="@string/progress"
         app:layout_constraintBottom_toTopOf="@+id/button13"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,48 +78,65 @@
     <Button
         android:id="@+id/button13"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="88dp"
         android:background="@drawable/button_style"
+        android:drawableLeft="@drawable/ic_settings"
+        android:onClick="goSettings"
         android:text="@string/settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBtnId" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="231dp"
-        android:layout_height="23dp"
+        android:id="@+id/namePatientId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:text="@string/name_patient"
         android:textAlignment="textEnd"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button11"
-        app:layout_constraintEnd_toStartOf="@+id/iconProfesionalId2"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientId"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.104" />
 
     <TextView
-        android:id="@+id/textView20"
-        android:layout_width="213dp"
-        android:layout_height="0dp"
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:text="@string/level"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView11"
-        app:layout_constraintEnd_toStartOf="@+id/textView19"
+        app:layout_constraintEnd_toStartOf="@+id/namePatientId"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/nomuteHome"
+        android:layout_width="98dp"
+        android:layout_height="93dp"
+        android:background="@null"
+        android:onClick="Silenciar"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.971"
+        app:srcCompat="@drawable/nomute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

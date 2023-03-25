@@ -44,6 +44,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.5'
 
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //noinspection GradleCompatible
+
+
+
 
 
     implementation "androidx.work:work-runtime:2.7.1"
@@ -77,6 +83,9 @@ dependencies {
 
     //Extra Librerys
     implementation 'com.basgeekball:awesome-validation:4.3'
+
+
+
 
 
 }

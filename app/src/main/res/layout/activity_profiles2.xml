@@ -88,7 +88,7 @@
         android:layout_height="198dp"
         android:background="@null"
         android:contentDescription="TODO"
-        android:onClick="goUser"
+        android:onClick="goPatient"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

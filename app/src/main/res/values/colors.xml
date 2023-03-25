@@ -10,8 +10,16 @@
     <color name="background">#384F89</color>
     <color name="button_back">#959595</color>
     <color name="button_red_cancel">#D42416</color>
+    <color name="button_green_check">#27E527</color>
     <color name="button_edit">#7160EA</color>
     <color name="task_item">#e1e5f2</color>
+    <color name="gray">#656563</color>
+    <color name="succes">#18DA15</color>
+    <color name="failed">#DA0E0E</color>
+    <color name="succes_trita">#65C9D9</color>
+    <color name="failed_trita">#D9160F</color>
+    <color name="yellow">#FFC107</color>
+    <color name="yellow_tritano">#FFB6C1</color>
 
 <!--    Daltonic-->
     <color name="background_tritano">#275960</color>

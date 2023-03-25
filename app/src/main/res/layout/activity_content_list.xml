@@ -39,7 +39,7 @@
         android:id="@+id/btnImageBackScreenId2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:onClick="goBack"
         app:layout_constraintBottom_toTopOf="@+id/view3"
@@ -52,8 +52,8 @@
 
     <TextView
         android:id="@+id/tittleContentListId"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:text="Lista de Contenidos"

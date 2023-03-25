@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/firstFragment"
+        android:icon="@drawable/ic_info"
+        android:title="Información"/>
+
+    <item
+        android:id="@+id/secondFragment"
+        android:icon="@drawable/ic_check_cross"
+        android:title="Aciertos y fallos"/>
+
+    <item
+        android:id="@+id/thirdFragment"
+        android:icon="@drawable/ic_123"
+        android:title="NºJuegos jugados"/>
+
+    <item
+        android:id="@+id/fourFragment"
+        android:icon="@drawable/ic_bar_chart"
+        android:title="Categorías y Dificultades"/>
+
+    <!--    <item
+        android:id="@+id/fiveFragment"
+        android:icon="@drawable/ic_radar_chart"
+        android:title="Cinco"/>
+    -->
+
+
+</menu>

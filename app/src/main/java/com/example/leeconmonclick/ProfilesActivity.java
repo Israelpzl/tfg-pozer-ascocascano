@@ -8,9 +8,19 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.leeconmonclick.patient.LoginPatient2Activity;
+import com.example.leeconmonclick.patient.ProgresionPatientActivity;
+import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
 import com.example.leeconmonclick.professional.leeconmonclick.professional.LoginProfesionalActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
+import es.leerconmonclick.util.AudioPlay;
 
 public class ProfilesActivity extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
+
 
 
 
@@ -19,23 +29,54 @@ public class ProfilesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(ProfilesActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
 
-    public void goUser(View v){
+    public void goPatient(View v){
         Intent helpIntent = new Intent(this, LoginPatient2Activity.class);
         startActivity(helpIntent);
-        finish();
     }
 
     public void goProfessional(View v){
         Intent helpIntent = new Intent(this, LoginProfesionalActivity.class);
         startActivity(helpIntent);
-        finish();
     }
 
     public void goHelp(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
-        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null){
+            Intent goHome = new Intent(this, HomeProfesionalActivity.class);
+            startActivity(goHome);
+            finish();
+        }
+
+
     }
 }

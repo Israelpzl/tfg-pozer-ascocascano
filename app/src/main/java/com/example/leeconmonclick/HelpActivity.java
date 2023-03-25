@@ -12,13 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.leeconmonclick.patient.ProgresionPatientActivity;
+
 import java.util.ArrayList;
+
+import es.leerconmonclick.util.AudioPlay;
 
 public class HelpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
     TextView message;
-    String url = "https://www.youtube.com/watch?v=s-aph61W300";
+    String url = "https://youtu.be/GCtEZU_49KU";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +34,24 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         message = findViewById(R.id.textView_message);
 
         ArrayList<String> options = new ArrayList<>();
-        options.add("Pregunta 1");
-        options.add("Pregunta 2");
-        options.add("Pregunta 3");
-        options.add("Pregunta 4");
+        options.add("¿Como puede un niño desbloquear mas imagenes?");
+        options.add("¿Como subo contenido propio?");
+        options.add("¿Que puedo hacer si pierdo mi usuario?");
+        options.add("¿Como funcionan los ajustes de accesibilidad?");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_itemms, options);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(HelpActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
     }
     public void home(View v){
         Intent helpIntent = new Intent(this, MainActivity.class);//Esta tiene que llevar a la de ayuda
@@ -52,7 +66,7 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void email(View v){
         Intent video = new Intent(Intent.ACTION_SENDTO);
-        video.setData(Uri.parse("mailto:theyecoca@gmail.com"));
+        video.setData(Uri.parse("mailto:pozeriaspozeriascocascano@gmail.com"));
         startActivity(video);
     }
 
@@ -64,17 +78,17 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
         String text_selection =  adapterView.getItemAtPosition(i).toString();
 
         switch (text_selection) {
-            case "Pregunta 1":
-                message.setText("Ayuda a mensaje 1");
+            case "¿Como puede un niño desbloquear mas imagenes?":
+                message.setText("Simplemente juagando, a medida que suban de nivel lo desbloquearan");
                 break;
-            case "Pregunta 2":
-                message.setText("Ayuda a mensaje 2");
+            case "¿Como subo contenido propio?":
+                message.setText("Desde la seccion de contenido los profesionales podran subir el contendio que quieran para luego usarse en sus terapias");
                 break;
-            case "Pregunta 3":
-                message.setText("Ayuda a mensaje 3");
+            case "¿Que puedo hacer si pierdo mi usuario?":
+                message.setText("Para los niños tendremos que crear un nuevo usuario, pero para los profesionales desde la pantalla de recuperar contraseña y siguiendo los pasos podremos recuperarla");
                 break;
-            case "Pregunta 4":
-                message.setText("Ayuda a mensaje 4");
+            case "¿Como funcionan los ajustes de accesibilidad?":
+                message.setText("Cada usuario podra activarlo en la seccion de ajustes y se aplicara los ajustes para la tritanopia ya que es la mas comun a dia de hoy");
                 break;
         }
     }
@@ -87,5 +101,14 @@ public class HelpActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void goBack(View view){
         onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

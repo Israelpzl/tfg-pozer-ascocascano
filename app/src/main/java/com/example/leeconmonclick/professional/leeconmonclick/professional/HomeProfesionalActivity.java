@@ -14,10 +14,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.SettingsActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.leerconmonclick.util.AudioPlay;
 
 public class HomeProfesionalActivity extends AppCompatActivity {
 
@@ -38,14 +39,17 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     private static final String STRING_PREFERENCES = "leeconmonclick.login";
     private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
     private CircleImageView iconProfesional;
-    private Context context = this;
-
+    private final Context context = this;
 
     private TextView btnPatients;
     private TextView btnContent;
     private TextView btnNotes;
     private TextView btnDates;
     private TextView btnSett;
+
+    private String userCollection;
+    private  ConstraintLayout constraintLayout;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,29 +58,47 @@ public class HomeProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_profesional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        final ConstraintLayout constraintLayout;
-        constraintLayout = findViewById(R.id.home_profesional);
+        findElements();
+        getSettings();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(HomeProfesionalActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+
+
+    }
+
+    private void findElements(){
+
 
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         nameProfesional = findViewById(R.id.nameProfesionalId);
-        iconProfesional = findViewById(R.id.iconProfesionalId);
-
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        String userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
+        iconProfesional = findViewById(R.id.iconPatientId);
         btnPatients = findViewById(R.id.button15);
         btnContent = findViewById(R.id.button16);
         btnSett = findViewById(R.id.button19);
         btnNotes = findViewById(R.id.button17);
         btnDates = findViewById(R.id.button18);
+        constraintLayout = findViewById(R.id.home_profesional);
 
+        userCollection = user.getEmail();
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+
+    }
+
+    private void getSettings(){
         databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -91,36 +113,56 @@ public class HomeProfesionalActivity extends AppCompatActivity {
                     }
                 });
                 String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    nameProfesional.setTextSize(30);
-                    btnPatients.setTextSize(30);
-                    btnContent.setTextSize(30);
-                    btnSett.setTextSize(30);
-                    btnNotes.setTextSize(30);
-                    btnDates.setTextSize(30);
-                }else if(size.equals("normal")){
-                    nameProfesional.setTextSize(20);
-                    btnPatients.setTextSize(20);
-                    btnContent.setTextSize(20);
-                    btnSett.setTextSize(20);
-                    btnNotes.setTextSize(20);
-                    btnDates.setTextSize(20);
-                }else if(size.equals("peque")){
-                    nameProfesional.setTextSize(10);
-                    btnPatients.setTextSize(10);
-                    btnContent.setTextSize(10);
-                    btnSett.setTextSize(10);
-                    btnNotes.setTextSize(10);
-                    btnDates.setTextSize(10);
+                switch (size) {
+                    case "grande":
+                        nameProfesional.setTextSize(30);
+                        btnPatients.setTextSize(30);
+                        btnContent.setTextSize(30);
+                        btnSett.setTextSize(30);
+                        btnNotes.setTextSize(30);
+                        btnDates.setTextSize(30);
+                        break;
+                    case "normal":
+                        nameProfesional.setTextSize(20);
+                        btnPatients.setTextSize(20);
+                        btnContent.setTextSize(20);
+                        btnSett.setTextSize(20);
+                        btnNotes.setTextSize(20);
+                        btnDates.setTextSize(20);
+                        break;
+                    case "peque":
+                        nameProfesional.setTextSize(10);
+                        btnPatients.setTextSize(10);
+                        btnContent.setTextSize(10);
+                        btnSett.setTextSize(10);
+                        btnNotes.setTextSize(10);
+                        btnDates.setTextSize(10);
+                        break;
                 }
                 String dalto = snapshot.child("sett").child("1").getValue().toString();
                 if(dalto.equals("tritanopia")){
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    if (iconText.indexOf("Tri") == -1){
+                        iconText = iconText + "Tritano";
+                    }
+                    databaseReference.child("Users").child(userCollection).child("icon").setValue(iconText);
                     constraintLayout.setBackgroundResource(R.color.background_tritano);
                     btnPatients.setBackgroundResource(R.drawable.button_style_tritano);
                     btnContent.setBackgroundResource(R.drawable.button_style_tritano);
                     btnSett.setBackgroundResource(R.drawable.button_style_tritano);
                     btnNotes.setBackgroundResource(R.drawable.button_style_tritano);
                     btnDates.setBackgroundResource(R.drawable.button_style_tritano);
+                }else {
+                    String iconText = snapshot.child("icon").getValue().toString();
+                    String[] parts = iconText.split("Trita");
+                    String datePart = parts[0];
+                    databaseReference.child("Users").child(userCollection).child("icon").setValue(datePart);
+                    constraintLayout.setBackgroundResource(R.color.background);
+                    btnPatients.setBackgroundResource(R.drawable.button_style);
+                    btnContent.setBackgroundResource(R.drawable.button_style);
+                    btnSett.setBackgroundResource(R.drawable.button_style);
+                    btnNotes.setBackgroundResource(R.drawable.button_style);
+                    btnDates.setBackgroundResource(R.drawable.button_style);
                 }
             }
 
@@ -129,8 +171,6 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public void goHelp(View v){
@@ -140,7 +180,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
 
     public void goListPatient(View v){
-        Intent helpIntent = new Intent(this, ListPatientActivity.class);
+        Intent helpIntent = new Intent(this, PatientListActivity.class);
         startActivity(helpIntent);
     }
 
@@ -163,7 +203,7 @@ public class HomeProfesionalActivity extends AppCompatActivity {
 
 
     public void goNotes(View v){
-        Intent helpIntent = new Intent(this, PersonalNotesActivity.class);
+        Intent helpIntent = new Intent(this, NotesListActivity.class);
         startActivity(helpIntent);
     }
 
@@ -182,25 +222,23 @@ public class HomeProfesionalActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
-
-
-    /*
-
-      public void goListNotes(View v){
-        Intent helpIntent = new Intent(this, ListNotes.class);
-        startActivity(helpIntent);
+       FirebaseUser u =  firebaseAuth.getCurrentUser();
+       if (u == null){
+           finish();
+       }
+       getSettings();
     }
 
-    public void goSettings(View v){
-        Intent helpIntent = new Intent(this, Setting.class);
-        startActivity(helpIntent);
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
-    */
-
-
-
-
-
-
 }

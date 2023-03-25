@@ -3,9 +3,11 @@ package com.example.leeconmonclick.professional.leeconmonclick.professional;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,23 +17,25 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+
+import es.leerconmonclick.util.AudioPlay;
 
 public class LoginProfesionalActivity extends AppCompatActivity {
 
-    private AwesomeValidation awesomeValidation;
     private FirebaseAuth firebaseAuth;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch remeberSession;
     private EditText email,pass;
-
-    private static final String STRING_PREFERENCES = "leeconmonclick.login";
-    private static final String PREFERENCES_STATE_BUTTON = "leeconmonclick.login.button";
 
 
     @Override
@@ -40,11 +44,68 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_professional);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        findElements();
 
-        remeberSession = (Switch) findViewById(R.id.switch_remember);
-        email = findViewById(R.id.editTextTextPersonName);
-        pass = findViewById(R.id.editTextTextPassword);
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(LoginProfesionalActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+    }
+
+
+    public void login (View v){
+
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
+        awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
+
+        if (awesomeValidation.validate()){
+
+            firebaseAuth.signInWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    if (task.isSuccessful()){
+
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        if (user.isEmailVerified()){
+                            String userCollection = email.getText().toString().trim();
+                            String[] parts = userCollection.split("@");
+                            userCollection = parts[0];
+                            userCollection = userCollection.toLowerCase();
+                            goHomeProfesional(userCollection);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Verifica el correo", Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }else{
+                        String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                        dameToastdeerror(errorCode);
+                    }
+                }
+            });
+        }
+    }
+
+    public void saveStateSession(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", remeberSession.isChecked());
+        editor.putString("user","professional");
+        editor.apply();
+    }
+
+    public void goRememberPass(View v){
+        Intent rememberIntent = new Intent(this, RemeberPassActivity.class);
+        startActivity(rememberIntent);
+
     }
 
     public void help(View v){
@@ -57,83 +118,29 @@ public class LoginProfesionalActivity extends AppCompatActivity {
         startActivity(helpIntent);
     }
 
-    public void login (View v){
-
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
-        awesomeValidation.addValidation(this,R.id.editTextTextPassword, ".{6,}", R.string.error_pass);
-
-        if (awesomeValidation.validate()){
-
-            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    if (task.isSuccessful()){
-
-                        String userCollection = email.getText().toString();
-                        String[] parts = userCollection.split("@");
-                        userCollection = parts[0];
-                        userCollection = userCollection.toLowerCase();
-                        goHomeProfesional(userCollection);
-                    }else{
-                        String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                        dameToastdeerror(errorCode);
-                    }
-                }
-            });
-        }
-    }
 
     private void goHomeProfesional(String name){
         Intent i = new Intent(this, HomeProfesionalActivity.class);
-
-        /*
-        databaseReference.child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                User u = new User(
-                        snapshot.child("nombre").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        "pass",
-                        null
-                );
-
-                i.putExtra("userProfesional", (Parcelable) u);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-         */
-
         saveStateSession();
         startActivity(i);
         finish();
     }
 
-    public void rememberPass(View v){
-        Intent helpIntent = new Intent(this, RegisterProfessionalActivity.class);
+    private void findElements(){
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        remeberSession = (Switch) findViewById(R.id.switch_remember);
+        email = findViewById(R.id.editTextTextPersonName);
+        pass = findViewById(R.id.editTextTextPassword);
+
+    }
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
     }
 
-    public void back(View v){
-        finish();
-    }
-
-    public void saveStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-        preferences.edit().putBoolean(PREFERENCES_STATE_BUTTON,remeberSession.isChecked()).apply();
-    }
-    public boolean getStateSession(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES,MODE_PRIVATE);
-         return preferences.getBoolean(PREFERENCES_STATE_BUTTON,false);
-    }
 
     private void dameToastdeerror(String error) {
         EditText email = findViewById(R.id.editTextTextPersonName);
@@ -215,5 +222,14 @@ public class LoginProfesionalActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

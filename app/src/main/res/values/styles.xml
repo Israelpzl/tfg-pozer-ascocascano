@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    
+    <style name="toggleBtnDaltonismSelect">
+        <item name="android:background">@color/button_green_check</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+</resources>

@@ -1,6 +1,5 @@
 package com.example.leeconmonclick.professional.leeconmonclick.professional;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,23 +19,22 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
+import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,15 +46,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import java.util.Vector;
 
-import es.leerconmonclick.util.Content;
+import es.leerconmonclick.util.AudioPlay;
+import es.leerconmonclick.util.utils.Content;
 
 
 public class AddContentActivity extends AppCompatActivity {
@@ -69,16 +63,16 @@ public class AddContentActivity extends AppCompatActivity {
     private Uri uri;
     private String uriStr;
     private DatabaseReference databaseReference;
-    private FirebaseAuth firebaseAuth;
     private TextInputEditText word;
-    private TextView title,imageText,saveButt,cancelButt;
+    private TextView title,saveButt,cancelButt;
     private Context context;
     private Bundle data;
     private ArrayAdapter<String> adapterSpinner;
     private StorageReference filePath;
     private String userCollection;
-    private FirebaseUser user;
-    private FirebaseAuth db = FirebaseAuth.getInstance();
+    private final String[] DIFFICULTIES = { "FÁCIL", "NORMAL", "DIFÍCIL"};
+
+    private Button addContentBtn;
 
 
     @SuppressLint("MissingInflatedId")
@@ -88,68 +82,39 @@ public class AddContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_content);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //Encontrar e inicializar los elementos de base de datos y de la actividad
+        findElements();
+        //Recuperar los setting del usuario
+        getSettings();
+        //Abrir la galeria del dispositivo
+        getGalery();
+        //Abir la cámra del dispositivo
+        getCamera();
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        //Comprobar si nos encontramos en modo edición de un contenido y si es así, recupera los valores del contenido a modificar
+        if (data.getBoolean("modeEdit")){modeEditOn();}
 
-        spinner = (Spinner) findViewById(R.id.spinnerId);
-        imageView = (ImageView) findViewById(R.id.imgViewId);
-        word = (TextInputEditText) findViewById(R.id.wordInputId);
-        title = findViewById(R.id.textView11);
-        saveButt = findViewById(R.id.btnSaveId);
-        cancelButt = findViewById(R.id.btnBackId);
-
-        user = db.getCurrentUser();
-        userCollection = user.getEmail();
-        String[] parts = userCollection.split("@");
-        userCollection = parts[0];
-        userCollection = userCollection.toLowerCase();
-
-        final ConstraintLayout constraintLayout;
-        constraintLayout =  findViewById(R.id.addContentLayoutId);
-
-        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String size = snapshot.child("sett").child("0").getValue().toString();
-                if(size.equals("grande")){
-                    title.setTextSize(30);
-                    word.setTextSize(30);
-                    saveButt.setTextSize(30);
-                    cancelButt.setTextSize(30);
-                }else if(size.equals("normal")){
-                    title.setTextSize(20);
-                    word.setTextSize(20);
-                    saveButt.setTextSize(20);
-                    cancelButt.setTextSize(20);
-                }else if(size.equals("peque")){
-                    title.setTextSize(10);
-                    word.setTextSize(10);
-                    saveButt.setTextSize(10);
-                    cancelButt.setTextSize(10);
-                }
-                String dalto = snapshot.child("sett").child("1").getValue().toString();
-                if(dalto.equals("tritanopia")){
-                    constraintLayout.setBackgroundResource(R.color.background_tritano);
-                    cancelButt.setBackgroundResource(R.drawable.button_style_red_tritano);
-                    saveButt.setBackgroundResource(R.drawable.button_style_tritano);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(AddContentActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
             }
         });
 
-        String[] opciones = {"-", "El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"};
 
-        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterSpinner);
-        context = getApplicationContext();
+    }
 
+
+    public void cameraImageBtn(View v){ someActivityResultCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE)); }
+
+    public void galeryImageBtn(View v){
+        someActivityResultGalery.launch("image/*");
+    }
+
+    private void getGalery(){
         someActivityResultGalery = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
@@ -159,8 +124,9 @@ public class AddContentActivity extends AppCompatActivity {
                         imageView.setImageURI(result);
                     }
                 });
+    }
 
-
+    private void getCamera(){
         someActivityResultCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -175,32 +141,21 @@ public class AddContentActivity extends AppCompatActivity {
                     }
                 });
 
-        data = getIntent().getExtras();
-        if (data.getBoolean("modeEdit")){
-                modeEditOn();
-        }
-
-
-
 
     }
-    public void cameraImageBtn(View v){ someActivityResultCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE)); }
 
-    public void galeryImageBtn(View v){
-        someActivityResultGalery.launch("image/*");
-    }
-
+    //Método que guarda en base de datos el contenido generado, este método se enlaza con el botón en la actividad a través del atributo onClick
     public void saveContent (View v){
 
         if (!data.getBoolean("modeEdit") || uri !=null){
             if(uri != null){
 
                 if (data.getBoolean("modeEdit")){
-                    filePath = storageReference.child("contenidos").child(data.getString("word"));
+                    filePath = storageReference.child("contenidos").child(userCollection).child(data.getString("word"));
                     filePath.delete();
                 }
 
-                filePath = storageReference.child("contenidos").child(word.getText().toString());
+                filePath = storageReference.child("contenidos").child(userCollection).child(Objects.requireNonNull(word.getText()).toString());
                 filePath.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -213,16 +168,21 @@ public class AddContentActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri downloadUri2 = task.getResult();
-                            List<String> sylablle = new ArrayList<>();
-                            Content content = new Content(word.getText().toString(), downloadUri2.toString(), sylablle, spinner.getSelectedItem().toString());
-                            databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                            });
+                            Vector palabras = getPalabras(word.getText().toString());
+                            if(Verificar(word.getText().toString().trim().toLowerCase()) && palabras.size() == 1){
+                                Uri downloadUri2 = task.getResult();
+                                Content content = new Content(word.getText().toString(), downloadUri2.toString(), "", spinner.getSelectedItem().toString(),false);
+                                databaseReference.child("content").child(userCollection).child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getApplicationContext(), "Se ha creado el contenido correctamente", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Tiene que ser una palabra real", Toast.LENGTH_LONG).show();
+                            }
+
                         }
                     }
                 });
@@ -242,13 +202,47 @@ public class AddContentActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    public void goHelp(View v){
-        Intent helpIntent = new Intent(this, HelpActivity.class);
-        startActivity(helpIntent);
+
+    // Comprueba si la palabra añadida no contiene carácteres raros ni espacios
+    private boolean Verificar(String cadena){
+        String s;
+        char c[],x;
+        int i,j,k;
+        int error = 0;
+        s = " abcdefghijklmnñopqrstuvwxyzáéíóúü";
+        c = s.toCharArray();
+        for( i=0 ;  i < cadena.length() && error == 0;i++){
+            x = cadena.charAt(i);
+            k = 0;
+            for(j = 0 ;  j < s.length() && k == 0;j++){
+                if(x==c[j])
+                    k++;
+            }
+            if( k == 0)
+                error++;
+        }
+        if(error == 0)
+            return true;
+        else
+            return false;
     }
 
-    public void goBack(View view){
-        onBackPressed();
+    //Transforma la palabra añadida a vector
+    private Vector getPalabras(String cadena) {
+        Vector palabras = new Vector();
+        String palabra = "";
+        cadena = cadena.trim().toLowerCase() + " ";
+        char[] c = cadena.toCharArray();
+        int i;
+        for(i = 0; i < cadena.length(); i++){
+            if ( c[i] == ' '){
+                palabras.add(palabra);
+                palabra = "";
+            }
+            else
+                palabra = palabra + String.valueOf(c[i]);
+        }
+        return palabras;
     }
 
     private void modeEditOn() {
@@ -258,13 +252,14 @@ public class AddContentActivity extends AppCompatActivity {
         uriStr = data.getString("image");
         int selectionPosition= adapterSpinner.getPosition(data.getString("determinant"));
         spinner.setSelection(selectionPosition);
+        title.setText("EDITAR CONTENIDO");
+        saveButt.setText("EDITAR");
     }
 
     private void editContent(){
-        databaseReference.child("content").child(data.getString("word")).removeValue();
-        List<String> sylablle = new ArrayList<>();
-        Content content = new Content(word.getText().toString(), uriStr ,sylablle , spinner.getSelectedItem().toString());
-        databaseReference.child("content").child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("content").child(userCollection).child(data.getString("word")).removeValue();
+        Content content = new Content(Objects.requireNonNull(word.getText()).toString(), uriStr ,"" , spinner.getSelectedItem().toString(),false);
+        databaseReference.child("content").child(userCollection).child(word.getText().toString()).setValue(content).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(getApplicationContext(),"Se ha editado el contenido correctamente",Toast.LENGTH_LONG).show();
@@ -273,4 +268,100 @@ public class AddContentActivity extends AppCompatActivity {
         });
     }
 
+
+    private void getSettings(){
+
+
+        final ConstraintLayout constraintLayout;
+        constraintLayout =  findViewById(R.id.addContentLayoutId);
+
+        databaseReference.child("Users").child(userCollection).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String size = snapshot.child("sett").child("0").getValue().toString();
+                switch (size) {
+                    case "grande":
+                        title.setTextSize(30);
+                        word.setTextSize(30);
+                        saveButt.setTextSize(30);
+                        cancelButt.setTextSize(30);
+                        break;
+                    case "normal":
+                        title.setTextSize(20);
+                        word.setTextSize(20);
+                        saveButt.setTextSize(20);
+                        cancelButt.setTextSize(20);
+                        break;
+                    case "peque":
+                        title.setTextSize(10);
+                        word.setTextSize(10);
+                        saveButt.setTextSize(10);
+                        cancelButt.setTextSize(10);
+                        break;
+                }
+                String dalto = snapshot.child("sett").child("1").getValue().toString();
+                if(dalto.equals("tritanopia")){
+                    constraintLayout.setBackgroundResource(R.color.background_tritano);
+                    cancelButt.setBackgroundResource(R.drawable.button_style_red_tritano);
+                    saveButt.setBackgroundResource(R.drawable.button_style_tritano);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setContentView(R.layout.activity_error2);
+            }
+        });
+
+    }
+
+    private void findElements(){
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        context = getApplicationContext();
+        data = getIntent().getExtras();
+
+        spinner = (Spinner) findViewById(R.id.spinnerId);
+        imageView = (ImageView) findViewById(R.id.imgViewId);
+        word = (TextInputEditText) findViewById(R.id.wordInputId);
+        title = findViewById(R.id.textView11);
+        saveButt = findViewById(R.id.btnSaveId);
+        cancelButt = findViewById(R.id.btnBackId);
+
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        userCollection = user.getEmail();
+        assert userCollection != null;
+        String[] parts = userCollection.split("@");
+        userCollection = parts[0];
+        userCollection = userCollection.toLowerCase();
+
+
+        adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DIFFICULTIES);
+        spinner.setAdapter(adapterSpinner);
+
+    }
+
+    public void goHelp(View v){
+        Intent helpIntent = new Intent(this, HelpActivity.class);
+        startActivity(helpIntent);
+    }
+
+    public void goBack(View view){
+        onBackPressed();
+    }
+
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
+    }
 }

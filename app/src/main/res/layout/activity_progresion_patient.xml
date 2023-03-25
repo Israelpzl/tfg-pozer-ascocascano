@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".patient.ProgresionPatientActivity"
+    android:id="@+id/progresionPatient"
+    android:background="@color/background">
+
+
+    <TextView
+        android:id="@+id/textViewProgresionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp"
+        android:text="@string/progression"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.416" />
+
+    <ImageButton
+        android:id="@+id/btnImageBackScreenProgresion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:onClick="goBack"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewProgresionTitle"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027"
+        app:srcCompat="@drawable/ic_arrow_back_android" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnImageBackScreenProgresion"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <TextView
+        android:id="@+id/namePatientId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/name_patient"
+        android:textAlignment="textEnd"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toStartOf="@+id/iconPatientProgresionId"
+        app:layout_constraintHorizontal_bias="0.992"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.378" />
+
+    <TextView
+        android:id="@+id/actualLvlPatient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/actualLvlText"
+        android:textAlignment="textEnd"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toStartOf="@+id/textViewProgresionTitle"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toEndOf="@+id/btnImageBackScreenProgresion"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iconPatientProgresionId"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/mono"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.986"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ProgressBar
+            android:id="@+id/lvlProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/lvl1"
+                        />
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl1a"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl1b"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        android:layout_marginLeft="20dp"/>
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl6c"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        android:layout_marginLeft="20dp"/>
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/lvl4" />
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl4a"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl4b"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        android:layout_marginLeft="20dp"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iconPatientlvl4c"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/mono"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        android:layout_marginLeft="20dp"/>
+
+                </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/lvl2" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl2a"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl2b"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl2c"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/lvl5" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl5a"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl5b"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/lvl3" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl3a"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl3b"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/lvl6" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl6a"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl6b"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iconPatientlvl6d"
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/mono"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    android:layout_marginLeft="20dp"/>
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+        <Button
+            android:id="@+id/buttonSaveProgresionPatient2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="200dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_style"
+            android:onClick="saveChanges"
+            android:text="@string/save_changes" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

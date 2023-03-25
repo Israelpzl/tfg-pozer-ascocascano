@@ -1,12 +1,18 @@
 package com.example.leeconmonclick;
 
+import static java.lang.Thread.sleep;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.leeconmonclick.professional.leeconmonclick.professional.PatientListActivity;
+
+import es.leerconmonclick.util.AudioPlay;
 import es.leerconmonclick.util.PBAnimation;
 
 public class LoadActivity extends AppCompatActivity {
@@ -26,12 +32,28 @@ public class LoadActivity extends AppCompatActivity {
         pb.setMax(100);
         pb.setScaleY(3f);
 
-        progressAnimation();
+        try {
+            progressAnimation();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        startActivity(new Intent(getApplicationContext(), PatientListActivity.class));
+        finish();
     }
 
-    public void progressAnimation(){
+    public void progressAnimation() throws InterruptedException {
         PBAnimation anim= new PBAnimation(this, pb, tv, 0f, 100f);
         anim.setDuration(8000);
+        sleep(500);
         pb.setAnimation(anim);
+    }
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

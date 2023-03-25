@@ -1,4 +1,5 @@
 <resources>
+    <!--APP-->
     <string name="app_name">Leer con Monclick</string>
     <string name="error">UPS ALGO SALIO MAL!!</string>
     <string name="back_home">VOLVER A INICIO</string>
@@ -34,26 +35,47 @@
     <string name="nothing">NINGUNO</string>
     <string name="log_out">CERRAR SESIÓN</string>
     <string name="save_changes">GUARDAR CAMBIOS</string>
-    <string name="settings">AJUSTES</string>
+    <string name="settings">Ajustes</string>
     <string name="add_note">AÑADIR NOTA</string>
-    <!--CONTENT-->
+    <!--Professional-CONTENT-->
     <string name="personalize_content">PERSONALIZAR CONTENIDO</string>
     <string name="img">IMÁGENES</string>
     <string name="word">Palabra</string>
-    <!--ADD PATIENT-->
+    <!--Professional-ADD PATIENT-->
     <string name="add_patient">AÑADIR PACIENTE</string>
     <string name="age">EDAD</string>
     <string name="name_patient">NOMBRE PACIENTE</string>
     <string name="progress">PROGRESO</string>
-    <string name="level">NIVEL 2</string>
+    <string name="level">NIVEL 1</string>
     <string name="play">JUGAR</string>
-    <!--Task and Calendar-->
-    <string name="list_Task">LISTA DE TAREAS</string>
-    <string name="add_task">AÑADIR TAREAS</string>
+    <!--Professional-Task and Calendar-->
+    <string name="list_Task">Lista de Citas</string>
+    <string name="add_task">AÑADIR CITA</string>
     <string name="noti">NOTI</string>
     <string name="date">FECHA</string>
     <string name="time">TIEMPO</string>
     <string name="tittle">TÍTULO</string>
     <string name="description">DESCRIPCIÓN</string>
     <string name="clock">RELOJ</string>
+    <!--Patient-PROGRESS-->
+    <string name="progression">PROGRESO</string>
+    <string name="actualLvlText">NIVEL ACTUAL:</string>
+    <string name="lvl1">NIVEL 1</string>
+    <string name="lvl2">NIVEL 2</string>
+    <string name="lvl3">NIVEL 3</string>
+    <string name="lvl4">NIVEL 4</string>
+    <string name="lvl5">NIVEL 5</string>
+    <string name="lvl6">NIVEL 6</string>
+    <!--Patient-CATEGORY-->
+    <string name="difficulty">DIFICULTAD</string>
+    <string name="tittle_category">SELECCIÓN DE CATEGORÍA</string>
+    <string name="animals">Animales</string>
+    <string name="house">Hogar</string>
+    <string name="category">Personal</string>
+    <string name="food">Comida</string>
+    <string name="percentage">percentage</string>
+    <string name="stadistic">Estadísticas</string>
+
+
+
 </resources>

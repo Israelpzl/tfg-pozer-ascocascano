@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tittleTaskId"
+    android:id="@+id/addTaskId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -30,10 +30,7 @@
         android:id="@+id/viewId2"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/separator"
-        app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +40,8 @@
         android:id="@+id/btnImageBackScreenId3"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@null"
         android:onClick="goBack"
         app:layout_constraintBottom_toTopOf="@+id/viewId2"
@@ -58,11 +55,10 @@
     <TextView
         android:id="@+id/timeTaskId"
         android:layout_width="0dp"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        android:layout_marginBottom="15dp"
         android:text="@string/time"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
         app:layout_constraintEnd_toStartOf="@+id/imageButton9"
         app:layout_constraintStart_toEndOf="@+id/calendarView"
         app:layout_constraintTop_toBottomOf="@+id/dateTaskId"
@@ -71,17 +67,17 @@
     <EditText
         android:id="@+id/textView12"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="6dp"
         android:hint="@string/tittle"
         android:maxLength="30"
         app:layout_constraintBottom_toTopOf="@+id/descriptionTaskId"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/calendarView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/viewId2" />
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -103,13 +99,12 @@
 
     <TextView
         android:id="@+id/tittleActivityAddNoteId"
-        android:layout_width="330dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/add_task"
         android:textAlignment="center"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/viewId2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -149,46 +144,44 @@
         android:id="@+id/button6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="100dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_style"
+        android:onClick="saveTask"
         android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button7"
-        app:layout_constraintStart_toEndOf="@+id/calendarView"
-        app:layout_constraintTop_toBottomOf="@+id/timeTaskId"
-        android:onClick="saveTask"/>
+        app:layout_constraintStart_toEndOf="@+id/calendarView" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_style_red"
+        android:onClick="goBack"
         android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button6"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
+        app:layout_constraintStart_toEndOf="@+id/button6" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="178dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/noti"
         app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toStartOf="@+id/imageButton9"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/calendarView"
         app:layout_constraintTop_toBottomOf="@+id/timeTaskId"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/imageButton9"

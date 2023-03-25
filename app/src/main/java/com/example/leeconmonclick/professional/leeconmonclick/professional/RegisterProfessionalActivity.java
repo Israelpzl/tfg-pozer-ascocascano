@@ -13,31 +13,46 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
 import com.example.leeconmonclick.R;
-import com.example.leeconmonclick.professional.leeconmonclick.professional.HomeProfesionalActivity;
+import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
-import es.leerconmonclick.util.Note;
-import es.leerconmonclick.util.User;
+import es.leerconmonclick.util.AudioPlay;
+import es.leerconmonclick.util.utils.Note;
+import es.leerconmonclick.util.utils.User;
 
 public class RegisterProfessionalActivity extends AppCompatActivity {
 
-    AwesomeValidation awesomeValidation;
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_professional2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        findElements();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                Intent intent = new Intent(RegisterProfessionalActivity.this, ErrorActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                System.exit(1);
+            }
+        });
+
     }
 
 
@@ -45,26 +60,28 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
     public void createUser(View v){
         EditText email = findViewById(R.id.editTextTextPersonName4);
         EditText pass = findViewById(R.id.editTextTextPassword4);
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.editTextTextPersonName4, Patterns.EMAIL_ADDRESS, R.string.error_mail);
         awesomeValidation.addValidation(this,R.id.editTextTextPassword4, ".{6,}", R.string.error_pass);
         awesomeValidation.addValidation(this, R.id.editTextTextPassword5, R.id.editTextTextPassword4, R.string.error_pass_confirmation);
 
 
         if(awesomeValidation.validate()){
-            FirebaseAuth db = FirebaseAuth.getInstance();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-            db.createUserWithEmailAndPassword(email.getText().toString(),pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString().toLowerCase().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        assert user != null;
+                        user.sendEmailVerification();
 
-                        String userCollection = email.getText().toString();
+                        String userCollection = email.getText().toString().trim().toLowerCase();
                         String[] parts = userCollection.split("@");
                         userCollection = parts[0];
-                        userCollection = userCollection.toLowerCase();
+                        userCollection = userCollection.toLowerCase().trim();
 
                         ArrayList<String> settings = new ArrayList<>();
                         settings.add("normal");
@@ -79,11 +96,11 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
                         notas.add(generateNote);
 
-                        User usuario = new User(email.getText().toString(),userCollection,settings,notas,null,null,"maleDoctor");
+                        User usuario = new User(email.getText().toString().trim().toLowerCase(),userCollection,settings,notas,null,null,"maleDoctor");
 
                         databaseReference.child("Users").child(userCollection).setValue(usuario);
 
-                        goHome(userCollection);
+                        goLoginProfessional();
                         finish();
 
                         succesCreation();
@@ -99,9 +116,14 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     }
 
+    private void findElements(){
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+    }
+
 
     public void succesCreation(){
-        Toast.makeText(getApplicationContext(),"Usuario creado correctamente",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Usuario creado correctamente, verifique el email",Toast.LENGTH_LONG).show();
     }
 
     public void necesaryInfo(){
@@ -190,11 +212,10 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     }
 
-    private void goHome(String email){
-        Intent i = new Intent(this, HomeProfesionalActivity.class);
-        i.putExtra("email",email);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+    private void goLoginProfessional(){
+        Intent professionalIntent = new Intent(this, LoginProfesionalActivity.class);
+        professionalIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(professionalIntent);
     }
 
     public void goHelp(View v){
@@ -204,5 +225,15 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
 
     public void goBack(View v){
         finish();
+    }
+
+
+    @Override
+    protected void onPause() {
+        boolean valor = AudioPlay.isIsplayingAudio();
+        if(valor){
+            AudioPlay.stopAudio();
+        }
+        super.onPause();
     }
 }

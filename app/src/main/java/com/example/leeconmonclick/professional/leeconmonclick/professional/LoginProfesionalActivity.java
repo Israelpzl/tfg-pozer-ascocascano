@@ -19,6 +19,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.leeconmonclick.ErrorActivity;
 import com.example.leeconmonclick.HelpActivity;
+import com.example.leeconmonclick.ProfilesActivity;
 import com.example.leeconmonclick.R;
 import com.example.leeconmonclick.patient.CategorySelecctionActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -111,6 +112,11 @@ public class LoginProfesionalActivity extends AppCompatActivity {
     public void help(View v){
         Intent helpIntent = new Intent(this, HelpActivity.class);
         startActivity(helpIntent);
+    }
+
+    public void goBack(View v){
+        Intent goLogin = new Intent(this, ProfilesActivity.class);
+        startActivity(goLogin);;
     }
 
     public void register(View v){

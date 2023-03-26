@@ -224,7 +224,8 @@ public class RegisterProfessionalActivity extends AppCompatActivity {
     }
 
     public void goBack(View v){
-        finish();
+        Intent goLogin = new Intent(this, LoginProfesionalActivity.class);
+        startActivity(goLogin);;
     }
 
 

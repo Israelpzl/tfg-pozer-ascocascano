@@ -252,7 +252,7 @@ public class AddPatientsActivity extends AppCompatActivity {
 
         StringBuilder pass = new StringBuilder();
 
-        for(int i = 0; i<=3; i++){
+        for(int i = 0; i<=5; i++){
             int numCaracteres = caracteres.length();
             int numRandom = (int)(Math.random()*numCaracteres);
             pass.append((caracteres.toString()).charAt(numRandom));

@@ -519,6 +519,10 @@ public class LetterGameActivity extends AppCompatActivity {
                 imgLetter.setImageResource(R.drawable.letra_x);
                 break;
             }
+            case 'Y': {
+                imgLetter.setImageResource(R.drawable.letra_y);
+                break;
+            }
             case 'Z': {
                 imgLetter.setImageResource(R.drawable.letra_z);
                 break;
